@@ -1,17 +1,26 @@
-package vn.easycare;
+package vn.easycare.layers.ui.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import vn.easycare.R;
+import vn.easycare.layers.ui.base.BaseActivity;
+import vn.easycare.layers.ui.presenters.ILoginPresenter;
+import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
+import vn.easycare.layers.ui.views.ILoginView;
 
-public class LoginActivity extends Activity {
 
+public class LoginActivity extends BaseActivity implements ILoginView{
+
+    private ILoginPresenter mLoginPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        mLoginPresenter = new LoginPresenterImpl(this, this.getApplicationContext());
     }
 
 
@@ -33,4 +42,21 @@ public class LoginActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void LoginOK(String message) {
+        //move to home screen
+    }
+
+    @Override
+    public void LoginFail(String message) {
+        //show message for login fail
+    }
+
+    @Override
+    public void ShowIncorrectAccountInfoMessage(String errorMessage) {
+        //show message for email or password format not correct
+    }
+
+
 }

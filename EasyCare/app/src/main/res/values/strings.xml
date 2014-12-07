@@ -4,5 +4,6 @@
     <string name="app_name">EasyCare</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="login_fail_msg">Đăng nhập thất bại.</string>
 
 </resources>
