@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Top menu -->
+    <style name="left_menu_ll">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center</item>        
+    </style>
+
+    <style name="left_menu_iv">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">30dp</item>                
+    </style>
+    
+    <style name="left_menu_separate_v">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/purple_separate</item>
+        
+    </style>
+
+    <style name="left_menu_tv_small">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>        
+        <item name="android:paddingLeft">@dimen/common_padding</item>        
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/aqua_text</item>                 
+        <item name="android:lineSpacingExtra">0dp</item>
+    </style>
+
+    <style name="left_menu_rb">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>        
+        <item name="android:paddingLeft">@dimen/common_padding</item>        
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:textColor">@color/white</item>                 
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:background">@color/menu_item_background_color</item>
+        <item name="android:button">@android:color/transparent</item>
+        <item name="android:onClick">radioClicked</item>
+    </style>
+    
+</resources>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <!-- Define common color -->
+        <color name="black">#000000</color>
+        <color name="white">#FFFFFF</color>
+        <color name="blue">#0000FF</color>
+        <color name="gray_bg">#eae8de</color>
+        <color name="gray_button_disable">#E5E9EA</color>
+        <color name="purple_bg">#6737a7</color>
+        <color name="purple_text">#6737a7</color>
+        <color name="purple_button">#350077</color>
+        <color name="purple_light">#1B0C23</color>
+        <color name="purple_top_light">#32174C</color>
+        <color name="purple_separate">#33164C</color>
+        <color name="aqua_text">#7ba1ab</color>
+        <color name="aqua_bg">#F2F6F7</color>
+
+        <!-- Define the background header color -->
+        <color name="header_background_color">#3694eb</color>
+
+        <!-- Define the menu item background color-->
+        <color name="menu_item_background_color">#2f374e</color>
+
+        <!-- Define separator menu item background-->
+        <color name="menu_item_separator_above_background_color">#373e51</color>
+        <color name="menu_item_separator_below_background_color">#363f56</color>
+        <!-- Define separator on footer -->
+        <color name="footer_item_separator_background_color">#dcdcdc</color>
+
+        <!-- Define the text color for textview -->
+        <color name="textview_color_default">#04262f</color>
+        <color name="textview_color_showtime">#f2f6f7</color>
+        <color name="textview_color_grey">#7ba1ab</color>
+        <color name="textview_color_highlight">@color/header_background_color</color>
+        <color name="textview_color_light_grey">#666666</color>
+    </resources>

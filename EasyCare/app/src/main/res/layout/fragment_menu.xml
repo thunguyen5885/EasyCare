@@ -1,0 +1,65 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/svParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/menu_item_background_color"
+    android:scrollbars="none" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+        <include
+            android:id="@+id/menuItemUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemDatingManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemCalendarCreating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemAccountManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemCommonInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemTermOfUse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemPrivacyPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemQA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemExit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+
+    </LinearLayout>
+
+</ScrollView>

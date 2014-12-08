@@ -4,5 +4,88 @@
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. -->
     </style>
+    <style name="MyTextView" parent="@android:style/TextAppearance.Holo.Widget.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large.Inverse</item>
+    </style>
+
+    <!-- For tiny textview -->
+    <style name="TinyTextView" parent="@style/MyTextView">
+        <item name="android:textSize">@dimen/text_tiny</item>
+    </style>
+
+    <style name="DefaultTinyTextView" parent="@style/TinyTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+    </style>
+
+    <style name="HighLightTinyTextView" parent="@style/TinyTextView">
+        <item name="android:textColor">@color/textview_color_highlight</item>
+    </style>
+
+    <!-- For small textview -->
+    <style name="SmallTextView" parent="@style/MyTextView">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="DefaultSmallTextView" parent="@style/SmallTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+    </style>
+
+    <style name="GraySmallTextView" parent="@style/SmallTextView">
+        <item name="android:textColor">@color/textview_color_grey</item>
+    </style>
+
+    <style name="HighLightSmallTextView" parent="@style/SmallTextView">
+        <item name="android:textColor">@color/textview_color_highlight</item>
+    </style>
+
+    <!-- For normal textview -->
+    <style name="NormalTextView" parent="@style/MyTextView">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="DefaultNormalTextView" parent="@style/NormalTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+    </style>
+
+    <style name="BoldNormalTextView" parent="@style/NormalTextView">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DefaultBoldNormalTextView" parent="@style/NormalTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HighLightNormalTextView" parent="@style/NormalTextView">
+        <item name="android:textColor">@color/textview_color_highlight</item>
+    </style>
+
+    <style name="GrayNormalTextView" parent="@style/NormalTextView">
+        <item name="android:textColor">@color/textview_color_grey</item>
+    </style>
+
+    <!-- For large textview -->
+    <style name="LargeTextView" parent="@style/MyTextView">
+        <item name="android:textSize">@dimen/text_big</item>
+    </style>
+
+    <style name="DefaultLargeTextView" parent="@style/LargeTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+    </style>
+
+    <style name="BoldLargeTextView" parent="@style/LargeTextView">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DefaultBoldLargeTextView" parent="@style/LargeTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="HighLightLargeTextView" parent="@style/LargeTextView">
+        <item name="android:textColor">@color/textview_color_highlight</item>
+    </style>
 
 </resources>

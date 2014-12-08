@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlHeader"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/home_header_height"
+    android:layout_alignParentTop="true"
+    android:background="@color/header_background_color"
+    >
+    
+    <LinearLayout 
+        android:id="@+id/llLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentLeft="true"
+    	android:layout_centerVertical="true"
+        >
+        
+        <ImageView
+            android:id="@+id/ivLeft"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="16dp"
+            android:visibility="visible"
+            android:src="@drawable/menu_icon"
+        />
+        
+    </LinearLayout>
+ 
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="match_parent"        
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_header"
+		android:maxLines="1"		
+		android:singleLine="true"
+        android:ellipsize="end"        
+        android:includeFontPadding="false"        
+        />
+  
+    <LinearLayout 
+        android:id="@+id/llRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:orientation="horizontal" >
+
+        <!-- search control -->
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="16dp"
+            android:visibility="visible" />
+        </LinearLayout>
+
+</RelativeLayout>
