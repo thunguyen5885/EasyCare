@@ -9,5 +9,7 @@ import java.util.Map;
 
 public interface IWebServiceAccess<T extends IWebServiceModel> {
     static final String WEBSERVICE_HOST = "https://easycare.vn/api/";
-
+    WSResult<T> executeRequest();
+    Map<String, List<String>> getHeaders();
+    void setHeaders(Map<String, List<String>> headers);
 }
