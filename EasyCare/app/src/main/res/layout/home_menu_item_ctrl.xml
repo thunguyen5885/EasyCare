@@ -4,11 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
     <RelativeLayout
+        android:id="@+id/menuItemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/common_padding"
-        android:gravity="center_vertical">
-        <ImageView
+        android:gravity="center_vertical"
+        android:clickable="true"
+        android:background="@drawable/menu_item_background">
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/ivMenuItemPoster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -16,7 +19,9 @@
             />
         <TextView
             android:id="@+id/tvMenuItemTitle"
-            style="@style/DefaultSmallTextView"
+            style="@style/DefaultNormalTextView"
+            android:textColor="@color/textview_color_grey"
+            android:textStyle="bold"
             android:layout_toRightOf="@+id/ivMenuItemPoster"
             android:layout_marginLeft="@dimen/common_padding"
             android:layout_centerVertical="true"
@@ -37,10 +42,10 @@
     </RelativeLayout>
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/menu_item_separator_above_background_color"/>
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/menu_item_separator_below_background_color"/>
 </LinearLayout>

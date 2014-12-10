@@ -21,9 +21,9 @@ public class CommonHeader implements View.OnClickListener{
     public CommonHeader(){}
     public CommonHeader(View view){
         mRootView = view;
-        View menuView = mRootView.findViewById(R.id.ivLeft);
+        View menuView = mRootView.findViewById(R.id.llLeft);
         menuView.setOnClickListener(this);
-        View backView = mRootView.findViewById(R.id.ivBack);
+        View backView = mRootView.findViewById(R.id.llRight);
         backView.setOnClickListener(this);
         TextView tvHeader = (TextView) mRootView.findViewById(R.id.tvHeader);
         tvHeader.setText(R.string.app_name);
@@ -45,12 +45,12 @@ public class CommonHeader implements View.OnClickListener{
             }
         }, 1000);
         switch(v.getId()){
-            case R.id.ivLeft:
+            case R.id.llLeft:
                 if(mOnHeaderClickListener != null){
                     mOnHeaderClickListener.onMenuClicked();
                 }
                 break;
-            case R.id.ivBack:
+            case R.id.llRight:
                 if(mOnHeaderClickListener != null){
                     mOnHeaderClickListener.onBack();
                 }

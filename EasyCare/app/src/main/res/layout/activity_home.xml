@@ -34,16 +34,19 @@
             android:orientation="vertical"
             android:layout_gravity="right"
             android:layout_weight="1"
-            >
+            android:background="@color/main_background_color">
             <include
                 android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/footer_vertical_padding"
+                android:layout_marginBottom="@dimen/footer_vertical_padding"
+                layout="@layout/footer_ctrl"/>
             <FrameLayout android:id="@+id/flRightContent"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
-                android:layout_above="@id/footer"
+                  android:layout_above="@id/footer"
              />
 
             <!-- <include layout="@layout/main_share"/> -->

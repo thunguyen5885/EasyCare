@@ -19,18 +19,22 @@
         <color name="header_background_color">#3694eb</color>
 
         <!-- Define the menu item background color-->
-        <color name="menu_item_background_color">#2f374e</color>
+        <color name="menu_item_background_color">#2e374e</color>
+        <color name="menu_item_selected_background_color">#0066b3</color>
 
         <!-- Define separator menu item background-->
-        <color name="menu_item_separator_above_background_color">#373e51</color>
-        <color name="menu_item_separator_below_background_color">#363f56</color>
+        <color name="menu_item_separator_above_background_color">#1c212f</color>
+        <color name="menu_item_separator_below_background_color">#444d64</color>
         <!-- Define separator on footer -->
         <color name="footer_item_separator_background_color">#dcdcdc</color>
+
+        <!-- Define the main background-->
+        <color name="main_background_color">#f4f4f4</color>
 
         <!-- Define the text color for textview -->
         <color name="textview_color_default">#04262f</color>
         <color name="textview_color_showtime">#f2f6f7</color>
-        <color name="textview_color_grey">#7ba1ab</color>
+        <color name="textview_color_grey">#dddddd</color>
         <color name="textview_color_highlight">@color/header_background_color</color>
         <color name="textview_color_light_grey">#666666</color>
     </resources>

@@ -9,12 +9,7 @@
     <!-- Define string for menu-->
     <string name="menu_dating_management">Quản lý hẹn khám</string>
     <string name="menu_calendar_creating">Tạo lịch khám</string>
-    <string name="menu_account_management">Quản lý thông tin cá nhân</string>
-    <string name="menu_common_info">Thông tin chung</string>
-    <string name="menu_term_of_use">Điều khoản sử dụng</string>
-    <string name="menu_privacy_policy">Chính sách bảo mật</string>
-    <string name="menu_qa">Hỏi đáp</string>
-    <string name="menu_contact">Liên hệ</string>
+    <string name="menu_comment">Nhận xét và đánh giá</string>
     <string name="menu_exit">Thoát</string>
 
     <!-- Define string for footer-->
