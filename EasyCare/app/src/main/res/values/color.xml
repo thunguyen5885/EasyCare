@@ -31,6 +31,15 @@
         <!-- Define the main background-->
         <color name="main_background_color">#f4f4f4</color>
 
+        <!--Color for layout selector-->
+        <color name="item_color_normal">#00000000</color>
+        <color name="item_color_pressed">#40000000</color>
+        
+        <!-- Define home item bottom-->
+        <color name="home_item_bottom_separator_above">#b3b3b3</color>
+        <color name="home_item_bottom_separator_middle">#c3c3c3</color>
+        <color name="home_item_bottom_separator_below">#e4e4e4</color>
+
         <!-- Define the text color for textview -->
         <color name="textview_color_default">#04262f</color>
         <color name="textview_color_showtime">#f2f6f7</color>

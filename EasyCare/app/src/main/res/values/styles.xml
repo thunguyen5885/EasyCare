@@ -66,6 +66,19 @@
         <item name="android:textColor">@color/textview_color_grey</item>
     </style>
 
+    <!-- For light large textview -->
+    <style name="LightLargeTextView" parent="@style/MyTextView">
+        <item name="android:textSize">@dimen/text_light_big</item>
+    </style>
+
+    <style name="DefaultLightLargeTextView" parent="@style/LightLargeTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+    </style>
+
+    <style name="BoldLightLargeTextView" parent="@style/LightLargeTextView">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!-- For large textview -->
     <style name="LargeTextView" parent="@style/MyTextView">
         <item name="android:textSize">@dimen/text_big</item>

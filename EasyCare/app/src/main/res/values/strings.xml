@@ -12,6 +12,12 @@
     <string name="menu_comment">Nhận xét và đánh giá</string>
     <string name="menu_exit">Thoát</string>
 
+    <!-- Define string for home-->
+    <string name="home_dating_management">Quản lý hẹn khám</string>
+    <string name="home_calendar_creating">Tạo lịch khám</string>
+    <string name="home_patient_list">Danh sách bệnh nhân</string>
+    <string name="home_statistic">Thống kê</string>
+
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>
     <string name="footer_privacy_policy">Chính sách bảo mật</string>
