@@ -10,6 +10,7 @@ import android.view.Window;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
+import vn.easycare.layers.ui.components.CommonFooter;
 import vn.easycare.layers.ui.components.CommonHeader;
 import vn.easycare.layers.ui.fragments.HomeFragment;
 import vn.easycare.layers.ui.fragments.MenuFragment;
@@ -20,6 +21,7 @@ import vn.easycare.layers.ui.fragments.MenuFragment;
 public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeaderClickListener{
     // For object
     private CommonHeader mCommonHeader;
+    private CommonFooter mCommonFooter;
 
     // For layout, control, view
     private MenuFragment mMenuFragment;
@@ -36,6 +38,9 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
         View headerView = findViewById(R.id.header);
         mCommonHeader = new CommonHeader(headerView);
         mCommonHeader.setOnHeaderClickListener(this);
+
+        View footerView = findViewById(R.id.footer);
+        mCommonFooter = new CommonFooter(footerView);
 
         mMenuFragment = (MenuFragment) getFragmentManager().findFragmentById(R.id.menuFragment);
 
@@ -54,11 +59,20 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
             public void onPanelClosed(View view) {
             }
         });
-
+        mMenuFragment.setSlidingLayout(mSlidingPanelLayout);
         // Show home fragment as default
         mSlidingPanelLayout.closePane();
         HomeFragment homeFragment = new HomeFragment();
         showFragmentFromMenu(homeFragment);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() == 1) {
+            finish();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void showFragment(Fragment frag) {
@@ -108,6 +122,34 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
 
         fragmentTransaction.commit();
     }
+
+    /**
+     * Hide the separator on footer
+     */
+    public void hideFooterSeparator(){
+        if(mCommonFooter != null){
+            mCommonFooter.hideIndicator();
+        }
+    }
+
+    /**
+     * Show the separator on footer
+     */
+    public void showFooterSeparator(){
+        if(mCommonFooter != null){
+            mCommonFooter.showIndicator();
+        }
+    }
+    public void showHeaderBackButton(){
+        if(mCommonHeader != null){
+            mCommonHeader.showBackButton();
+        }
+    }
+    public void hideHeaderBackButton(){
+        if(mCommonHeader != null){
+            mCommonHeader.hideBackButton();
+        }
+    }
     @Override
     public void onMenuClicked() {
         if(mSlidingPanelLayout != null){
@@ -121,6 +163,6 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
 
     @Override
     public void onBack() {
-
+        onBackPressed();
     }
 }

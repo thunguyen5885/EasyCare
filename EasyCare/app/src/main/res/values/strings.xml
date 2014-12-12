@@ -18,6 +18,16 @@
     <string name="home_patient_list">Danh sách bệnh nhân</string>
     <string name="home_statistic">Thống kê</string>
 
+    <!-- Define string for comment screen-->
+    <string name="comment_patient_management">Quản lý bệnh nhân</string>
+    <string name="comment_comment">Nhận xét và đánh giá</string>
+    <string name="comment_common_idea">Cảm nhận chung</string>
+    <string name="comment_assets">Cơ sở vật chất</string>
+    <string name="comment_waiting_time">Thời gian chờ</string>
+    <string name="comment_display">Hiển thị</string>
+    <string name="comment_no_display">Bỏ hiển thị</string>
+    <string name="comment_load_more">Xem thêm</string>
+
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>
     <string name="footer_privacy_policy">Chính sách bảo mật</string>

@@ -20,21 +20,21 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/vRightRightMost"
+        android:layout_marginRight="1dp"
         android:background="@color/home_item_bottom_separator_below"/>
     <View
         android:id="@+id/vLessBottomMost"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/vBottomMost"
-        android:layout_toLeftOf="@+id/vRightRightMost"
+        android:layout_marginRight="1dp"
         android:background="@color/home_item_bottom_separator_middle"/>
     <View
         android:id="@+id/vLessLessBottomMost"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@+id/vLessBottomMost"
-        android:layout_toLeftOf="@+id/vRightRightMost"
+        android:layout_marginRight="1dp"
         android:background="@color/home_item_bottom_separator_above"/>
     <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
         android:id="@+id/homeItemLayout"

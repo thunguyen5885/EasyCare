@@ -40,7 +40,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="@dimen/footer_vertical_padding"
                 android:layout_marginBottom="@dimen/footer_vertical_padding"
                 layout="@layout/footer_ctrl"/>
             <FrameLayout android:id="@+id/flRightContent"

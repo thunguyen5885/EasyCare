@@ -57,4 +57,12 @@ public class CommonHeader implements View.OnClickListener{
                 break;
         }
     }
+    public void showBackButton(){
+        View backView = mRootView.findViewById(R.id.llRight);
+        backView.setVisibility(View.VISIBLE);
+    }
+    public void hideBackButton(){
+        View backView = mRootView.findViewById(R.id.llRight);
+        backView.setVisibility(View.INVISIBLE);
+    }
 }

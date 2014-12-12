@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
 
 /**
@@ -25,6 +26,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private View mCalendarCreatingLayout;
     private View mPatientListLayout;
     private View mStatisticLayout;
+
+    public HomeFragment(){
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -54,7 +59,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+        if(getActivity() != null){
+            ((HomeActivity) getActivity()).hideFooterSeparator();
+            ((HomeActivity) getActivity()).hideHeaderBackButton();
+        }
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+//        if(getActivity() != null){
+//            ((HomeActivity) getActivity()).showFooterSeparator();
+//            ((HomeActivity) getActivity()).showHeaderBackButton();
+//        }
+    }
+
     @Override
     public void onClick(View v) {
         int parentViewId = (Integer) v.getTag();

@@ -59,4 +59,13 @@ public class CommonFooter implements View.OnClickListener{
 
         }
     }
+    public void hideIndicator(){
+        View vSeparator = mRootView.findViewById(R.id.vFooterSeparator);
+        vSeparator.setVisibility(View.INVISIBLE);
+    }
+    public void showIndicator(){
+        View vSeparator = mRootView.findViewById(R.id.vFooterSeparator);
+        vSeparator.setVisibility(View.VISIBLE);
+    }
+
 }
