@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rlHeader"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/commentItemLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/header_background_color"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="@dimen/common_padding"
+        android:layout_marginRight="@dimen/common_padding"
+        android:layout_marginBottom="@dimen/common_padding"
+        android:background="@color/footer_item_separator_background_color"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1">
         <com.android.volley.toolbox.NetworkImageView
-            android:id="@+id/patientAvatar"
+            android:id="@+id/commentPatientAvatar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
         />
@@ -18,7 +29,139 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="4">
-
+        android:layout_weight="5"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvCommentPatientName"
+                style="@style/DefaultNormalTextView"
+                android:textColor="@color/textview_color_highlight"
+                />
+            <TextView
+                android:id="@+id/tvCommentHour"
+                style="@style/DefaultSmallTextView"
+                android:textStyle="italic"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/common_padding"/>
+            <TextView
+                android:id="@+id/tvCommentDate"
+                style="@style/DefaultSmallTextView"
+                android:textStyle="italic"
+                android:layout_toLeftOf="@+id/tvCommentHour"
+                android:layout_marginRight="@dimen/common_padding"/>
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/tvCommentComment"
+            style="@style/DefaultNormalTextView"
+            android:layout_marginTop="@dimen/common_padding"
+            android:textStyle="italic"
+            android:maxLines="3"
+            android:ellipsize="end"/>
+        <LinearLayout
+            android:id="@+id/commonCommentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/home_item_separator_size"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    style="@style/DefaultNormalTextView"
+                    android:layout_alignParentRight="true"
+                    android:text=":"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                   style="@style/DefaultNormalTextView"
+                   android:text="@string/comment_common_idea"
+                   android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <vn.easycare.layers.ui.components.views.RatingLayout
+                android:id="@+id/commonIdeaRatingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/home_item_separator_size"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/commentAssetsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/home_item_separator_size"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_centerVertical="true">
+                <TextView
+                    style="@style/DefaultNormalTextView"
+                    android:layout_alignParentRight="true"
+                    android:text=":"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    style="@style/DefaultNormalTextView"
+                    android:text="@string/comment_assets"/>
+            </RelativeLayout>
+            <vn.easycare.layers.ui.components.views.RatingLayout
+                android:id="@+id/assetRatingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/home_item_separator_size"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/commentWaitingTimeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/home_item_separator_size"
+            android:layout_marginBottom="@dimen/common_padding">
+            <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
+                android:id="@+id/commentDisplayLayout"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/common_padding"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:background="@drawable/layout_button_with_corner"
+                custom:foreground="@drawable/layout_item_selector">
+                <TextView
+                    android:id="@+id/tvCommentDisplay"
+                    style="@style/DefaultSmallTextView"
+                    android:layout_width="match_parent"
+                    android:layout_centerInParent="true"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"/>
+            </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
+            <RelativeLayout
+                android:id="@+id/commentWaitingTimeTitleLayout"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true">
+                <TextView
+                    style="@style/DefaultNormalTextView"
+                    android:layout_alignParentRight="true"
+                    android:text=":"
+                    android:layout_centerVertical="true"/>
+                <TextView
+                    style="@style/DefaultNormalTextView"
+                    android:text="@string/comment_waiting_time"
+                    android:layout_centerVertical="true"/>
+            </RelativeLayout>
+            <vn.easycare.layers.ui.components.views.RatingLayout
+                android:id="@+id/waitingTimeRatingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/home_item_separator_size"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/commentWaitingTimeTitleLayout"/>
+        </RelativeLayout>
     </LinearLayout>
+        </LinearLayout>
 </LinearLayout>

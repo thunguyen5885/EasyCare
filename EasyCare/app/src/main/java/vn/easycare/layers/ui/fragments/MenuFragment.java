@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.activities.HomeActivity;
 
 public class MenuFragment extends Fragment implements View.OnClickListener{
     public interface IOnMenuItemOnClickListener{
@@ -168,6 +169,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemCommentClicked() {
             // Go to comment screen
+            CommentFragment commentFragment = new CommentFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(commentFragment);
         }
 
         @Override

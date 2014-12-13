@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/common_padding"
-        android:layout_marginBottom="@dimen/common_padding">
+        android:layout_marginBottom="@dimen/common_padding"
+        android:layout_marginLeft="@dimen/common_padding">
         <TextView
             style="@style/DefaultLightLargeTextView"
             android:textStyle="bold"
@@ -32,10 +33,10 @@
             android:id="@+id/commentLoadMoreLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/footer_vertical_padding"
-            android:paddingRight="@dimen/footer_vertical_padding"
-            android:paddingTop="@dimen/home_item_separator_size"
-            android:paddingBottom="@dimen/home_item_separator_size"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:paddingTop="@dimen/common_padding"
+            android:paddingBottom="@dimen/common_padding"
             android:background="@drawable/layout_button_with_corner"
             custom:foreground="@drawable/layout_item_selector"
             android:clickable="true"
@@ -50,7 +51,10 @@
             android:id="@+id/commentListView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/commentLoadMoreLayout">
+            android:layout_above="@id/commentLoadMoreLayout"
+            android:layout_marginBottom="@dimen/footer_vertical_padding"
+            android:listSelector="@android:color/transparent"
+            android:divider="@null">
 
         </ListView>
     </RelativeLayout>

@@ -76,6 +76,11 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
     }
 
     public void showFragment(Fragment frag) {
+        // Alway close pane layout
+        if(mSlidingPanelLayout != null) {
+            mSlidingPanelLayout.closePane();
+        }
+
         FragmentManager fragmentManager = getFragmentManager();
         String backStateName = frag.getClass().getName();
 
@@ -98,6 +103,10 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
      * @param frag
      */
     public void showFragmentFromMenu(Fragment frag) {
+        // Alway close pane layout
+        if(mSlidingPanelLayout != null) {
+            mSlidingPanelLayout.closePane();
+        }
         FragmentManager fragmentManager = getFragmentManager();
         String backStateName = frag.getClass().getName();
 
