@@ -9,5 +9,9 @@ public class AppConstants {
     public static enum WSMethod {
         GET, POST, PUT, DELETE
     }
+
+    public static enum EXAMINATION_STATUS {
+        WAITING, ACCEPTED, CANCEL
+    }
     public static final String DEFAULT_ENCODING = "UTF-8";
 }

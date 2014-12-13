@@ -1,4 +1,4 @@
-package vn.easycare.layers.ui.models;
+package vn.easycare.layers.ui.models.base;
 
 import vn.easycare.layers.ui.models.base.IBaseModel;
 

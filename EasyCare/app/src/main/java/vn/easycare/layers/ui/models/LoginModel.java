@@ -2,7 +2,7 @@ package vn.easycare.layers.ui.models;
 
 import android.content.Context;
 
-import vn.easycare.layers.ui.models.ILoginModel;
+import vn.easycare.layers.ui.models.base.ILoginModel;
 
 /**
  * Created by phannguyen on 12/7/14.
