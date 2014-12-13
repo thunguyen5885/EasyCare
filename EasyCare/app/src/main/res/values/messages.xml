@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Define string message for examination appointment screen-->
+    <string name="accept_appointment_ok">Lịch hẹn khám đã duyệt thành </string>
+    <string name="accept_appointment_fail">Lịch hẹn khám đã duyệtcông thất bại</string>
+    <string name="cancel_appointment_ok">Lịch hẹn khám đã huỷ thành công</string>
+    <string name="cancel_appointment_fail">Lịch hẹn khám đã huỷ thất bại</string>
+    <string name="change_appointment_ok">Lịch hẹn khám đã đổi thành công</string>
+    <string name="change_appointment_fail">Lịch hẹn khám đã đổi thất bại</string>
+</resources>

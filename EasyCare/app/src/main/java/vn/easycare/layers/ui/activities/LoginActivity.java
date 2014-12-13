@@ -1,14 +1,12 @@
 package vn.easycare.layers.ui.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
-import vn.easycare.layers.ui.presenters.ILoginPresenter;
+import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.views.ILoginView;
 
