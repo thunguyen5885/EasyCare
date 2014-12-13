@@ -47,7 +47,7 @@
         custom:foreground="@drawable/layout_item_selector">
         <TextView
             android:id="@+id/tvHomeItemTitle"
-            style="@style/DefaultLightLargeTextView"
+            style="@style/DefaultNormalTextView"
             android:textColor="@color/textview_color_highlight"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
