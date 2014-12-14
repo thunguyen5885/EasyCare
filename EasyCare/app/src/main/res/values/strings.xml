@@ -27,6 +27,19 @@
     <string name="comment_display">Hiển thị</string>
     <string name="comment_no_display">Bỏ hiển thị</string>
     <string name="comment_load_more">Xem thêm</string>
+    
+    <!-- Define string for statistic screen-->
+    <string name="statistic_common_info">Thông tin chung</string>
+    <string name="statistic_detail_info">Xem thông tin chi tiết</string>
+    <string name="statistic_order_count">Số lượng đã đặt</string>
+    <string name="statistic_waiting_dating">Chờ duyệt đặt khám</string>
+    <string name="statistic_user_comment">Đánh giá của người dùng</string>
+    <string name="statistic_common_comment">Đánh giá chung</string>
+    <string name="statistic_comment_count">Số lượt người đánh giá</string>
+    <string name="statistic_rate_average">Điểm Rate trung bình</string>
+    <string name="statistic_waiting_comment">Đánh giá thời gian chờ</string>
+    <string name="statistic_asset_comment">Đánh giá cơ sở vật chất</string>
+    <string name="statistic_see_more">( Xem )</string>
 
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>

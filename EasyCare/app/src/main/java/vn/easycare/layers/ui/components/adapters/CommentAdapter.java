@@ -21,7 +21,7 @@ import vn.easycare.utils.AppFnUtils;
 /**
  * Created by Thu Nguyen on 12/13/2014.
  */
-public class CommentAdapter extends BaseAdapter {
+public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
     private Context mContext;
     private LayoutInflater mInflater;
 
@@ -64,10 +64,10 @@ public class CommentAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        int screenWidth = AppFnUtils.getScreenWidth((Activity)mContext);
-        int padding = (int)mContext.getResources().getDimension(R.dimen.common_padding);
-        int patientAvatarSize = screenWidth / 5 - padding;
-        viewHolder.mPatientAvatar.getLayoutParams().width = patientAvatarSize;
+        // Set onclick
+        viewHolder.mCommentDiplayLayout.setOnClickListener(this);
+
+        // Set data
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
         viewHolder.mTvPatientName.setText("Nguyen Van A".toUpperCase());
         viewHolder.mTvCommentDate.setText("10/12/2014");
@@ -87,6 +87,15 @@ public class CommentAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.commentDisplayLayout:
+                break;
+        }
+    }
+
     private static class ViewHolder{
         private CustomImageViewCircularShape mPatientAvatar;
         private TextView mTvPatientName;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llCommentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
     <LinearLayout
         android:id="@+id/commentTitleLayout"
         android:layout_width="match_parent"
@@ -24,38 +24,16 @@
             style="@style/DefaultNormalTextView"
             android:text="@string/comment_comment"/>
     </LinearLayout>
-    <RelativeLayout
+    <ListView
+        android:id="@+id/commentListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/commentTitleLayout"
-        android:layout_marginBottom="@dimen/footer_vertical_padding">
-        <vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout
-            android:id="@+id/commentLoadMoreLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="@dimen/common_padding"
-            android:paddingBottom="@dimen/common_padding"
-            android:background="@drawable/layout_button_with_corner"
-            custom:foreground="@drawable/layout_item_selector_with_corner"
-            android:clickable="true"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true">
-            <TextView
-                style="@style/DefaultNormalTextView"
-                android:text="@string/comment_load_more"
-                android:layout_gravity="center_horizontal"/>
-        </vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout>
-        <ListView
-            android:id="@+id/commentListView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/commentLoadMoreLayout"
-            android:layout_marginBottom="@dimen/footer_vertical_padding"
-            android:listSelector="@android:color/transparent"
-            android:divider="@null">
+        android:layout_marginBottom="@dimen/footer_vertical_padding"
+        android:drawSelectorOnTop="true"
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:divider="@null">
 
-        </ListView>
-    </RelativeLayout>
+    </ListView>
 </RelativeLayout>

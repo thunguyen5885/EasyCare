@@ -41,6 +41,7 @@
                     android:id="@+id/tvCommentPatientName"
                     style="@style/DefaultNormalTextView"
                     android:textColor="@color/textview_color_highlight"
+                    android:textStyle="bold"
                     />
                 <TextView
                     android:id="@+id/tvCommentHour"
@@ -79,6 +80,7 @@
                         android:layout_centerVertical="true"/>
                     <TextView
                        style="@style/DefaultNormalTextView"
+                        android:textStyle="bold"
                        android:text="@string/comment_common_idea"
                        android:layout_centerVertical="true"/>
                 </RelativeLayout>
@@ -107,6 +109,7 @@
                         android:layout_centerVertical="true"/>
                     <TextView
                         style="@style/DefaultNormalTextView"
+                        android:textStyle="bold"
                         android:text="@string/comment_assets"/>
                 </RelativeLayout>
                 <vn.easycare.layers.ui.components.views.RatingLayout
@@ -154,6 +157,7 @@
                     <TextView
                         style="@style/DefaultNormalTextView"
                         android:text="@string/comment_waiting_time"
+                        android:textStyle="bold"
                         android:layout_centerVertical="true"/>
                 </RelativeLayout>
                 <vn.easycare.layers.ui.components.views.RatingLayout
