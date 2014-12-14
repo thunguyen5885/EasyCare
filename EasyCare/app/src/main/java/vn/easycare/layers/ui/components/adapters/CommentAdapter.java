@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.components.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.components.views.CustomImageViewCircularShape;
 import vn.easycare.layers.ui.components.views.RatingLayout;
 import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by Thu Nguyen on 12/13/2014.
@@ -62,6 +64,10 @@ public class CommentAdapter extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        int screenWidth = AppFnUtils.getScreenWidth((Activity)mContext);
+        int padding = (int)mContext.getResources().getDimension(R.dimen.common_padding);
+        int patientAvatarSize = screenWidth / 5 - padding;
+        viewHolder.mPatientAvatar.getLayoutParams().width = patientAvatarSize;
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
         viewHolder.mTvPatientName.setText("Nguyen Van A".toUpperCase());
         viewHolder.mTvCommentDate.setText("10/12/2014");

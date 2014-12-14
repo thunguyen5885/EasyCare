@@ -14,7 +14,7 @@ import com.android.volley.toolbox.NetworkImageView;
 public class CustomImageViewCircularShape extends NetworkImageView{
     //you can change the radius to modify the circlur shape into oval or rounded rectangle
 
-    public static float radius = 270.0f;
+    public static float radius = 35.0f;
 
     public CustomImageViewCircularShape(Context context) {
         super(context);
