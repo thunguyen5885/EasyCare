@@ -12,7 +12,9 @@ import com.android.volley.toolbox.NetworkImageView;
 import org.w3c.dom.Text;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.components.views.CustomImageViewCircularShape;
 import vn.easycare.layers.ui.components.views.RatingLayout;
+import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
 
 /**
  * Created by Thu Nguyen on 12/13/2014.
@@ -46,7 +48,7 @@ public class CommentAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.comment_item_ctrl, null);
             viewHolder = new ViewHolder();
-            viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.commentPatientAvatar);
+            viewHolder.mPatientAvatar = (CustomImageViewCircularShape) convertView.findViewById(R.id.commentPatientAvatar);
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvCommentPatientName);
             viewHolder.mTvCommentDate = (TextView) convertView.findViewById(R.id.tvCommentDate);
             viewHolder.mTvCommentHour = (TextView) convertView.findViewById(R.id.tvCommentHour);
@@ -55,6 +57,7 @@ public class CommentAdapter extends BaseAdapter {
             viewHolder.mAssetRatingLayout = (RatingLayout) convertView.findViewById(R.id.assetRatingLayout);
             viewHolder.mWaitingTimeRatingLayout = (RatingLayout) convertView.findViewById(R.id.waitingTimeRatingLayout);
             viewHolder.mCommentDisplay = (TextView) convertView.findViewById(R.id.tvCommentDisplay);
+            viewHolder.mCommentDiplayLayout = (ForegroundRelativeLayout) convertView.findViewById(R.id.commentDisplayLayout);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -63,21 +66,23 @@ public class CommentAdapter extends BaseAdapter {
         viewHolder.mTvPatientName.setText("Nguyen Van A".toUpperCase());
         viewHolder.mTvCommentDate.setText("10/12/2014");
         viewHolder.mTvCommentHour.setText("12:01");
-        viewHolder.mTvCommentComment.setText("kjkd kj kfdjk kjfkjdkf dkjkieir thhak ki jktej kajkui3 kjiu39 aijtjei kajkiujite kjkf aiueti tjei tekjtke ai tkej tekjt krjk trekjrek aijtjei kajkiujite kjkf aiueti tjei tekjtke ai tkej tekjt krjk trekjrekaijtjei kajkiujite kjkf aiueti tjei tekjtke ai tkej tekjt krjk trekjrek");
+        viewHolder.mTvCommentComment.setText("EasyCare là 1 sự trải nghiệm tuyệt vời. Tôi chỉ có vài phút là đặt được lịch hẹn với bác sĩ. Tôi sẽ giới thiệu EasyCare đến bạn bè và người thân của tôi.");
         viewHolder.mCommonIdeaRatingLayout.setSelection(4);
         viewHolder.mWaitingTimeRatingLayout.setSelection(2);
         viewHolder.mAssetRatingLayout.setSelection(3);
         if(position % 2 == 0){
             viewHolder.mCommentDisplay.setText(R.string.comment_display);
-            viewHolder.mCommentDisplay.setBackgroundColor(mContext.getResources().getColor(R.color.textview_color_grey));
+            viewHolder.mCommentDisplay.setBackgroundResource(R.drawable.layout_disable_button_with_corner);
+            viewHolder.mCommentDiplayLayout.setEnabled(false);
         }else{
             viewHolder.mCommentDisplay.setText(R.string.comment_no_display);
-            viewHolder.mCommentDisplay.setBackgroundColor(mContext.getResources().getColor(R.color.textview_color_highlight));
+            viewHolder.mCommentDisplay.setBackgroundResource(R.drawable.layout_hightlight_button_with_corner);
+            viewHolder.mCommentDiplayLayout.setEnabled(true);
         }
         return convertView;
     }
     private static class ViewHolder{
-        private NetworkImageView mPatientAvatar;
+        private CustomImageViewCircularShape mPatientAvatar;
         private TextView mTvPatientName;
         private TextView mTvCommentDate;
         private TextView mTvCommentHour;
@@ -86,6 +91,7 @@ public class CommentAdapter extends BaseAdapter {
         private RatingLayout mAssetRatingLayout;
         private RatingLayout mWaitingTimeRatingLayout;
         private TextView mCommentDisplay;
+        private ForegroundRelativeLayout mCommentDiplayLayout;
     }
 
 }

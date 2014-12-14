@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -30,7 +31,8 @@ public class RatingLayout extends LinearLayout{
         for(int index = 0; index < CHILD_NUM; index++){
             ImageView child = new ImageView(getContext());
             child.setImageResource(R.drawable.ic_star_unactive);
-            LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+            int childSize = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 13, getResources().getDisplayMetrics());
+            LayoutParams params = new LayoutParams(childSize, childSize);
             child.setLayoutParams(params);
 
             addView(child);

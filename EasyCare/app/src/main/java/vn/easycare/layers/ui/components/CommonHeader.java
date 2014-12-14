@@ -16,7 +16,6 @@ public class CommonHeader implements View.OnClickListener{
     }
     private IOnHeaderClickListener mOnHeaderClickListener;
     private View mRootView;
-    private boolean mIsClicked = false;
     /*Constructor*/
     public CommonHeader(){}
     public CommonHeader(View view){
@@ -34,16 +33,6 @@ public class CommonHeader implements View.OnClickListener{
     }
     @Override
     public void onClick(View v) {
-        if(mIsClicked){
-            return;
-        }
-        mIsClicked = true;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mIsClicked = false;
-            }
-        }, 1000);
         switch(v.getId()){
             case R.id.llLeft:
                 if(mOnHeaderClickListener != null){

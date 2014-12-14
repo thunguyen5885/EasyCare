@@ -9,12 +9,12 @@
     <!-- Header height -->
     <dimen name="header_height">50dp</dimen>
 
-    <dimen name="text_header">24dp</dimen>
-    <dimen name="text_big">18dp</dimen>
-    <dimen name="text_light_big">16dp</dimen>
-    <dimen name="text_medium">14dp</dimen>
-    <dimen name="text_small">12dp</dimen>
-    <dimen name="text_tiny">10dp</dimen>
+    <dimen name="text_header">23dp</dimen>
+    <dimen name="text_big">17dp</dimen>
+    <dimen name="text_light_big">15dp</dimen>
+    <dimen name="text_medium">13dp</dimen>
+    <dimen name="text_small">11dp</dimen>
+    <dimen name="text_tiny">9dp</dimen>
 
     <!--Define header height-->
     <dimen name="home_header_height">50dp</dimen>

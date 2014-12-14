@@ -38,7 +38,7 @@
             android:paddingTop="@dimen/common_padding"
             android:paddingBottom="@dimen/common_padding"
             android:background="@drawable/layout_button_with_corner"
-            custom:foreground="@drawable/layout_item_selector"
+            custom:foreground="@drawable/layout_item_selector_with_corner"
             android:clickable="true"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true">
