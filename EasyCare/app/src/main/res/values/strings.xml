@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">EasyCare</string>
+    <string name="app_slogan">New healthcare experience</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_fail_msg">Đăng nhập thất bại.</string>
@@ -49,6 +50,14 @@
     <string name="footer_for_doctor">Dành cho bác sĩ</string>
     <string name="footer_for_easycare">Dành cho phòng khám</string>
 
+    <!-- Define string for login screen-->
+    <string name="username">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="signin">Đăng nhập</string>
+    <string name="forget_password">Quên mật khẩu?</string>
+    <!-- Define string for forget password screen-->
+    <string name="submit">Gửi</string>
+    <string name="forget_password_title">Quên mật khẩu</string>
 
     
 </resources>
