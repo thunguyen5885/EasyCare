@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private View mPatientListLayout;
     private View mStatisticLayout;
 
+    // For data, object
+    private boolean mIsClicked = false;
     public HomeFragment(){
 
     }
@@ -76,15 +79,29 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        if(mIsClicked){
+            return;
+        }
+        mIsClicked = true;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mIsClicked = false;
+            }
+        }, 1000);
         int parentViewId = (Integer) v.getTag();
         switch(parentViewId){
             case R.id.homeItemDatingManagementLayout:
+                mHomeItemOnClickListener.onHomeItemDatingManagementClicked();
                 break;
             case R.id.homeItemCalendarCreatingLayout:
+                mHomeItemOnClickListener.onHomeItemCalendarCreatingClicked();
                 break;
             case R.id.homeItemPatientListLayout:
+                mHomeItemOnClickListener.onHomeItemPatientListClicked();
                 break;
             case R.id.homeItemStatisticLayout:
+                mHomeItemOnClickListener.onHomeItemStatisticClicked();
                 break;
         }
     }
@@ -119,7 +136,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onHomeItemStatisticClicked() {
-
+            StatisticFragment statisticFragment = new StatisticFragment();
+            ((HomeActivity) getActivity()).showFragment(statisticFragment);
         }
     };
 }

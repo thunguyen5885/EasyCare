@@ -39,6 +39,8 @@
         <color name="home_item_bottom_separator_above">#b3b3b3</color>
         <color name="home_item_bottom_separator_middle">#c3c3c3</color>
         <color name="home_item_bottom_separator_below">#e4e4e4</color>
+        <!-- Define carousel backgroud-->
+        <color name="carousel_background">#888888</color>
 
         <!-- Define the text color for textview -->
         <color name="textview_color_default">#04262f</color>
