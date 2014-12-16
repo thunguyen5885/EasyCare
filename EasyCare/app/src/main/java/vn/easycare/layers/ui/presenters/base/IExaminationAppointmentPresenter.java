@@ -3,12 +3,13 @@ package vn.easycare.layers.ui.presenters.base;
 import java.util.Date;
 
 import vn.easycare.layers.ui.models.base.IExaminationAppointmentModel;
+import vn.easycare.layers.ui.views.IExaminationAppointmentView;
 import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phannguyen on 12/13/14.
  */
-public interface IExaminationAppointmentPresenter extends IPresenter<IExaminationAppointmentModel>{
+public interface IExaminationAppointmentPresenter extends IPresenter<IExaminationAppointmentView>{
      void loadExaminationAppointmentsForDoctor(String doctorID,AppConstants.EXAMINATION_STATUS status,int page);
      void searchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,Date date,int page);
      void AcceptAnExaminationAppointment(String doctorID, String appointmentID);

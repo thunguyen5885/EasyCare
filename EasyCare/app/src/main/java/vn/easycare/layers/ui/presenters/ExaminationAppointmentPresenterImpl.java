@@ -26,7 +26,7 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void init(IExaminationAppointmentModel view) {
+    public void init(IExaminationAppointmentView view) {
 
     }
 
