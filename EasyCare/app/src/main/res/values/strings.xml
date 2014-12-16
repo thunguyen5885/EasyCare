@@ -41,6 +41,13 @@
     <string name="statistic_waiting_comment">Đánh giá thời gian chờ</string>
     <string name="statistic_asset_comment">Đánh giá cơ sở vật chất</string>
     <string name="statistic_see_more">( Xem )</string>
+    
+    <!-- Define string for dating_management screen-->
+    <string name="patient_list">Danh sách bệnh nhân</string>
+    <string name="patient_list_patient">Bệnh nhân</string>
+    <string name="patient_list_blacklist">Blacklist</string>
+    <string name="patient_list_block">Chặn</string>
+    <string name="patient_list_datings">Các cuộc hẹn</string>
 
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>

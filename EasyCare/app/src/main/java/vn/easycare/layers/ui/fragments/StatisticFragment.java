@@ -29,7 +29,9 @@ public class StatisticFragment extends Fragment{
 
     // For data, object
 
+    public StatisticFragment(){
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_statistic, container, false);

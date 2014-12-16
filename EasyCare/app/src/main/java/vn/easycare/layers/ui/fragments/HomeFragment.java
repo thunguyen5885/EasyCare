@@ -131,7 +131,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onHomeItemPatientListClicked() {
-
+           PatientListFragment patientListFragment = new PatientListFragment();
+            ((HomeActivity)getActivity()).showFragment(patientListFragment);
         }
 
         @Override

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -31,6 +32,7 @@ public class CustomImageViewCircularShape extends NetworkImageView{
     @Override
     protected void onDraw(Canvas canvas) {
 //float radius = 36.0f;
+        radius = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 23, getContext().getResources().getDisplayMetrics());
         Path clipPath = new Path();
         RectF rect = new RectF(0, 0, this.getWidth(), this.getHeight());
         clipPath.addRoundRect(rect, radius, radius, Path.Direction.CW);

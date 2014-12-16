@@ -26,7 +26,9 @@ public class CommentFragment extends Fragment implements View.OnClickListener{
     private View mLoadMoreView;
     // For data, object
 
+    public CommentFragment(){
 
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
