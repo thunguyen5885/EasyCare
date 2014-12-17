@@ -1,8 +1,12 @@
 package vn.easycare.layers.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
@@ -19,6 +23,21 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mLoginPresenter = new LoginPresenterImpl(this, this.getApplicationContext());
+        Button loginBtn = (Button)findViewById(R.id.btnSignin);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+        TextView linkForgetPass = (TextView) findViewById(R.id.linkForgetPass);
+        linkForgetPass.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
