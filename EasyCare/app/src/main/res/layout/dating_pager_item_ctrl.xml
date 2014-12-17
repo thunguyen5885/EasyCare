@@ -9,8 +9,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginLeft="@dimen/common_padding"
-        android:layout_marginRight="@dimen/common_padding"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
         android:layout_marginTop="@dimen/statistic_vertical_padding"
         android:layout_marginBottom="@dimen/statistic_vertical_padding">
         <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
@@ -58,7 +58,7 @@
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:singleLine="true"
-            android:layout_marginLeft="@dimen/home_item_separator_size"
+            android:layout_marginLeft="3dp"
             android:layout_toRightOf="@+id/edtDatingCode"/>
         <RelativeLayout
             android:id="@+id/rlSelectCalendarLayout"
@@ -66,8 +66,8 @@
             android:layout_height="match_parent"
             android:layout_toLeftOf="@+id/datingListSearchLayout"
             android:layout_toRightOf="@+id/edtPatientName"
-            android:layout_marginLeft="@dimen/home_item_separator_size"
-            android:layout_marginRight="@dimen/home_item_separator_size"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
             android:clickable="true"
             android:background="@drawable/layout_button_with_corner">
             <ImageView
@@ -89,6 +89,8 @@
                 android:id="@+id/tvCalendarText"
                 style="@style/DefaultSmallTextView"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/ivDropDown"
+                android:layout_toRightOf="@+id/ivCalendar"
                 android:gravity="center"/>
         </RelativeLayout>
     </RelativeLayout>
