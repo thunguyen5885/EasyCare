@@ -19,9 +19,12 @@ public class ForgetPasswordActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        getActionBar().setDisplayShowCustomEnabled(true);
         setContentView(R.layout.activity_forget_password);
-        getActionBar().setTitle(R.string.forget_password_title);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getActionBar().setTitle(R.string.forget_password_title);
+
+        getActionBar().setCustomView(R.layout.actionbar_forgetpassword_screen);
+        getActionBar().setDisplayShowHomeEnabled(true);
         Button sendBtn = (Button)findViewById(R.id.btnSend);
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
