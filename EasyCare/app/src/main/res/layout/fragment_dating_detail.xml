@@ -20,7 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/common_padding"
+        android:layout_marginTop="@dimen/footer_vertical_padding"
         android:orientation="vertical">
-
+        <TextView
+            style="@style/DefaultBoldNormalTextView"
+            android:text="@string/dating_detail_dating_info"/>
     </LinearLayout>
 </LinearLayout>
