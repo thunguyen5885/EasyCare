@@ -49,4 +49,9 @@
         <color name="textview_color_highlight">#0065b3</color>
         <color name="textview_color_highlight_tab">#1565b0</color>
         <color name="textview_color_light_grey">#666666</color>
+
+        <!-- Define the text color for textview -->
+        <color name="app_background_startendcolor">#065dae</color>
+        <color name="app_background_centercolor">#3694e7</color>
+
     </resources>
