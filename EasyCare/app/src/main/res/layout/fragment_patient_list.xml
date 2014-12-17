@@ -7,7 +7,8 @@
     android:background="@color/white">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:background="@drawable/patient_list_background">
         <TextView
             style="@style/DefaultLargeTextView"
             android:text="@string/patient_list"

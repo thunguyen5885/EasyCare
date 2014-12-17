@@ -49,7 +49,7 @@
         <TextView
             android:id="@+id/tvHomeItemTitle"
             style="@style/DefaultNormalTextView"
-            android:textColor="@color/textview_color_highlight"
+            android:textColor="@color/header_background_color"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/footer_vertical_padding"/>

@@ -25,10 +25,16 @@ public class PatientListPagerAdapter extends PagerAdapter{
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return true;
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        // TODO Auto-generated method stub
+        container.removeView((View)object);
+        mViewMaps.remove(object);
     }
 
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return view == object;
+    }
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         PatientListLayout patientListLayout;
@@ -41,10 +47,5 @@ public class PatientListPagerAdapter extends PagerAdapter{
         }
         container.addView(patientListLayout, position);
         return patientListLayout;
-    }
-
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
     }
 }
