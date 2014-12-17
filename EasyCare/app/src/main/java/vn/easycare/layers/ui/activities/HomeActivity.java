@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SlidingPaneLayout;
 import android.view.View;
 import android.view.Window;
@@ -57,6 +58,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
 
             @Override
             public void onPanelClosed(View view) {
+
             }
         });
         mMenuFragment.setSlidingLayout(mSlidingPanelLayout);
@@ -103,18 +105,25 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
      * @param frag
      */
     public void showFragmentFromMenu(Fragment frag) {
-
         FragmentManager fragmentManager = getFragmentManager();
         String backStateName = frag.getClass().getName();
 
         FragmentTransaction fragmentTransaction = fragmentManager
                 .beginTransaction();
-        fragmentTransaction.setCustomAnimations(0, 0,
-                R.animator.fragment_slide_right_enter,
-                R.animator.fragment_slide_right_exit);
+        // Decide to show animation or not
+        boolean isTransitionFrag = false;
+        Fragment curFrag = fragmentManager.findFragmentById(R.id.flRightContent);
+        if(curFrag != null && curFrag.getClass().getName().equals(backStateName)) {
+            isTransitionFrag = true;
+            fragmentTransaction.setCustomAnimations(0,
+                    0,
+                    R.animator.fragment_slide_right_enter,
+                    R.animator.fragment_slide_right_exit);
+        }else{
+            isTransitionFrag = false;
+        }
         boolean fragmentPopped = fragmentManager.popBackStackImmediate(
                 backStateName, 0);
-
         if (!fragmentPopped
                 && fragmentManager.findFragmentByTag(backStateName) == null) {
             fragmentTransaction.replace(R.id.flRightContent, frag,
@@ -127,10 +136,21 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
         }
 
         fragmentTransaction.commit();
-
-        // Alway close pane layout
-        if(mSlidingPanelLayout != null) {
-            mSlidingPanelLayout.closePane();
+        if(isTransitionFrag) {
+            // Alway close pane layout
+            if (mSlidingPanelLayout != null) {
+                mSlidingPanelLayout.closePane();
+            }
+        }else{
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Alway close pane layout
+                    if (mSlidingPanelLayout != null) {
+                        mSlidingPanelLayout.closePane();
+                    }
+                }
+            }, 50);
         }
     }
 
