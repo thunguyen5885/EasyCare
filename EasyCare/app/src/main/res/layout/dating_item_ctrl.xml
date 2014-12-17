@@ -24,66 +24,72 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvPatientName"
-                style="@style/DefaultBoldNormalTextView"
-                android:textColor="@color/textview_color_highlight"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/common_padding">
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvPatientName"
+                    style="@style/DefaultBoldNormalTextView"
+                    android:textColor="@color/textview_color_highlight"
+                    android:layout_gravity="center_vertical"/>
+                <TextView
+                    style="@style/DefaultBoldNormalTextView"
+                    android:textColor="@color/textview_color_highlight"
+                    android:text="-"
+                    android:layout_marginLeft="@dimen/home_item_separator_size"
+                    android:layout_marginRight="@dimen/home_item_separator_size"
+                    android:layout_gravity="center_vertical"/>
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_phone"
+                    android:src="@drawable/ic_calendar_active"
                     android:layout_gravity="center_vertical"/>
                 <TextView
-                    android:id="@+id/tvPatientPhone"
-                    style="@style/DefaultNormalTextView"
-                    android:layout_marginLeft="@dimen/common_padding"/>
+                    android:id="@+id/tvDatingTime"
+                    style="@style/HighLightNormalTextView"
+                    android:textStyle="italic"
+                    android:layout_marginLeft="@dimen/home_item_separator_size"
+                    />
             </LinearLayout>
+            <TextView
+                android:id="@+id/tvPatientDisease"
+                style="@style/DefaultNormalTextView"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:layout_marginTop="@dimen/home_item_separator_size"
+                />
             <LinearLayout
+                android:id="@+id/datingListButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/home_item_separator_size">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_email"
-                    android:layout_gravity="center_vertical"/>
-                <TextView
-                    android:id="@+id/tvPatientEmail"
-                    style="@style/DefaultNormalTextView"
-                    android:layout_marginLeft="@dimen/common_padding"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/patientListButtonLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/common_padding">
                 <Button
-                    android:id="@+id/btnBlock"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btnCalendarChange"
+                    android:layout_width="75dp"
                     android:layout_height="25dp"
-                    android:text="@string/patient_list_block"
+                    android:text="@string/dating_list_calendar_change"
                     android:textColor="@color/header_background_color"
-                    android:textSize="@dimen/text_medium"
-                    android:paddingLeft="@dimen/footer_vertical_padding"
-                    android:paddingRight="@dimen/footer_vertical_padding"
+                    android:textSize="@dimen/text_small"
                     android:background="@drawable/layout_item_selector_with_corner_hightlight_border"/>
                 <Button
-                    android:id="@+id/btnDating"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/btnCalendarCancel"
+                    android:layout_width="75dp"
                     android:layout_height="25dp"
-                    android:text="@string/patient_list_datings"
-                    android:textSize="@dimen/text_medium"
+                    android:text="@string/dating_list_cancel"
+                    android:textSize="@dimen/text_small"
                     android:textColor="@color/header_background_color"
                     android:layout_marginLeft="@dimen/home_item_separator_size"
-                    android:paddingLeft="@dimen/footer_vertical_padding"
-                    android:paddingRight="@dimen/footer_vertical_padding"
+                    android:background="@drawable/layout_item_selector_with_corner_hightlight_border"/>
+                <Button
+                    android:id="@+id/btnCalendarAccept"
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:text="@string/dating_list_accept"
+                    android:textSize="@dimen/text_small"
+                    android:textColor="@color/header_background_color"
+                    android:layout_marginLeft="@dimen/home_item_separator_size"
                     android:background="@drawable/layout_item_selector_with_corner_hightlight_border"/>
              </LinearLayout>
 

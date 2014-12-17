@@ -121,7 +121,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     private IHomeItemOnClickListner mHomeItemOnClickListener = new IHomeItemOnClickListner() {
         @Override
         public void onHomeItemDatingManagementClicked() {
-
+            DatingListFragment datingListFragment = new DatingListFragment();
+            ((HomeActivity) getActivity()).showFragment(datingListFragment);
         }
 
         @Override

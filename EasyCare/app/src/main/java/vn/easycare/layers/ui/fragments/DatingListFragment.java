@@ -3,7 +3,6 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,38 +13,40 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.adapters.DatingListPagerAdapter;
 import vn.easycare.layers.ui.components.adapters.PatientListPagerAdapter;
 import vn.easycare.layers.ui.components.views.TabLayout;
 
 /**
  * Created by Thu Nguyen on 12/16/2014.
  */
-public class PatientListFragment extends Fragment{
+public class DatingListFragment extends Fragment{
     // For view, control
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private PatientListPagerAdapter mPagerAdapter;
+    private DatingListPagerAdapter mPagerAdapter;
 
     // For data, object
-    private List<String> mPatientList;
-    public PatientListFragment(){
-        mPatientList = new ArrayList<String>();
+    private List<String> mDatingList;
+    public DatingListFragment(){
+        mDatingList = new ArrayList<String>();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mPatientList.add(activity.getString(R.string.patient_list_patient));
-        mPatientList.add(activity.getString(R.string.patient_list_blacklist));
+        mDatingList.add(activity.getString(R.string.dating_list_waiting));
+        mDatingList.add(activity.getString(R.string.dating_list_approved));
+        mDatingList.add(activity.getString(R.string.dating_list_cancel));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_patient_list, container, false);
-        mTabLayout = (TabLayout) v.findViewById(R.id.patientListTabLayout);
-        mTabLayout.createChild(mPatientList);
+        View v = inflater.inflate(R.layout.fragment_dating_list, container, false);
+        mTabLayout = (TabLayout) v.findViewById(R.id.datingListTabLayout);
+        mTabLayout.createChild(mDatingList);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);
-        mViewPager = (ViewPager) v.findViewById(R.id.patientListViewPager);
+        mViewPager = (ViewPager) v.findViewById(R.id.datingListViewPager);
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);
         return v;
     }
@@ -53,7 +54,7 @@ public class PatientListFragment extends Fragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mPagerAdapter = new PatientListPagerAdapter(mViewPager);
+        mPagerAdapter = new DatingListPagerAdapter(mViewPager);
         mViewPager.setAdapter(mPagerAdapter);
         mTabLayout.setSelection(0);
     }

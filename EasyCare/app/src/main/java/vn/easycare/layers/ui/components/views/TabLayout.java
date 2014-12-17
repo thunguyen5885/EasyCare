@@ -57,7 +57,7 @@ public class TabLayout extends LinearLayout{
                 View child = mInflater.inflate(R.layout.tab_item_ctrl, null);
                 LayoutParams params = new LayoutParams(childWidth, ViewGroup.LayoutParams.MATCH_PARENT);
                 if(index != 0){
-                    params.leftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
+                    params.leftMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics());
                 }
                 child.setLayoutParams(params);
                 child.setTag(index);

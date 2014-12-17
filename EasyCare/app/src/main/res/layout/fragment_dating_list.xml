@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llPatientListLayout"
+    android:id="@+id/llDatingListLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/main_background_color">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@drawable/patient_list_background">
         <TextView
             style="@style/DefaultLargeTextView"
-            android:text="@string/patient_list"
+            android:text="@string/dating_list"
             android:textColor="@color/textview_color_highlight_tab"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/common_padding"/>
     </FrameLayout>
     <vn.easycare.layers.ui.components.views.TabLayout
-        android:id="@+id/patientListTabLayout"
+        android:id="@+id/datingListTabLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/main_background_color"/>
     <android.support.v4.view.ViewPager
-        android:id="@+id/patientListViewPager"
+        android:id="@+id/datingListViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/common_padding"
         android:paddingBottom="@dimen/footer_vertical_padding"/>
 </LinearLayout>

@@ -42,12 +42,23 @@
     <string name="statistic_asset_comment">Đánh giá cơ sở vật chất</string>
     <string name="statistic_see_more">( Xem )</string>
     
-    <!-- Define string for dating_management screen-->
+    <!-- Define string for patient_list screen-->
     <string name="patient_list">Danh sách bệnh nhân</string>
     <string name="patient_list_patient">Bệnh nhân</string>
     <string name="patient_list_blacklist">Blacklist</string>
     <string name="patient_list_block">Chặn</string>
     <string name="patient_list_datings">Các cuộc hẹn</string>
+
+    <!-- Define string for dating_list screen-->
+    <string name="dating_list">Quản lý lịch hẹn khám</string>
+    <string name="dating_list_waiting">Chờ duyệt</string>
+    <string name="dating_list_approved">Đã duyệt</string>
+    <string name="dating_list_cancel">Hủy</string>
+    <string name="dating_list_dating_code">Mã cuộc hẹn</string>
+    <string name="dating_list_patient_name">Tên bệnh nhân</string>
+    <string name="dating_list_search">Tìm kiếm</string>
+    <string name="dating_list_calendar_change">Đổi lịch</string>
+    <string name="dating_list_accept">Đồng ý</string>
 
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>

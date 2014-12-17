@@ -158,7 +158,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemDatingManagementClicked() {
             // Go to dating management screen
-
+            DatingListFragment datingListFragment = new DatingListFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(datingListFragment);
         }
 
         @Override

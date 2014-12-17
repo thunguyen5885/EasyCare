@@ -12,24 +12,22 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-import org.w3c.dom.Text;
-
 import vn.easycare.R;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/16/2014.
  */
-public class PatientListAdapter extends BaseAdapter{
+public class DatingListAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater mLayoutInflater;
-    private boolean mIsBlackList = false;
-    public PatientListAdapter(Context context){
+    private boolean mIsWaitingList = false;
+    public DatingListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
-    public void setBlackList(boolean isBlackList){
-        mIsBlackList = isBlackList;
+    public void setWaitingList(boolean isWaitingList){
+        mIsWaitingList = isWaitingList;
     }
     @Override
     public int getCount() {
@@ -50,30 +48,37 @@ public class PatientListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView == null){
-            convertView = mLayoutInflater.inflate(R.layout.patient_item_ctrl, null);
+            convertView = mLayoutInflater.inflate(R.layout.dating_item_ctrl, null);
             viewHolder = new ViewHolder();
             viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatar);
-            viewHolder.mPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
-            viewHolder.mPatientPhone = (TextView) convertView.findViewById(R.id.tvPatientPhone);
-            viewHolder.mPatientEmail = (TextView) convertView.findViewById(R.id.tvPatientEmail);
-            viewHolder.mButtonLayout = convertView.findViewById(R.id.patientListButtonLayout);
-            viewHolder.mBtnBlock = (Button) convertView.findViewById(R.id.btnBlock);
-            viewHolder.mBtnDating = (Button) convertView.findViewById(R.id.btnDating);
+            viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
+            viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvDatingTime);
+            viewHolder.mTvPatientDisease = (TextView) convertView.findViewById(R.id.tvPatientDisease);
+            viewHolder.mButtonLayout = convertView.findViewById(R.id.datingListButtonLayout);
+            viewHolder.mBtnCalendarChange = (Button) convertView.findViewById(R.id.btnCalendarChange);
+            viewHolder.mBtnCalendarAccept = (Button) convertView.findViewById(R.id.btnCalendarAccept);
+            viewHolder.mBtnCalendarCancel = (Button) convertView.findViewById(R.id.btnCalendarCancel);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if(mIsBlackList){
+        if(mIsWaitingList){
             viewHolder.mButtonLayout.setVisibility(View.GONE);
         }else{
             viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
         }
-        // Set on click
-        viewHolder.mBtnBlock.setTag(position);
-        viewHolder.mBtnBlock.setOnClickListener(mOnClickListener);
-        viewHolder.mBtnDating.setTag(position);
-        viewHolder.mBtnDating.setOnClickListener(mOnClickListener);
-
+        // Set onClick
+        viewHolder.mBtnCalendarChange.setTag(position);
+        viewHolder.mBtnCalendarChange.setOnClickListener(mOnClickListener);
+        viewHolder.mBtnCalendarAccept.setTag(position);
+        viewHolder.mBtnCalendarAccept.setOnClickListener(mOnClickListener);
+        viewHolder.mBtnCalendarCancel.setTag(position);
+        viewHolder.mBtnCalendarCancel.setOnClickListener(mOnClickListener);
+        if(mIsWaitingList){
+            viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.mButtonLayout.setVisibility(View.GONE);
+        }
         // Calculate the avatar size
         int screenWidth = AppFnUtils.getScreenWidth((Activity)mContext);
         int avatarSize = screenWidth / 5;
@@ -82,31 +87,27 @@ public class PatientListAdapter extends BaseAdapter{
 
         // Set fake data
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mPatientName.setText("Nguyen Van A");
-        viewHolder.mPatientPhone.setText("00388030330");
-        viewHolder.mPatientEmail.setText("abcd@gmail.com");
+        viewHolder.mTvPatientName.setText("Nguyen Van A");
+        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
+        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.btnBlock:
-                    Toast.makeText(mContext, "Block clicked", Toast.LENGTH_SHORT).show();
-                    break;
-                case R.id.btnDating:
-                    Toast.makeText(mContext, "Dating clicked", Toast.LENGTH_SHORT).show();
-                    break;
+
             }
         }
     };
     private static class ViewHolder{
         private NetworkImageView mPatientAvatar;
-        private TextView mPatientName;
-        private TextView mPatientPhone;
-        private TextView mPatientEmail;
+        private TextView mTvPatientName;
+        private TextView mTvDatingTime;
+        private TextView mTvPatientDisease;
         private View mButtonLayout;
-        private Button mBtnBlock;
-        private Button mBtnDating;
+        private Button mBtnCalendarChange;
+        private Button mBtnCalendarAccept;
+        private Button mBtnCalendarCancel;
     }
 }

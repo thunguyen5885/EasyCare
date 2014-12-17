@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    custom:foreground="@drawable/layout_item_selector"
     android:background="@color/white">
     <TextView
         android:id="@+id/tvTabTitle"
-        style="@style/DefaultBoldNormalTextView"
+        style="@style/DefaultLightLargeTextView"
+        android:textStyle="bold"
         android:layout_centerInParent="true"/>
     <View
         android:id="@+id/vDefaultTab"
@@ -20,4 +24,4 @@
         android:layout_height="5dp"
         android:layout_alignParentBottom="true"
         android:background="@color/header_background_color"/>
-</RelativeLayout>
+</vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
