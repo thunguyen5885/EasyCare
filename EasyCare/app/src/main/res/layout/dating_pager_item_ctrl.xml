@@ -5,18 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/main_background_color">
+    android:background="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="7dp"
         android:layout_marginRight="7dp"
-        android:layout_marginTop="@dimen/statistic_vertical_padding"
-        android:layout_marginBottom="@dimen/statistic_vertical_padding">
+        android:paddingBottom="@dimen/statistic_vertical_padding"
+        android:paddingTop="@dimen/statistic_vertical_padding"
+        android:background="@color/main_background_color">
         <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
             android:id="@+id/datingListSearchLayout"
-            android:layout_width="65dp"
-            android:layout_height="match_parent"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:clickable="true"
@@ -24,7 +25,7 @@
             custom:foreground="@drawable/layout_item_selector_with_corner">
             <TextView
                 android:id="@+id/tvSearch"
-                style="@style/DefaultSmallTextView"
+                style="@style/DefaultTinyTextView"
                 android:textColor="@color/white"
                 android:text="@string/dating_list_search"
                 android:layout_width="match_parent"
@@ -34,26 +35,26 @@
         </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
         <EditText
             android:id="@+id/edtDatingCode"
-            android:layout_width="85dp"
-            android:layout_height="match_parent"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
             android:background="@drawable/layout_button_with_corner"
             android:textColorHint="@color/textview_color_grey"
             android:hint="@string/dating_list_dating_code"
             android:textColor="@color/textview_color_default"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/text_tiny"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
             android:gravity="center"
             android:singleLine="true"/>
         <EditText
             android:id="@+id/edtPatientName"
-            android:layout_width="85dp"
-            android:layout_height="match_parent"
+            android:layout_width="70dp"
+            android:layout_height="25dp"
             android:background="@drawable/layout_button_with_corner"
             android:textColorHint="@color/textview_color_grey"
             android:hint="@string/dating_list_patient_name"
             android:textColor="@color/textview_color_default"
-            android:textSize="@dimen/text_small"
+            android:textSize="@dimen/text_tiny"
             android:gravity="center"
             android:paddingLeft="2dp"
             android:paddingRight="2dp"
@@ -63,7 +64,7 @@
         <RelativeLayout
             android:id="@+id/rlSelectCalendarLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="25dp"
             android:layout_toLeftOf="@+id/datingListSearchLayout"
             android:layout_toRightOf="@+id/edtPatientName"
             android:layout_marginLeft="3dp"
@@ -87,7 +88,7 @@
                 android:layout_marginRight="@dimen/home_item_separator_size"/>
             <TextView
                 android:id="@+id/tvCalendarText"
-                style="@style/DefaultSmallTextView"
+                style="@style/DefaultTinyTextView"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/ivDropDown"
                 android:layout_toRightOf="@+id/ivCalendar"
@@ -103,6 +104,7 @@
         android:id="@+id/lvDatingList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:divider="@null"
         android:cacheColorHint="@android:color/transparent">
     </ListView>

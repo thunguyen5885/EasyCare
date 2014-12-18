@@ -21,12 +21,16 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         setContentView(R.layout.activity_login);
         mLoginPresenter = new LoginPresenterImpl(this, this.getApplicationContext());
-        Button loginBtn = (Button)findViewById(R.id.btnSignin);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        View loginLayout = findViewById(R.id.loginLayout);
+        loginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
+                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -74,6 +78,4 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     public void ShowIncorrectAccountInfoMessage(String errorMessage) {
         //show message for email or password format not correct
     }
-
-
 }

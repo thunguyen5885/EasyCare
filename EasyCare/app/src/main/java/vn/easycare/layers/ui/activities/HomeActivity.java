@@ -32,6 +32,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
 
@@ -62,10 +63,16 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
             }
         });
         mMenuFragment.setSlidingLayout(mSlidingPanelLayout);
-        // Show home fragment as default
-        mSlidingPanelLayout.closePane();
-        HomeFragment homeFragment = new HomeFragment();
-        showFragmentFromMenu(homeFragment);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // Show home fragment as default
+                mSlidingPanelLayout.closePane();
+                HomeFragment homeFragment = new HomeFragment();
+                showFragmentFromMenu(homeFragment);
+            }
+        }, 10);
+
     }
 
     @Override

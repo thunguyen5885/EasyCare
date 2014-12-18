@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import com.android.volley.toolbox.NetworkImageView;
 import org.w3c.dom.Text;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.fragments.PatientDetailFragment;
 import vn.easycare.utils.AppFnUtils;
 
 /**
@@ -24,6 +27,7 @@ public class PatientListAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private boolean mIsBlackList = false;
+    private boolean mIsClicked = false;
     public PatientListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -69,6 +73,8 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
         }
         // Set on click
+        viewHolder.mPatientName.setTag(position);
+        viewHolder.mPatientName.setOnClickListener(mOnClickListener);
         viewHolder.mBtnBlock.setTag(position);
         viewHolder.mBtnBlock.setOnClickListener(mOnClickListener);
         viewHolder.mBtnDating.setTag(position);
@@ -90,12 +96,27 @@ public class PatientListAdapter extends BaseAdapter{
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if(mIsClicked){
+                return;
+            }
+            mIsClicked = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsClicked = false;
+                }
+            }, 500);
             switch (v.getId()){
                 case R.id.btnBlock:
                     Toast.makeText(mContext, "Block clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.btnDating:
                     Toast.makeText(mContext, "Dating clicked", Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.tvPatientName:
+                    // Go to patient_detail screen
+                    PatientDetailFragment patientDetailFragment = new PatientDetailFragment();
+                    ((HomeActivity) mContext).showFragment(patientDetailFragment);
                     break;
             }
         }

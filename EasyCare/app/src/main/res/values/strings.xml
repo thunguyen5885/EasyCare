@@ -89,8 +89,16 @@
     <!-- Define string for login screen-->
     <string name="username">Email</string>
     <string name="password">Mật khẩu</string>
-    <string name="signin">Đăng nhập</string>
+    <string name="signin">ĐĂNG NHẬP</string>
     <string name="forget_password">Quên mật khẩu?</string>
+
+    <!-- Define string for patient detail-->
+    <string name="patient_detail">Thông tin chi tiết bệnh nhân</string>
+    <string name="patient_detail_order_count">Số lần đặt khám</string>
+    <string name="patient_detail_cancel_count">Số lần hủy</string>
+    <string name="patient_detail_change_count">Số lần chuyển lịch</string>
+    <string name="patient_detail_commen_count">Số lần đánh giá</string>
+
     <!-- Define string for forget password screen-->
     <string name="submit">Gửi</string>
     <string name="forget_password_title">Quên mật khẩu</string>

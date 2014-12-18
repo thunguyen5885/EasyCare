@@ -53,5 +53,11 @@
         <!-- Define the text color for textview -->
         <color name="app_background_startendcolor">#065dae</color>
         <color name="app_background_centercolor">#3694e7</color>
-
+        <color name="login_button_background">#03529c</color>
+        
+        <!-- Define text color for patient detail-->
+        <color name="textview_color_patient_detail_order_count">#3bc000</color>
+        <color name="textview_color_patient_detail_cancel_count">#e30300</color>
+        <color name="textview_color_patient_detail_change_count">#3694eb</color>
+        <color name="textview_color_patient_detail_comment_count">#ff8a00</color>
     </resources>

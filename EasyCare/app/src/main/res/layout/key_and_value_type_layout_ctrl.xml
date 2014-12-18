@@ -7,7 +7,7 @@
     <TextView
         android:id="@+id/tvKey"
         style="@style/DefaultNormalTextView"
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:layout_gravity="center_vertical"
         android:gravity="left"
         android:textStyle="bold"/>
@@ -19,10 +19,12 @@
         android:id="@+id/tvValue"
         android:layout_gravity="center_vertical"
         style="@style/DefaultNormalTextView"
+        android:singleLine="false"
         android:layout_marginLeft="@dimen/home_item_separator_size"/>
     <TextView
         android:id="@+id/tvExtraMore"
-        style="@style/HighLightNormalTextView"
+        style="@style/GrayNormalTextView"
+        android:textStyle="italic"
         android:layout_marginLeft="@dimen/home_item_separator_size"
         android:layout_gravity="center_vertical"
         android:visibility="gone"/>

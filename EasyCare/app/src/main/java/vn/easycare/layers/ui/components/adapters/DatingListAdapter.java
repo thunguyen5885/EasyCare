@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.fragments.DatingDetailFragment;
 import vn.easycare.utils.AppFnUtils;
 
 /**
@@ -22,6 +25,7 @@ public class DatingListAdapter extends BaseAdapter{
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private boolean mIsWaitingList = false;
+    private boolean mIsClicked = false;
     public DatingListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -68,6 +72,8 @@ public class DatingListAdapter extends BaseAdapter{
             viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
         }
         // Set onClick
+        viewHolder.mTvPatientName.setTag(position);
+        viewHolder.mTvPatientName.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarChange.setTag(position);
         viewHolder.mBtnCalendarChange.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarAccept.setTag(position);
@@ -95,8 +101,28 @@ public class DatingListAdapter extends BaseAdapter{
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            if(mIsClicked){
+                return;
+            }
+            mIsClicked = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsClicked = false;
+                }
+            }, 500);
             switch (v.getId()){
-
+                case R.id.tvPatientName:
+                    // Go to dating detail screen
+                    DatingDetailFragment datingDetailFragment = new DatingDetailFragment();
+                    ((HomeActivity) mContext).showFragment(datingDetailFragment);
+                    break;
+                case R.id.btnCalendarChange:
+                    break;
+                case R.id.btnCalendarCancel:
+                    break;
+                case R.id.btnCalendarAccept:
+                    break;
             }
         }
     };

@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.activities.LoginActivity;
 
 public class MenuFragment extends Fragment implements View.OnClickListener{
     public interface IOnMenuItemOnClickListener{
@@ -177,6 +179,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemExitClicked() {
             // Logout, exit here
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         }
     };
 }

@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,7 @@ import vn.easycare.utils.AppFnUtils;
 public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
     private Context mContext;
     private LayoutInflater mInflater;
-
+    private boolean  mIsClicked = false;
     public CommentAdapter(Context context){
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -90,6 +91,16 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        if(mIsClicked){
+            return;
+        }
+        mIsClicked = true;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mIsClicked = false;
+            }
+        }, 500);
         switch (v.getId()){
             case R.id.commentDisplayLayout:
                 break;

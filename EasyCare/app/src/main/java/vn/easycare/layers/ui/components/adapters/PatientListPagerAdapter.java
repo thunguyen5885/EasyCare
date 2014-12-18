@@ -45,7 +45,7 @@ public class PatientListPagerAdapter extends PagerAdapter{
             patientListLayout.renderData(position != 0);
             mViewMaps.put(position, patientListLayout);
         }
-        container.addView(patientListLayout, position);
+        container.addView(patientListLayout);
         return patientListLayout;
     }
 }
