@@ -28,4 +28,29 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     public void init(IPatientManagementView view) {
 
     }
+
+    @Override
+    public void loadAllAvailablePatientsForDoctor(String doctorID) {
+        iView.DisplayAllAvailablePatientsForDoctor(iModel.getAllAvailablePatientsForDoctor(doctorID));
+    }
+
+    @Override
+    public void loadAllBlockedPatientsForDoctor(String doctorID) {
+        iView.DisplayAllBlockedPatientsForDoctor(iModel.getAllBlockedPatientForDoctor(doctorID));
+    }
+
+    @Override
+    public void blockAPatient(String doctorID, String patientID) {
+        boolean isBlocked = iModel.doBlockAPatient(doctorID,patientID);
+        if(isBlocked){
+            iView.DisplayMessageForBlockPatient("");
+        }else{
+            iView.DisplayMessageForBlockPatient("");
+        }
+    }
+
+    @Override
+    public void showAllAppointmentsForAPatient(String doctorID, String patientID) {
+        iView.DisplayAllAppointmentForPatient(doctorID,patientID);
+    }
 }

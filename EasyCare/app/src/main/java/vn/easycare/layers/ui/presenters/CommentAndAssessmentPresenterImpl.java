@@ -27,4 +27,19 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
     public void init(ICommentAndAssessmentView view) {
 
     }
+
+    @Override
+    public void loadCommentAndAssessmentForDoctor(String doctorID, int page) {
+        iView.DisplayAllCommentAndAssessmentForDoctor(iModel.getAllCommentsAndAssessmentsForDoctor(doctorID,page));
+    }
+
+    @Override
+    public void HideACommentAndAssessment(String commentID) {
+        boolean isHide = iModel.doHideACommentAndAssessment(commentID);
+        if(isHide){
+            iView.DisplayMessageForHideCommentAndAssessment("");
+        }else{
+            iView.DisplayMessageForHideCommentAndAssessment("");
+        }
+    }
 }
