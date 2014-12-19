@@ -125,7 +125,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:layout_marginRight="2dp"
+                android:layout_marginRight="3dp"
                 android:background="@drawable/layout_item_bg_card">
                 <TextView
                     android:id="@+id/tvOrderCount"
@@ -146,7 +146,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="3dp"
                 android:background="@drawable/layout_item_bg_card">
                 <TextView
                     android:id="@+id/tvCancelCount"
@@ -167,13 +167,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:orientation="horizontal">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:layout_marginRight="2dp"
+                android:layout_marginRight="3dp"
                 android:background="@drawable/layout_item_bg_card">
                 <TextView
                     android:id="@+id/tvChangeCount"
@@ -194,7 +194,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="80dp"
-                android:layout_marginLeft="2dp"
+                android:layout_marginLeft="3dp"
                 android:background="@drawable/layout_item_bg_card">
                 <TextView
                     android:id="@+id/tvCommentCount"

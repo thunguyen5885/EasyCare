@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/main_background_color">
+        android:background="@color/white">
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -200,10 +200,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="@dimen/footer_vertical_padding"
-            android:layout_marginBottom="@dimen/footer_vertical_padding"
-            android:layout_marginLeft="@dimen/home_item_separator_size"
-            android:layout_marginRight="@dimen/common_padding">
+            android:paddingTop="@dimen/footer_vertical_padding"
+            android:paddingBottom="@dimen/footer_vertical_padding"
+            android:paddingLeft="@dimen/home_item_separator_size"
+            android:paddingRight="@dimen/common_padding"
+            android:background="@color/main_background_color">
             <Button
                 android:id="@+id/btnCalendarChange"
                 android:layout_width="0dp"

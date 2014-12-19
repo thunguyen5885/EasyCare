@@ -46,7 +46,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
             datingListLayout.renderData(position == 0);
             mViewMaps.put(position, datingListLayout);
         }
-        container.addView(datingListLayout, position);
+        container.addView(datingListLayout);
         return datingListLayout;
     }
 }

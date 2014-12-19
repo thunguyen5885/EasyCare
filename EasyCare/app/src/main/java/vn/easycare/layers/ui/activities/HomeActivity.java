@@ -32,7 +32,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right);
+        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
 
@@ -63,16 +63,18 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
             }
         });
         mMenuFragment.setSlidingLayout(mSlidingPanelLayout);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Show home fragment as default
-                mSlidingPanelLayout.closePane();
-                HomeFragment homeFragment = new HomeFragment();
-                showFragmentFromMenu(homeFragment);
-            }
-        }, 10);
+        if(mSlidingPanelLayout != null){
+            mSlidingPanelLayout.closePane();
+        }
+        // Show home fragment as default
+        HomeFragment homeFragment = new HomeFragment();
+        showFragmentFromMenu(homeFragment);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 
     @Override
@@ -129,6 +131,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
         }else{
             isTransitionFrag = false;
         }
+
         boolean fragmentPopped = fragmentManager.popBackStackImmediate(
                 backStateName, 0);
         if (!fragmentPopped
@@ -157,7 +160,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
                         mSlidingPanelLayout.closePane();
                     }
                 }
-            }, 50);
+            }, 10);
         }
     }
 
