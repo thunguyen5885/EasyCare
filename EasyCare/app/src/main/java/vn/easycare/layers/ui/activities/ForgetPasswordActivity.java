@@ -20,7 +20,7 @@ public class ForgetPasswordActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
         getActionBar().setDisplayShowCustomEnabled(true);
-        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+        //overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         setContentView(R.layout.activity_forget_password);
         //getActionBar().setTitle(R.string.forget_password_title);
 
@@ -38,7 +38,7 @@ public class ForgetPasswordActivity extends BaseActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+        //overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 
     @Override

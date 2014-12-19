@@ -32,7 +32,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
+        //overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
 
@@ -74,7 +74,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
     @Override
     protected void onPause() {
         super.onPause();
-        overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
+        //overridePendingTransition(R.anim.anim_slide_in_right, R.anim.anim_slide_out_right);
     }
 
     @Override

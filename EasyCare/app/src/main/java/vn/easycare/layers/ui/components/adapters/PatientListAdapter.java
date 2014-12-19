@@ -73,8 +73,8 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
         }
         // Set on click
-        viewHolder.mPatientName.setTag(position);
-        viewHolder.mPatientName.setOnClickListener(mOnClickListener);
+//        viewHolder.mPatientName.setTag(position);
+//        viewHolder.mPatientName.setOnClickListener(mOnClickListener);
         viewHolder.mBtnBlock.setTag(position);
         viewHolder.mBtnBlock.setOnClickListener(mOnClickListener);
         viewHolder.mBtnDating.setTag(position);

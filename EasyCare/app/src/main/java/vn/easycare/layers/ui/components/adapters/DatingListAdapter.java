@@ -72,8 +72,8 @@ public class DatingListAdapter extends BaseAdapter{
             viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
         }
         // Set onClick
-        viewHolder.mTvPatientName.setTag(position);
-        viewHolder.mTvPatientName.setOnClickListener(mOnClickListener);
+//        viewHolder.mTvPatientName.setTag(position);
+//        viewHolder.mTvPatientName.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarChange.setTag(position);
         viewHolder.mBtnCalendarChange.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarAccept.setTag(position);

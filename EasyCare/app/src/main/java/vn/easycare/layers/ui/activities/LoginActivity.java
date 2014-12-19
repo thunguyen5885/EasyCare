@@ -21,7 +21,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //overridePendingTransition(R.anim.anim_slide_in_left, 0);
         setContentView(R.layout.activity_login);
         mLoginPresenter = new LoginPresenterImpl(this, this.getApplicationContext());
         View loginLayout = findViewById(R.id.loginLayout);
@@ -47,8 +46,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     protected void onPause() {
         super.onPause();
-//        overridePendingTransition(0,
-//                R.anim.anim_slide_out_right);
     }
 
     @Override
