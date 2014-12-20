@@ -13,7 +13,7 @@
             android:id="@+id/menuItemUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            layout="@layout/home_menu_item_ctrl"/>
+            layout="@layout/home_menu_item_for_user_ctrl"/>
         <include
             android:id="@+id/menuItemDatingManagement"
             android:layout_width="match_parent"
@@ -21,6 +21,11 @@
             layout="@layout/home_menu_item_ctrl"/>
         <include
             android:id="@+id/menuItemCalendarCreating"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
+            android:id="@+id/menuItemPatientList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             layout="@layout/home_menu_item_ctrl"/>

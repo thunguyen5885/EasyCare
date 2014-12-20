@@ -60,7 +60,6 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
             viewHolder.mPatientPhone = (TextView) convertView.findViewById(R.id.tvPatientPhone);
             viewHolder.mPatientEmail = (TextView) convertView.findViewById(R.id.tvPatientEmail);
-            viewHolder.mButtonLayout = convertView.findViewById(R.id.patientListButtonLayout);
             viewHolder.mBtnBlock = (Button) convertView.findViewById(R.id.btnBlock);
             viewHolder.mBtnDating = (Button) convertView.findViewById(R.id.btnDating);
             convertView.setTag(viewHolder);
@@ -68,13 +67,15 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if(mIsBlackList){
-            viewHolder.mButtonLayout.setVisibility(View.GONE);
+            viewHolder.mBtnDating.setVisibility(View.GONE);
+            viewHolder.mBtnBlock.setText(R.string.patient_list_unblock);
         }else{
-            viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
+            viewHolder.mBtnDating.setVisibility(View.VISIBLE);
+            viewHolder.mBtnBlock.setText(R.string.patient_list_block);
         }
         // Set on click
-//        viewHolder.mPatientName.setTag(position);
-//        viewHolder.mPatientName.setOnClickListener(mOnClickListener);
+        viewHolder.mPatientName.setTag(position);
+        viewHolder.mPatientName.setOnClickListener(mOnClickListener);
         viewHolder.mBtnBlock.setTag(position);
         viewHolder.mBtnBlock.setOnClickListener(mOnClickListener);
         viewHolder.mBtnDating.setTag(position);
@@ -126,7 +127,6 @@ public class PatientListAdapter extends BaseAdapter{
         private TextView mPatientName;
         private TextView mPatientPhone;
         private TextView mPatientEmail;
-        private View mButtonLayout;
         private Button mBtnBlock;
         private Button mBtnDating;
     }

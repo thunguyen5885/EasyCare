@@ -24,6 +24,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         public void onMenuItemUserClicked();
         public void onMenuItemDatingManagementClicked();
         public void onMenuItemCalendarCreatingClicked();
+        public void onMenuItemPatientListClicked();
         public void onMenuItemCommentClicked();
         public void onMenuItemExitClicked();
     }
@@ -31,6 +32,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 	private View mMenuItemUser;
     private View mMenuItemDatingManagement;
     private View mMenuItemCalendarCreating;
+    private View mMenuItemPatientList;
     private View mMenuItemComment;
     private View mMenuItemExit;
     private View mMenuItemSeletedItem;
@@ -63,12 +65,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 		mMenuItemUser = v.findViewById(R.id.menuItemUser);
         mMenuItemDatingManagement = v.findViewById(R.id.menuItemDatingManagement);
         mMenuItemCalendarCreating = v.findViewById(R.id.menuItemCalendarCreating);
+        mMenuItemPatientList = v.findViewById(R.id.menuItemPatientList);
         mMenuItemComment = v.findViewById(R.id.menuItemComment);
         mMenuItemExit = v.findViewById(R.id.menuItemExit);
 
         //initMenuItem(mMenuItemUser, 0, );
+        initMenuItem(mMenuItemUser, R.string.menu_test_user, R.drawable.ic_no_avatar);
         initMenuItem(mMenuItemDatingManagement, R.string.menu_dating_management, R.drawable.ic_menu_dating_management);
         initMenuItem(mMenuItemCalendarCreating, R.string.menu_calendar_creating, R.drawable.ic_menu_calendar_creating);
+        initMenuItem(mMenuItemPatientList, R.string.menu_patient_list, R.drawable.ic_menu_comment);
         initMenuItem(mMenuItemComment, R.string.menu_comment, R.drawable.ic_menu_comment);
         initMenuItem(mMenuItemExit, R.string.menu_exit, R.drawable.ic_menu_exit);
 		return v;
@@ -139,6 +144,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
                     mMenuItemSeletedItem = mMenuItemCalendarCreating;
                     mMenuItemOnClickListener.onMenuItemCalendarCreatingClicked();
                     break;
+                case R.id.menuItemPatientList:
+                    mMenuItemSeletedItem = mMenuItemPatientList;
+                    mMenuItemOnClickListener.onMenuItemPatientListClicked();
+                    break;
                 case R.id.menuItemComment:
                     mMenuItemSeletedItem = mMenuItemComment;
                     mMenuItemOnClickListener.onMenuItemCommentClicked();
@@ -167,6 +176,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemCalendarCreatingClicked() {
             // Go to calendar creating screen
+        }
+
+        @Override
+        public void onMenuItemPatientListClicked() {
+            PatientListFragment patientListFragment = new PatientListFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(patientListFragment);
         }
 
         @Override

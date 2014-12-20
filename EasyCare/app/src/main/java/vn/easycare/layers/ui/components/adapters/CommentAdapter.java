@@ -77,15 +77,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         viewHolder.mCommonIdeaRatingLayout.setSelection(4);
         viewHolder.mWaitingTimeRatingLayout.setSelection(2);
         viewHolder.mAssetRatingLayout.setSelection(3);
-        if(position % 2 == 0){
-            viewHolder.mCommentDisplay.setText(R.string.comment_display);
-            viewHolder.mCommentDisplay.setBackgroundResource(R.drawable.layout_disable_button_with_corner);
-            viewHolder.mCommentDiplayLayout.setEnabled(false);
-        }else{
-            viewHolder.mCommentDisplay.setText(R.string.comment_no_display);
-            viewHolder.mCommentDisplay.setBackgroundResource(R.drawable.layout_hightlight_button_with_corner);
-            viewHolder.mCommentDiplayLayout.setEnabled(true);
-        }
+
         return convertView;
     }
 

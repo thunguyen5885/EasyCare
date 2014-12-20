@@ -8,8 +8,10 @@
     <string name="login_fail_msg">Đăng nhập thất bại.</string>
 
     <!-- Define string for menu-->
+    <string name="menu_test_user">Test User</string>
     <string name="menu_dating_management">Quản lý hẹn khám</string>
     <string name="menu_calendar_creating">Tạo lịch khám</string>
+    <string name="menu_patient_list">Danh sách bệnh nhân</string>
     <string name="menu_comment">Nhận xét và đánh giá</string>
     <string name="menu_exit">Thoát</string>
 
@@ -47,6 +49,7 @@
     <string name="patient_list_patient">Bệnh nhân</string>
     <string name="patient_list_blacklist">Blacklist</string>
     <string name="patient_list_block">Chặn</string>
+    <string name="patient_list_unblock">Bỏ chặn</string>
     <string name="patient_list_datings">Các cuộc hẹn</string>
 
     <!-- Define string for dating_list screen-->
@@ -99,6 +102,15 @@
     <string name="patient_detail_change_count">Số lần chuyển lịch</string>
     <string name="patient_detail_commen_count">Số lần đánh giá</string>
 
+    <!-- Define string time range screen-->
+    <string name="time_range">Chọn khoảng thời gian</string>
+    <string name="time_range_day">Ngày</string>
+    <string name="time_range_average_time">Thời gian khám trung bình</string>
+    <string name="time_range_minute">phút</string>
+    <string name="time_range_office_address">Địa chỉ phòng khám</string>
+    <string name="time_range_comment">Chú thích</string>
+    <string name="time_range_cancel">HỦY</string>
+    <string name="time_range_save">LƯU LẠI</string>
     <!-- Define string for forget password screen-->
     <string name="submit">Gửi</string>
     <string name="forget_password_title">Quên mật khẩu</string>

@@ -142,7 +142,9 @@
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp"
                         android:gravity="center"
-                        android:textColor="@color/white"/>
+                        android:background="@drawable/layout_hightlight_button_with_corner"
+                        android:textColor="@color/white"
+                        android:text="@string/comment_no_display"/>
                 </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
                 <RelativeLayout
                     android:id="@+id/commentWaitingTimeTitleLayout"
