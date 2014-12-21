@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.models.base.IPatientManagementModel;
 
@@ -12,6 +13,8 @@ import vn.easycare.layers.ui.models.base.IPatientManagementModel;
  */
 public class PatientManagementModel implements IPatientManagementModel{
     private Context mContext;
+
+
     public  PatientManagementModel(Context context){
         mContext = context;
     }
@@ -30,4 +33,6 @@ public class PatientManagementModel implements IPatientManagementModel{
     public boolean doBlockAPatient(String doctorID, String patientID) {
         return true;
     }
+
+
 }

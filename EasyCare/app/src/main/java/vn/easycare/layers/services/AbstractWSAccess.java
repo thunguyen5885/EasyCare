@@ -3,72 +3,85 @@ package vn.easycare.layers.services;
 /**
  * Created by phan on 12/9/2014.
  */
+import android.content.Context;
+import android.util.Log;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import vn.easycare.utils.AppConstants;
 
 
-public abstract class AbstractWSAccess<T extends IWebServiceModel> implements IWebServiceAccess {
-    protected Map<String, List<String>> headers;
-    @Override
-    public WSResult<T> executeRequest() {
-        // TODO Auto-generated method stub
-        WSRequest request = buildRequest();
-        if (requiresAuthorization()) {
-            //add authorize to request
-        }
-        WSResponse response = doRequest(request);
-        return buildResult(response);
+public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWebServiceParamModel> implements IWebServiceAccess {
+
+    protected  Context mContext;
+    protected  IWSResponse mCallback;
+
+    public void setContext(Context context){
+        this.mContext = context;
     }
 
-    protected WSResult<T> buildResult(WSResponse response) {
-
-        int status = response.status;
-        String statusMsg = "";
-        String responseBody = null;
-        T resource = null;
-
-        try {
-            responseBody = new String(response.body, getCharacterEncoding(response.headers));
-            resource = parseResponseBody(responseBody);
-        } catch (Exception ex) {
-            // TODO Should we set some custom status code?
-            status = 1001; // spec only defines up to 505
-            statusMsg = ex.getMessage();
-        }
-        return new WSResult<T>(status, statusMsg, resource);
+    public void setResponseCallback(IWSResponse callback){
+        this.mCallback = callback;
     }
 
-    protected abstract WSRequest buildRequest();
-    protected abstract T parseResponseBody(String responseBody) throws Exception;
+    public void sendGetRequest(){
+        StringRequest sr = new StringRequest(Request.Method.GET, getWSURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onParseJsonResponseOK(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                onResponseFailed(error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                return  getWSParams();
+            }
 
-    protected boolean requiresAuthorization() {
-        return true;
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return  getWSHeaders();
+            }
+        };
+        WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 
-    private String getCharacterEncoding(Map<String, List<String>> headers) {
-        // TODO get value from headers
-        return AppConstants.DEFAULT_ENCODING;
-    }
+    public void sendPostRequest(){
 
-    private WSResponse doRequest(WSRequest request) {
+       StringRequest sr = new StringRequest(Request.Method.POST, getWSURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onParseJsonResponseOK(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                onResponseFailed(error.getMessage());
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+              return  getWSParams();
+            }
 
-        WSClient client = new WSClient();
-        return client.execute(request);
-    }
-
-    @Override
-    public Map<String, List<String>> getHeaders() {
-        // TODO Auto-generated method stub
-        return this.headers;
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public void setHeaders(Map headers) {
-        // TODO Auto-generated method stub
-        this.headers = headers;
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+              return  getWSHeaders();
+            }
+        };
+        WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 
 }

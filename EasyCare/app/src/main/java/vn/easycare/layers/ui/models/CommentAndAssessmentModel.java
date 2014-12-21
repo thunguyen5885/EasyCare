@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.util.List;
 
+import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
 import vn.easycare.layers.ui.models.base.ICommentAndAssessmentModel;
 

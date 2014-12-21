@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.models;
 
 import android.content.Context;
 
+import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.ui.models.base.IInformationStatisticModel;
 
 /**
@@ -9,7 +10,11 @@ import vn.easycare.layers.ui.models.base.IInformationStatisticModel;
  */
 public class InformationStatisticModel implements IInformationStatisticModel {
     private Context mContext;
+
+
     public InformationStatisticModel(Context context){
         mContext = context;
     }
+
+
 }

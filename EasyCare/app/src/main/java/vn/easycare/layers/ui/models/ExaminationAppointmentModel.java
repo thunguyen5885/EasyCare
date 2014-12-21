@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.Date;
 import java.util.List;
 
+import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.models.base.IExaminationAppointmentModel;
 import vn.easycare.utils.AppConstants;
@@ -14,6 +15,8 @@ import vn.easycare.utils.AppConstants;
  */
 public class ExaminationAppointmentModel implements IExaminationAppointmentModel {
     private Context mContext;
+
+
     public  ExaminationAppointmentModel(Context context){
         mContext = context;
     }
@@ -46,4 +49,5 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
     public boolean doChangeAnExaminationAppointment(String doctorID, String appointmentID, Date newDateTime, int oldAddressID, int addressChangeID, String doctorNotes) {
         return true;
     }
+
 }

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Define string message for login screen-->
+    <string name="email_format_incorrect">Địa chỉ email không đúng định dạng</string>
+    <string name="password_format_incorrect">Mật khẩu phải nhiều hơn 6 kí tự</string>
+
     <!-- Define string message for examination appointment screen-->
     <string name="accept_appointment_ok">Lịch hẹn khám đã duyệt thành </string>
     <string name="accept_appointment_fail">Lịch hẹn khám đã duyệtcông thất bại</string>

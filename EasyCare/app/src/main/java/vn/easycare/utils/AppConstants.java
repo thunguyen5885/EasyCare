@@ -14,4 +14,6 @@ public class AppConstants {
         WAITING, ACCEPTED, CANCEL
     }
     public static final String DEFAULT_ENCODING = "UTF-8";
+
+    public static String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 }
