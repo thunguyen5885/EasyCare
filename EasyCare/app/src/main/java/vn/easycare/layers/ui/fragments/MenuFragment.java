@@ -176,6 +176,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemCalendarCreatingClicked() {
             // Go to calendar creating screen
+            DateCreatingFragment dateCreatingFragment = new DateCreatingFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(dateCreatingFragment);
         }
 
         @Override

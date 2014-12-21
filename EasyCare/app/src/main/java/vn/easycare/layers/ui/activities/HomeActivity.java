@@ -84,6 +84,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
         } else {
             super.onBackPressed();
         }
+        mSlidingPanelLayout.closePane();
     }
 
     public void showFragment(Fragment frag) {

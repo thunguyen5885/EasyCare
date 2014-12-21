@@ -127,7 +127,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onHomeItemCalendarCreatingClicked() {
-
+            DateCreatingFragment dateCreatingFragment = new DateCreatingFragment();
+            ((HomeActivity)getActivity()).showFragment(dateCreatingFragment);
         }
 
         @Override
