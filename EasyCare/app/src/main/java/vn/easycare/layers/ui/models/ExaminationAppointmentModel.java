@@ -21,32 +21,32 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
         mContext = context;
     }
     @Override
-    public List<ExaminationAppointmentItemData> getExaminationAppointmentsForDoctor(String doctorID, AppConstants.EXAMINATION_STATUS status, int page) {
+    public List<ExaminationAppointmentItemData> getExaminationAppointmentsForDoctor(String token, AppConstants.EXAMINATION_STATUS status, int page) {
         return null;
     }
 
     @Override
-    public List<ExaminationAppointmentItemData> doSearchExaminationAppointments(String appointmentCode, String patientName, AppConstants.EXAMINATION_STATUS status, Date date, int page) {
+    public List<ExaminationAppointmentItemData> doSearchExaminationAppointments(String token, String appointmentCode, String patientName, AppConstants.EXAMINATION_STATUS status, Date date, Date start, Date end, int page) {
         return null;
     }
 
     @Override
-    public boolean doAcceptAnExaminationAppointment(String doctorID, String appointmentID) {
+    public boolean doAcceptAnExaminationAppointment(String token, String appointmentID) {
         return true;
     }
 
     @Override
-    public boolean doCancelAnExaminationAppointment(String doctorID, String appointmentID) {
+    public boolean doCancelAnExaminationAppointment(String token, String appointmentID) {
         return true;
     }
 
     @Override
-    public ExaminationAppointmentItemData getAnExaminationAppointmentForDoctor(String doctorID, String appointmentID) {
+    public ExaminationAppointmentItemData getAnExaminationAppointmentForDoctor(String token, String appointmentID) {
         return null;
     }
 
     @Override
-    public boolean doChangeAnExaminationAppointment(String doctorID, String appointmentID, Date newDateTime, int oldAddressID, int addressChangeID, String doctorNotes) {
+    public boolean doChangeAnExaminationAppointment(String token, String appointmentID, Date newDateTime, int oldAddressID, int addressChangeID, String doctorNotes) {
         return true;
     }
 

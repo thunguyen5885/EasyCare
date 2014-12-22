@@ -31,18 +31,18 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void loadExaminationAppointmentsForDoctor(String doctorID, AppConstants.EXAMINATION_STATUS status, int page) {
-        iView.DisplayExaminationAppointmentsForDoctor(iModel.getExaminationAppointmentsForDoctor(doctorID, status, page));
+    public void loadExaminationAppointmentsForDoctor(String token,AppConstants.EXAMINATION_STATUS status,int page) {
+        iView.DisplayExaminationAppointmentsForDoctor(iModel.getExaminationAppointmentsForDoctor(token, status, page));
     }
 
     @Override
-    public void searchExaminationAppointments(String appointmentCode, String patientName, AppConstants.EXAMINATION_STATUS status, Date date, int page) {
-        iView.DisplayExaminationAppointmentsForDoctor(iModel.doSearchExaminationAppointments(appointmentCode, patientName, status, date, page));
+    public void searchExaminationAppointments(String token, String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,Date date,Date start, Date end,int page) {
+        iView.DisplayExaminationAppointmentsForDoctor(iModel.doSearchExaminationAppointments(token,appointmentCode, patientName, status, date,start,end, page));
     }
 
     @Override
-    public void AcceptAnExaminationAppointment(String doctorID, String appointmentID) {
-        boolean isAccept = iModel.doAcceptAnExaminationAppointment(doctorID,appointmentID);
+    public void AcceptAnExaminationAppointment(String token, String appointmentID) {
+        boolean isAccept = iModel.doAcceptAnExaminationAppointment(token,appointmentID);
         if(isAccept){
             iView.DisplayMessageForAcceptAppointment(mContext.getResources().getString(R.string.accept_appointment_ok));
         }else{
@@ -51,8 +51,8 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void CancelAnExaminationAppointment(String doctorID, String appointmentID) {
-        boolean isCancel = iModel.doCancelAnExaminationAppointment(doctorID,appointmentID);
+    public void CancelAnExaminationAppointment(String token, String appointmentID) {
+        boolean isCancel = iModel.doCancelAnExaminationAppointment(token,appointmentID);
         if(isCancel){
             iView.DisplayMessageForCancelAppointment(mContext.getResources().getString(R.string.cancel_appointment_ok));
         }else{
@@ -61,13 +61,13 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void loadAnExaminationAppointmentForDoctor(String doctorID, String appointmentID) {
-        iView.DisplayPopupForAnAppointment(iModel.getAnExaminationAppointmentForDoctor(doctorID, appointmentID));
+    public void loadAnExaminationAppointmentForDoctor(String token, String appointmentID) {
+        iView.DisplayPopupForAnAppointment(iModel.getAnExaminationAppointmentForDoctor(token, appointmentID));
     }
 
     @Override
-    public void ChangeAnExaminationAppointment(String doctorID, String appointmentID, Date newDateTime, int oldAddressID, int addressChangeID, String doctorNotes) {
-       boolean isChange = iModel.doChangeAnExaminationAppointment(doctorID,appointmentID,newDateTime,oldAddressID,addressChangeID,doctorNotes);
+    public void ChangeAnExaminationAppointment(String token, String appointmentID, Date newDateTime, int oldAddressID, int addressChangeID, String doctorNotes) {
+       boolean isChange = iModel.doChangeAnExaminationAppointment(token,appointmentID,newDateTime,oldAddressID,addressChangeID,doctorNotes);
         if(isChange){
             iView.DisplayMessageForChangeAppointment(mContext.getResources().getString(R.string.change_appointment_ok));
         }else{
