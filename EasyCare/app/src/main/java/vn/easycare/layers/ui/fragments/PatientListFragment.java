@@ -3,7 +3,6 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,12 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.PatientListPagerAdapter;
 import vn.easycare.layers.ui.components.views.TabLayout;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by Thu Nguyen on 12/16/2014.
  */
-public class PatientListFragment extends Fragment{
+public class PatientListFragment extends Fragment {
     // For view, control
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
@@ -47,6 +47,9 @@ public class PatientListFragment extends Fragment{
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);
         mViewPager = (ViewPager) v.findViewById(R.id.patientListViewPager);
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

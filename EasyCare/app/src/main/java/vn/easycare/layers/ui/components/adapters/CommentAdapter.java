@@ -78,6 +78,8 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         viewHolder.mWaitingTimeRatingLayout.setSelection(2);
         viewHolder.mAssetRatingLayout.setSelection(3);
 
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(convertView, null);
         return convertView;
     }
 

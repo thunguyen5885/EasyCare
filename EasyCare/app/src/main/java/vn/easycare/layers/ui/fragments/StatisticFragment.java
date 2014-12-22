@@ -12,10 +12,12 @@ import org.w3c.dom.Text;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.utils.AppFnUtils;
+
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class StatisticFragment extends Fragment{
+public class StatisticFragment extends Fragment {
     public interface IStatisticOnClickListener{
         public void onSeeWatingList();
     }
@@ -52,6 +54,8 @@ public class StatisticFragment extends Fragment{
         initViewForUserComment(mUserCommentWaitingCommentLayout, R.drawable.ic_comment_about_waiting_time, R.string.statistic_waiting_comment);
         initViewForUserComment(mUserCommentAssetCommentLayout, R.drawable.ic_comment_about_assets, R.string.statistic_asset_comment);
 
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 
@@ -123,6 +127,9 @@ public class StatisticFragment extends Fragment{
         @Override
         public void onSeeWatingList() {
             // Later......
+            // Go to dating list
+            DatingListFragment datingListFragment = new DatingListFragment();
+            ((HomeActivity) getActivity()).showFragment(datingListFragment);
         }
     };
 }

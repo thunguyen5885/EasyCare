@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
@@ -63,6 +64,9 @@ public class TimeRangeSelectionFragment extends Fragment implements View.OnClick
         mOfficeAddressLayout.setOnClickListener(this);
         mCancelLayout.setOnClickListener(this);
         mSaveLayout.setOnClickListener(this);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

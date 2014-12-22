@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by phan on 12/16/2014.
@@ -22,5 +23,8 @@ public class ChangePasswordActivity extends BaseActivity {
 
             }
         });
+        // Apply font
+        View rootLayout = findViewById(R.id.changePassRootLayout);
+        AppFnUtils.applyFontForTextViewChild(rootLayout, null);
     }
 }

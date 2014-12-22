@@ -100,6 +100,9 @@ public class DateTimeAdapter extends BaseAdapter{
             viewHolder.mHightlight.setBackgroundColor(Color.TRANSPARENT);
         }
         viewHolder.mHightlight.invalidate();
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(convertView, null);
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {

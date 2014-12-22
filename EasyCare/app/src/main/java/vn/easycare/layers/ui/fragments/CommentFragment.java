@@ -2,7 +2,6 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.Toast;
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.CommentAdapter;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
@@ -37,6 +37,9 @@ public class CommentFragment extends Fragment implements View.OnClickListener{
         mCommentListView.addFooterView(mLoadMoreView);
         View loadMoreEventLayout = mLoadMoreView.findViewById(R.id.loadMoreLayout);
         loadMoreEventLayout.setOnClickListener(this);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

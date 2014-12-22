@@ -96,6 +96,9 @@ public class DatingListAdapter extends BaseAdapter{
         viewHolder.mTvPatientName.setText("Nguyen Van A");
         viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
         viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(convertView, null);
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {

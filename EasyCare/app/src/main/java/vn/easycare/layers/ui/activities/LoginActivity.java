@@ -13,6 +13,7 @@ import vn.easycare.layers.ui.base.BaseActivity;
 import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.views.ILoginView;
+import vn.easycare.utils.AppFnUtils;
 
 
 public class LoginActivity extends BaseActivity implements ILoginView{
@@ -41,6 +42,10 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                 startActivity(intent);
             }
         });
+
+        // Apply font
+        View rootLayout = findViewById(R.id.loginRootLayout);
+        AppFnUtils.applyFontForTextViewChild(rootLayout, null);
     }
 
     @Override

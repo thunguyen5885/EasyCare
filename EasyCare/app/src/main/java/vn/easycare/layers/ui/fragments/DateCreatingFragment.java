@@ -18,6 +18,7 @@ import java.util.Calendar;
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.DateTimeAdapter;
+import vn.easycare.utils.AppFnUtils;
 import vn.easycare.utils.DateFnUtils;
 
 /**
@@ -25,9 +26,9 @@ import vn.easycare.utils.DateFnUtils;
  */
 public class DateCreatingFragment extends Fragment implements View.OnClickListener{
     // For control, layout
-    private ImageView mIvCalendar;
-    private ImageView mIvNext;
-    private ImageView mIvPrevious;
+    private View mCalendarLayout;
+    private View mNextDayLayout;
+    private View mPreviousDayLayout;
     private TextView mTvDay;
     private ListView mDatingTimeListView;
     private DateTimeAdapter mDateTimeAdapter;
@@ -40,17 +41,19 @@ public class DateCreatingFragment extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_date_creating, container, false);
-        mIvCalendar = (ImageView) v.findViewById(R.id.ivCalendar);
-        mIvNext = (ImageView) v.findViewById(R.id.ivNextDay);
-        mIvPrevious = (ImageView) v.findViewById(R.id.ivPreviousDay);
+        mCalendarLayout = v.findViewById(R.id.calendarLayout);
+        mNextDayLayout = v.findViewById(R.id.nextDayLayout);
+        mPreviousDayLayout = v.findViewById(R.id.previousDayLayout);
         mTvDay = (TextView) v.findViewById(R.id.tvDateTime);
         mDatingTimeListView = (ListView) v.findViewById(R.id.datingTimeListView);
 
         // Set on click
-        mIvCalendar.setOnClickListener(this);
-        mIvNext.setOnClickListener(this);
-        mIvPrevious.setOnClickListener(this);
+        mCalendarLayout.setOnClickListener(this);
+        mNextDayLayout.setOnClickListener(this);
+        mPreviousDayLayout.setOnClickListener(this);
 
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 
@@ -79,7 +82,7 @@ public class DateCreatingFragment extends Fragment implements View.OnClickListen
     public void onResume() {
         super.onResume();
         if(getActivity() != null){
-            ((HomeActivity) getActivity()).showFooterSeparator();
+            ((HomeActivity) getActivity()).hideFooterSeparator();
             ((HomeActivity) getActivity()).showHeaderBackButton();
         }
     }
@@ -97,17 +100,17 @@ public class DateCreatingFragment extends Fragment implements View.OnClickListen
             }
         }, 500);
         switch (v.getId()) {
-            case R.id.ivCalendar:
+            case R.id.calendarLayout:
                 showDatePickerDialog();
                 break;
-            case R.id.ivNextDay:
+            case R.id.nextDayLayout:
                 // Get next day
                 DateFnUtils.nextDate(mMyDate);
                 // Update
                 update();
                 animationForNext();
                 break;
-            case R.id.ivPreviousDay:
+            case R.id.previousDayLayout:
                 // Get next day
                 DateFnUtils.previousDate(mMyDate);
                 // Update

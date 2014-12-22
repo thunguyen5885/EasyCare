@@ -19,6 +19,7 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.fragments.PatientDetailFragment;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.FontUtil;
 
 /**
  * Created by ThuNguyen on 12/16/2014.
@@ -92,6 +93,9 @@ public class PatientListAdapter extends BaseAdapter{
         viewHolder.mPatientName.setText("Nguyen Van A");
         viewHolder.mPatientPhone.setText("00388030330");
         viewHolder.mPatientEmail.setText("abcd@gmail.com");
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(convertView, null);
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {

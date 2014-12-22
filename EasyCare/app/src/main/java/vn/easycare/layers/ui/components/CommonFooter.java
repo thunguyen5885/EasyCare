@@ -8,6 +8,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import vn.easycare.R;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/8/2014.
@@ -38,6 +39,9 @@ public class CommonFooter implements View.OnClickListener{
         tvForDoctor.setOnClickListener(this);
         TextView tvForEasyCare = (TextView) mRootView.findViewById(R.id.tvFooterForEasyCare);
         tvForEasyCare.setOnClickListener(this);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(mRootView, null);
     }
     /*Getter and setter*/
     public void setOnFooterClickListener(IOnFooterClickListener onFooterClickListener){

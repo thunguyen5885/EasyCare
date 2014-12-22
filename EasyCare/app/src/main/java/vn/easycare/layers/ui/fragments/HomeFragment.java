@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/11/2014.
@@ -33,6 +35,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     public HomeFragment(){
 
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
@@ -46,6 +54,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         initHomeItemLayout(mCalendarCreatingLayout, R.string.home_calendar_creating, R.drawable.ic_calendar_creating);
         initHomeItemLayout(mPatientListLayout, R.string.home_patient_list, R.drawable.ic_patient_list);
         initHomeItemLayout(mStatisticLayout, R.string.home_statistic, R.drawable.ic_statistic);
+
+        // Apply font style here
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

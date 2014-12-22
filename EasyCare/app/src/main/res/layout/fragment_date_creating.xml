@@ -7,34 +7,55 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common_padding">
-        <ImageView
-            android:id="@+id/ivCalendar"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_calendar_active"
-            android:layout_centerVertical="true"/>
-        <ImageView
-            android:id="@+id/ivNextDay"
-            android:layout_width="10dp"
-            android:layout_height="16dp"
+        android:layout_margin="@dimen/home_item_separator_size">
+        <FrameLayout
+            android:id="@+id/calendarLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/home_item_separator_size"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/ivCalendar"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_calendar_active"
+                android:layout_gravity="center_vertical"/>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/nextDayLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_next"/>
-        <ImageView
-            android:id="@+id/ivPreviousDay"
-            android:layout_width="10dp"
-            android:layout_height="16dp"
-            android:layout_toLeftOf="@+id/ivNextDay"
+            android:padding="@dimen/home_item_separator_size">
+            <ImageView
+                android:id="@+id/ivNextDay"
+                android:layout_width="10dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_next"/>
+        </FrameLayout>
+        <FrameLayout
+            android:id="@+id/previousDayLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/nextDayLayout"
             android:layout_marginRight="@dimen/footer_vertical_padding"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_previous"/>
+            android:padding="@dimen/home_item_separator_size">
+            <ImageView
+                android:id="@+id/ivPreviousDay"
+                android:layout_width="10dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_previous"/>
+        </FrameLayout>
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/home_item_separator_size"
-            android:layout_toRightOf="@+id/ivCalendar"
+            android:layout_toRightOf="@+id/calendarLayout"
             >
         <TextView
             android:id="@+id/tvDateTime"

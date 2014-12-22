@@ -17,7 +17,7 @@ import vn.easycare.utils.AppFnUtils;
 /**
  * Created by ThuNguyen on 12/18/2014.
  */
-public class PatientDetailFragment extends Fragment{
+public class PatientDetailFragment extends Fragment {
     // For layout, control
     private NetworkImageView mPatientAvatar;
     private TextView mTvPatientName;
@@ -53,6 +53,8 @@ public class PatientDetailFragment extends Fragment{
         mPatientAvatar.getLayoutParams().width = avatarSize;
         mPatientAvatar.getLayoutParams().height = avatarSize;
 
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

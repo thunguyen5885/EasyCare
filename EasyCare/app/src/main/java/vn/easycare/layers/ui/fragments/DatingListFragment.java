@@ -16,6 +16,7 @@ import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.DatingListPagerAdapter;
 import vn.easycare.layers.ui.components.adapters.PatientListPagerAdapter;
 import vn.easycare.layers.ui.components.views.TabLayout;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by Thu Nguyen on 12/16/2014.
@@ -48,6 +49,9 @@ public class DatingListFragment extends Fragment{
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);
         mViewPager = (ViewPager) v.findViewById(R.id.datingListViewPager);
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

@@ -16,6 +16,7 @@ import java.util.Calendar;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.components.adapters.DatingListAdapter;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/17/2014.
@@ -70,6 +71,9 @@ public class DatingListLayout extends LinearLayout{
         mSearchLayout = view.findViewById(R.id.datingListSearchLayout);
         mSearchLayout.setOnClickListener(mOnClickListener);
         addView(view);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(this, null);
     }
 
     /**

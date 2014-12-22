@@ -25,5 +25,6 @@
         android:id="@+id/datingListViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:paddingBottom="@dimen/footer_vertical_padding"/>
 </LinearLayout>

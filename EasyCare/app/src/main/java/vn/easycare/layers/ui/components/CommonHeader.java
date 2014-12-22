@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import vn.easycare.R;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/8/2014.
@@ -26,6 +27,9 @@ public class CommonHeader implements View.OnClickListener{
         backView.setOnClickListener(this);
         TextView tvHeader = (TextView) mRootView.findViewById(R.id.tvHeader);
         tvHeader.setText(R.string.app_name);
+
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(mRootView, null);
     }
     /*Getter and setter*/
     public void setOnHeaderClickListener(IOnHeaderClickListener onHeaderClickListener){

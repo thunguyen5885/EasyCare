@@ -37,6 +37,7 @@ public class PatientListLayout extends ListView{
         mLayoutInflater = LayoutInflater.from(context);
         mLoadMoreView = mLayoutInflater.inflate(R.layout.load_more_ctrl, null);
         addFooterView(mLoadMoreView);
+
     }
     public void renderData(boolean isBlackList){
         mAdapter = new PatientListAdapter(getContext());

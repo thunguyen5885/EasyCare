@@ -10,6 +10,7 @@ import android.widget.Button;
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by phan on 12/15/2014.
@@ -33,6 +34,9 @@ public class ForgetPasswordActivity extends BaseActivity {
 
             }
         });
+        // Apply font
+        View rootLayout = findViewById(R.id.forgetPassLayout);
+        AppFnUtils.applyFontForTextViewChild(rootLayout, null);
     }
 
     @Override

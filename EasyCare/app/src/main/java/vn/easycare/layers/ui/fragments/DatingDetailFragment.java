@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
-import vn.easycare.layers.ui.components.adapters.CommentAdapter;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
@@ -39,11 +39,19 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     private Button mBtnCalendarChange;
     private Button mBtnCalendarCancel;
     private Button mBtnCalendarAccept;
-    // For data, object
 
+    // For data, object
+    private Activity mActivity;
     public DatingDetailFragment(){
 
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dating_detail, container, false);
@@ -110,6 +118,9 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
                 }
             }
         });
+
+        // Apply font here
+        AppFnUtils.applyFontForTextViewChild(v, null);
         return v;
     }
 

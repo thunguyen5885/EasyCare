@@ -2,8 +2,13 @@ package vn.easycare.utils;
 
 import android.app.Activity;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
@@ -45,5 +50,24 @@ public class AppFnUtils {
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
 
         return metrics.widthPixels;
+    }
+
+    public static void applyFontForTextViewChild(View parentView, Typeface fontStyle){
+        if(parentView instanceof ViewGroup){
+            if(fontStyle == null){
+                fontStyle = FontUtil.getRobotoRegular(parentView.getContext());
+            }
+            ViewGroup parentViewGroup = (ViewGroup) parentView;
+            for(int index = 0; index < parentViewGroup.getChildCount(); index++){
+                View childView = parentViewGroup.getChildAt(index);
+                if(childView instanceof TextView){
+                    ((TextView) childView).setTypeface(fontStyle);
+                }else if(childView instanceof Button){
+                    ((Button) childView).setTypeface(fontStyle);
+                }else if(childView instanceof ViewGroup){
+                    applyFontForTextViewChild(childView, fontStyle);
+                }
+            }
+        }
     }
 }
