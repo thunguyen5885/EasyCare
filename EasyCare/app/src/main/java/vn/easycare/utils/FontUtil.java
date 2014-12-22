@@ -73,7 +73,7 @@ public class FontUtil {
 //    }
     public static Typeface getRobotoRegular(Context context){
         if(robotoRegular == null){
-            robotoRegular = Typeface.createFromAsset(context.getAssets(),"font/ROBOTO-REGULAR.TTF");
+            robotoRegular = Typeface.createFromAsset(context.getAssets(), "font/roboto-regular.ttf");
             //robotoRegular = Typeface.createFromAsset(context.getAssets(),"font/OpenSans-Bold.ttf");
         }
         return robotoRegular;
