@@ -9,33 +9,51 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.components.adapters.DatingListAdapter;
+import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/17/2014.
  */
 public class DatingListLayout extends LinearLayout{
+    public static final int DATING_WAITING_FOR_APPROVED = 0;
+    public static final int DATING_APPROVED = 1;
+    public static final int DATING_CANCEL = 2;
+    private static final int DATE_ITEM_PER_PAGE = 10;
     // For control, layout
     private ListView mLvDatingList;
+    private ProgressBar mPbLoading;
     private DatingListAdapter mAdapter;
     private EditText mEdtDatingCode;
     private EditText mEdtPatientName;
     private View mSelectCalendarView;
     private TextView mTvCalendarText;
     private View mSearchLayout;
-    private View mLoadMoreView;
+    private LoadMoreLayout mLoadMoreView;
 
     // For data, object
     private int mSelectedYear;
     private int mSelectedMonth;
     private int mSelectedDay;
+    private int mDatingType;
+    private int mTotalItemCount;
+    private int mPage;
+    private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
+
+    // Key search
+    private String mDatingCode;
+    private String mPatientName;
+    private String mDatingDate;
 
     private LayoutInflater mLayoutInflater;
     public DatingListLayout(Context context) {
@@ -57,9 +75,16 @@ public class DatingListLayout extends LinearLayout{
         mSelectedMonth = -1;
         mSelectedDay = -1;
 
+        // For key and result search
+        mTotalItemCount = 0;
+        mDatingType = DATING_WAITING_FOR_APPROVED;
+        mPage = 1;
+        mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
+
         mLayoutInflater = LayoutInflater.from(context);
         View view = mLayoutInflater.inflate(R.layout.dating_pager_item_ctrl, null);
-        mLoadMoreView = mLayoutInflater.inflate(R.layout.load_more_ctrl, null);
+        mLoadMoreView = new LoadMoreLayout(getContext());
+        mLoadMoreView.setOnLoadMoreClickListener(mILoadMoreClickListener);
         mLvDatingList = (ListView)view.findViewById(R.id.lvDatingList);
         mLvDatingList.addFooterView(mLoadMoreView);
 
@@ -74,17 +99,66 @@ public class DatingListLayout extends LinearLayout{
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(this, null);
+
+        // Call API here
+        loadNewData();
+    }
+    private void loadNewData(){
+        mTotalItemCount = 0;
+        mPage = 1;
+        mExaminationAppointmentItemDataList.clear();
+        // Show loading
+        mPbLoading.setVisibility(View.VISIBLE);
+        // Hide listview
+        mLvDatingList.setVisibility(View.GONE);
+
+        // load data
+        loadData();
+
     }
 
     /**
-     *
-     * @param isWaiting
+     * Load more when click on loadmore button
      */
-    public void renderData(boolean isWaiting){
-        mAdapter = new DatingListAdapter(getContext());
-        mAdapter.setWaitingList(isWaiting);
-        mLvDatingList.setAdapter(mAdapter);
+    private void loadMoreData(){
+        mPage++;
+        mLoadMoreView.beginLoading();
+
+        loadData();
     }
+
+    /**
+     * Begin call API here
+     */
+    private void loadData(){
+
+    }
+
+    /**
+     * Update GUI from list of data
+     */
+    private void updateUI(){
+        mPbLoading.setVisibility(View.GONE);
+        mLvDatingList.setVisibility(View.VISIBLE);
+        if(mExaminationAppointmentItemDataList.size() == mTotalItemCount){ // load end of list
+            // Close loadmore layout
+            mLoadMoreView.closeView();
+        }else{
+            mLoadMoreView.loadMoreComplete();
+        }
+        if(mAdapter == null){
+            mAdapter = new DatingListAdapter(getContext());
+            mAdapter.setWaitingList(mDatingType == DATING_WAITING_FOR_APPROVED);
+            mAdapter.setmExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
+            mLvDatingList.setAdapter(mAdapter);
+        }else{
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+    public void setDateType(int dateType){
+        mDatingType = dateType;
+    }
+
     private OnClickListener mOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -96,6 +170,12 @@ public class DatingListLayout extends LinearLayout{
                     Toast.makeText(getContext(), "Search clicked", Toast.LENGTH_SHORT).show();
                     break;
             }
+        }
+    };
+    private LoadMoreLayout.ILoadMoreClickListener mILoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
+        @Override
+        public void onLoadMoreClicked() {
+            loadMoreData();
         }
     };
     private DatePickerDialog.OnDateSetListener mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {

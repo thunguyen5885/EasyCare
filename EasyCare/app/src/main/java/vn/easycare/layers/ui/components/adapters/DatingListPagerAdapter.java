@@ -43,7 +43,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
             datingListLayout = (DatingListLayout)mViewMaps.get(position);
         }else{
             datingListLayout = new DatingListLayout(mViewPager.getContext());
-            datingListLayout.renderData(position == 0);
+            datingListLayout.setDateType(position);
             mViewMaps.put(position, datingListLayout);
         }
         container.addView(datingListLayout);

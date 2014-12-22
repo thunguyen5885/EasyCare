@@ -13,8 +13,11 @@ import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
+import java.util.List;
+
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.fragments.DatingDetailFragment;
 import vn.easycare.utils.AppFnUtils;
 
@@ -26,6 +29,8 @@ public class DatingListAdapter extends BaseAdapter{
     private LayoutInflater mLayoutInflater;
     private boolean mIsWaitingList = false;
     private boolean mIsClicked = false;
+    private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDatas;
+
     public DatingListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -33,9 +38,13 @@ public class DatingListAdapter extends BaseAdapter{
     public void setWaitingList(boolean isWaitingList){
         mIsWaitingList = isWaitingList;
     }
+    public void setmExaminationAppointmentItemDatas(List<ExaminationAppointmentItemData> data){
+        mExaminationAppointmentItemDatas = data;
+    }
     @Override
     public int getCount() {
-        return 10;
+
+        return (mExaminationAppointmentItemDatas != null)?mExaminationAppointmentItemDatas.size(): 0;
     }
 
     @Override
