@@ -11,7 +11,7 @@ import vn.easycare.utils.AppConstants;
  */
 public interface IExaminationAppointmentPresenter extends IPresenter<IExaminationAppointmentView>{
      void loadExaminationAppointmentsForDoctor(AppConstants.EXAMINATION_STATUS status,int page);
-     void searchExaminationAppointments( String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,Date date,Date start, Date end,int page);
+     void searchExaminationAppointments( String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,String date,String startDate, String endDate,int page);
      void AcceptAnExaminationAppointment(String appointmentID);
      void CancelAnExaminationAppointment(String appointmentID);
      void loadAnExaminationAppointmentForDoctor(String appointmentID);

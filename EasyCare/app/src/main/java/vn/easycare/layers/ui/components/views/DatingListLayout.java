@@ -20,15 +20,16 @@ import java.util.List;
 import vn.easycare.R;
 import vn.easycare.layers.ui.components.adapters.DatingListAdapter;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
+import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
+import vn.easycare.layers.ui.views.IExaminationAppointmentView;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/17/2014.
  */
-public class DatingListLayout extends LinearLayout{
-    public static final int DATING_WAITING_FOR_APPROVED = 0;
-    public static final int DATING_APPROVED = 1;
-    public static final int DATING_CANCEL = 2;
+public class DatingListLayout extends LinearLayout implements IExaminationAppointmentView{
     private static final int DATE_ITEM_PER_PAGE = 10;
     // For control, layout
     private ListView mLvDatingList;
@@ -42,10 +43,11 @@ public class DatingListLayout extends LinearLayout{
     private LoadMoreLayout mLoadMoreView;
 
     // For data, object
+    private IExaminationAppointmentPresenter mPresenter;
     private int mSelectedYear;
     private int mSelectedMonth;
     private int mSelectedDay;
-    private int mDatingType;
+    private AppConstants.EXAMINATION_STATUS mDatingType;
     private int mTotalItemCount;
     private int mPage;
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
@@ -76,8 +78,11 @@ public class DatingListLayout extends LinearLayout{
         mSelectedDay = -1;
 
         // For key and result search
+        mDatingCode = "";
+        mPatientName = "";
+        mDatingDate = "";
         mTotalItemCount = 0;
-        mDatingType = DATING_WAITING_FOR_APPROVED;
+        mDatingType = AppConstants.EXAMINATION_STATUS.WAITING;
         mPage = 1;
         mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
 
@@ -100,6 +105,8 @@ public class DatingListLayout extends LinearLayout{
         // Apply font
         AppFnUtils.applyFontForTextViewChild(this, null);
 
+        // Initialize object for API control
+        mPresenter = new ExaminationAppointmentPresenterImpl(this, getContext());
         // Call API here
         loadNewData();
     }
@@ -131,7 +138,14 @@ public class DatingListLayout extends LinearLayout{
      * Begin call API here
      */
     private void loadData(){
-
+        if(mDatingCode.length() > 0 ||
+                mPatientName.length() > 0 ||
+                mDatingDate.length() > 0){ // Search
+            mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mDatingType, mDatingDate, "", "", mPage);
+        }else{
+            // Load all
+            mPresenter.loadExaminationAppointmentsForDoctor(mDatingType, mPage);
+        }
     }
 
     /**
@@ -148,14 +162,14 @@ public class DatingListLayout extends LinearLayout{
         }
         if(mAdapter == null){
             mAdapter = new DatingListAdapter(getContext());
-            mAdapter.setWaitingList(mDatingType == DATING_WAITING_FOR_APPROVED);
+            mAdapter.setWaitingList(mDatingType == AppConstants.EXAMINATION_STATUS.WAITING);
             mAdapter.setmExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
             mLvDatingList.setAdapter(mAdapter);
         }else{
             mAdapter.notifyDataSetChanged();
         }
     }
-    public void setDateType(int dateType){
+    public void setDateType(AppConstants.EXAMINATION_STATUS dateType){
         mDatingType = dateType;
     }
 
@@ -213,4 +227,41 @@ public class DatingListLayout extends LinearLayout{
         datePickerDialog.show();
     }
 
+    @Override
+    public void DisplayExaminationAppointmentsForDoctor(List<ExaminationAppointmentItemData> examinationAppointmentItemsList) {
+        if(examinationAppointmentItemsList != null && examinationAppointmentItemsList.size() > 0){
+            if(mPage == 1){ // Load for first time
+                if(mExaminationAppointmentItemDataList != null){
+                    mExaminationAppointmentItemDataList.clear();
+                }
+                mExaminationAppointmentItemDataList.addAll(examinationAppointmentItemsList);
+            }else{ // Load more here
+                mExaminationAppointmentItemDataList.addAll(examinationAppointmentItemsList);
+            }
+        }else{ // Maybe failed
+
+        }
+        // Update UI anyway
+        updateUI();
+    }
+
+    @Override
+    public void DisplayMessageForAcceptAppointment(String message) {
+
+    }
+
+    @Override
+    public void DisplayMessageForCancelAppointment(String message) {
+
+    }
+
+    @Override
+    public void DisplayMessageForChangeAppointment(String message) {
+
+    }
+
+    @Override
+    public void DisplayPopupForAnAppointment(ExaminationAppointmentItemData item) {
+
+    }
 }

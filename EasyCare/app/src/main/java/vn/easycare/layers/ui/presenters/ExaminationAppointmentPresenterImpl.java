@@ -36,8 +36,8 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void searchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,Date date,Date start, Date end,int page) {
-        iView.DisplayExaminationAppointmentsForDoctor(iModel.doSearchExaminationAppointments(appointmentCode, patientName, status, date,start,end, page));
+    public void searchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,String date,String startDate, String endDate,int page) {
+        iView.DisplayExaminationAppointmentsForDoctor(iModel.doSearchExaminationAppointments(appointmentCode, patientName, status, date,startDate,endDate, page));
     }
 
     @Override

@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import vn.easycare.layers.ui.components.views.DatingListLayout;
 import vn.easycare.layers.ui.components.views.PatientListLayout;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by Thu Nguyen on 12/16/2014.
@@ -43,7 +44,13 @@ public class DatingListPagerAdapter extends PagerAdapter{
             datingListLayout = (DatingListLayout)mViewMaps.get(position);
         }else{
             datingListLayout = new DatingListLayout(mViewPager.getContext());
-            datingListLayout.setDateType(position);
+            if(position == 0) {
+                datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
+            }else if(position == 1){
+                datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
+            }else{
+                datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
+            }
             mViewMaps.put(position, datingListLayout);
         }
         container.addView(datingListLayout);

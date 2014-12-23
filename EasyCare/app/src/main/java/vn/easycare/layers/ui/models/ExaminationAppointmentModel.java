@@ -26,7 +26,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
     }
 
     @Override
-    public List<ExaminationAppointmentItemData> doSearchExaminationAppointments( String appointmentCode, String patientName, AppConstants.EXAMINATION_STATUS status, Date date, Date start, Date end, int page) {
+    public List<ExaminationAppointmentItemData> doSearchExaminationAppointments( String appointmentCode, String patientName, AppConstants.EXAMINATION_STATUS status, String date, String startDate, String endDate, int page) {
         return null;
     }
 

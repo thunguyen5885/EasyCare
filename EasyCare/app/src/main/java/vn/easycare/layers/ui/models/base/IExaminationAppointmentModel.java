@@ -12,7 +12,7 @@ import vn.easycare.utils.AppConstants;
  */
 public interface IExaminationAppointmentModel extends IBaseModel{
     List<ExaminationAppointmentItemData> getExaminationAppointmentsForDoctor( AppConstants.EXAMINATION_STATUS status, int page);
-    List<ExaminationAppointmentItemData> doSearchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,Date date,Date start,Date end,int page);
+    List<ExaminationAppointmentItemData> doSearchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,String date,String startDate,String endDate,int page);
     boolean doAcceptAnExaminationAppointment( String appointmentID);
     boolean doCancelAnExaminationAppointment( String appointmentID);
     ExaminationAppointmentItemData getAnExaminationAppointmentForDoctor(String appointmentID);
