@@ -13,7 +13,11 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 import vn.easycare.R;
+import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
+import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.components.views.CustomImageViewCircularShape;
 import vn.easycare.layers.ui.components.views.RatingLayout;
 import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
@@ -26,13 +30,17 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
     private Context mContext;
     private LayoutInflater mInflater;
     private boolean  mIsClicked = false;
+    private List<CommentAndAssessmentItemData> mItemDataList;
     public CommentAdapter(Context context){
         mContext = context;
         mInflater = LayoutInflater.from(context);
     }
+    public void setItemDataList(List<CommentAndAssessmentItemData> itemDataList){
+        mItemDataList = itemDataList;
+    }
     @Override
     public int getCount() {
-        return 10;
+        return (mItemDataList != null) ? mItemDataList.size() : 0;
     }
 
     @Override
@@ -69,14 +77,21 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         viewHolder.mCommentDiplayLayout.setOnClickListener(this);
 
         // Set data
+        CommentAndAssessmentItemData itemData = mItemDataList.get(position);
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mTvPatientName.setText("Nguyen Van A".toUpperCase());
-        viewHolder.mTvCommentDate.setText("10/12/2014");
-        viewHolder.mTvCommentHour.setText("12:01");
-        viewHolder.mTvCommentComment.setText("EasyCare là 1 sự trải nghiệm tuyệt vời. Tôi chỉ có vài phút là đặt được lịch hẹn với bác sĩ. Tôi sẽ giới thiệu EasyCare đến bạn bè và người thân của tôi.");
-        viewHolder.mCommonIdeaRatingLayout.setSelection(4);
-        viewHolder.mWaitingTimeRatingLayout.setSelection(2);
-        viewHolder.mAssetRatingLayout.setSelection(3);
+        viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
+        viewHolder.mTvPatientName.setText(itemData.getPatientName().toUpperCase());
+        viewHolder.mTvCommentComment.setText(itemData.getCommentContent());
+        viewHolder.mCommonIdeaRatingLayout.setSelection(itemData.getGeneralPoint() - 1);
+        viewHolder.mWaitingTimeRatingLayout.setSelection(itemData.getWaitingTimePoint() - 1);
+        viewHolder.mAssetRatingLayout.setSelection(itemData.getFacilityPoint() - 1);
+//        viewHolder.mTvPatientName.setText("Nguyen Van A".toUpperCase());
+//        viewHolder.mTvCommentDate.setText("10/12/2014");
+//        viewHolder.mTvCommentHour.setText("12:01");
+//        viewHolder.mTvCommentComment.setText("EasyCare là 1 sự trải nghiệm tuyệt vời. Tôi chỉ có vài phút là đặt được lịch hẹn với bác sĩ. Tôi sẽ giới thiệu EasyCare đến bạn bè và người thân của tôi.");
+//        viewHolder.mCommonIdeaRatingLayout.setSelection(4);
+//        viewHolder.mWaitingTimeRatingLayout.setSelection(2);
+//        viewHolder.mAssetRatingLayout.setSelection(3);
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView, null);

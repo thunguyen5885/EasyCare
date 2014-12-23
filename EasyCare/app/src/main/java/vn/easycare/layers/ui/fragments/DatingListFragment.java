@@ -86,7 +86,10 @@ public class DatingListFragment extends Fragment{
             if(mTabLayout != null){
                 mTabLayout.setSelection(position);
             }
-
+            // Reload the current item if data changed
+            if(mPagerAdapter != null){
+                mPagerAdapter.updateDataIfAnyForCurrentItem();
+            }
         }
 
         @Override

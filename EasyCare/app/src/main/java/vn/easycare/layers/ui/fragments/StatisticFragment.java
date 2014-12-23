@@ -6,18 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.InformationStatisticItemData;
+import vn.easycare.layers.ui.presenters.InformationStatisticPresenterImpl;
+import vn.easycare.layers.ui.presenters.base.IInformationStatisticPresenter;
+import vn.easycare.layers.ui.views.IInformationStatisticView;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class StatisticFragment extends Fragment {
+public class StatisticFragment extends Fragment implements IInformationStatisticView{
     public interface IStatisticOnClickListener{
         public void onSeeWatingList();
     }
@@ -28,15 +33,21 @@ public class StatisticFragment extends Fragment {
     private View mUserCommentCommonCommentLayout;
     private View mUserCommentWaitingCommentLayout;
     private View mUserCommentAssetCommentLayout;
+    private View mStatisticLayout;
+    private ProgressBar mPbLoading;
 
     // For data, object
+    private InformationStatisticItemData mItemData;
+    private IInformationStatisticPresenter mPresenter;
 
     public StatisticFragment(){
-
+        mPresenter = new InformationStatisticPresenterImpl(this, getActivity());
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_statistic, container, false);
+        mStatisticLayout = v.findViewById(R.id.mainStatisticLayout);
+        mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         mCommonCommentDetailInfoLayout = v.findViewById(R.id.statisticDetailInfoLayout);
         mCommonCommentOrderCountLayout = v.findViewById(R.id.statisticOrderCountLayout);
         mCommonCommentWaitingDatingLayout = v.findViewById(R.id.statisticWaitingDatingLayout);
@@ -62,7 +73,7 @@ public class StatisticFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateData();
+        getData();
     }
 
     @Override
@@ -81,6 +92,11 @@ public class StatisticFragment extends Fragment {
                 mOnStatisticOnClickListener.onSeeWatingList();
             }
         });
+    }
+    private void getData(){
+        mPbLoading.setVisibility(View.VISIBLE);
+        mStatisticLayout.setVisibility(View.GONE);
+        //mPresenter.
     }
     private void initViewForUserComment(View parentView, int posterId, int titleId){
         ImageView ivPoster = (ImageView) parentView.findViewById(R.id.ivUserCommentPoster);
@@ -106,13 +122,17 @@ public class StatisticFragment extends Fragment {
         tvRating.setText(String.valueOf(rating));
     }
     private void updateData(){
-        updateViewForCommonInfo(mCommonCommentDetailInfoLayout, 1242);
-        updateViewForCommonInfo(mCommonCommentOrderCountLayout, 42);
-        updateViewForCommonInfo(mCommonCommentWaitingDatingLayout, 15);
+        if(mItemData != null) {
+            mStatisticLayout.setVisibility(View.VISIBLE);
+            mPbLoading.setVisibility(View.GONE);
 
-        updateViewForUserComment(mUserCommentCommonCommentLayout, 761, 5);
-        updateViewForUserComment(mUserCommentWaitingCommentLayout, 761, 5);
-        updateViewForUserComment(mUserCommentAssetCommentLayout, 761, 5);
+            updateViewForCommonInfo(mCommonCommentDetailInfoLayout, mItemData.getDetailViewCount());
+            updateViewForCommonInfo(mCommonCommentOrderCountLayout, mItemData.getOrderedCount());
+            updateViewForCommonInfo(mCommonCommentWaitingDatingLayout, mItemData.getWaitingTimeCommentCount());
+            updateViewForUserComment(mUserCommentCommonCommentLayout, mItemData.getGeneralCommentCount(), mItemData.getGeneralAverageRate());
+            updateViewForUserComment(mUserCommentWaitingCommentLayout, mItemData.getWaitingTimeCommentCount(), mItemData.getWaitingTimeCommentCount());
+            updateViewForUserComment(mUserCommentAssetCommentLayout, mItemData.getFacilityCommentCount(), mItemData.getFacilityAverageRate());
+        }
     }
     @Override
     public void onResume() {

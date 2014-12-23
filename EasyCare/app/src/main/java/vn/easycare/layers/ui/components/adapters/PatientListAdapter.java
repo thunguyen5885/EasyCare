@@ -15,8 +15,12 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.PatientManagementItemData;
+import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.fragments.PatientDetailFragment;
 import vn.easycare.utils.AppFnUtils;
 import vn.easycare.utils.FontUtil;
@@ -29,6 +33,7 @@ public class PatientListAdapter extends BaseAdapter{
     private LayoutInflater mLayoutInflater;
     private boolean mIsBlackList = false;
     private boolean mIsClicked = false;
+    private List<PatientManagementItemData> mItemDataList;
     public PatientListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -36,9 +41,12 @@ public class PatientListAdapter extends BaseAdapter{
     public void setBlackList(boolean isBlackList){
         mIsBlackList = isBlackList;
     }
+    public void setItemDataList(List<PatientManagementItemData> itemDataList){
+        mItemDataList = itemDataList;
+    }
     @Override
     public int getCount() {
-        return 10;
+        return (mItemDataList != null) ? mItemDataList.size() : 0;
     }
 
     @Override
@@ -89,10 +97,15 @@ public class PatientListAdapter extends BaseAdapter{
         viewHolder.mPatientAvatar.getLayoutParams().height = avatarSize;
 
         // Set fake data
+        PatientManagementItemData itemData = mItemDataList.get(position);
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mPatientName.setText("Nguyen Van A");
-        viewHolder.mPatientPhone.setText("00388030330");
-        viewHolder.mPatientEmail.setText("abcd@gmail.com");
+        viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
+        viewHolder.mPatientName.setText(itemData.getPatientName());
+        viewHolder.mPatientEmail.setText(itemData.getPatientEmailAddress());
+        viewHolder.mPatientPhone.setText(itemData.getPatientPhoneNumber());
+//        viewHolder.mPatientName.setText("Nguyen Van A");
+//        viewHolder.mPatientPhone.setText("00388030330");
+//        viewHolder.mPatientEmail.setText("abcd@gmail.com");
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView, null);

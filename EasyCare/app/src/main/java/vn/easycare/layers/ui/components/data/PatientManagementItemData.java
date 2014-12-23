@@ -6,17 +6,26 @@ import android.graphics.Bitmap;
  * Created by phan on 12/16/2014.
  */
 public class PatientManagementItemData {
-    Bitmap PatientAvatar;
+    String PatientId;
+    String PatientAvatar;
     String PatientName;
     String PatientPhoneNumber;
     String PatientEmailAddress;
     boolean IsPatientBlocked;
 
-    public Bitmap getPatientAvatar() {
+    public String getPatientId() {
+        return PatientId;
+    }
+
+    public void setPatientId(String patientId) {
+        PatientId = patientId;
+    }
+
+    public String getPatientAvatar() {
         return PatientAvatar;
     }
 
-    public void setPatientAvatar(Bitmap patientAvatar) {
+    public void setPatientAvatar(String patientAvatar) {
         PatientAvatar = patientAvatar;
     }
 

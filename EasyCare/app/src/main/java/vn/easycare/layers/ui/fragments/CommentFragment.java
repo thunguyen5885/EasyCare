@@ -6,37 +6,52 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.CommentAdapter;
+import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
+import vn.easycare.layers.ui.components.views.LoadMoreLayout;
+import vn.easycare.layers.ui.presenters.CommentAndAssessmentPresenterImpl;
+import vn.easycare.layers.ui.presenters.base.ICommentAndAssessmentPresenter;
+import vn.easycare.layers.ui.views.ICommentAndAssessmentView;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class CommentFragment extends Fragment implements View.OnClickListener{
+public class CommentFragment extends Fragment implements ICommentAndAssessmentView{
     public static final int COMMENT_NUM_PER_PAGE = 3;
     private int mTotalItemCount = 0;
 
     // For control, layout
+    private ProgressBar mPbLoading;
     private ListView mCommentListView;
     private CommentAdapter mCommentAdapter;
-    private View mLoadMoreView;
+    private LoadMoreLayout mLoadMoreView;
+
     // For data, object
-
+    private List<CommentAndAssessmentItemData> mCommentAndAssessmentItemDatas;
+    private ICommentAndAssessmentPresenter mPresenter;
+    private int mPage;
     public CommentFragment(){
-
+        mCommentAndAssessmentItemDatas = new ArrayList<CommentAndAssessmentItemData>();
+        mPresenter = new CommentAndAssessmentPresenterImpl(this, getActivity());
+        mPage = 1;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
+        mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         mCommentListView = (ListView) v.findViewById(R.id.commentListView);
-        mLoadMoreView = inflater.inflate(R.layout.load_more_ctrl, null);
+        mLoadMoreView = new LoadMoreLayout(getActivity());
+        mLoadMoreView.setOnLoadMoreClickListener(mOnLoadMoreClickListener);
         mCommentListView.addFooterView(mLoadMoreView);
-        View loadMoreEventLayout = mLoadMoreView.findViewById(R.id.loadMoreLayout);
-        loadMoreEventLayout.setOnClickListener(this);
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(v, null);
@@ -46,8 +61,7 @@ public class CommentFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mCommentAdapter = new CommentAdapter(getActivity());
-        mCommentListView.setAdapter(mCommentAdapter);
+        loadNewData();
     }
 
     @Override
@@ -64,12 +78,59 @@ public class CommentFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.loadMoreLayout:
-                Toast.makeText(getActivity(), "Load more clicked", Toast.LENGTH_LONG).show();
-                break;
+    private void loadMoreData(){
+        mPage ++;
+        mLoadMoreView.beginLoading();
+        loadData();
+    }
+    private void loadNewData(){
+        mPage = 1;
+        mCommentAndAssessmentItemDatas.clear();
+        mPbLoading.setVisibility(View.VISIBLE);
+        mCommentListView.setVisibility(View.GONE);
+        loadData();
+    }
+    private void loadData(){
+        mPresenter.loadCommentAndAssessmentForDoctor(null, mPage);
+    }
+    private void updateUI(){
+        mPbLoading.setVisibility(View.GONE);
+        mCommentListView.setVisibility(View.VISIBLE);
+        if(mCommentAdapter == null){
+            mCommentAdapter = new CommentAdapter(getActivity());
+            mCommentAdapter.setItemDataList(mCommentAndAssessmentItemDatas);
+            mCommentListView.setAdapter(mCommentAdapter);
+        }else{
+            mCommentAdapter.notifyDataSetChanged();
         }
     }
+    @Override
+    public void DisplayAllCommentAndAssessmentForDoctor(List<CommentAndAssessmentItemData> commentAndAssessmentItemsList) {
+        if(commentAndAssessmentItemsList != null && commentAndAssessmentItemsList.size() > 0){
+            if(mPage == 1){ // Load for first time
+                if(mCommentAndAssessmentItemDatas != null){
+                    mCommentAndAssessmentItemDatas.clear();
+                }
+                mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);
+            }else{ // Load more here
+                mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);
+            }
+            mLoadMoreView.loadMoreComplete();
+        }else{ // Maybe failed or data is end of list
+            mLoadMoreView.closeView();
+        }
+        // Update UI anyway
+        updateUI();
+    }
+
+    @Override
+    public void DisplayMessageForHideCommentAndAssessment(String message) {
+
+    }
+    private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
+        @Override
+        public void onLoadMoreClicked() {
+            loadMoreData();
+        }
+    };
 }

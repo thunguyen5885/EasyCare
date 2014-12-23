@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by phan on 12/16/2014.
  */
 public class CommentAndAssessmentItemData {
-    Bitmap PatientAvatar;
+    String PatientAvatar;
     String PatientName;
     Date CommentDateTime;
     String CommentContent;
@@ -73,11 +73,11 @@ public class CommentAndAssessmentItemData {
         PatientName = patientName;
     }
 
-    public Bitmap getPatientAvatar() {
+    public String getPatientAvatar() {
         return PatientAvatar;
     }
 
-    public void setPatientAvatar(Bitmap patientAvatar) {
+    public void setPatientAvatar(String patientAvatar) {
         PatientAvatar = patientAvatar;
     }
 }

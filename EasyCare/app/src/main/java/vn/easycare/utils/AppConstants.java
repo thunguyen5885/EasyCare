@@ -16,4 +16,7 @@ public class AppConstants {
     public static final String DEFAULT_ENCODING = "UTF-8";
 
     public static String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+
+    /* Define all keys for screen transition*/
+    public static final String APPOINMENT_ID_KEY = "appointment_id_key";
 }

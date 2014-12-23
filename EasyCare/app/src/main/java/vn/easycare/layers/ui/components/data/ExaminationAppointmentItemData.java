@@ -10,7 +10,8 @@ import vn.easycare.utils.AppConstants;
  * Created by phannguyen on 12/13/14.
  */
 public class ExaminationAppointmentItemData {
-    Bitmap PatientAvatar;
+    String ExaminationId;
+    String PatientAvatar;
     String PatientName;
     Date ExaminationDateTime;
     String ExaminationReasion;
@@ -19,19 +20,21 @@ public class ExaminationAppointmentItemData {
     public ExaminationAppointmentItemData() {
     }
 
-    public ExaminationAppointmentItemData(Bitmap patientAvatar, String patientName, Date examinationDateTime, String examinationReasion, AppConstants.EXAMINATION_STATUS examinationStatus) {
+    public ExaminationAppointmentItemData(String examinationId, String patientAvatar, String patientName, Date examinationDateTime, String examinationReasion, AppConstants.EXAMINATION_STATUS examinationStatus) {
+        ExaminationId = examinationId;
         PatientAvatar = patientAvatar;
         PatientName = patientName;
         ExaminationDateTime = examinationDateTime;
         ExaminationReasion = examinationReasion;
         ExaminationStatus = examinationStatus;
     }
-
-    public Bitmap getPatientAvatar() {
+    public String getExaminationId(){return ExaminationId;}
+    public void setExaminationId(String examinationId){ExaminationId = examinationId;}
+    public String getPatientAvatar() {
         return PatientAvatar;
     }
 
-    public void setPatientAvatar(Bitmap patientAvatar) {
+    public void setPatientAvatar(String patientAvatar) {
         PatientAvatar = patientAvatar;
     }
 

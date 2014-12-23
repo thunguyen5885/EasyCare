@@ -62,6 +62,7 @@
     <string name="dating_list_search">Tìm kiếm</string>
     <string name="dating_list_calendar_change">Đổi lịch</string>
     <string name="dating_list_accept">Đồng ý</string>
+    <string name="dating_list_accept_ok">Chấp nhận</string>
     
     <!-- Define string for dating_detail screen-->
     <string name="dating_detail">Chi tiết cuộc hẹn khám</string>

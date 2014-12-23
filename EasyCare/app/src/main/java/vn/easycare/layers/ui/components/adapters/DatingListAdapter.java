@@ -18,6 +18,7 @@ import java.util.List;
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.fragments.DatingDetailFragment;
 import vn.easycare.utils.AppFnUtils;
 
@@ -25,10 +26,18 @@ import vn.easycare.utils.AppFnUtils;
  * Created by ThuNguyen on 12/16/2014.
  */
 public class DatingListAdapter extends BaseAdapter{
+    public interface IDatingItemClickListener{
+        public void onDatingDetail(String appointmentId);
+        public void onDatingCalendarChange(ExaminationAppointmentItemData itemData);
+        public void onDatingCalendarCancel(String appointmentId);
+        public void onDatingCalendarAccept(String appointmentId);
+    }
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private boolean mIsWaitingList = false;
     private boolean mIsClicked = false;
+    private IDatingItemClickListener mDatingItemClickListener;
+
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDatas;
 
     public DatingListAdapter(Context context){
@@ -38,8 +47,11 @@ public class DatingListAdapter extends BaseAdapter{
     public void setWaitingList(boolean isWaitingList){
         mIsWaitingList = isWaitingList;
     }
-    public void setmExaminationAppointmentItemDatas(List<ExaminationAppointmentItemData> data){
+    public void setExaminationAppointmentItemDatas(List<ExaminationAppointmentItemData> data){
         mExaminationAppointmentItemDatas = data;
+    }
+    public void setDatingItemClickListener(IDatingItemClickListener datingItemClickListener){
+        mDatingItemClickListener = datingItemClickListener;
     }
     @Override
     public int getCount() {
@@ -100,11 +112,16 @@ public class DatingListAdapter extends BaseAdapter{
         viewHolder.mPatientAvatar.getLayoutParams().width = avatarSize;
         viewHolder.mPatientAvatar.getLayoutParams().height = avatarSize;
 
-        // Set fake data
+        // Set item data
+        ExaminationAppointmentItemData itemData = mExaminationAppointmentItemDatas.get(position);
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mTvPatientName.setText("Nguyen Van A");
-        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
-        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
+        viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
+        viewHolder.mTvPatientName.setText(itemData.getPatientName());
+        viewHolder.mTvDatingTime.setText(itemData.getExaminationDateTime().toString());
+        viewHolder.mTvPatientDisease.setText(itemData.getExaminationReasion());
+//        viewHolder.mTvPatientName.setText("Nguyen Van A");
+//        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
+//        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView, null);
@@ -123,17 +140,29 @@ public class DatingListAdapter extends BaseAdapter{
                     mIsClicked = false;
                 }
             }, 500);
+            int selectedPos = (Integer) v.getTag();
+            ExaminationAppointmentItemData selectedItem = mExaminationAppointmentItemDatas.get(selectedPos);
+            String appointmentId = selectedItem.getExaminationId();
             switch (v.getId()){
                 case R.id.tvPatientName:
-                    // Go to dating detail screen
-                    DatingDetailFragment datingDetailFragment = new DatingDetailFragment();
-                    ((HomeActivity) mContext).showFragment(datingDetailFragment);
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onDatingDetail(appointmentId);
+                    }
                     break;
                 case R.id.btnCalendarChange:
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onDatingCalendarChange(selectedItem);
+                    }
                     break;
                 case R.id.btnCalendarCancel:
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onDatingCalendarCancel(appointmentId);
+                    }
                     break;
                 case R.id.btnCalendarAccept:
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onDatingCalendarAccept(appointmentId);
+                    }
                     break;
             }
         }

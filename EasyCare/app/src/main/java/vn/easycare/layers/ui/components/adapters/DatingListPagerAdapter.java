@@ -15,6 +15,9 @@ import vn.easycare.utils.AppConstants;
  * Created by Thu Nguyen on 12/16/2014.
  */
 public class DatingListPagerAdapter extends PagerAdapter{
+    public interface IBroadCastToSynData{
+        public void broadCast(AppConstants.EXAMINATION_STATUS status);
+    }
     private ViewPager mViewPager;
     private HashMap<Integer, View> mViewMaps;
     public DatingListPagerAdapter(ViewPager viewPager){
@@ -44,6 +47,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
             datingListLayout = (DatingListLayout)mViewMaps.get(position);
         }else{
             datingListLayout = new DatingListLayout(mViewPager.getContext());
+
             if(position == 0) {
                 datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
             }else if(position == 1){
@@ -51,9 +55,40 @@ public class DatingListPagerAdapter extends PagerAdapter{
             }else{
                 datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
             }
+            datingListLayout.loadNewData();
+
             mViewMaps.put(position, datingListLayout);
         }
         container.addView(datingListLayout);
         return datingListLayout;
     }
+
+    /**
+     * Load data again for current item if data changed
+     */
+    public void updateDataIfAnyForCurrentItem(){
+        int currentPos = mViewPager.getCurrentItem();
+        DatingListLayout curItem = (DatingListLayout) mViewMaps.get(currentPos);
+        curItem.enforceToRefreshForDataChanged();
+    }
+    private IBroadCastToSynData mBroadCastToSynData = new IBroadCastToSynData() {
+        @Override
+        public void broadCast(AppConstants.EXAMINATION_STATUS status) {
+            // Always change on the first item
+            DatingListLayout waitingDatingListLayout = (DatingListLayout) mViewMaps.get(0);
+            waitingDatingListLayout.setNeedToRefresh(true);
+            switch (status){
+                case ACCEPTED:
+                    DatingListLayout acceptDatingListLayout = (DatingListLayout) mViewMaps.get(1);
+                    acceptDatingListLayout.setNeedToRefresh(true);
+                    break;
+                case WAITING:
+                    break;
+                case CANCEL:
+                    DatingListLayout cancelDatingListLayout = (DatingListLayout) mViewMaps.get(2);
+                    cancelDatingListLayout.setNeedToRefresh(true);
+                    break;
+            }
+        }
+    };
 }
