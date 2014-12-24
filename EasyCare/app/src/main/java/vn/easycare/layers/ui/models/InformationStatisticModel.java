@@ -2,7 +2,10 @@ package vn.easycare.layers.ui.models;
 
 import android.content.Context;
 
+import java.util.List;
+
 import vn.easycare.layers.services.IWSResponse;
+import vn.easycare.layers.ui.components.data.InformationStatisticItemData;
 import vn.easycare.layers.ui.models.base.IInformationStatisticModel;
 
 /**
@@ -17,4 +20,8 @@ public class InformationStatisticModel implements IInformationStatisticModel {
     }
 
 
+    @Override
+    public List<InformationStatisticItemData> getAllInfoStatisticForDoctor() {
+        return null;
+    }
 }

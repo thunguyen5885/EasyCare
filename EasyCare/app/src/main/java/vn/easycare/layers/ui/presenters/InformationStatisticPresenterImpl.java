@@ -25,4 +25,9 @@ public class InformationStatisticPresenterImpl implements IInformationStatisticP
     public void init(IInformationStatisticView view) {
 
     }
+
+    @Override
+    public void loadAllInfoStatisticForDoctor() {
+        iView.DisplayAllInfoStatisticForDoctor(iModel.getAllInfoStatisticForDoctor());
+    }
 }

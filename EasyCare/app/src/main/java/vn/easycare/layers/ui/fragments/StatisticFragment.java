@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.InformationStatisticItemData;
@@ -23,6 +25,8 @@ import vn.easycare.utils.AppFnUtils;
  * Created by ThuNguyen on 12/13/2014.
  */
 public class StatisticFragment extends Fragment implements IInformationStatisticView{
+
+
     public interface IStatisticOnClickListener{
         public void onSeeWatingList();
     }
@@ -152,4 +156,9 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
             ((HomeActivity) getActivity()).showFragment(datingListFragment);
         }
     };
+
+    @Override
+    public void DisplayAllInfoStatisticForDoctor(List<InformationStatisticItemData> InfoStatisticItemsList) {
+
+    }
 }
