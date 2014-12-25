@@ -26,6 +26,7 @@
                 android:id="@+id/commentPatientAvatar"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:scaleType="fitXY"
                 android:background="@drawable/layout_circle_transparent_background"
             />
         </RelativeLayout>
@@ -33,7 +34,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="5"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/home_item_separator_size">
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -127,7 +129,7 @@
                 android:layout_marginBottom="@dimen/common_padding">
                 <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
                     android:id="@+id/commentDisplayLayout"
-                    android:layout_width="65dp"
+                    android:layout_width="55dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/common_padding"
@@ -136,7 +138,7 @@
                     custom:foreground="@drawable/layout_item_selector_with_corner">
                     <TextView
                         android:id="@+id/tvCommentDisplay"
-                        style="@style/DefaultSmallTextView"
+                        style="@style/DefaultTinyTextView"
                         android:layout_width="match_parent"
                         android:layout_centerInParent="true"
                         android:paddingTop="5dp"

@@ -10,5 +10,5 @@ import vn.easycare.layers.ui.views.base.IBaseView;
  * Created by phan on 12/16/2014.
  */
 public interface IInformationStatisticView extends IBaseView{
-    void DisplayAllInfoStatisticForDoctor(List<InformationStatisticItemData> InfoStatisticItemsList);
+    void DisplayAllInfoStatisticForDoctor(InformationStatisticItemData InfoStatisticItem);
 }

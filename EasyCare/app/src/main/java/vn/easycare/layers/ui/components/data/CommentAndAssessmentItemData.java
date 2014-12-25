@@ -10,18 +10,18 @@ import java.util.Date;
 public class CommentAndAssessmentItemData {
     String PatientAvatar;
     String PatientName;
-    Date CommentDateTime;
+    String CommentDateTime;
     String CommentContent;
     int GeneralPoint;//from 1 to 5
     int FacilityPoint;//from 1 to 5
     int WaitingTimePoint;//from 1 to 5
     boolean IsDisplayed;
 
-    public Date getCommentDateTime() {
+    public String getCommentDateTime() {
         return CommentDateTime;
     }
 
-    public void setCommentDateTime(Date commentDateTime) {
+    public void setCommentDateTime(String commentDateTime) {
         CommentDateTime = commentDateTime;
     }
 

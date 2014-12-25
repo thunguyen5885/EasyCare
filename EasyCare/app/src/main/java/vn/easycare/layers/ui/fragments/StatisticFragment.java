@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_statistic, container, false);
         mStatisticLayout = v.findViewById(R.id.mainStatisticLayout);
+
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         mCommonCommentDetailInfoLayout = v.findViewById(R.id.statisticDetailInfoLayout);
         mCommonCommentOrderCountLayout = v.findViewById(R.id.statisticOrderCountLayout);
@@ -84,6 +86,7 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+
     private void initViewForCommonInfo(View parentView, int posterId, int titleId){
         ImageView ivPoster = (ImageView) parentView.findViewById(R.id.ivCommonCommentPoster);
         ivPoster.setImageResource(posterId);
@@ -100,7 +103,14 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
     private void getData(){
         mPbLoading.setVisibility(View.VISIBLE);
         mStatisticLayout.setVisibility(View.GONE);
-        //mPresenter.
+        mPresenter = new InformationStatisticPresenterImpl(this, getActivity());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.loadAllInfoStatisticForDoctor();
+            }
+        }, 2000);
+
     }
     private void initViewForUserComment(View parentView, int posterId, int titleId){
         ImageView ivPoster = (ImageView) parentView.findViewById(R.id.ivUserCommentPoster);
@@ -132,9 +142,9 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
 
             updateViewForCommonInfo(mCommonCommentDetailInfoLayout, mItemData.getDetailViewCount());
             updateViewForCommonInfo(mCommonCommentOrderCountLayout, mItemData.getOrderedCount());
-            updateViewForCommonInfo(mCommonCommentWaitingDatingLayout, mItemData.getWaitingTimeCommentCount());
+            updateViewForCommonInfo(mCommonCommentWaitingDatingLayout, mItemData.getExaminationPendingCount());
             updateViewForUserComment(mUserCommentCommonCommentLayout, mItemData.getGeneralCommentCount(), mItemData.getGeneralAverageRate());
-            updateViewForUserComment(mUserCommentWaitingCommentLayout, mItemData.getWaitingTimeCommentCount(), mItemData.getWaitingTimeCommentCount());
+            updateViewForUserComment(mUserCommentWaitingCommentLayout, mItemData.getWaitingTimeCommentCount(), mItemData.getWaitingTimeAverageRate());
             updateViewForUserComment(mUserCommentAssetCommentLayout, mItemData.getFacilityCommentCount(), mItemData.getFacilityAverageRate());
         }
     }
@@ -158,7 +168,10 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
     };
 
     @Override
-    public void DisplayAllInfoStatisticForDoctor(List<InformationStatisticItemData> InfoStatisticItemsList) {
-
+    public void DisplayAllInfoStatisticForDoctor(InformationStatisticItemData InfoStatisticItem) {
+        mItemData = InfoStatisticItem;
+        if(mItemData != null){
+            updateData();
+        }
     }
 }

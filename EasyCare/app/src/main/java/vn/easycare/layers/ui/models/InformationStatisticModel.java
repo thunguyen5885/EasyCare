@@ -21,7 +21,17 @@ public class InformationStatisticModel implements IInformationStatisticModel {
 
 
     @Override
-    public List<InformationStatisticItemData> getAllInfoStatisticForDoctor() {
-        return null;
+    public InformationStatisticItemData getAllInfoStatisticForDoctor() {
+        InformationStatisticItemData itemData = new InformationStatisticItemData();
+        itemData.setDetailViewCount(500);
+        itemData.setOrderedCount(200);
+        itemData.setExaminationPendingCount(2);
+        itemData.setGeneralCommentCount(276);
+        itemData.setGeneralAverageRate(7);
+        itemData.setWaitingTimeCommentCount(300);
+        itemData.setWaitingTimeAverageRate(5);
+        itemData.setFacilityCommentCount(250);
+        itemData.setFacilityAverageRate(7);
+        return itemData;
     }
 }

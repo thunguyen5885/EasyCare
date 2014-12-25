@@ -22,14 +22,17 @@ public class LoadMoreLayout extends FrameLayout{
     private ILoadMoreClickListener mILoadMoreClickListener;
     public LoadMoreLayout(Context context) {
         super(context);
+        init(context);
     }
 
     public LoadMoreLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
     }
 
     public LoadMoreLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        init(context);
     }
     private void init(Context context){
         mInflater = LayoutInflater.from(context);
@@ -51,13 +54,13 @@ public class LoadMoreLayout extends FrameLayout{
     }
     public void beginLoading(){
         setVisibility(View.VISIBLE);
-        mLoadMore.setVisibility(View.GONE);
+        mLoadMore.setVisibility(View.INVISIBLE);
         mProgressBar.setVisibility(View.VISIBLE);
     }
     public void loadMoreComplete(){
         setVisibility(View.VISIBLE);
         mLoadMore.setVisibility(View.VISIBLE);
-        mProgressBar.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.INVISIBLE);
     }
     public void closeView(){
         setVisibility(View.GONE);

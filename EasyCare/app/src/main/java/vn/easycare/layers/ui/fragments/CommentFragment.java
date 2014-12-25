@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,12 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         loadData();
     }
     private void loadData(){
-        mPresenter.loadCommentAndAssessmentForDoctor(null, mPage);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPresenter.loadCommentAndAssessmentForDoctor(null, mPage);
+            }
+        }, 2000);
     }
     private void updateUI(){
         mPbLoading.setVisibility(View.GONE);
@@ -115,9 +121,12 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
             }else{ // Load more here
                 mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);
             }
+            mCommentListView.removeFooterView(mLoadMoreView);
             mLoadMoreView.loadMoreComplete();
+            mCommentListView.addFooterView(mLoadMoreView);
         }else{ // Maybe failed or data is end of list
             mLoadMoreView.closeView();
+            mCommentListView.removeFooterView(mLoadMoreView);
         }
         // Update UI anyway
         updateUI();
