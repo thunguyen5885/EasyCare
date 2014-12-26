@@ -80,7 +80,7 @@ public class PatientListAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.patient_item_ctrl, null);
             viewHolder = new ViewHolder();
-            viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatar);
+            viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatarThumb);
             viewHolder.mPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
             viewHolder.mPatientPhone = (TextView) convertView.findViewById(R.id.tvPatientPhone);
             viewHolder.mPatientEmail = (TextView) convertView.findViewById(R.id.tvPatientEmail);

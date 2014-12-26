@@ -15,7 +15,7 @@ public class AuthorizationWSBuilder {
     public AuthorizationWSBuilder() {
     }
 
-    public AuthorizationWSBuilder(JSONObject productJson) throws JSONException {
+    public AuthorizationWSBuilder(JSONObject resJson) throws JSONException {
         //parse json and set value for properties
     }
     public AuthorizationWSBuilder withSessionToken(String sessionToken) {

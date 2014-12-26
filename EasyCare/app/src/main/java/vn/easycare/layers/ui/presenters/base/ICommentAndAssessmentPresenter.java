@@ -9,6 +9,6 @@ import vn.easycare.utils.AppConstants;
  * Created by phan on 12/16/2014.
  */
 public interface ICommentAndAssessmentPresenter extends IPresenter<ICommentAndAssessmentView> {
-    void loadCommentAndAssessmentForDoctor(String doctorID,int page);
+    void loadCommentAndAssessmentForDoctor(int page);
     void HideACommentAndAssessment(String commentID);
 }

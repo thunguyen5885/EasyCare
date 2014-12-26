@@ -2,8 +2,13 @@ package vn.easycare.layers.ui.presenters;
 
 import android.content.Context;
 
+import java.util.List;
+
+import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 import vn.easycare.layers.ui.models.CommentAndAssessmentModel;
 import vn.easycare.layers.ui.models.ExaminationAppointmentModel;
+import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.ICommentAndAssessmentModel;
 import vn.easycare.layers.ui.models.base.IExaminationAppointmentModel;
 import vn.easycare.layers.ui.presenters.base.ICommentAndAssessmentPresenter;
@@ -13,7 +18,7 @@ import vn.easycare.layers.ui.views.IExaminationAppointmentView;
 /**
  * Created by phan on 12/16/2014.
  */
-public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentPresenter {
+public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentPresenter,IBaseModel.IResponseUIDataCallback {
     private ICommentAndAssessmentView iView;
     private ICommentAndAssessmentModel iModel;
     Context mContext;
@@ -29,8 +34,9 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
     }
 
     @Override
-    public void loadCommentAndAssessmentForDoctor(String doctorID, int page) {
-        iView.DisplayAllCommentAndAssessmentForDoctor(iModel.getAllCommentsAndAssessmentsForDoctor(doctorID,page));
+    public void loadCommentAndAssessmentForDoctor(int page) {
+        iModel.getAllCommentsAndAssessmentsForDoctor(page);
+
     }
 
     @Override
@@ -41,5 +47,21 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
         }else{
             iView.DisplayMessageForHideCommentAndAssessment("");
         }
+    }
+
+    @Override
+    public void onResponseOK(IBaseItemData itemData) {
+
+    }
+
+    @Override
+    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
+        List<CommentAndAssessmentItemData> commentAndAssessmentItemsList = (List<CommentAndAssessmentItemData>) itemDataList;
+        iView.DisplayAllCommentAndAssessmentForDoctor(commentAndAssessmentItemsList);
+    }
+
+    @Override
+    public void onResponseFail(String message) {
+        iView.DisplayMessageIncaseError(message);
     }
 }

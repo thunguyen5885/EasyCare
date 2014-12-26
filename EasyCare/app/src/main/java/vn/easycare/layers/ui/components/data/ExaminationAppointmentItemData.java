@@ -5,12 +5,13 @@ import android.graphics.Bitmap;
 import java.io.Serializable;
 import java.util.Date;
 
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phannguyen on 12/13/14.
  */
-public class ExaminationAppointmentItemData implements Serializable{
+public class ExaminationAppointmentItemData implements IBaseItemData,Serializable {
     String ExaminationId;
     String PatientAvatar;
     String PatientName;

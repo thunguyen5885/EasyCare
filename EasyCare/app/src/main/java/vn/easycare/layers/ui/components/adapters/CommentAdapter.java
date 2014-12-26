@@ -1,6 +1,5 @@
 package vn.easycare.layers.ui.components.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -8,10 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import com.android.volley.toolbox.NetworkImageView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -88,7 +83,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         // Set data
         CommentAndAssessmentItemData itemData = mItemDataList.get(position);
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
+        viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatarThumb(), DataSingleton.getInstance(mContext).getImageLoader());
         viewHolder.mTvPatientName.setText(itemData.getPatientName().toUpperCase());
         viewHolder.mTvCommentComment.setText(itemData.getCommentContent());
         viewHolder.mCommonIdeaRatingLayout.setSelection(itemData.getGeneralPoint() - 1);

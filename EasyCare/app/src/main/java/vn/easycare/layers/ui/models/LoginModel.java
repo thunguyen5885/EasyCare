@@ -2,6 +2,8 @@ package vn.easycare.layers.ui.models;
 
 import android.content.Context;
 
+import java.util.List;
+
 import vn.easycare.R;
 import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.services.IWebServiceAccess;
@@ -12,6 +14,8 @@ import vn.easycare.layers.services.WSError;
 import vn.easycare.layers.services.concretes.LoginWSAccess;
 import vn.easycare.layers.services.models.AuthorizationWSModel;
 import vn.easycare.layers.services.models.AuthorizationWSParamModel;
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.ILoginModel;
 import vn.easycare.utils.AppConstants;
 
@@ -21,7 +25,7 @@ import vn.easycare.utils.AppConstants;
 public class LoginModel implements ILoginModel, IWSResponse{
 
     private Context mContext;
-    private ILoginCallback mCallback;
+    private IResponseUIDataCallback mCallback;
 
     public  LoginModel(Context context){
         mContext = context;
@@ -63,7 +67,7 @@ public class LoginModel implements ILoginModel, IWSResponse{
     }
 
     @Override
-    public void setLoginCallback(ILoginCallback callback) {
+    public void setResponseCallback(IResponseUIDataCallback callback) {
         this.mCallback = callback;
     }
 
@@ -72,11 +76,12 @@ public class LoginModel implements ILoginModel, IWSResponse{
     public void onWSResponseOK(IWebServiceModel result) {
         AuthorizationWSModel model  = (AuthorizationWSModel) result;
         WSDataSingleton.getInstance(mContext).setSessionToken(model.getCurrentSessionToken());
-        mCallback.onLoginOK();
+        IBaseItemData item = null;
+        mCallback.onResponseOK(item);
     }
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onLoginFail(error.getErrorMessage());
+        mCallback.onResponseFail(error.getErrorMessage());
     }
 }

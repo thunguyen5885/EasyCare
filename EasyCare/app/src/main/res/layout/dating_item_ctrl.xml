@@ -14,7 +14,7 @@
             android:layout_marginLeft="@dimen/common_padding"
             android:layout_marginRight="@dimen/common_padding">
             <com.android.volley.toolbox.NetworkImageView
-                android:id="@+id/patientAvatar"
+                android:id="@+id/patientAvatarThumb"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
 

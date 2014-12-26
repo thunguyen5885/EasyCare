@@ -41,7 +41,7 @@ public class PatientDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_patient_detail, container, false);
-        mPatientAvatar = (NetworkImageView) v.findViewById(R.id.patientAvatar);
+        mPatientAvatar = (NetworkImageView) v.findViewById(R.id.patientAvatarThumb);
         mTvPatientName = (TextView) v.findViewById(R.id.tvPatientName);
         mTvPatientBirthday = (TextView) v.findViewById(R.id.tvPatientBirthday);
         mTvPatientPhone = (TextView) v.findViewById(R.id.tvPatientPhone);

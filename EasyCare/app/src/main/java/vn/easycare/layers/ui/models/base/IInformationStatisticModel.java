@@ -11,5 +11,5 @@ import vn.easycare.utils.AppConstants;
  * Created by phan on 12/16/2014.
  */
 public interface IInformationStatisticModel extends IBaseModel{
-    InformationStatisticItemData getAllInfoStatisticForDoctor();
+    void getAllInfoStatisticForDoctor();
 }

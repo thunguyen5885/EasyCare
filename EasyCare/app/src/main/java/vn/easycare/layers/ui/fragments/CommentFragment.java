@@ -110,7 +110,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPresenter.loadCommentAndAssessmentForDoctor(null, mPage);
+                mPresenter.loadCommentAndAssessmentForDoctor( mPage);
             }
         }, 2000);
     }
@@ -169,6 +169,12 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
             }
         }
     }
+
+    @Override
+    public void DisplayMessageIncaseError(String message) {
+
+    }
+
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
         @Override
         public void onLoadMoreClicked() {

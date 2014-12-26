@@ -33,6 +33,22 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
         this.mCallback = callback;
     }
 
+    @Override
+    public void onResponseFailed(String error) {
+        WSError errorObj = new WSError(error);
+        if(mCallback!=null)
+            mCallback.onWSResponseFailed(errorObj);
+    }
+
+    @Override
+    public Map<String, String> getWSHeaders() {
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Content-Type","application/x-www-form-urlencoded");
+        return params;
+    }
+
+    @Override
     public void sendGetRequest(){
         StringRequest sr = new StringRequest(Request.Method.GET, getWSURL(), new Response.Listener<String>() {
             @Override
@@ -58,6 +74,7 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
         WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 
+    @Override
     public void sendPostRequest(){
 
        StringRequest sr = new StringRequest(Request.Method.POST, getWSURL(), new Response.Listener<String>() {

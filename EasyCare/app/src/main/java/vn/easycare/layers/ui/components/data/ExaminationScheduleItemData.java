@@ -1,9 +1,11 @@
 package vn.easycare.layers.ui.components.data;
 
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+
 /**
  * Created by phan on 12/24/2014.
  */
-public class ExaminationScheduleItemData {
+public class ExaminationScheduleItemData implements IBaseItemData {
     String scheduleId;
     String scheduleDate;//yyyy-MM-dd
     String timeFrom;//hh:mm:ss

@@ -12,4 +12,5 @@ import vn.easycare.layers.ui.views.base.IBaseView;
 public interface ICommentAndAssessmentView extends IBaseView{
     void DisplayAllCommentAndAssessmentForDoctor(List<CommentAndAssessmentItemData> commentAndAssessmentItemsList);
     void DisplayMessageForHideCommentAndAssessment(String message);
+    void DisplayMessageIncaseError(String message);
 }

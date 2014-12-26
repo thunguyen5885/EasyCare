@@ -8,6 +8,7 @@ import java.util.List;
 
 import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.IExaminationAppointmentModel;
 import vn.easycare.utils.AppConstants;
 
@@ -111,4 +112,8 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
         return true;
     }
 
+    @Override
+    public void setResponseCallback(IResponseUIDataCallback callback) {
+
+    }
 }

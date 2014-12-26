@@ -10,6 +10,6 @@ import vn.easycare.utils.AppConstants;
  * Created by phan on 12/16/2014.
  */
 public interface ICommentAndAssessmentModel extends IBaseModel{
-    List<CommentAndAssessmentItemData> getAllCommentsAndAssessmentsForDoctor(String doctorID,int page);
+    void getAllCommentsAndAssessmentsForDoctor(int page);
     boolean doHideACommentAndAssessment(String commentID);
 }

@@ -79,7 +79,7 @@ public class DatingListAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.dating_item_ctrl, null);
             viewHolder = new ViewHolder();
-            viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatar);
+            viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatarThumb);
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
             viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvDatingTime);
             viewHolder.mTvPatientDisease = (TextView) convertView.findViewById(R.id.tvPatientDisease);

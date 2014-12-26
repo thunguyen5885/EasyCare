@@ -8,9 +8,5 @@ import vn.easycare.layers.ui.models.base.IBaseModel;
 public interface ILoginModel extends IBaseModel {
     void getLoginAuthentication(String email,String password);
     String ValidateAccountInfo(String email,String password);
-    void setLoginCallback(ILoginCallback callback);
-    interface ILoginCallback{
-        void onLoginOK();
-        void onLoginFail(String message);
-    }
+
 }

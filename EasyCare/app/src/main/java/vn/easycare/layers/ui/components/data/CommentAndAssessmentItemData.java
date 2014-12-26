@@ -1,30 +1,22 @@
 package vn.easycare.layers.ui.components.data;
 
-import android.graphics.Bitmap;
-
-import java.util.Date;
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 
 /**
  * Created by phan on 12/16/2014.
  */
-public class CommentAndAssessmentItemData {
+public class CommentAndAssessmentItemData implements IBaseItemData{
     String CommentId;
     String PatientAvatar;
+    String PatientAvatarThumb;
     String PatientName;
+    String PatientId;
     String CommentDateTime;
     String CommentContent;
     int GeneralPoint;//from 1 to 5
     int FacilityPoint;//from 1 to 5
     int WaitingTimePoint;//from 1 to 5
     boolean IsDisplayed;
-
-    public String getCommentId() {
-        return CommentId;
-    }
-
-    public void setCommentId(String commentId) {
-        CommentId = commentId;
-    }
 
     public String getCommentDateTime() {
         return CommentDateTime;
@@ -82,11 +74,35 @@ public class CommentAndAssessmentItemData {
         PatientName = patientName;
     }
 
+    public String getPatientAvatarThumb() {
+        return PatientAvatarThumb;
+    }
+
+    public void setPatientAvatarThumb(String patientAvatarThumb) {
+        PatientAvatarThumb = patientAvatarThumb;
+    }
+
     public String getPatientAvatar() {
         return PatientAvatar;
     }
 
     public void setPatientAvatar(String patientAvatar) {
         PatientAvatar = patientAvatar;
+    }
+
+    public String getCommentId() {
+        return CommentId;
+    }
+
+    public void setCommentId(String commentId) {
+        CommentId = commentId;
+    }
+
+    public String getPatientId() {
+        return PatientId;
+    }
+
+    public void setPatientId(String patientId) {
+        PatientId = patientId;
     }
 }

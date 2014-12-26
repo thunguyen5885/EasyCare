@@ -7,6 +7,7 @@ import java.util.List;
 
 import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
+import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.IPatientManagementModel;
 
 /**
@@ -75,4 +76,8 @@ public class PatientManagementModel implements IPatientManagementModel{
     }
 
 
+    @Override
+    public void setResponseCallback(IResponseUIDataCallback callback) {
+        
+    }
 }

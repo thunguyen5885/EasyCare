@@ -47,20 +47,9 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
         //mCallback.onWSResponseOK();
     }
 
-    @Override
-    public void onResponseFailed(String error) {
-        WSError errorObj = new WSError(error);
-        if(mCallback!=null)
-            mCallback.onWSResponseFailed(errorObj);
-    }
 
-    @Override
-    public Map<String, String> getWSHeaders() {
 
-        Map<String,String> params = new HashMap<String, String>();
-        params.put("Content-Type","application/x-www-form-urlencoded");
-        return params;
-    }
+
 
     @Override
     public String getWSURL() {

@@ -7,6 +7,7 @@ import java.util.List;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
+import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.IExaminationSchedulesModel;
 
 /**
@@ -21,6 +22,11 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel {
     @Override
     public List<ExaminationScheduleItemData> getAllExaminationSchedulesForSpecificDate(String date) {
         return null;
+    }
+
+    @Override
+    public void setResponseCallback(IResponseUIDataCallback callback) {
+
     }
 
     @Override

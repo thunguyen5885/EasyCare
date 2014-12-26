@@ -129,7 +129,7 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
             }
         }
     }
-    private void updateViewForUserComment(View parentView, int commentCount, int rating){
+    private void updateViewForUserComment(View parentView, int commentCount, float rating){
         TextView tvCommentCount = (TextView) parentView.findViewById(R.id.tvUserCommentCommentCount);
         tvCommentCount.setText(String.valueOf(commentCount));
         TextView tvRating = (TextView) parentView.findViewById(R.id.tvUserCommentAverageRate);
@@ -173,5 +173,10 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         if(mItemData != null){
             updateData();
         }
+    }
+
+    @Override
+    public void DisplayMessageIncaseError(String message) {
+
     }
 }

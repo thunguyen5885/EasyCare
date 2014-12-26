@@ -2,10 +2,14 @@ package vn.easycare.layers.ui.presenters;
 
 import android.content.Context;
 
+import java.util.List;
+
 import vn.easycare.R;
 import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.services.IWebServiceModel;
 import vn.easycare.layers.services.WSError;
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.ILoginModel;
 import vn.easycare.layers.ui.models.LoginModel;
 import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
@@ -14,7 +18,7 @@ import vn.easycare.layers.ui.views.ILoginView;
 /**
  * Created by phannguyen on 12/7/14.
  */
-public class LoginPresenterImpl  implements ILoginPresenter, ILoginModel.ILoginCallback{
+public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IResponseUIDataCallback{
     ILoginView iView;
     ILoginModel iModel;
     Context mContext;
@@ -38,14 +42,18 @@ public class LoginPresenterImpl  implements ILoginPresenter, ILoginModel.ILoginC
 
     }
 
-
     @Override
-    public void onLoginOK() {
+    public void onResponseOK(IBaseItemData itemData) {
         iView.LoginOK("");
     }
 
     @Override
-    public void onLoginFail(String message) {
+    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
+
+    }
+
+    @Override
+    public void onResponseFail(String message) {
         iView.LoginFail(mContext.getResources().getString(R.string.login_fail_msg));
     }
 }

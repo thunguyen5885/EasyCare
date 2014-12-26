@@ -11,4 +11,5 @@ import vn.easycare.layers.ui.views.base.IBaseView;
  */
 public interface IInformationStatisticView extends IBaseView{
     void DisplayAllInfoStatisticForDoctor(InformationStatisticItemData InfoStatisticItem);
+    void DisplayMessageIncaseError(String message);
 }

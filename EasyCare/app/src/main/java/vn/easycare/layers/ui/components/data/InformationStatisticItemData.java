@@ -1,18 +1,20 @@
 package vn.easycare.layers.ui.components.data;
 
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+
 /**
  * Created by phan on 12/16/2014.
  */
-public class InformationStatisticItemData {
+public class InformationStatisticItemData implements IBaseItemData {
     int DetailViewCount;
     int OrderedCount;
     int ExaminationPendingCount;
     int GeneralCommentCount;
-    int GeneralAverageRate;
+    float GeneralAverageRate;
     int WaitingTimeCommentCount;
-    int WaitingTimeAverageRate;
+    float WaitingTimeAverageRate;
     int FacilityCommentCount;
-    int FacilityAverageRate;
+    float FacilityAverageRate;
 
     public int getDetailViewCount() {
         return DetailViewCount;
@@ -46,11 +48,11 @@ public class InformationStatisticItemData {
         GeneralCommentCount = generalCommentCount;
     }
 
-    public int getGeneralAverageRate() {
+    public float getGeneralAverageRate() {
         return GeneralAverageRate;
     }
 
-    public void setGeneralAverageRate(int generalAverageRate) {
+    public void setGeneralAverageRate(float generalAverageRate) {
         GeneralAverageRate = generalAverageRate;
     }
 
@@ -62,11 +64,11 @@ public class InformationStatisticItemData {
         WaitingTimeCommentCount = waitingTimeCommentCount;
     }
 
-    public int getWaitingTimeAverageRate() {
+    public float getWaitingTimeAverageRate() {
         return WaitingTimeAverageRate;
     }
 
-    public void setWaitingTimeAverageRate(int waitingTimeAverageRate) {
+    public void setWaitingTimeAverageRate(float waitingTimeAverageRate) {
         WaitingTimeAverageRate = waitingTimeAverageRate;
     }
 
@@ -78,11 +80,11 @@ public class InformationStatisticItemData {
         FacilityCommentCount = facilityCommentCount;
     }
 
-    public int getFacilityAverageRate() {
+    public float getFacilityAverageRate() {
         return FacilityAverageRate;
     }
 
-    public void setFacilityAverageRate(int facilityAverageRate) {
+    public void setFacilityAverageRate(float facilityAverageRate) {
         FacilityAverageRate = facilityAverageRate;
     }
 }

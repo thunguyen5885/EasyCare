@@ -4,10 +4,12 @@ import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
+import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+
 /**
  * Created by phan on 12/16/2014.
  */
-public class PatientManagementItemData implements Serializable{
+public class PatientManagementItemData implements Serializable,IBaseItemData {
     String PatientId;
     String PatientAvatar;
     String PatientName;
@@ -117,4 +119,5 @@ public class PatientManagementItemData implements Serializable{
     public void setPatientBlocked(boolean isPatientBlocked) {
         IsPatientBlocked = isPatientBlocked;
     }
+
 }
