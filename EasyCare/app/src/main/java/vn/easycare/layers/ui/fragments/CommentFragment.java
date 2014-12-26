@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +23,7 @@ import vn.easycare.layers.ui.presenters.CommentAndAssessmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.ICommentAndAssessmentPresenter;
 import vn.easycare.layers.ui.views.ICommentAndAssessmentView;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
@@ -35,6 +37,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     private ListView mCommentListView;
     private CommentAdapter mCommentAdapter;
     private LoadMoreLayout mLoadMoreView;
+    private Dialog mLoadingDialog;
 
     // For data, object
     private List<CommentAndAssessmentItemData> mCommentAndAssessmentItemDatas;
@@ -91,6 +94,15 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         mCommentListView.setVisibility(View.GONE);
         loadData();
     }
+
+    /**
+     * Reload data to get the newest data after enable "Not-display"
+     */
+    private void reloadData(){
+        mPage = 1;
+        mCommentAndAssessmentItemDatas.clear();
+        loadData();
+    }
     private void loadData(){
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -104,6 +116,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         mCommentListView.setVisibility(View.VISIBLE);
         if(mCommentAdapter == null){
             mCommentAdapter = new CommentAdapter(getActivity());
+            mCommentAdapter.setCommentClickListener(mCommentClickListener);
             mCommentAdapter.setItemDataList(mCommentAndAssessmentItemDatas);
             mCommentListView.setAdapter(mCommentAdapter);
         }else{
@@ -112,6 +125,9 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     }
     @Override
     public void DisplayAllCommentAndAssessmentForDoctor(List<CommentAndAssessmentItemData> commentAndAssessmentItemsList) {
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
         if(commentAndAssessmentItemsList != null && commentAndAssessmentItemsList.size() > 0){
             if(mPage == 1){ // Load for first time
                 if(mCommentAndAssessmentItemDatas != null){
@@ -134,12 +150,34 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
 
     @Override
     public void DisplayMessageForHideCommentAndAssessment(String message) {
-
+        boolean mIsUpdatedDone = true;
+        if(mIsUpdatedDone) {
+            // Load new data
+            reloadData();
+        }else{
+            if(mLoadingDialog != null){
+                mLoadingDialog.dismiss();
+            }
+        }
     }
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
         @Override
         public void onLoadMoreClicked() {
             loadMoreData();
+        }
+    };
+    private CommentAdapter.ICommentClickListener mCommentClickListener = new CommentAdapter.ICommentClickListener() {
+        @Override
+        public void onHideTheComment(final String commentId) {
+            mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getActivity().getString(R.string.loading_dialog_in_progress));
+            mLoadingDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPresenter.HideACommentAndAssessment(commentId);
+                }
+            }, 2000);
+
         }
     };
 }

@@ -27,9 +27,13 @@ import vn.easycare.utils.AppFnUtils;
  * Created by Thu Nguyen on 12/13/2014.
  */
 public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
+    public interface ICommentClickListener{
+        public void onHideTheComment(String commentId);
+    }
     private Context mContext;
     private LayoutInflater mInflater;
     private boolean  mIsClicked = false;
+    private ICommentClickListener mCommentClickListener;
     private List<CommentAndAssessmentItemData> mItemDataList;
     public CommentAdapter(Context context){
         mContext = context;
@@ -38,6 +42,10 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
     public void setItemDataList(List<CommentAndAssessmentItemData> itemDataList){
         mItemDataList = itemDataList;
     }
+    public void setCommentClickListener(ICommentClickListener commentClickListener){
+        mCommentClickListener = commentClickListener;
+    }
+
     @Override
     public int getCount() {
         return (mItemDataList != null) ? mItemDataList.size() : 0;
@@ -74,6 +82,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Set onclick
+        viewHolder.mCommentDiplayLayout.setTag(position);
         viewHolder.mCommentDiplayLayout.setOnClickListener(this);
 
         // Set data
@@ -112,6 +121,11 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         }, 500);
         switch (v.getId()){
             case R.id.commentDisplayLayout:
+                int selectedPos = (Integer) v.getTag();
+                CommentAndAssessmentItemData itemData = mItemDataList.get(selectedPos);
+                if(mCommentClickListener != null){
+                    mCommentClickListener.onHideTheComment(itemData.getCommentId());
+                }
                 break;
         }
     }

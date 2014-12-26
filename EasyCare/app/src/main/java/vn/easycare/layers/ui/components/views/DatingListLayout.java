@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -244,7 +243,6 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             switch (v.getId()){
                 case R.id.rlSelectCalendarLayout:
                     showDatePickerDialog();
-
                     break;
                 case R.id.datingListSearchLayout:
                     // Update data for search
@@ -278,7 +276,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         public void onDatingDetail(String appointmentId) {
             DatingDetailFragment datingDetailFragment = new DatingDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(AppConstants.APPOINMENT_ID_KEY, appointmentId);
+            bundle.putString(AppConstants.APPOINTMENT_ID_KEY, appointmentId);
             datingDetailFragment.setArguments(bundle);
             ((HomeActivity) getContext()).showFragment(datingDetailFragment);
         }

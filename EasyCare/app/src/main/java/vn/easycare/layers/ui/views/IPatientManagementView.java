@@ -13,5 +13,6 @@ public interface IPatientManagementView extends IBaseView {
     void DisplayAllAvailablePatientsForDoctor(List<PatientManagementItemData> patientManagementItemsList);
     void DisplayAllBlockedPatientsForDoctor(List<PatientManagementItemData> patientManagementItemsList);
     void DisplayMessageForBlockPatient(String message);
-    void DisplayAllAppointmentForPatient(String doctorID,String patientID);
+    void DisplayMessageForUnblockPatient(String message);
+    void DisplayAllAppointmentForPatient(String patientID);
 }

@@ -13,8 +13,12 @@ import vn.easycare.layers.ui.components.views.PatientListLayout;
  * Created by Thu Nguyen on 12/16/2014.
  */
 public class PatientListPagerAdapter extends PagerAdapter{
+    public interface IPatientListBroadcastListener{
+        public void onUpdateData(boolean isBlackList);
+    }
     private ViewPager mViewPager;
     private HashMap<Integer, View> mViewMaps;
+
     public PatientListPagerAdapter(ViewPager viewPager){
         mViewPager = viewPager;
         mViewMaps = new HashMap<Integer, View>();
@@ -42,11 +46,27 @@ public class PatientListPagerAdapter extends PagerAdapter{
             patientListLayout = (PatientListLayout)mViewMaps.get(position);
         }else{
             patientListLayout = new PatientListLayout(mViewPager.getContext());
-            patientListLayout.setBlackList(position != 0);
-            patientListLayout.loadNewData();
+            patientListLayout.setPatientListBroadcastListener(mPatientListBroadcastListener);
             mViewMaps.put(position, patientListLayout);
         }
+        patientListLayout.setBlackList(position != 0);
+        patientListLayout.loadNewData();
         container.addView(patientListLayout);
         return patientListLayout;
     }
+
+    private IPatientListBroadcastListener mPatientListBroadcastListener = new IPatientListBroadcastListener() {
+        @Override
+        public void onUpdateData(boolean isBlackList) {
+            PatientListLayout layoutNeedUpdate = null;
+            if(isBlackList){
+                layoutNeedUpdate = (PatientListLayout) mViewMaps.get(1);
+            }else{
+                layoutNeedUpdate = (PatientListLayout) mViewMaps.get(0);
+            }
+            if(layoutNeedUpdate != null){
+                layoutNeedUpdate.refreshData();
+            }
+        }
+    };
 }

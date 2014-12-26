@@ -120,6 +120,7 @@
     <string name="confirmed_password">Xác nhận mật khẩu</string>
     <string name="change_password_instruction">Nhập mật khẩu mới</string>
 
-
+    <!-- Define string for loading dialog-->
+    <string name="loading_dialog_in_progress">Đang thực hiện...</string>
     
 </resources>

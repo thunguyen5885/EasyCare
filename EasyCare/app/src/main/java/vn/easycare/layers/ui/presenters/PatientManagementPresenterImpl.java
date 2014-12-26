@@ -30,18 +30,18 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     }
 
     @Override
-    public void loadAllAvailablePatientsForDoctor(String doctorID) {
-        iView.DisplayAllAvailablePatientsForDoctor(iModel.getAllAvailablePatientsForDoctor(doctorID));
+    public void loadAllAvailablePatientsForDoctor(int page) {
+        iView.DisplayAllAvailablePatientsForDoctor(iModel.getAllAvailablePatientsForDoctor(page));
     }
 
     @Override
-    public void loadAllBlockedPatientsForDoctor(String doctorID) {
-        iView.DisplayAllBlockedPatientsForDoctor(iModel.getAllBlockedPatientForDoctor(doctorID));
+    public void loadAllBlockedPatientsForDoctor(int page) {
+        iView.DisplayAllBlockedPatientsForDoctor(iModel.getAllBlockedPatientForDoctor(page));
     }
 
     @Override
-    public void blockAPatient(String doctorID, String patientID) {
-        boolean isBlocked = iModel.doBlockAPatient(doctorID,patientID);
+    public void blockAPatient(String patientID) {
+        boolean isBlocked = iModel.doBlockAPatient(patientID);
         if(isBlocked){
             iView.DisplayMessageForBlockPatient("");
         }else{
@@ -50,7 +50,17 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     }
 
     @Override
-    public void showAllAppointmentsForAPatient(String doctorID, String patientID) {
-        iView.DisplayAllAppointmentForPatient(doctorID,patientID);
+    public void unblockAPatient(String patientID) {
+        boolean isBlocked = iModel.doUnblockAPatient(patientID);
+        if(isBlocked){
+            iView.DisplayMessageForUnblockPatient("");
+        }else{
+            iView.DisplayMessageForUnblockPatient("");
+        }
+    }
+
+    @Override
+    public void showAllAppointmentsForAPatient(String patientID) {
+        iView.DisplayAllAppointmentForPatient(patientID);
     }
 }

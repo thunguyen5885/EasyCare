@@ -1,7 +1,9 @@
 package vn.easycare.layers.ui.components.views;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +16,12 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.components.adapters.PatientListAdapter;
+import vn.easycare.layers.ui.components.adapters.PatientListPagerAdapter;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.presenters.PatientManagementPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IPatientManagementPresenter;
 import vn.easycare.layers.ui.views.IPatientManagementView;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by ThuNguyen on 12/16/2014.
@@ -32,6 +36,8 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     private PatientListAdapter mAdapter;
     private List<PatientManagementItemData> mManagementItemDatas;
     private IPatientManagementPresenter mPresenter;
+    private PatientListPagerAdapter.IPatientListBroadcastListener mPatientListBroadcastListener;
+    private Dialog mLoadingDialog;
     private int mPage;
     private boolean mIsBlackList;
 
@@ -69,6 +75,9 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     public void setBlackList(boolean isBlackList){
         mIsBlackList = isBlackList;
     }
+    public void setPatientListBroadcastListener(PatientListPagerAdapter.IPatientListBroadcastListener patientListBroadcastListener){
+        mPatientListBroadcastListener = patientListBroadcastListener;
+    }
     public void loadNewData(){
         mPage = 1;
         mManagementItemDatas.clear();
@@ -77,28 +86,45 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
 
         loadData();
     }
+    public void refreshData(){
+        mPage = 1;
+        mManagementItemDatas.clear();
+
+        loadData();
+    }
     private void loadMoreData(){
         mPage ++;
         mLoadMoreView.beginLoading();
         loadData();
     }
+
     private void loadData(){
-        if(mIsBlackList){
-            mPresenter.loadAllBlockedPatientsForDoctor(null);
-        }else{
-            mPresenter.loadAllAvailablePatientsForDoctor(null);
-        }
+        // Delay 2s(just for fake data)
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(mIsBlackList){
+                    mPresenter.loadAllBlockedPatientsForDoctor(mPage);
+                }else{
+                    mPresenter.loadAllAvailablePatientsForDoctor(mPage);
+                }
+            }
+        }, 2000);
+
     }
-    public void updateUI(){
+    public void updateUI(boolean isEndOfList){
         mPbLoading.setVisibility(View.GONE);
         mPatientListView.setVisibility(View.VISIBLE);
 
         if(mAdapter == null){
             mAdapter = new PatientListAdapter(getContext());
             mAdapter.setBlackList(mIsBlackList);
+            mAdapter.setIsEndOfList(isEndOfList);
+            mAdapter.setPatientListClickListener(mOnPatientListClickListener);
             mAdapter.setItemDataList(mManagementItemDatas);
             mPatientListView.setAdapter(mAdapter);
         }else{
+            mAdapter.setIsEndOfList(isEndOfList);
             mAdapter.notifyDataSetChanged();
         }
     }
@@ -108,9 +134,38 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
             loadMoreData();
         }
     };
+    private PatientListAdapter.IPatientListClickListener mOnPatientListClickListener = new PatientListAdapter.IPatientListClickListener() {
+        @Override
+        public void onBlockClicked(final String patientId) {
+            mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+            mLoadingDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPresenter.blockAPatient(patientId);
+                }
+            }, 2000);
 
+        }
+
+        @Override
+        public void onUnblockClicked(final String patientId) {
+            mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+            mLoadingDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPresenter.unblockAPatient(patientId);
+                }
+            }, 2000);
+        }
+    };
     @Override
     public void DisplayAllAvailablePatientsForDoctor(List<PatientManagementItemData> patientManagementItemsList) {
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        boolean isEndOfList = false;
         if(patientManagementItemsList != null && patientManagementItemsList.size() > 0) {
             if (mPage == 1) {
                 if (mManagementItemDatas != null) {
@@ -120,15 +175,25 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
             } else { // Failed or go to end of list
                 mManagementItemDatas.addAll(patientManagementItemsList);
             }
+            isEndOfList = false;
+            //mPatientListView.removeFooterView();
+            mPatientListView.removeFooterView(mLoadMoreView);
             mLoadMoreView.loadMoreComplete();
+            mPatientListView.addFooterView(mLoadMoreView);
         }else { // Failed or go to end of list
+            isEndOfList = true;
             mLoadMoreView.closeView();
+            mPatientListView.removeFooterView(mLoadMoreView);
         }
-        updateUI();
+        updateUI(isEndOfList);
     }
 
     @Override
     public void DisplayAllBlockedPatientsForDoctor(List<PatientManagementItemData> patientManagementItemsList) {
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        boolean isEndOfList = false;
         if(patientManagementItemsList != null && patientManagementItemsList.size() > 0) {
             if (mPage == 1) {
                 if (mManagementItemDatas != null) {
@@ -138,20 +203,54 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
             } else { // Failed or go to end of list
                 mManagementItemDatas.addAll(patientManagementItemsList);
             }
+            isEndOfList = false;
+            mPatientListView.removeFooterView(mLoadMoreView);
             mLoadMoreView.loadMoreComplete();
+            mPatientListView.addFooterView(mLoadMoreView);
         }else { // Failed or go to end of list
+            isEndOfList = true;
             mLoadMoreView.closeView();
+            mPatientListView.removeFooterView(mLoadMoreView);
         }
-        updateUI();
+        updateUI(isEndOfList);
     }
 
     @Override
     public void DisplayMessageForBlockPatient(String message) {
+        boolean isUpdatedDone = true;
+        if(isUpdatedDone){
+            refreshData();
 
+            // Also update on blacklist tab
+            if(mPatientListBroadcastListener != null){
+                mPatientListBroadcastListener.onUpdateData(true);
+            }
+        }else{
+            if(mLoadingDialog != null){
+                mLoadingDialog.dismiss();
+            }
+        }
     }
 
     @Override
-    public void DisplayAllAppointmentForPatient(String doctorID, String patientID) {
+    public void DisplayMessageForUnblockPatient(String message) {
+        boolean isUpdatedDone = true;
+        if(isUpdatedDone){
+            refreshData();
+
+            // Also update on patient list tab
+            if(mPatientListBroadcastListener != null){
+                mPatientListBroadcastListener.onUpdateData(false);
+            }
+        }else{
+            if(mLoadingDialog != null){
+                mLoadingDialog.dismiss();
+            }
+        }
+    }
+
+    @Override
+    public void DisplayAllAppointmentForPatient(String patientID) {
 
     }
 }

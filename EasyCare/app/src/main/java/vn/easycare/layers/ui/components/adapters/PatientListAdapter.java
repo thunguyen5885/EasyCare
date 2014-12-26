@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.fragments.PatientDetailFragment;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 import vn.easycare.utils.FontUtil;
 
@@ -29,11 +31,18 @@ import vn.easycare.utils.FontUtil;
  * Created by ThuNguyen on 12/16/2014.
  */
 public class PatientListAdapter extends BaseAdapter{
+    public interface IPatientListClickListener{
+        public void onBlockClicked(String patientId);
+        public void onUnblockClicked(String patientId);
+    }
     private Context mContext;
     private LayoutInflater mLayoutInflater;
     private boolean mIsBlackList = false;
     private boolean mIsClicked = false;
+    private boolean mIsEndOfList = false;
+    private IPatientListClickListener mPatientListClickListener;
     private List<PatientManagementItemData> mItemDataList;
+
     public PatientListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -43,6 +52,12 @@ public class PatientListAdapter extends BaseAdapter{
     }
     public void setItemDataList(List<PatientManagementItemData> itemDataList){
         mItemDataList = itemDataList;
+    }
+    public void setPatientListClickListener(IPatientListClickListener patientListClickListener){
+        mPatientListClickListener = patientListClickListener;
+    }
+    public void setIsEndOfList(boolean isEndOfList){
+        mIsEndOfList = isEndOfList;
     }
     @Override
     public int getCount() {
@@ -71,6 +86,8 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mPatientEmail = (TextView) convertView.findViewById(R.id.tvPatientEmail);
             viewHolder.mBtnBlock = (Button) convertView.findViewById(R.id.btnBlock);
             viewHolder.mBtnDating = (Button) convertView.findViewById(R.id.btnDating);
+            viewHolder.mBottomIndicator = convertView.findViewById(R.id.bottomIndicator);
+            viewHolder.mEndOfListIndicator = convertView.findViewById(R.id.endOfListIndicator);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -81,6 +98,13 @@ public class PatientListAdapter extends BaseAdapter{
         }else{
             viewHolder.mBtnDating.setVisibility(View.VISIBLE);
             viewHolder.mBtnBlock.setText(R.string.patient_list_block);
+        }
+        if(position == getCount() - 1 && mIsEndOfList){
+            viewHolder.mBottomIndicator.setVisibility(View.GONE);
+            viewHolder.mEndOfListIndicator.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.mBottomIndicator.setVisibility(View.VISIBLE);
+            viewHolder.mEndOfListIndicator.setVisibility(View.GONE);
         }
         // Set on click
         viewHolder.mPatientName.setTag(position);
@@ -103,9 +127,6 @@ public class PatientListAdapter extends BaseAdapter{
         viewHolder.mPatientName.setText(itemData.getPatientName());
         viewHolder.mPatientEmail.setText(itemData.getPatientEmailAddress());
         viewHolder.mPatientPhone.setText(itemData.getPatientPhoneNumber());
-//        viewHolder.mPatientName.setText("Nguyen Van A");
-//        viewHolder.mPatientPhone.setText("00388030330");
-//        viewHolder.mPatientEmail.setText("abcd@gmail.com");
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView, null);
@@ -126,14 +147,30 @@ public class PatientListAdapter extends BaseAdapter{
             }, 500);
             switch (v.getId()){
                 case R.id.btnBlock:
-                    Toast.makeText(mContext, "Block clicked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(mContext, "Block clicked", Toast.LENGTH_SHORT).show();
+                    int selectedPos = (Integer) v.getTag();
+                    PatientManagementItemData selectedItem = mItemDataList.get(selectedPos);
+                    if(mPatientListClickListener != null){
+                        if(mIsBlackList){
+                            mPatientListClickListener.onUnblockClicked(selectedItem.getPatientId());
+                        }else{
+                            mPatientListClickListener.onBlockClicked(selectedItem.getPatientId());
+                        }
+                    }
                     break;
                 case R.id.btnDating:
                     Toast.makeText(mContext, "Dating clicked", Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.tvPatientName:
+                    selectedPos = (Integer) v.getTag();
+                    selectedItem = mItemDataList.get(selectedPos);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AppConstants.PATIENT_DETAIL_KEY, selectedItem);
+
                     // Go to patient_detail screen
                     PatientDetailFragment patientDetailFragment = new PatientDetailFragment();
+                    patientDetailFragment.setArguments(bundle);
                     ((HomeActivity) mContext).showFragment(patientDetailFragment);
                     break;
             }
@@ -146,5 +183,7 @@ public class PatientListAdapter extends BaseAdapter{
         private TextView mPatientEmail;
         private Button mBtnBlock;
         private Button mBtnDating;
+        private View mBottomIndicator;
+        private View mEndOfListIndicator;
     }
 }

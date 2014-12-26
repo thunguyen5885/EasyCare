@@ -35,7 +35,8 @@
                 <com.android.volley.toolbox.NetworkImageView
                     android:id="@+id/patientAvatar"
                     android:layout_width="50dp"
-                    android:layout_height="50dp" />
+                    android:layout_height="50dp"
+                    android:scaleType="fitStart"/>
 
             </FrameLayout>
             <LinearLayout

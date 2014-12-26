@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by phan on 12/16/2014.
  */
 public class CommentAndAssessmentItemData {
+    String CommentId;
     String PatientAvatar;
     String PatientName;
     String CommentDateTime;
@@ -16,6 +17,14 @@ public class CommentAndAssessmentItemData {
     int FacilityPoint;//from 1 to 5
     int WaitingTimePoint;//from 1 to 5
     boolean IsDisplayed;
+
+    public String getCommentId() {
+        return CommentId;
+    }
+
+    public void setCommentId(String commentId) {
+        CommentId = commentId;
+    }
 
     public String getCommentDateTime() {
         return CommentDateTime;

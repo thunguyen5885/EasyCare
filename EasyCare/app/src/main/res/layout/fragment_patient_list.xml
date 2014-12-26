@@ -25,6 +25,5 @@
         android:id="@+id/patientListViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/common_padding"
-        android:paddingBottom="@dimen/footer_vertical_padding"/>
+        android:layout_marginTop="@dimen/common_padding"/>
 </LinearLayout>

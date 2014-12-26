@@ -16,7 +16,8 @@
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/patientAvatar"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:scaleType="fitStart"/>
 
         </FrameLayout>
         <LinearLayout
@@ -95,9 +96,14 @@
         </LinearLayout>
     </LinearLayout>
     <View
+        android:id="@+id/bottomIndicator"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/footer_item_separator_background_color"
         android:layout_marginTop="@dimen/common_padding"
         android:layout_marginBottom="@dimen/common_padding"/>
+    <View
+        android:id="@+id/endOfListIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/common_padding"/>
 </LinearLayout>

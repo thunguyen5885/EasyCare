@@ -61,4 +61,20 @@ public class DialogUtil {
         });
 		dialog.show();
 	}
+
+    public static Dialog createLoadingDialog(Context context, String title){
+        Dialog dialog = new Dialog(context,android.R.style.Theme_Holo_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.loading_dialog_ctrl);
+        dialog.setCancelable(false);
+        // Get screen width
+        int screenWidth = AppFnUtils.getScreenWidth((Activity) context);
+        int screenHeight = AppFnUtils.getScreenHeight((Activity) context);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_border_dialog);
+
+        TextView tvTitle = (TextView) dialog.findViewById(R.id.tvLoadingTitle);
+        tvTitle.setText(title);
+
+        return dialog;
+    }
 }

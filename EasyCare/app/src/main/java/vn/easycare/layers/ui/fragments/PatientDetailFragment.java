@@ -12,6 +12,9 @@ import com.android.volley.toolbox.NetworkImageView;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.PatientManagementItemData;
+import vn.easycare.layers.ui.components.singleton.DataSingleton;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 
 /**
@@ -31,6 +34,8 @@ public class PatientDetailFragment extends Fragment {
     private TextView mTvPatientCommentCount;
 
     // For data, object
+    private PatientManagementItemData mPatientManagementItemData;
+
     public PatientDetailFragment(){}
 
     @Override
@@ -61,7 +66,7 @@ public class PatientDetailFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateData();
+        getAndUpdateDataFromBundle();
     }
 
     @Override
@@ -76,16 +81,29 @@ public class PatientDetailFragment extends Fragment {
             ((HomeActivity) getActivity()).showHeaderBackButton();
         }
     }
-    private void updateData(){
-        mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        mTvPatientName.setText("Bùi Hiệu");
-        mTvPatientBirthday.setText("01/02/1980");
-        mTvPatientPhone.setText("0989658741");
-        mTvPatientEmail.setText("abc@gmail.com");
-        mTvPatientAddress.setText("Số 42, Lê Trọng Tấn, Thanh Xuân, Hà Nội");
-        mTvPatientOrderCount.setText("108");
-        mTvPatientCancelCount.setText("30");
-        mTvPatientChangeCount.setText("50");
-        mTvPatientCommentCount.setText("28");
+    private void getAndUpdateDataFromBundle(){
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            Object object = bundle.get(AppConstants.PATIENT_DETAIL_KEY);
+            if(object != null && object instanceof PatientManagementItemData){
+                mPatientManagementItemData = (PatientManagementItemData)object;
+
+                // Update UI
+                mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
+                mPatientAvatar.setImageUrl(mPatientManagementItemData.getPatientAvatar(),
+                        DataSingleton.getInstance(getActivity()).getImageLoader());
+
+                mTvPatientName.setText(mPatientManagementItemData.getPatientName());
+                mTvPatientBirthday.setText(mPatientManagementItemData.getPatientBirthday());
+                mTvPatientPhone.setText(mPatientManagementItemData.getPatientPhoneNumber());
+                mTvPatientEmail.setText(mPatientManagementItemData.getPatientEmailAddress());
+                mTvPatientAddress.setText(mPatientManagementItemData.getPatientAddress());
+                mTvPatientOrderCount.setText(String.valueOf(mPatientManagementItemData.getPatientOrderCount()));
+                mTvPatientCancelCount.setText(String.valueOf(mPatientManagementItemData.getPatientCancelCount()));
+                mTvPatientChangeCount.setText(String.valueOf(mPatientManagementItemData.getPatientChangeCount()));
+                mTvPatientCommentCount.setText(String.valueOf(mPatientManagementItemData.getPatientCommentCount()));
+            }
+        }
+
     }
 }
