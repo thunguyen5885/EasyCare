@@ -135,6 +135,7 @@
                     android:layout_marginRight="@dimen/common_padding"
                     android:layout_centerVertical="true"
                     android:clickable="true"
+                    android:visibility="gone"
                     custom:foreground="@drawable/layout_item_selector_with_corner">
                     <TextView
                         android:id="@+id/tvCommentDisplay"

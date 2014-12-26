@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.presenters.PatientManagementPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IPatientManagementPresenter;
 import vn.easycare.layers.ui.views.IPatientManagementView;
+import vn.easycare.utils.AppFnUtils;
 import vn.easycare.utils.DialogUtil;
 
 /**
@@ -31,6 +33,7 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     private LoadMoreLayout mLoadMoreView;
     private ListView mPatientListView;
     private ProgressBar mPbLoading;
+    private TextView mTvNoData;
 
     // For data object
     private PatientListAdapter mAdapter;
@@ -65,11 +68,14 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         View v = mLayoutInflater.inflate(R.layout.patient_pager_item_ctrl, null);
         mPatientListView = (ListView) v.findViewById(R.id.lvPatientList);
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
+        mTvNoData = (TextView) v.findViewById(R.id.tvNoData);
 
         mLoadMoreView = new LoadMoreLayout(context);
         mLoadMoreView.setOnLoadMoreClickListener(mOnLoadMoreClickListener);
         mPatientListView.addFooterView(mLoadMoreView);
 
+        // Apply font
+        AppFnUtils.applyFontForTextViewChild(v, null);
         addView(v);
     }
     public void setBlackList(boolean isBlackList){
@@ -115,7 +121,9 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     public void updateUI(boolean isEndOfList){
         mPbLoading.setVisibility(View.GONE);
         mPatientListView.setVisibility(View.VISIBLE);
-
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
         if(mAdapter == null){
             mAdapter = new PatientListAdapter(getContext());
             mAdapter.setBlackList(mIsBlackList);
@@ -126,6 +134,11 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         }else{
             mAdapter.setIsEndOfList(isEndOfList);
             mAdapter.notifyDataSetChanged();
+        }
+        if(mManagementItemDatas.size() == 0){
+            mTvNoData.setVisibility(VISIBLE);
+        }else{
+            mTvNoData.setVisibility(GONE);
         }
     }
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
@@ -162,9 +175,7 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     };
     @Override
     public void DisplayAllAvailablePatientsForDoctor(List<PatientManagementItemData> patientManagementItemsList) {
-        if(mLoadingDialog != null){
-            mLoadingDialog.dismiss();
-        }
+
         boolean isEndOfList = false;
         if(patientManagementItemsList != null && patientManagementItemsList.size() > 0) {
             if (mPage == 1) {

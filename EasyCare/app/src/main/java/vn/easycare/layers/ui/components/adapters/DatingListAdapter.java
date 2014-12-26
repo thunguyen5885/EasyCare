@@ -27,7 +27,7 @@ import vn.easycare.utils.AppFnUtils;
  */
 public class DatingListAdapter extends BaseAdapter{
     public interface IDatingItemClickListener{
-        public void onDatingDetail(String appointmentId);
+        public void onDatingDetail(ExaminationAppointmentItemData itemData);
         public void onDatingCalendarChange(ExaminationAppointmentItemData itemData);
         public void onDatingCalendarCancel(String appointmentId);
         public void onDatingCalendarAccept(String appointmentId);
@@ -36,6 +36,7 @@ public class DatingListAdapter extends BaseAdapter{
     private LayoutInflater mLayoutInflater;
     private boolean mIsWaitingList = false;
     private boolean mIsClicked = false;
+    private boolean mIsEndOfList = false;
     private IDatingItemClickListener mDatingItemClickListener;
 
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDatas;
@@ -49,6 +50,9 @@ public class DatingListAdapter extends BaseAdapter{
     }
     public void setExaminationAppointmentItemDatas(List<ExaminationAppointmentItemData> data){
         mExaminationAppointmentItemDatas = data;
+    }
+    public void setEndOfList(boolean isEndOfList){
+        mIsEndOfList = isEndOfList;
     }
     public void setDatingItemClickListener(IDatingItemClickListener datingItemClickListener){
         mDatingItemClickListener = datingItemClickListener;
@@ -83,6 +87,8 @@ public class DatingListAdapter extends BaseAdapter{
             viewHolder.mBtnCalendarChange = (Button) convertView.findViewById(R.id.btnCalendarChange);
             viewHolder.mBtnCalendarAccept = (Button) convertView.findViewById(R.id.btnCalendarAccept);
             viewHolder.mBtnCalendarCancel = (Button) convertView.findViewById(R.id.btnCalendarCancel);
+            viewHolder.mBottomSeparatorLayout = convertView.findViewById(R.id.bottomIndicator);
+            viewHolder.mEndOfListLayout = convertView.findViewById(R.id.endOfListIndicator);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
@@ -106,6 +112,13 @@ public class DatingListAdapter extends BaseAdapter{
         }else{
             viewHolder.mButtonLayout.setVisibility(View.GONE);
         }
+        if(mIsEndOfList && position == getCount() - 1){
+            viewHolder.mEndOfListLayout.setVisibility(View.VISIBLE);
+            viewHolder.mBottomSeparatorLayout.setVisibility(View.GONE);
+        }else{
+            viewHolder.mEndOfListLayout.setVisibility(View.GONE);
+            viewHolder.mBottomSeparatorLayout.setVisibility(View.VISIBLE);
+        }
         // Calculate the avatar size
         int screenWidth = AppFnUtils.getScreenWidth((Activity)mContext);
         int avatarSize = screenWidth / 5;
@@ -118,7 +131,7 @@ public class DatingListAdapter extends BaseAdapter{
         viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
         viewHolder.mTvPatientName.setText(itemData.getPatientName());
         viewHolder.mTvDatingTime.setText(itemData.getExaminationDateTime().toString());
-        viewHolder.mTvPatientDisease.setText(itemData.getExaminationReasion());
+        viewHolder.mTvPatientDisease.setText(itemData.getExaminationReason());
 //        viewHolder.mTvPatientName.setText("Nguyen Van A");
 //        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
 //        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
@@ -146,7 +159,7 @@ public class DatingListAdapter extends BaseAdapter{
             switch (v.getId()){
                 case R.id.tvPatientName:
                     if(mDatingItemClickListener != null){
-                        mDatingItemClickListener.onDatingDetail(appointmentId);
+                        mDatingItemClickListener.onDatingDetail(selectedItem);
                     }
                     break;
                 case R.id.btnCalendarChange:
@@ -176,5 +189,7 @@ public class DatingListAdapter extends BaseAdapter{
         private Button mBtnCalendarChange;
         private Button mBtnCalendarAccept;
         private Button mBtnCalendarCancel;
+        private View mBottomSeparatorLayout;
+        private View mEndOfListLayout;
     }
 }

@@ -1,8 +1,10 @@
 package vn.easycare.layers.ui.components.views;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,14 +42,14 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     // For control, layout
     private ListView mLvDatingList;
     private ProgressBar mPbLoading;
-    private DatingListAdapter mAdapter;
+    private TextView mTvNoData;
     private EditText mEdtDatingCode;
     private EditText mEdtPatientName;
     private View mSelectCalendarView;
     private TextView mTvCalendarText;
     private View mSearchLayout;
     private LoadMoreLayout mLoadMoreView;
-
+    private Dialog mLoadingDialog;
     // For data, object
     private boolean mIsDataLoading = false;
     private boolean mIsNeedToRefresh = false;
@@ -55,9 +57,9 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private int mSelectedYear;
     private int mSelectedMonth;
     private int mSelectedDay;
-    private int mTotalItemCount;
     private int mPage;
 
+    private DatingListAdapter mAdapter;
     private AppointmentTime mAppointmentTime;
     private AppConstants.EXAMINATION_STATUS mDatingType;
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
@@ -93,7 +95,6 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         mDatingCode = "";
         mPatientName = "";
         mDatingDate = "";
-        mTotalItemCount = 0;
         mDatingType = AppConstants.EXAMINATION_STATUS.WAITING;
         mPage = 1;
         mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
@@ -102,6 +103,8 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         mLayoutInflater = LayoutInflater.from(context);
         View view = mLayoutInflater.inflate(R.layout.dating_pager_item_ctrl, null);
         mPbLoading = (ProgressBar) view.findViewById(R.id.pbLoading);
+        mTvNoData = (TextView) view.findViewById(R.id.tvNoData);
+
         mLoadMoreView = new LoadMoreLayout(getContext());
         mLoadMoreView.setOnLoadMoreClickListener(mILoadMoreClickListener);
         mLvDatingList = (ListView)view.findViewById(R.id.lvDatingList);
@@ -138,7 +141,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         }
     }
 
-    private void refreshDataWithNonSearch(){
+    public void refreshDataWithNonSearch(){
         mEdtDatingCode.setText("");
         mEdtPatientName.setText("");
         mTvCalendarText.setText("");
@@ -154,7 +157,6 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         loadNewData();
     }
     public void loadNewData(){
-        mTotalItemCount = 0;
         mPage = 1;
         mExaminationAppointmentItemDataList.clear();
         // Show loading
@@ -166,7 +168,16 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         loadData();
 
     }
+    public void beginSearch(){
+        mPage = 1;
+        mExaminationAppointmentItemDataList.clear();
 
+        mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+        mLoadingDialog.show();
+
+        // Load data
+        loadData();
+    }
     /**
      * Load more when click on loadmore button
      */
@@ -183,32 +194,46 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private void loadData(){
         if(!mIsDataLoading) {
             mIsDataLoading = true;
-            if (mDatingCode.length() > 0 ||
-                    mPatientName.length() > 0 ||
-                    mDatingDate.length() > 0) { // Search
-                mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mDatingType, mDatingDate, "", "", mPage);
-            } else {
-                // Load all
-                mPresenter.loadExaminationAppointmentsForDoctor(mDatingType, mPage);
-            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (mDatingCode.length() > 0 ||
+                            mPatientName.length() > 0 ||
+                            mDatingDate.length() > 0) { // Search
+                        mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mDatingType, mDatingDate, "", "", mPage);
+                    } else {
+                        // Load all
+                        mPresenter.loadExaminationAppointmentsForDoctor(mDatingType, mPage);
+                    }
+                }
+            }, 2000);
         }
     }
 
     /**
      * Update GUI from list of data
      */
-    private void updateUI(){
+    private void updateUI(boolean isEndOfList){
         mPbLoading.setVisibility(View.GONE);
         mLvDatingList.setVisibility(View.VISIBLE);
-
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
         if(mAdapter == null){
             mAdapter = new DatingListAdapter(getContext());
             mAdapter.setWaitingList(mDatingType == AppConstants.EXAMINATION_STATUS.WAITING);
+            mAdapter.setEndOfList(isEndOfList);
             mAdapter.setDatingItemClickListener(mDatingItemClickListener);
             mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
             mLvDatingList.setAdapter(mAdapter);
         }else{
+            mAdapter.setEndOfList(isEndOfList);
             mAdapter.notifyDataSetChanged();
+        }
+        if(mExaminationAppointmentItemDataList.size() == 0){
+            mTvNoData.setVisibility(View.VISIBLE);
+        }else{
+            mTvNoData.setVisibility(View.GONE);
         }
     }
     public void setDateType(AppConstants.EXAMINATION_STATUS dateType){
@@ -249,7 +274,11 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
                     mDatingCode = mEdtDatingCode.getText().toString().trim();
                     mPatientName = mEdtPatientName.getText().toString().trim();
                     mDatingDate = mTvCalendarText.getText().toString().trim();
-                    loadNewData();
+                    if(mDatingCode.length() > 0 || mPatientName.length() > 0 || mDatingDate.length() > 0) {
+                        beginSearch();
+                    }else{
+                        // Show dialog to confirm to need to fill at least one field.
+                    }
                     break;
             }
         }
@@ -273,10 +302,10 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     };
     private DatingListAdapter.IDatingItemClickListener mDatingItemClickListener = new DatingListAdapter.IDatingItemClickListener() {
         @Override
-        public void onDatingDetail(String appointmentId) {
+        public void onDatingDetail(ExaminationAppointmentItemData itemData) {
             DatingDetailFragment datingDetailFragment = new DatingDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putString(AppConstants.APPOINTMENT_ID_KEY, appointmentId);
+            bundle.putSerializable(AppConstants.APPOINTMENT_ID_KEY, itemData);
             datingDetailFragment.setArguments(bundle);
             ((HomeActivity) getContext()).showFragment(datingDetailFragment);
         }
@@ -312,24 +341,35 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         }
 
         @Override
-        public void onDatingCalendarCancel(String appointmentId) {
-            // Show progress dialog here
-            mPbLoading.setVisibility(View.VISIBLE);
-            mPresenter.CancelAnExaminationAppointment(appointmentId);
+        public void onDatingCalendarCancel(final String appointmentId) {
+            mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+            mLoadingDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPresenter.CancelAnExaminationAppointment(appointmentId);
+                }
+            }, 2000);
+
         }
 
         @Override
-        public void onDatingCalendarAccept(String appointmentId) {
-            // Show progress dialog here
-            mPbLoading.setVisibility(View.VISIBLE);
-
-            mPresenter.AcceptAnExaminationAppointment(appointmentId);
+        public void onDatingCalendarAccept(final String appointmentId) {
+            mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+            mLoadingDialog.show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mPresenter.AcceptAnExaminationAppointment(appointmentId);
+                }
+            }, 2000);
         }
     };
 
 
     @Override
     public void DisplayExaminationAppointmentsForDoctor(List<ExaminationAppointmentItemData> examinationAppointmentItemsList) {
+        boolean isEndOfList = false;
         if(examinationAppointmentItemsList != null && examinationAppointmentItemsList.size() > 0){
             if(mPage == 1){ // Load for first time
                 if(mExaminationAppointmentItemDataList != null){
@@ -339,57 +379,55 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             }else{ // Load more here
                 mExaminationAppointmentItemDataList.addAll(examinationAppointmentItemsList);
             }
+            isEndOfList = false;
+            mLvDatingList.removeFooterView(mLoadMoreView);
             mLoadMoreView.loadMoreComplete();
+            mLvDatingList.addFooterView(mLoadMoreView);
         }else{ // Maybe failed or data is end of list
+            isEndOfList = true;
             mLoadMoreView.closeView();
+            mLvDatingList.removeFooterView(mLoadMoreView);
         }
         // Reset
         mIsDataLoading = false;
         mIsNeedToRefresh = false;
         // Update UI anyway
-        updateUI();
+        updateUI(isEndOfList);
     }
 
     @Override
     public void DisplayMessageForAcceptAppointment(String message) {
-        // Hide progress dialog here
-        mPbLoading.setVisibility(View.GONE);
-
-        // In case of OK
-        if(mIBroadCast != null){
-            mIBroadCast.broadCast(AppConstants.EXAMINATION_STATUS.ACCEPTED);
-        }
-        // Reload data here
-        enforceToRefreshForDataChanged();
+        processWhenUpdateDone(message, AppConstants.EXAMINATION_STATUS.ACCEPTED);
     }
 
     @Override
     public void DisplayMessageForCancelAppointment(String message) {
-        // Hide progress dialog here
-        mPbLoading.setVisibility(View.GONE);
-
-        if(mIBroadCast != null){
-            mIBroadCast.broadCast(AppConstants.EXAMINATION_STATUS.CANCEL);
-        }
-        // Reload data here
-        enforceToRefreshForDataChanged();
+        processWhenUpdateDone(message, AppConstants.EXAMINATION_STATUS.CANCEL);
     }
 
     @Override
     public void DisplayMessageForChangeAppointment(String message) {
-        // Hide progress dialog here
-        mPbLoading.setVisibility(View.GONE);
-
-        if(mIBroadCast != null){
-            mIBroadCast.broadCast(AppConstants.EXAMINATION_STATUS.WAITING);
-        }
-        // Reload data here
-        enforceToRefreshForDataChanged();
+        processWhenUpdateDone(message, AppConstants.EXAMINATION_STATUS.WAITING);
     }
 
     @Override
     public void DisplayPopupForAnAppointment(ExaminationAppointmentItemData item) {
 
+    }
+    private void processWhenUpdateDone(String message, AppConstants.EXAMINATION_STATUS status){
+        boolean isUpdatedDone = true;
+        if(isUpdatedDone) {
+            // In case of OK
+            if (mIBroadCast != null) {
+                mIBroadCast.broadCast(status);
+            }
+            // Reload data here
+            refreshDataWithNonSearch();
+        }else{
+            if(mLoadingDialog != null){
+                mLoadingDialog.dismiss();
+            }
+        }
     }
     public class AppointmentTime{
         private int year;

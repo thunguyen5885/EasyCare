@@ -45,7 +45,7 @@ public class PatientManagementModel implements IPatientManagementModel{
     @Override
     public List<PatientManagementItemData> getAllBlockedPatientForDoctor(int page) {
         List<PatientManagementItemData> itemDataList = new ArrayList<PatientManagementItemData>();
-        if(page < 4){
+        /*if(page < 4){
             for(int index = 0; index < 10; index++){
                 PatientManagementItemData itemData = new PatientManagementItemData();
                 itemData.setPatientAvatar("http://storage.googleapis.com/androiddevelopers/sample_data/activity_transition/thumbs/look_me_in_the_eye.jpg");
@@ -60,7 +60,7 @@ public class PatientManagementModel implements IPatientManagementModel{
                 itemData.setPatientCommentCount(18);
                 itemDataList.add(itemData);
             }
-        }
+        }*/
         return itemDataList;
     }
 

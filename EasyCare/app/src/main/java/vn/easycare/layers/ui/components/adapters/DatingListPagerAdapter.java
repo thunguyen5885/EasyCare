@@ -75,18 +75,18 @@ public class DatingListPagerAdapter extends PagerAdapter{
         @Override
         public void broadCast(AppConstants.EXAMINATION_STATUS status) {
             // Always change on the first item
-            DatingListLayout waitingDatingListLayout = (DatingListLayout) mViewMaps.get(0);
-            waitingDatingListLayout.setNeedToRefresh(true);
+//            DatingListLayout waitingDatingListLayout = (DatingListLayout) mViewMaps.get(0);
+//            waitingDatingListLayout.setNeedToRefresh(true);
             switch (status){
                 case ACCEPTED:
                     DatingListLayout acceptDatingListLayout = (DatingListLayout) mViewMaps.get(1);
-                    acceptDatingListLayout.setNeedToRefresh(true);
+                    acceptDatingListLayout.refreshDataWithNonSearch();
                     break;
                 case WAITING:
                     break;
                 case CANCEL:
                     DatingListLayout cancelDatingListLayout = (DatingListLayout) mViewMaps.get(2);
-                    cancelDatingListLayout.setNeedToRefresh(true);
+                    cancelDatingListLayout.refreshDataWithNonSearch();
                     break;
             }
         }

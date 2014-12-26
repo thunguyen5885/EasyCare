@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     // For control, layout
     private ProgressBar mPbLoading;
     private ListView mCommentListView;
+    private TextView mTvNoData;
     private CommentAdapter mCommentAdapter;
     private LoadMoreLayout mLoadMoreView;
     private Dialog mLoadingDialog;
@@ -53,6 +55,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         mCommentListView = (ListView) v.findViewById(R.id.commentListView);
+        mTvNoData = (TextView) v.findViewById(R.id.tvNoData);
         mLoadMoreView = new LoadMoreLayout(getActivity());
         mLoadMoreView.setOnLoadMoreClickListener(mOnLoadMoreClickListener);
         mCommentListView.addFooterView(mLoadMoreView);
@@ -114,6 +117,9 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     private void updateUI(){
         mPbLoading.setVisibility(View.GONE);
         mCommentListView.setVisibility(View.VISIBLE);
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
         if(mCommentAdapter == null){
             mCommentAdapter = new CommentAdapter(getActivity());
             mCommentAdapter.setCommentClickListener(mCommentClickListener);
@@ -122,12 +128,15 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         }else{
             mCommentAdapter.notifyDataSetChanged();
         }
+        if(mCommentAndAssessmentItemDatas.size() == 0){ // No data
+            mTvNoData.setVisibility(View.VISIBLE);
+        }else{
+            mTvNoData.setVisibility(View.GONE);
+        }
     }
     @Override
     public void DisplayAllCommentAndAssessmentForDoctor(List<CommentAndAssessmentItemData> commentAndAssessmentItemsList) {
-        if(mLoadingDialog != null){
-            mLoadingDialog.dismiss();
-        }
+
         if(commentAndAssessmentItemsList != null && commentAndAssessmentItemsList.size() > 0){
             if(mPage == 1){ // Load for first time
                 if(mCommentAndAssessmentItemDatas != null){

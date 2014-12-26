@@ -122,5 +122,5 @@
 
     <!-- Define string for loading dialog-->
     <string name="loading_dialog_in_progress">Đang thực hiện...</string>
-    
+    <string name="empty_data">Không tìm thấy dữ liệu.</string>
 </resources>
