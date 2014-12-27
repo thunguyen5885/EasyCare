@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.concretes;
 
+import com.android.volley.Request;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -53,6 +55,11 @@ public class InfoStatisticWSAccess extends AbstractWSAccess<InfoStatisticWSModel
     @Override
     public void setWSParams(IWebServiceParamModel params) {
         mParam = (InfoStatisticWSParamModel)params;
+    }
+
+    @Override
+    public int getMethod() {
+        return Request.Method.GET;
     }
 
     @Override

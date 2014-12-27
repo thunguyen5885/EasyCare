@@ -37,7 +37,7 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
                     mContext,
                     this,
                     new CommentAndAssessmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(),page+""));
-            WS.sendGetRequest();
+            WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

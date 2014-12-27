@@ -7,12 +7,17 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -24,7 +29,7 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
 
     protected  Context mContext;
     protected  IWSResponse mCallback;
-
+    private static final String Res_Errors = "errors";
     public void setContext(Context context){
         this.mContext = context;
     }
@@ -34,8 +39,28 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
     }
 
     @Override
-    public void onResponseFailed(String error) {
-        WSError errorObj = new WSError(error);
+    public void onResponseFailed(VolleyError error) {
+        NetworkResponse response = error.networkResponse;
+        String errMessage = "";
+        if(response != null && response.data != null) {
+            String errorResponse = new String(response.data);
+            try {
+                JSONObject jsonObj = new JSONObject(errorResponse);
+                JSONObject jsonErrorObj = (JSONObject)jsonObj.get(Res_Errors);
+                if(jsonErrorObj!=null){
+                    Iterator<?> keys = jsonErrorObj.keys();
+                    while( keys.hasNext() ){
+                        String key = (String)keys.next();
+                        errMessage+=jsonErrorObj.getString(key)+"\r\n";
+                    }
+                }
+            } catch (JSONException e) {
+                errMessage = errorResponse;
+
+            }
+
+        }
+        WSError errorObj = new WSError(errMessage);
         if(mCallback!=null)
             mCallback.onWSResponseFailed(errorObj);
     }
@@ -49,7 +74,21 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
     }
 
     @Override
-    public void sendGetRequest(){
+    public void sendRequest()
+    {
+        switch (getMethod()){
+            case Request.Method.GET:
+                sendGetRequest();
+                break;
+            case Request.Method.POST:
+                sendPostRequest();
+                break;
+           default:
+               break;
+
+        }
+    }
+    private void sendGetRequest(){
         StringRequest sr = new StringRequest(Request.Method.GET, getWSURL(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -58,7 +97,7 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                onResponseFailed(error.getMessage());
+                onResponseFailed(error);
             }
         }){
             @Override
@@ -74,8 +113,8 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
         WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 
-    @Override
-    public void sendPostRequest(){
+
+    private void sendPostRequest(){
 
        StringRequest sr = new StringRequest(Request.Method.POST, getWSURL(), new Response.Listener<String>() {
             @Override
@@ -85,7 +124,7 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                onResponseFailed(error.getMessage());
+                onResponseFailed(error);
             }
         }){
             @Override

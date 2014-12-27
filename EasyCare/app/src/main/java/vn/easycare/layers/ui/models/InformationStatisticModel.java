@@ -34,7 +34,7 @@ public class InformationStatisticModel implements IInformationStatisticModel,IWS
                     mContext,
                     this,
                     new InfoStatisticWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken()));
-            WS.sendGetRequest();
+            WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

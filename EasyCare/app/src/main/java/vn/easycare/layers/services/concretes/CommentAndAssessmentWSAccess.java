@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.concretes;
 
+import com.android.volley.Request;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +60,11 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
     @Override
     public void setWSParams(IWebServiceParamModel params) {
         mParam = (CommentAndAssessmentWSParamModel)params;
+    }
+
+    @Override
+    public int getMethod() {
+        return Request.Method.GET;
     }
 
     @Override

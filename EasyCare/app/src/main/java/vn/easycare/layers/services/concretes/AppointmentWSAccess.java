@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.concretes;
 
+import com.android.volley.Request;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,6 +95,10 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
         mParam = (AppointmentWSParamModel)params;
     }
 
+    @Override
+    public int getMethod() {
+        return Request.Method.GET;
+    }
     @Override
     public void onParseJsonResponseOK(String jsonResponse) {
         try {

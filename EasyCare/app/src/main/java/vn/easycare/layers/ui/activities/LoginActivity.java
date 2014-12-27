@@ -6,7 +6,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
@@ -19,18 +21,21 @@ import vn.easycare.utils.AppFnUtils;
 public class LoginActivity extends BaseActivity implements ILoginView{
 
     private ILoginPresenter mLoginPresenter;
+    EditText edtUsername;
+    EditText edtPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mLoginPresenter = new LoginPresenterImpl(this, this.getApplicationContext());
         View loginLayout = findViewById(R.id.loginLayout);
+        edtUsername = (EditText)findViewById(R.id.etxUsername);
+        edtPassword = (EditText)findViewById(R.id.etxPassword);
         loginLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                mLoginPresenter.DoAuthenticateUser(edtUsername.getText().toString(),edtPassword.getText().toString());
 
             }
         });
@@ -75,15 +80,20 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void LoginOK(String message) {
         //move to home screen
+        finish();
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void LoginFail(String message) {
         //show message for login fail
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void ShowIncorrectAccountInfoMessage(String errorMessage) {
         //show message for email or password format not correct
+        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
     }
 }

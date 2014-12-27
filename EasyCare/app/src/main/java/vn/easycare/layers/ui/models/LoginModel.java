@@ -27,8 +27,9 @@ public class LoginModel implements ILoginModel, IWSResponse{
     private Context mContext;
     private IResponseUIDataCallback mCallback;
 
-    public  LoginModel(Context context){
+    public  LoginModel(Context context,IResponseUIDataCallback callback){
         mContext = context;
+        this.mCallback = callback;
     }
     @Override
     public void getLoginAuthentication(String email, String password) {
@@ -38,7 +39,7 @@ public class LoginModel implements ILoginModel, IWSResponse{
                     mContext,
                     this,
                     new AuthorizationWSParamModel(email,password));
-            WS.sendPostRequest();
+            WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -75,9 +76,19 @@ public class LoginModel implements ILoginModel, IWSResponse{
     @Override
     public void onWSResponseOK(IWebServiceModel result) {
         AuthorizationWSModel model  = (AuthorizationWSModel) result;
-        WSDataSingleton.getInstance(mContext).setSessionToken(model.getCurrentSessionToken());
-        IBaseItemData item = null;
-        mCallback.onResponseOK(item);
+        if(model.getErrorMessageIfAny()!=null && !model.getErrorMessageIfAny().isEmpty()){
+            mCallback.onResponseFail(model.getErrorMessageIfAny());
+        }else{
+            WSDataSingleton.getInstance(mContext).setSessionToken(model.getCurrentSessionToken());
+            WSDataSingleton.getInstance(mContext).setDoctorAvatar(model.getUserAvatar());
+            WSDataSingleton.getInstance(mContext).setDoctorAvatarThumb(model.getUserAvatarThumb());
+            WSDataSingleton.getInstance(mContext).setDoctorEmail(model.getUserEmail());
+            WSDataSingleton.getInstance(mContext).setDoctorFullName(model.getUserFullname());
+            WSDataSingleton.getInstance(mContext).setDoctorId(model.getUserId());
+            IBaseItemData item = null;
+            mCallback.onResponseOK(item);
+        }
+
     }
 
     @Override

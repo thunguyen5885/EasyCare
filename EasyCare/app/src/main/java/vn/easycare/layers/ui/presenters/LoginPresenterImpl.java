@@ -24,17 +24,18 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
     Context mContext;
     public LoginPresenterImpl(ILoginView loginView, Context context){
         iView = loginView;
-        iModel = new LoginModel(context);
+        iModel = new LoginModel(context,this);
         mContext = context;
     }
     @Override
     public void DoAuthenticateUser(String email, String password) {
-        String validAccInfo = iModel.ValidateAccountInfo(email, password);
+       /* String validAccInfo = iModel.ValidateAccountInfo(email, password);
         if (validAccInfo != null && !validAccInfo.isEmpty()) {
             iModel.getLoginAuthentication(email, password);
         } else {
             iView.ShowIncorrectAccountInfoMessage(validAccInfo);
-        }
+        }*/
+        iModel.getLoginAuthentication(email, password);
     }
 
     @Override
@@ -54,6 +55,6 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
 
     @Override
     public void onResponseFail(String message) {
-        iView.LoginFail(mContext.getResources().getString(R.string.login_fail_msg));
+        iView.LoginFail(message);
     }
 }

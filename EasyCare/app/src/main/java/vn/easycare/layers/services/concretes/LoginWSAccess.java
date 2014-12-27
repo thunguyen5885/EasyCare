@@ -1,9 +1,12 @@
 package vn.easycare.layers.services.concretes;
 
+import com.android.volley.Request;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import vn.easycare.layers.services.AbstractWSAccess;
@@ -18,10 +21,17 @@ import vn.easycare.layers.services.models.builders.AuthorizationWSBuilder;
  * Created by phan on 12/9/2014.
  */
 public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,AuthorizationWSParamModel> {
-    private static final String LOGIN_URI = WEBSERVICE_HOST + "/login";
+    private static final String LOGIN_URI = WEBSERVICE_HOST + "/users/login?email=%s&password=%s";
     private static final String Param_Username = "email";
     private static final String Param_Password = "password";
-    private static final String Param_Token = "token";
+    private static final String Res_Id = "id";
+    private static final String Res_email = "email";
+    private static final String Res_full_name = "full_name";
+    private static final String Res_avatar = "avatar";
+    private static final String Res_avatar_thumb = "avatar_thumb";
+    private static final String Res_Token = "token";
+    private static final String Res_User = "user";
+    private static final String Res_Errors = "errors";
 
     private AuthorizationWSParamModel mParam;
     public  LoginWSAccess(){
@@ -32,9 +42,18 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
     public void onParseJsonResponseOK(String jsonResponse) {
         try {
             AuthorizationWSBuilder modelBuilder = new  AuthorizationWSBuilder();
-            JSONObject jsonObj = new JSONObject(jsonResponse);
-            modelBuilder.withSessionToken(jsonObj.get("token").toString());
-            modelBuilder.withSessionTokenExpire(Long.valueOf(jsonObj.get("token_expire").toString()).longValue());
+            JSONObject jsonBigObj = new JSONObject(jsonResponse);
+
+            modelBuilder.withSessionToken(jsonBigObj.get(Res_Token).toString());
+            JSONObject jsonUserObj = (JSONObject)jsonBigObj.get(Res_User);
+            if(jsonUserObj!=null){
+                modelBuilder.withUserAvatar(jsonUserObj.getString(Res_avatar));
+                modelBuilder.withUserAvatarThumb(jsonUserObj.getString(Res_avatar_thumb));
+                modelBuilder.withUserEmail(jsonUserObj.getString(Res_email));
+                modelBuilder.withUserFullname(jsonUserObj.getString(Res_full_name));
+                modelBuilder.withUserId(jsonUserObj.getString(Res_Id));
+            }
+
             if(mCallback!=null)
                 mCallback.onWSResponseOK(modelBuilder.build());
         } catch (JSONException e) {
@@ -48,23 +67,21 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
     }
 
 
-
-
+    @Override
+    public int getMethod() {
+        return Request.Method.GET;
+    }
 
     @Override
     public String getWSURL() {
-        return LOGIN_URI;
+
+        return String.format(LOGIN_URI,mParam.getUsername(),mParam.getPassword());
     }
 
     @Override
     public Map<String,String> getWSParams() {
 
-        Map<String,String> params = new HashMap<String, String>();
-        if(mParam!=null) {
-            params.put(Param_Username,mParam.getUsername());
-            params.put(Param_Password,mParam.getPassword());
-        }
-        return params;
+        return null;
     }
 
     @Override

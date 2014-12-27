@@ -13,7 +13,12 @@ public class WSDataSingleton {
     private static Object lock = new Object();
     private Context mContext;
     private RequestQueue queue;
-    private String sessionToken;
+    private String sessionToken="";
+    private String doctorFullName="";
+    private String doctorAvatar="";
+    private String doctorId="";
+    private String doctorEmail="";
+    private String doctorAvatarThumb="";
     public static WSDataSingleton getInstance(Context context) {
         synchronized (lock) {
             if (instance == null) {
@@ -39,5 +44,45 @@ public class WSDataSingleton {
 
     public void setSessionToken(String sessionToken) {
         this.sessionToken = sessionToken;
+    }
+
+    public String getDoctorFullName() {
+        return doctorFullName;
+    }
+
+    public void setDoctorFullName(String doctorFullName) {
+        this.doctorFullName = doctorFullName;
+    }
+
+    public String getDoctorAvatar() {
+        return doctorAvatar;
+    }
+
+    public void setDoctorAvatar(String doctorAvatar) {
+        this.doctorAvatar = doctorAvatar;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+
+    public String getDoctorAvatarThumb() {
+        return doctorAvatarThumb;
+    }
+
+    public void setDoctorAvatarThumb(String doctorAvatarThumb) {
+        this.doctorAvatarThumb = doctorAvatarThumb;
     }
 }
