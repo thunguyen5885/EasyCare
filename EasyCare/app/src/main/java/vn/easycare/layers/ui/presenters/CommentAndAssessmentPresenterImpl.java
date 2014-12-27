@@ -25,7 +25,7 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
 
     public CommentAndAssessmentPresenterImpl(ICommentAndAssessmentView view,Context context){
         iView = view;
-        iModel = new CommentAndAssessmentModel(context);
+        iModel = new CommentAndAssessmentModel(context,this);
         mContext = context;
     }
     @Override
@@ -62,6 +62,7 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
 
     @Override
     public void onResponseFail(String message) {
+
         iView.DisplayMessageIncaseError(message);
     }
 }

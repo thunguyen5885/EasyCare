@@ -17,6 +17,10 @@ public class CommentAndAssessmentItemData implements IBaseItemData{
     int FacilityPoint;//from 1 to 5
     int WaitingTimePoint;//from 1 to 5
     boolean IsDisplayed;
+    int totalPages;
+    int currentPage;
+    int lastPage;
+    int itemsPerPage;
 
     public String getCommentDateTime() {
         return CommentDateTime;
@@ -104,5 +108,37 @@ public class CommentAndAssessmentItemData implements IBaseItemData{
 
     public void setPatientId(String patientId) {
         PatientId = patientId;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getLastPage() {
+        return lastPage;
+    }
+
+    public void setLastPage(int lastPage) {
+        this.lastPage = lastPage;
+    }
+
+    public int getItemsPerPage() {
+        return itemsPerPage;
+    }
+
+    public void setItemsPerPage(int itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
     }
 }

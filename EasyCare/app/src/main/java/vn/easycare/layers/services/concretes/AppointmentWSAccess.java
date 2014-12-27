@@ -11,6 +11,7 @@ import java.util.Map;
 
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
+import vn.easycare.layers.services.WSError;
 import vn.easycare.layers.services.models.AppointmentListWSModel;
 import vn.easycare.layers.services.models.AppointmentWSParamModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSParamModel;
@@ -149,10 +150,12 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             if(mCallback!=null)
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
-            e.printStackTrace();
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
         catch (Exception e) {
-            e.printStackTrace();
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
     }
 }

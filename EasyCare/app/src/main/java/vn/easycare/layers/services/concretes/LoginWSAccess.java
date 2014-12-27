@@ -57,10 +57,12 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
             if(mCallback!=null)
                 mCallback.onWSResponseOK(modelBuilder.build());
         } catch (JSONException e) {
-            e.printStackTrace();
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
         catch (Exception e) {
-            e.printStackTrace();
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
 
         //mCallback.onWSResponseOK();

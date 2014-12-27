@@ -22,7 +22,7 @@ public class InformationStatisticPresenterImpl implements IInformationStatisticP
 
     public InformationStatisticPresenterImpl(IInformationStatisticView view, Context context){
         iView = view;
-        iModel = new InformationStatisticModel(context);
+        iModel = new InformationStatisticModel(context,this);
         mContext = context;
     }
 

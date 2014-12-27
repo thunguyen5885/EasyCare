@@ -21,8 +21,9 @@ public class InformationStatisticModel implements IInformationStatisticModel,IWS
     private Context mContext;
     private IResponseUIDataCallback mCallback;
 
-    public InformationStatisticModel(Context context){
+    public InformationStatisticModel(Context context,IResponseUIDataCallback callback){
         mContext = context;
+        this.mCallback = callback;
     }
 
 

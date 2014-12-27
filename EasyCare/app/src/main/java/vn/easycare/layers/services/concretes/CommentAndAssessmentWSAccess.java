@@ -11,6 +11,7 @@ import java.util.Map;
 
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
+import vn.easycare.layers.services.WSError;
 import vn.easycare.layers.services.models.CommentAndAssessmentListWSModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSParamModel;
@@ -23,7 +24,7 @@ import vn.easycare.layers.services.models.builders.InfoStatisticWSBuilder;
  */
 public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAssessmentListWSModel,CommentAndAssessmentWSParamModel> {
 
-    private static final String COMMENT_URI = WEBSERVICE_HOST + "/login";
+    private static final String COMMENT_URI = WEBSERVICE_HOST + "/doctors/comments?token=%s&page=%s";
     private static final String Res_comments = "comments";
     private static final String Res_id = "id";
     private static final String Res_comment = "comment";
@@ -36,6 +37,11 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
     private static final String Res_full_name = "full_name";
     private static final String Res_avatar = "avatar";
     private static final String Res_avatar_thumb = "avatar_thumb";
+    private static final String Res_paging = "paging";
+    private static final String Res_pagetotal = "total";
+    private static final String Res_currentPage = "currentPage";
+    private static final String Res_lastPage = "lastPage";
+    private static final String Res_itemsPerPage = "itemsPerPage";
     private static final String Param_Token = "token";
     private static final String Param_page = "page";
     private CommentAndAssessmentWSParamModel mParam;
@@ -44,17 +50,13 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
     }
     @Override
     public String getWSURL() {
-        return COMMENT_URI;
+        return String.format(COMMENT_URI,mParam.getToken(),mParam.getPage());
+
     }
 
     @Override
     public Map<String, String> getWSParams() {
-        Map<String,String> params = new HashMap<String, String>();
-        if(mParam!=null) {
-            params.put(Param_Token, mParam.getToken());
-            params.put(Param_page, mParam.getPage()+"");
-        }
-        return params;
+        return null;
     }
 
     @Override
@@ -98,13 +100,22 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
                     listModel.getListComments().add(model);
             }
 
+            JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
+            listModel.setPage_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
+            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
+            listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
+            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());
+
+
             if(mCallback!=null)
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
-            e.printStackTrace();
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
         catch (Exception e) {
-            e.printStackTrace();
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
     }
 }

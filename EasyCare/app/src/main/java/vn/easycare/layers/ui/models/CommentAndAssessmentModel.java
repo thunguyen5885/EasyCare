@@ -25,8 +25,9 @@ import vn.easycare.layers.ui.models.base.ICommentAndAssessmentModel;
 public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWSResponse {
     private Context mContext;
     private IResponseUIDataCallback mCallback;
-    public  CommentAndAssessmentModel(Context context){
+    public  CommentAndAssessmentModel(Context context,IResponseUIDataCallback callback){
         mContext = context;
+        mCallback = callback;
     }
 
     @Override
@@ -93,6 +94,10 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
             item.setPatientAvatarThumb(commentModel.getCommentByPatientAvatarThumbUrl());
             item.setPatientAvatar(commentModel.getCommentByPatientAvatarUrl());
             item.setDisplayed(true);
+            item.setTotalPages(listModel.getPage_total());
+            item.setCurrentPage(listModel.getPage_currentPage());
+            item.setLastPage(listModel.getLastPage());
+            item.setItemsPerPage(listModel.getItemsPerPage());
             itemDataList.add(item);
         }
         if(mCallback!=null)
