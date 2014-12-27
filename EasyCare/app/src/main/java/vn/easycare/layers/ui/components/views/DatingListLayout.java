@@ -156,6 +156,24 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         // Load new data
         loadNewData();
     }
+
+    /**
+     * When user did the "Change" or "Cancel", need to refresh data
+     */
+    public void refreshDataWhenDataChanged(){
+        mEdtDatingCode.setText("");
+        mEdtPatientName.setText("");
+        mTvCalendarText.setText("");
+        mDatingCode = "";
+        mPatientName = "";
+        mDatingDate = "";
+
+        mSelectedYear = -1;
+        mSelectedMonth = -1;
+        mSelectedDay = -1;
+
+        loadData();
+    }
     public void loadNewData(){
         mPage = 1;
         mExaminationAppointmentItemDataList.clear();
@@ -311,11 +329,11 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         }
 
         @Override
-        public void onDatingCalendarChange(ExaminationAppointmentItemData itemData) {
+        public void onDatingCalendarChange(final ExaminationAppointmentItemData itemData) {
             // TODO
             // Update appointment time from data
             //...................
-
+            //itemData.
             // Show datetime dialog here
             DialogUtil.showDateTimeDialog(getContext(), mAppointmentTime, new DatePicker.OnDateChangedListener() {
                 @Override
@@ -330,10 +348,10 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             }, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Show progress dialog here
-                    mPbLoading.setVisibility(View.VISIBLE);
+                    /*mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+                    mLoadingDialog.show();
                     // Change examination based on appointment time
-                    //mPresenter.ChangeAnExaminationAppointment();
+                    mPresenter.ChangeAnExaminationAppointment(itemData);*/
                 }
             });
 
@@ -422,7 +440,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
                 mIBroadCast.broadCast(status);
             }
             // Reload data here
-            refreshDataWithNonSearch();
+            refreshDataWhenDataChanged();
         }else{
             if(mLoadingDialog != null){
                 mLoadingDialog.dismiss();

@@ -125,4 +125,8 @@
     <!-- Define string for loading dialog-->
     <string name="loading_dialog_in_progress">Đang thực hiện...</string>
     <string name="empty_data">Không tìm thấy dữ liệu.</string>
+
+    <!-- Define string for patient detail screen-->
+    <string name="nothing_data">không có</string>
+    <string name="first_visit">Lần đầu tới khám</string>
 </resources>

@@ -13,7 +13,8 @@
             android:layout_height="wrap_content"
             android:scaleX=".8"
             android:scaleY=".8"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:background="@color/header_background_color">
         </DatePicker>
 
         <TimePicker
@@ -22,7 +23,8 @@
             android:layout_height="wrap_content"
             android:scaleX=".8"
             android:scaleY=".8"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:background="@color/header_background_color">
         </TimePicker>
 
         <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout

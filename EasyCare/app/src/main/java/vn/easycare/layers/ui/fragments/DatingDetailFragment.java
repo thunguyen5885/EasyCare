@@ -1,26 +1,39 @@
 package vn.easycare.layers.ui.fragments;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+
+import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.components.views.DatingListLayout;
+import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
+import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
+import vn.easycare.layers.ui.views.IExaminationAppointmentView;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class DatingDetailFragment extends Fragment implements View.OnClickListener{
+public class DatingDetailFragment extends Fragment implements View.OnClickListener, IExaminationAppointmentView{
     // For control, layout
     private View mDateLayout;
     private View mDatingCodeLayout;
@@ -41,7 +54,11 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     private Button mBtnCalendarAccept;
 
     // For data, object
-    private Activity mActivity;
+    boolean mIsCLicked = false;
+    private ExaminationAppointmentItemData mItemData;
+    private IExaminationAppointmentPresenter mPresenter;
+    private Dialog mLoadingDialog;
+    private AppointmentTime mAppointmentTime;
     public DatingDetailFragment(){
 
     }
@@ -54,6 +71,8 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mPresenter = new ExaminationAppointmentPresenterImpl(this, getActivity());
+        mAppointmentTime = new AppointmentTime();
         View v = inflater.inflate(R.layout.fragment_dating_detail, container, false);
         mDateLayout = v.findViewById(R.id.datingDetailDateLayout);
         mDatingCodeLayout = v.findViewById(R.id.datingDetailDatingCodeLayout);
@@ -128,22 +147,34 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Set value
-        initContentForChildView(mDateLayout, "19/11/2014, 11:15");
-        initContentForChildView(mDatingCodeLayout, "EA0012L");
-        initContentForChildView(mLocationLayout, "Phòng khám Bạch Mai");
-        initContentForChildView(mPersonInDateLayout, "Bùi Hiệu");
-        initContentForChildView(mRequestReasonLayout, "Viêm cơ xương");
-        initContentForChildView(mNameLayout, "Bùi Hiệu");
-        initContentForChildView(mGenderLayout, "Nam");
-        initContentForChildView(mPhoneLayout, "09875245625");
-        initContentForChildView(mEmailLayout, "abcd@gmail.com");
-        initContentForChildView(mDateCreatingLayout, "18/11/2014");
-        initContentForChildView(mStatusLayout, "Chấp nhận khám");
-        initContentForChildView(mMoreInfoLayout, "không có");
+        Bundle bundle = getArguments();
+        if(bundle != null){
+            Object object = bundle.getSerializable(AppConstants.APPOINTMENT_ID_KEY);
+            if(object != null && object instanceof ExaminationAppointmentItemData){
+                mItemData = (ExaminationAppointmentItemData) object;
+            }
+        }
 
-        initExtraMoreForChildView(mPersonInDateLayout, "Lần đầu tới khám");
+        if(mItemData != null){
+            // Begin update UI
+            // Set value
+            initContentForChildView(mDateLayout, mItemData.getExaminationDateTime());
+            initContentForChildView(mDatingCodeLayout, mItemData.getExaminationCode());
+            initContentForChildView(mLocationLayout, mItemData.getExaminationAddress());
+            initContentForChildView(mPersonInDateLayout, mItemData.getExaminationByPerson());
+            initContentForChildView(mRequestReasonLayout, mItemData.getExaminationReason());
+            initContentForChildView(mNameLayout, mItemData.getPatientName());
+            initContentForChildView(mGenderLayout, mItemData.getPatientGender());
+            initContentForChildView(mPhoneLayout, mItemData.getPatientPhone());
+            initContentForChildView(mEmailLayout, mItemData.getPatientEmail());
+            initContentForChildView(mDateCreatingLayout, mItemData.getExaminationDateTimeAppointmentCreated());
+            initContentForChildView(mStatusLayout, mItemData.getExaminationState());
+            initContentForChildView(mMoreInfoLayout, mItemData.getExaminationExtraInfo());
 
+            initExtraMoreForChildView(mPersonInDateLayout, mItemData.isExaminationFirstVisit());
+
+            mEdtDoctorComment.setText(mItemData.getExaminationDoctorNote());
+        }
 
     }
 
@@ -163,18 +194,77 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        if(mIsCLicked){
+            return;
+        }
+        mIsCLicked = true;
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mIsCLicked = false;
+            }
+        }, 500);
         switch (v.getId()) {
             case R.id.sendLayout:
-                Toast.makeText(getActivity(), "Send clicked", Toast.LENGTH_SHORT).show();
+                mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
+                mLoadingDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Change examination based on appointment time
+                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), null, 0, 0, mEdtDoctorComment.getText().toString());
+                    }
+                }, 2000);
                 break;
             case R.id.btnCalendarChange:
-                Toast.makeText(getActivity(), "Calendar change clicked", Toast.LENGTH_SHORT).show();
+                // Update appointment time from data
+                //...................
+                //itemData.
+                // Show datetime dialog here
+                DialogUtil.showDateTimeDialog(getActivity(), mAppointmentTime, new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        mAppointmentTime.set(year, monthOfYear, dayOfMonth);
+                    }
+                }, new TimePicker.OnTimeChangedListener() {
+                    @Override
+                    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                        mAppointmentTime.set(hourOfDay, minute);
+                    }
+                }, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
+                        mLoadingDialog.show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Change examination based on appointment time
+                                mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), null, 0, 0, null);
+                            }
+                        }, 2000);
+                    }
+                });
                 break;
             case R.id.btnCalendarCancel:
-                Toast.makeText(getActivity(), "Calendar cancel clicked", Toast.LENGTH_SHORT).show();
+                mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
+                mLoadingDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.CancelAnExaminationAppointment(mItemData.getExaminationId());
+                    }
+                }, 2000);
                 break;
             case R.id.btnCalendarAccept:
-                Toast.makeText(getActivity(), "Calendar accept clicked", Toast.LENGTH_SHORT).show();
+                mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
+                mLoadingDialog.show();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.AcceptAnExaminationAppointment(mItemData.getExaminationId());
+                    }
+                }, 2000);
                 break;
         }
     }
@@ -187,13 +277,131 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     private void initContentForChildView(View parentView, String contentVal){
         if(parentView != null){
             TextView tvValue = (TextView)parentView.findViewById(R.id.tvValue);
-            tvValue.setText(contentVal);
+            if(contentVal != null && contentVal.length() > 0) {
+                tvValue.setText(contentVal);
+            }else{
+                tvValue.setText(R.string.nothing_data);
+                tvValue.setTextColor(getResources().getColor(R.color.textview_color_grey));
+            }
         }
     }
-    private void initExtraMoreForChildView(View parentView, String contentVal){
+    private void initExtraMoreForChildView(View parentView, boolean isShow){
         if(parentView != null){
             TextView tvExtraMore = (TextView)parentView.findViewById(R.id.tvExtraMore);
-            tvExtraMore.setText(contentVal);
+            if(isShow) {
+                tvExtraMore.setText(String.format("(%s)", getResources().getString(R.string.nothing_data)));
+            }else{
+
+            }
+        }
+    }
+
+    @Override
+    public void DisplayExaminationAppointmentsForDoctor(List<ExaminationAppointmentItemData> examinationAppointmentItemsList) {
+
+    }
+
+    @Override
+    public void DisplayMessageForAcceptAppointment(String message) {
+        processWhenUpdateDone(message);
+    }
+
+    @Override
+    public void DisplayMessageForCancelAppointment(String message) {
+        processWhenUpdateDone(message);
+    }
+
+    @Override
+    public void DisplayMessageForChangeAppointment(String message) {
+        processWhenUpdateDone(message);
+    }
+
+    @Override
+    public void DisplayPopupForAnAppointment(ExaminationAppointmentItemData item) {
+
+    }
+    private void processWhenUpdateDone(String message){
+        boolean isUpdatedDone = true;
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        if(isUpdatedDone) {
+            // Can show message update done here
+            // .....
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Gone this screen
+                    ((HomeActivity) getActivity()).onBackPressed();
+                }
+            }, 500);
+
+        }else{
+
+        }
+    }
+    public class AppointmentTime{
+        private int year;
+        private int month;
+        private int day;
+        private int hour;
+        private int minute;
+
+        public AppointmentTime(){
+            year = -1;
+            month = -1;
+            day = -1;
+            hour = -1;
+            minute = -1;
+        }
+        public void set(int year, int month, int day){
+            this.year = year;
+            this.month = month;
+            this.day = day;
+        }
+        public void set(int hour, int minute){
+            this.hour = hour;
+            this.minute = minute;
+        }
+
+        public int getYear() {
+            return year;
+        }
+
+        public void setYear(int year) {
+            this.year = year;
+        }
+
+        public int getMonth() {
+            return month;
+        }
+
+        public void setMonth(int month) {
+            this.month = month;
+        }
+
+        public int getDay() {
+            return day;
+        }
+
+        public void setDay(int day) {
+            this.day = day;
+        }
+
+        public int getHour() {
+            return hour;
+        }
+
+        public void setHour(int hour) {
+            this.hour = hour;
+        }
+
+        public int getMinute() {
+            return minute;
+        }
+
+        public void setMinute(int minute) {
+            this.minute = minute;
         }
     }
 }

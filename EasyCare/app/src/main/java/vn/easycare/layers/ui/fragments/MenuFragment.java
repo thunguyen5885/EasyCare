@@ -16,8 +16,10 @@ import android.widget.Toast;
 import com.android.volley.toolbox.NetworkImageView;
 
 import vn.easycare.R;
+import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.activities.LoginActivity;
+import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.utils.AppFnUtils;
 
 public class MenuFragment extends Fragment implements View.OnClickListener{
@@ -71,13 +73,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         mMenuItemExit = v.findViewById(R.id.menuItemExit);
 
         //initMenuItem(mMenuItemUser, 0, );
-        initMenuItem(mMenuItemUser, R.string.menu_test_user, R.drawable.ic_no_avatar);
+        //initMenuItem(mMenuItemUser, R.string.menu_test_user, R.drawable.ic_no_avatar);
         initMenuItem(mMenuItemDatingManagement, R.string.menu_dating_management, R.drawable.ic_menu_dating_management);
         initMenuItem(mMenuItemCalendarCreating, R.string.menu_calendar_creating, R.drawable.ic_menu_calendar_creating);
         initMenuItem(mMenuItemPatientList, R.string.menu_patient_list, R.drawable.ic_patient_list);
         initMenuItem(mMenuItemComment, R.string.menu_comment, R.drawable.ic_menu_comment);
         initMenuItem(mMenuItemExit, R.string.menu_exit, R.drawable.ic_menu_exit);
 
+        showUserMenuItem(mMenuItemUser);
         // Apply font
         AppFnUtils.applyFontForTextViewChild(v, null);
 		return v;
@@ -93,6 +96,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 	public void onResume() {
 		super.onResume();
 	}
+    private void showUserMenuItem(View rootView){
+        View menuItemLayout = rootView.findViewById(R.id.menuItemLayout);
+        TextView tvUserName = (TextView) rootView.findViewById(R.id.tvMenuItemTitle);
+        tvUserName.setText(WSDataSingleton.getInstance(getActivity()).getDoctorFullName());
+        NetworkImageView ivPoster = (NetworkImageView) rootView.findViewById(R.id.ivMenuItemPoster);
+        ivPoster.setDefaultImageResId(R.drawable.ic_no_avatar);
+        ivPoster.setImageUrl(WSDataSingleton.getInstance(getActivity()).getDoctorAvatarThumb(), DataSingleton.getInstance(getActivity()).getImageLoader());
+
+    }
     private void initMenuItem(View rootView, int titleId, int posterId){
         View menuItemLayout = rootView.findViewById(R.id.menuItemLayout);
         menuItemLayout.setOnClickListener(this);
