@@ -58,4 +58,12 @@ public class CommonHeader implements View.OnClickListener{
         View backView = mRootView.findViewById(R.id.llRight);
         backView.setVisibility(View.INVISIBLE);
     }
+    public void hideMenuButton() {
+        View menuView = mRootView.findViewById(R.id.llLeft);
+        menuView.setVisibility(View.INVISIBLE);
+    }
+    public void showMenuButton() {
+        View menuView = mRootView.findViewById(R.id.llLeft);
+        menuView.setVisibility(View.VISIBLE);
+    }
 }

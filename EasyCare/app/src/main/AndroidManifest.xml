@@ -24,6 +24,7 @@
         <activity
             android:name=".layers.ui.activities.ForgetPasswordActivity"
             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:parentActivityName=".layers.ui.activities.LoginActivity"
             >
         </activity>

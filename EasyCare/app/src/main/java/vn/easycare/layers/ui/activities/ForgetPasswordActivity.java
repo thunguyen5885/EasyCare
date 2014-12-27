@@ -24,33 +24,38 @@ import java.util.Map;
 import vn.easycare.R;
 import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.ui.base.BaseActivity;
+import vn.easycare.layers.ui.components.CommonHeader;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by phan on 12/15/2014.
  */
-public class ForgetPasswordActivity extends BaseActivity {
+public class ForgetPasswordActivity extends BaseActivity implements CommonHeader.IOnHeaderClickListener{
     final String REQUEST_NEW_PASS_URL = "http://edev.easycare.vn/api/v1/users/login?email=gdgfdgd&password=ldgfd";
     EditText edtUserEmail;
+    private CommonHeader mCommonHeader;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        getActionBar().setDisplayShowCustomEnabled(true);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         setContentView(R.layout.activity_forget_password);
         //getActionBar().setTitle(R.string.forget_password_title);
 
-        getActionBar().setCustomView(R.layout.actionbar_forgetpassword_screen);
-        getActionBar().setDisplayShowHomeEnabled(true);
-        Button sendBtn = (Button)findViewById(R.id.btnSend);
+        View headerView = findViewById(R.id.header);
+        mCommonHeader = new CommonHeader(headerView);
+        mCommonHeader.hideMenuButton();
+        mCommonHeader.setOnHeaderClickListener(this);
+
+        View submitLayout = findViewById(R.id.submitLayout);
         edtUserEmail = (EditText)findViewById(R.id.etxUsername);
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+        submitLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                // sendRequestNewPassword(edtUserEmail.getText().toString());
                 volleyTest();
+                Toast.makeText(ForgetPasswordActivity.this, "Send clicked", Toast.LENGTH_SHORT).show();
             }
         });
         // Apply font
@@ -145,5 +150,15 @@ public class ForgetPasswordActivity extends BaseActivity {
         });
 // Add the request to the RequestQueue.
         queue.add(stringRequest);
+    }
+
+    @Override
+    public void onMenuClicked() {
+
+    }
+
+    @Override
+    public void onBack() {
+        finish();
     }
 }
