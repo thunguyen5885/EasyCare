@@ -3,7 +3,6 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,12 +106,13 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         loadData();
     }
     private void loadData(){
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.loadCommentAndAssessmentForDoctor( mPage);
-            }
-        }, 2000);
+        mPresenter.loadCommentAndAssessmentForDoctor( mPage);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPresenter.loadCommentAndAssessmentForDoctor( mPage);
+//            }
+//        }, 2000);
     }
     private void updateUI(){
         mPbLoading.setVisibility(View.GONE);
@@ -186,12 +186,13 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         public void onHideTheComment(final String commentId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getActivity().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.HideACommentAndAssessment(commentId);
-                }
-            }, 2000);
+            mPresenter.HideACommentAndAssessment(commentId);
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mPresenter.HideACommentAndAssessment(commentId);
+//                }
+//            }, 2000);
 
         }
     };

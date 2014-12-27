@@ -2,7 +2,6 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,12 +103,7 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         mPbLoading.setVisibility(View.VISIBLE);
         mStatisticLayout.setVisibility(View.GONE);
         mPresenter = new InformationStatisticPresenterImpl(this, getActivity());
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPresenter.loadAllInfoStatisticForDoctor();
-            }
-        }, 2000);
+        mPresenter.loadAllInfoStatisticForDoctor();
 
     }
     private void initViewForUserComment(View parentView, int posterId, int titleId){
