@@ -102,7 +102,7 @@ public class DateTimeAdapter extends BaseAdapter{
         viewHolder.mHightlight.invalidate();
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(convertView, null);
+        AppFnUtils.applyFontForTextViewChild(convertView);
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {

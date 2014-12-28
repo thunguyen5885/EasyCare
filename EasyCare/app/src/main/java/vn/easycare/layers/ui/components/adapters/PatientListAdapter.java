@@ -22,6 +22,7 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
+import vn.easycare.layers.ui.fragments.DatingListForAPatientFragment;
 import vn.easycare.layers.ui.fragments.PatientDetailFragment;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
@@ -129,7 +130,7 @@ public class PatientListAdapter extends BaseAdapter{
         viewHolder.mPatientPhone.setText(itemData.getPatientPhoneNumber());
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(convertView, null);
+        AppFnUtils.applyFontForTextViewChild(convertView);
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -159,13 +160,22 @@ public class PatientListAdapter extends BaseAdapter{
                     }
                     break;
                 case R.id.btnDating:
-                    Toast.makeText(mContext, "Dating clicked", Toast.LENGTH_SHORT).show();
+                    selectedPos = (Integer) v.getTag();
+                    selectedItem = mItemDataList.get(selectedPos);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AppConstants.PATIENT_DETAIL_KEY, selectedItem);
+
+                    // Go to patient_detail screen
+                    DatingListForAPatientFragment datingListForAPatientFragment = new DatingListForAPatientFragment();
+                    datingListForAPatientFragment.setArguments(bundle);
+                    ((HomeActivity) mContext).showFragment(datingListForAPatientFragment);
                     break;
                 case R.id.tvPatientName:
                     selectedPos = (Integer) v.getTag();
                     selectedItem = mItemDataList.get(selectedPos);
 
-                    Bundle bundle = new Bundle();
+                    bundle = new Bundle();
                     bundle.putSerializable(AppConstants.PATIENT_DETAIL_KEY, selectedItem);
 
                     // Go to patient_detail screen

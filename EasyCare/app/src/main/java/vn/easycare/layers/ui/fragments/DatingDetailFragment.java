@@ -49,6 +49,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     private View mMoreInfoLayout;
     private View mSendLayout;
     private EditText mEdtDoctorComment;
+    private View mDatingListButtonLayout;
     private Button mBtnCalendarChange;
     private Button mBtnCalendarCancel;
     private Button mBtnCalendarAccept;
@@ -88,6 +89,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
         mMoreInfoLayout = v.findViewById(R.id.datingDetailMoreInfoLayout);
         mSendLayout = v.findViewById(R.id.sendLayout);
         mEdtDoctorComment = (EditText)v.findViewById(R.id.edtDoctorComment);
+        mDatingListButtonLayout = v.findViewById(R.id.datingListButtonLayout);
         mBtnCalendarChange = (Button) v.findViewById(R.id.btnCalendarChange);
         mBtnCalendarCancel = (Button) v.findViewById(R.id.btnCalendarCancel);
         mBtnCalendarAccept = (Button) v.findViewById(R.id.btnCalendarAccept);
@@ -139,7 +141,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
         });
 
         // Apply font here
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 
@@ -152,6 +154,12 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
             Object object = bundle.getSerializable(AppConstants.APPOINTMENT_ID_KEY);
             if(object != null && object instanceof ExaminationAppointmentItemData){
                 mItemData = (ExaminationAppointmentItemData) object;
+            }
+            boolean isWaitingType = bundle.getBoolean(AppConstants.EXAMINATION_TYPE_KEY, false);
+            if(isWaitingType){
+                mDatingListButtonLayout.setVisibility(View.VISIBLE);
+            }else{
+                mDatingListButtonLayout.setVisibility(View.GONE);
             }
         }
 

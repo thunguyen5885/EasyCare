@@ -52,20 +52,57 @@ public class AppFnUtils {
         return metrics.widthPixels;
     }
 
-    public static void applyFontForTextViewChild(View parentView, Typeface fontStyle){
+    public static void applyFontForTextViewChild(View parentView){
         if(parentView instanceof ViewGroup){
-            if(fontStyle == null){
-                fontStyle = FontUtil.getRobotoRegular(parentView.getContext());
-            }
+            Typeface robotoRegular = FontUtil.getRobotoRegular(parentView.getContext());
+//            Typeface robotoItalic = FontUtil.getRobotoItalic(parentView.getContext());
+//            Typeface robotoBold = FontUtil.getRobotoBold(parentView.getContext());
+//            Typeface robotoBoldItalic = FontUtil.getRobotoBoldItalic(parentView.getContext());
             ViewGroup parentViewGroup = (ViewGroup) parentView;
             for(int index = 0; index < parentViewGroup.getChildCount(); index++){
                 View childView = parentViewGroup.getChildAt(index);
                 if(childView instanceof TextView){
-                    ((TextView) childView).setTypeface(fontStyle);
+                    TextView textView = (TextView) childView;
+                    Typeface typeface = textView.getTypeface();
+                    if(typeface != null){
+                        boolean isBold = typeface.isBold();
+                        boolean isItalic = typeface.isItalic();
+                        if(isBold && isItalic){
+                            textView.setTypeface(robotoRegular, Typeface.BOLD_ITALIC);
+                        }else{
+                            if(isBold){
+                                textView.setTypeface(robotoRegular, Typeface.BOLD);
+                            }else if(isItalic){
+                                textView.setTypeface(robotoRegular, Typeface.ITALIC);
+                            }else{
+                                textView.setTypeface(robotoRegular);
+                            }
+                        }
+                    }else{
+                        textView.setTypeface(robotoRegular);
+                    }
                 }else if(childView instanceof Button){
-                    ((Button) childView).setTypeface(fontStyle);
+                    Button  button = (Button) childView;
+                    Typeface typeface = button.getTypeface();
+                    if(typeface != null){
+                        boolean isBold = typeface.isBold();
+                        boolean isItalic = typeface.isItalic();
+                        if(isBold && isItalic){
+                            button.setTypeface(robotoRegular, Typeface.BOLD_ITALIC);
+                        }else{
+                            if(isBold){
+                                button.setTypeface(robotoRegular, Typeface.BOLD);
+                            }else if(isItalic){
+                                button.setTypeface(robotoRegular, Typeface.ITALIC);
+                            }else{
+                                button.setTypeface(robotoRegular);
+                            }
+                        }
+                    }else{
+                        button.setTypeface(robotoRegular);
+                    }
                 }else if(childView instanceof ViewGroup){
-                    applyFontForTextViewChild(childView, fontStyle);
+                    applyFontForTextViewChild(childView);
                 }
             }
         }

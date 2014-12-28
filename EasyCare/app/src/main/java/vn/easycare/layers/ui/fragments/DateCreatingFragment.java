@@ -53,7 +53,7 @@ public class DateCreatingFragment extends Fragment implements View.OnClickListen
         mPreviousDayLayout.setOnClickListener(this);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

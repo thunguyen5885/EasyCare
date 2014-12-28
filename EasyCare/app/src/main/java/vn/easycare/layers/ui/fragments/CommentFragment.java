@@ -60,7 +60,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         mCommentListView.addFooterView(mLoadMoreView);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

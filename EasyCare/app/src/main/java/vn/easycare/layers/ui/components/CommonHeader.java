@@ -29,7 +29,7 @@ public class CommonHeader implements View.OnClickListener{
         tvHeader.setText(R.string.app_name);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(mRootView, null);
+        AppFnUtils.applyFontForTextViewChild(mRootView);
     }
     /*Getter and setter*/
     public void setOnHeaderClickListener(IOnHeaderClickListener onHeaderClickListener){

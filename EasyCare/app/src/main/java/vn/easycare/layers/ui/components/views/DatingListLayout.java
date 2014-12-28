@@ -51,6 +51,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private LoadMoreLayout mLoadMoreView;
     private Dialog mLoadingDialog;
     // For data, object
+    private String mPatientId;
     private boolean mIsDataLoading = false;
     private boolean mIsNeedToRefresh = false;
 
@@ -120,7 +121,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         addView(view);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(this, null);
+        AppFnUtils.applyFontForTextViewChild(this);
 
         // Initialize object for API control
         mPresenter = new ExaminationAppointmentPresenterImpl(this, getContext());
@@ -131,6 +132,9 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     }
     public void setIBroadCast(DatingListPagerAdapter.IBroadCastToSynData broadCast){
         mIBroadCast = broadCast;
+    }
+    public void setPatientId(String patientId){
+        mPatientId = patientId;
     }
     /**
      * Enforce to refresh to sync data from the change of other tabs
@@ -324,6 +328,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             DatingDetailFragment datingDetailFragment = new DatingDetailFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(AppConstants.APPOINTMENT_ID_KEY, itemData);
+            bundle.putBoolean(AppConstants.EXAMINATION_TYPE_KEY, mDatingType == AppConstants.EXAMINATION_STATUS.WAITING);
             datingDetailFragment.setArguments(bundle);
             ((HomeActivity) getContext()).showFragment(datingDetailFragment);
         }

@@ -20,4 +20,5 @@ public class AppConstants {
     /* Define all keys for screen transition*/
     public static final String APPOINTMENT_ID_KEY = "appointment_id_key";
     public static final String PATIENT_DETAIL_KEY = "patient_detail_key";
+    public static final String EXAMINATION_TYPE_KEY = "examination_type_key";
 }

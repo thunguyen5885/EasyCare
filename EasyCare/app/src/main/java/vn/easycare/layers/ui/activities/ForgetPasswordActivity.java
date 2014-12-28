@@ -60,7 +60,7 @@ public class ForgetPasswordActivity extends BaseActivity implements CommonHeader
         });
         // Apply font
         View rootLayout = findViewById(R.id.forgetPassLayout);
-        AppFnUtils.applyFontForTextViewChild(rootLayout, null);
+        AppFnUtils.applyFontForTextViewChild(rootLayout);
     }
 
     @Override

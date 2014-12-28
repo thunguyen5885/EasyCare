@@ -25,6 +25,6 @@ public class ChangePasswordActivity extends BaseActivity {
         });
         // Apply font
         View rootLayout = findViewById(R.id.changePassRootLayout);
-        AppFnUtils.applyFontForTextViewChild(rootLayout, null);
+        AppFnUtils.applyFontForTextViewChild(rootLayout);
     }
 }

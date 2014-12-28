@@ -49,7 +49,7 @@ public class PatientListFragment extends Fragment {
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

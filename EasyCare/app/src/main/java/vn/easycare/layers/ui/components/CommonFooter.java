@@ -41,7 +41,7 @@ public class CommonFooter implements View.OnClickListener{
         tvForEasyCare.setOnClickListener(this);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(mRootView, null);
+        AppFnUtils.applyFontForTextViewChild(mRootView);
     }
     /*Getter and setter*/
     public void setOnFooterClickListener(IOnFooterClickListener onFooterClickListener){

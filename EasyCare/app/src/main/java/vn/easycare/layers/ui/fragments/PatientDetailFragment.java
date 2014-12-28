@@ -59,7 +59,7 @@ public class PatientDetailFragment extends Fragment {
         mPatientAvatar.getLayoutParams().height = avatarSize;
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

@@ -66,7 +66,7 @@ public class TimeRangeSelectionFragment extends Fragment implements View.OnClick
         mSaveLayout.setOnClickListener(this);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

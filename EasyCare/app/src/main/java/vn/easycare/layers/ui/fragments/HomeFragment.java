@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         initHomeItemLayout(mStatisticLayout, R.string.home_statistic, R.drawable.ic_statistic);
 
         // Apply font style here
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

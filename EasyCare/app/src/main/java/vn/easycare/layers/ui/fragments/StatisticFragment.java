@@ -71,7 +71,7 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         initViewForUserComment(mUserCommentAssetCommentLayout, R.drawable.ic_comment_about_assets, R.string.statistic_asset_comment);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         return v;
     }
 

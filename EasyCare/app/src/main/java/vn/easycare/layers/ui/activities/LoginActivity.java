@@ -50,7 +50,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
         // Apply font
         View rootLayout = findViewById(R.id.loginRootLayout);
-        AppFnUtils.applyFontForTextViewChild(rootLayout, null);
+        AppFnUtils.applyFontForTextViewChild(rootLayout);
     }
 
     @Override

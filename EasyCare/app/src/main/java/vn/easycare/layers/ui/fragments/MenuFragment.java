@@ -82,7 +82,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
         showUserMenuItem(mMenuItemUser);
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
 		return v;
 	}
 	/*ThuNguyen Add 20141022 Start*/

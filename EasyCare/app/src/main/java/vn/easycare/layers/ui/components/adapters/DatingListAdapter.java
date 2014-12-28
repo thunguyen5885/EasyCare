@@ -137,7 +137,7 @@ public class DatingListAdapter extends BaseAdapter{
 //        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(convertView, null);
+        AppFnUtils.applyFontForTextViewChild(convertView);
         return convertView;
     }
     private View.OnClickListener mOnClickListener = new View.OnClickListener() {

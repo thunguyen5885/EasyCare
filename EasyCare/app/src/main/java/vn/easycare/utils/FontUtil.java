@@ -31,19 +31,19 @@ public class FontUtil {
 //    }
 //    public static Typeface getRobotoBold(Context context){
 //        if(robotoBold == null){
-//            robotoBold = Typeface.createFromAsset(context.getAssets(),"font/ROBOTO-BOLD.TTF");
+//            robotoBold = Typeface.createFromAsset(context.getAssets(),"font/roboto-regular.ttf");
 //        }
 //        return robotoBold;
 //    }
 //    public static Typeface getRobotoBoldItalic(Context context){
 //        if(robotoBoldItalic == null){
-//            robotoBoldItalic = Typeface.createFromAsset(context.getAssets(),"font/ROBOTO-BOLDITALIC.TTF");
+//            robotoBoldItalic = Typeface.createFromAsset(context.getAssets(),"font/roboto-regular.ttf");
 //        }
 //        return robotoBoldItalic;
 //    }
 //    public static Typeface getRobotoItalic(Context context){
 //        if(robotoItalic == null){
-//            robotoItalic = Typeface.createFromAsset(context.getAssets(),"font/ROBOTO-ITALIC.TTF");
+//            robotoItalic = Typeface.createFromAsset(context.getAssets(),"font/roboto-regular.ttf");
 //        }
 //        return robotoItalic;
 //    }

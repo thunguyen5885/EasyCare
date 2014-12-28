@@ -75,7 +75,7 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         mPatientListView.addFooterView(mLoadMoreView);
 
         // Apply font
-        AppFnUtils.applyFontForTextViewChild(v, null);
+        AppFnUtils.applyFontForTextViewChild(v);
         addView(v);
     }
     public void setBlackList(boolean isBlackList){

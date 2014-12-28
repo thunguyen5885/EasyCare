@@ -20,9 +20,14 @@ public class DatingListPagerAdapter extends PagerAdapter{
     }
     private ViewPager mViewPager;
     private HashMap<Integer, View> mViewMaps;
+    private String mPatientId;
+
     public DatingListPagerAdapter(ViewPager viewPager){
         mViewPager = viewPager;
         mViewMaps = new HashMap<Integer, View>();
+    }
+    public void setPatientId(String patientId){
+        mPatientId = patientId;
     }
     @Override
     public int getCount() {
@@ -55,6 +60,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
             }else{
                 datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
             }
+            datingListLayout.setPatientId(mPatientId);
             datingListLayout.loadNewData();
 
             mViewMaps.put(position, datingListLayout);
@@ -69,7 +75,9 @@ public class DatingListPagerAdapter extends PagerAdapter{
     public void updateDataIfAnyForCurrentItem(){
         int currentPos = mViewPager.getCurrentItem();
         DatingListLayout curItem = (DatingListLayout) mViewMaps.get(currentPos);
-        curItem.enforceToRefreshForDataChanged();
+        if(curItem != null) {
+            curItem.enforceToRefreshForDataChanged();
+        }
     }
     private IBroadCastToSynData mBroadCastToSynData = new IBroadCastToSynData() {
         @Override
