@@ -264,4 +264,9 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     public void DisplayAllAppointmentForPatient(String patientID) {
 
     }
+
+    @Override
+    public void DisplayMessageIncaseError(String message) {
+
+    }
 }

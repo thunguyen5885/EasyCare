@@ -1,6 +1,7 @@
 package vn.easycare.layers.services.models;
 
 import vn.easycare.layers.services.IWebServiceParamModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/26/2014.
@@ -16,8 +17,15 @@ public class AppointmentWSParamModel implements IWebServiceParamModel{
     String endDate;
     String patientId;
     String numberOfRecords;
+    String appointmentId;
+    String address;
+    String time;
+    String date;
+    AppConstants.APPOINTMENT_ACTION action;
 
-    public AppointmentWSParamModel(String token, String page, String appointmentCode, String appointmentStatus, String patientName, String appointmentDate, String startDate, String endDate, String patientId, String numberOfRecords) {
+    public AppointmentWSParamModel(String token, String page, String appointmentCode, String appointmentStatus, String patientName,
+                                   String appointmentDate, String startDate, String endDate, String patientId, String numberOfRecords,
+                                   String appointmentId, String address, String time, String date, AppConstants.APPOINTMENT_ACTION action) {
         this.token = token;
         this.page = page;
         this.appointmentCode = appointmentCode;
@@ -28,6 +36,11 @@ public class AppointmentWSParamModel implements IWebServiceParamModel{
         this.endDate = endDate;
         this.patientId = patientId;
         this.numberOfRecords = numberOfRecords;
+        this.appointmentId = appointmentId;
+        this.address = address;
+        this.time = time;
+        this.date = date;
+        this.action = action;
     }
 
     public String getToken() {
@@ -108,5 +121,45 @@ public class AppointmentWSParamModel implements IWebServiceParamModel{
 
     public void setNumberOfRecords(String numberOfRecords) {
         this.numberOfRecords = numberOfRecords;
+    }
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public AppConstants.APPOINTMENT_ACTION getAction() {
+        return action;
+    }
+
+    public void setAction(AppConstants.APPOINTMENT_ACTION action) {
+        this.action = action;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

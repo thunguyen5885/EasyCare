@@ -220,7 +220,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
                     @Override
                     public void run() {
                         // Change examination based on appointment time
-                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), null, 0, 0, mEdtDoctorComment.getText().toString());
+                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), "", "", 0, mEdtDoctorComment.getText().toString());
                     }
                 }, 2000);
                 break;
@@ -248,7 +248,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
                             @Override
                             public void run() {
                                 // Change examination based on appointment time
-                                mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), null, 0, 0, null);
+                                mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), "", "", 0, null);
                             }
                         }, 2000);
                     }
@@ -325,9 +325,15 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     }
 
     @Override
-    public void DisplayPopupForAnAppointment(ExaminationAppointmentItemData item) {
+    public void DisplayDetailForAnAppointment(ExaminationAppointmentItemData item) {
 
     }
+
+    @Override
+    public void DisplayMessageIncaseError(String message) {
+
+    }
+
     private void processWhenUpdateDone(String message){
         boolean isUpdatedDone = true;
         if(mLoadingDialog != null){

@@ -10,8 +10,25 @@ public class AppConstants {
         GET, POST, PUT, DELETE
     }
 
+    public static enum PATIENT_ACTION {
+        NONE, BAN, UNBAN
+    }
+
+    public static enum APPOINTMENT_ACTION {
+        NONE, ACCEPT, CANCEL, CHANGE, VIEWDETAIL
+    }
+
     public static enum EXAMINATION_STATUS {
-        WAITING, ACCEPTED, CANCEL
+        WAITING(0), ACCEPTED(1), CANCEL(-1);
+        private int value;
+
+        private EXAMINATION_STATUS(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
     public static final String DEFAULT_ENCODING = "UTF-8";
 

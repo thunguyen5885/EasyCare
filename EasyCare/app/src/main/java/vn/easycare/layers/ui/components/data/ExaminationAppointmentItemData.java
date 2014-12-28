@@ -32,7 +32,13 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
 
     boolean ExaminationFirstVisit;
 
+    int totalPages;
+    int currentPage;
+    int lastPage;
+    int itemsPerPage;
+
     AppConstants.EXAMINATION_STATUS ExaminationStatus;
+    AppConstants.APPOINTMENT_ACTION action;
 
     public ExaminationAppointmentItemData() {
     }
@@ -173,5 +179,45 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
 
     public void setExaminationFirstVisit(boolean examinationFirstVisit) {
         ExaminationFirstVisit = examinationFirstVisit;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getLastPage() {
+        return lastPage;
+    }
+
+    public void setLastPage(int lastPage) {
+        this.lastPage = lastPage;
+    }
+
+    public int getItemsPerPage() {
+        return itemsPerPage;
+    }
+
+    public void setItemsPerPage(int itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
+    }
+
+    public AppConstants.APPOINTMENT_ACTION getAction() {
+        return action;
+    }
+
+    public void setAction(AppConstants.APPOINTMENT_ACTION action) {
+        this.action = action;
     }
 }

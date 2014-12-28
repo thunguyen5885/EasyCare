@@ -1,6 +1,7 @@
 package vn.easycare.layers.services.models;
 
 import vn.easycare.layers.services.IWebServiceModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/26/2014.
@@ -26,7 +27,7 @@ public class AppointmentWSModel implements IWebServiceModel {
     String patient_birth_date;
     String patient_email;
     String patient_id;
-
+    AppConstants.APPOINTMENT_ACTION action;
 
     public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id) {
         this.id = id;
@@ -211,5 +212,11 @@ public class AppointmentWSModel implements IWebServiceModel {
         this.patient_id = patient_id;
     }
 
+    public AppConstants.APPOINTMENT_ACTION getAction() {
+        return action;
+    }
 
+    public void setAction(AppConstants.APPOINTMENT_ACTION action) {
+        this.action = action;
+    }
 }

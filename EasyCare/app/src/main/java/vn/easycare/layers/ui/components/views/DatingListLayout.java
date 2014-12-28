@@ -434,9 +434,15 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     }
 
     @Override
-    public void DisplayPopupForAnAppointment(ExaminationAppointmentItemData item) {
+    public void DisplayDetailForAnAppointment(ExaminationAppointmentItemData item) {
 
     }
+
+    @Override
+    public void DisplayMessageIncaseError(String message) {
+
+    }
+
     private void processWhenUpdateDone(String message, AppConstants.EXAMINATION_STATUS status){
         boolean isUpdatedDone = true;
         if(isUpdatedDone) {

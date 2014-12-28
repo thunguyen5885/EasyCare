@@ -129,4 +129,6 @@
     <!-- Define string for patient detail screen-->
     <string name="nothing_data">không có</string>
     <string name="first_visit">Lần đầu tới khám</string>
+    <string name="gender_man">Nam</string>
+    <string name="gender_women">Nữ</string>
 </resources>

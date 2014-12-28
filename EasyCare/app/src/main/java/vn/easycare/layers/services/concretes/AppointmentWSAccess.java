@@ -16,12 +16,19 @@ import vn.easycare.layers.services.models.AppointmentListWSModel;
 import vn.easycare.layers.services.models.AppointmentWSParamModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSParamModel;
 import vn.easycare.layers.services.models.builders.AppoinmentWSBuilder;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/26/2014.
  */
 public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel,AppointmentWSParamModel> {
-    private static final String APPOINTMENT_URI = WEBSERVICE_HOST + "/login";
+    private static final String APPOINTMENT_URI = WEBSERVICE_HOST +
+    "/doctors/appointments?token=%s&appointmentCode=%s&appointmentStatus=%s&patientName=%s[&appointmentDate=%s&startDate=%s&endDate=%s&patientId=%s]&numberOfRecords=%s&page=%s";
+    private static final String APPOINTMENT_ACCEPT_URI = WEBSERVICE_HOST + "/doctors/appointments/accept";
+    private static final String APPOINTMENT_CANCEL_URI = WEBSERVICE_HOST + "/doctors/appointments/reject";
+    private static final String APPOINTMENT_CHANGE_URI = WEBSERVICE_HOST + "/doctors/appointments/update?token=%s&id=%s&date=%s&time=%s&address=%s";
+    private static final String APPOINTMENT_VIEW_URI = WEBSERVICE_HOST + "/doctors/appointments/%s?token=%s";
+
     private static final String Res_appointments = "appointments";
     private static final String Res_id = "id";
     private static final String Res_doctor_id = "doctor_id";
@@ -59,15 +66,41 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String Param_patientId = "patientId";
     private static final String Param_numberOfRecords = "numberOfRecords";
     private static final String Param_page = "page";
+    private static final String Param_id = "id";
     private AppointmentWSParamModel mParam;
     @Override
     public String getWSURL() {
-        return APPOINTMENT_URI;
+
+        switch (mParam.getAction()){
+            case NONE:
+                return String.format(APPOINTMENT_URI,
+                        mParam.getToken(),
+                        mParam.getAppointmentCode(),
+                        mParam.getAppointmentStatus(),
+                        mParam.getPatientName(),
+                        mParam.getAppointmentDate(),
+                        mParam.getStartDate(),
+                        mParam.getEndDate(),
+                        mParam.getPatientId(),
+                        mParam.getNumberOfRecords(),
+                        mParam.getPage());
+            case ACCEPT:
+                return APPOINTMENT_ACCEPT_URI;
+            case CANCEL:
+                return  APPOINTMENT_CANCEL_URI;
+            case CHANGE:
+                return  String.format(APPOINTMENT_CHANGE_URI,mParam.getToken(),mParam.getAppointmentId(),mParam.getDate(),mParam.getTime(),mParam.getAddress());
+            case VIEWDETAIL:
+                return  String.format(APPOINTMENT_VIEW_URI,mParam.getAppointmentId(),mParam.getToken());
+            default:
+                return "";
+        }
+
     }
 
     @Override
     public Map<String, String> getWSParams() {
-        Map<String,String> params = new HashMap<String, String>();
+      /*  Map<String,String> params = new HashMap<String, String>();
         if(mParam!=null) {
             params.put(Param_Token, mParam.getToken());
             params.put(Param_page, mParam.getPage());
@@ -88,7 +121,14 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             if(mParam.getPatientId()!=null && mParam.getPatientId()!="")
                 params.put(Param_patientId, mParam.getPatientId());
         }
-        return params;
+        return params;*/
+        if(mParam.getAction()== AppConstants.APPOINTMENT_ACTION.ACCEPT || mParam.getAction()== AppConstants.APPOINTMENT_ACTION.CANCEL){
+            Map<String,String> params = new HashMap<String, String>();
+            params.put(Param_Token, mParam.getToken());
+            params.put(Param_id, mParam.getAppointmentId());
+            return  params;
+        }else
+            return null;
     }
 
     @Override
@@ -98,10 +138,45 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
 
     @Override
     public int getMethod() {
-        return Request.Method.GET;
+        switch (mParam.getAction()){
+            case NONE:
+                return Request.Method.GET;
+            case ACCEPT:
+                return Request.Method.POST;
+            case CANCEL:
+                return Request.Method.POST;
+            case CHANGE:
+                return Request.Method.GET;
+            case VIEWDETAIL:
+                return Request.Method.GET;
+            default:
+                return Request.Method.GET;
+        }
     }
     @Override
     public void onParseJsonResponseOK(String jsonResponse) {
+        switch (mParam.getAction()){
+            case NONE:
+                parseResponseForLoadAppointments(jsonResponse);
+                break;
+            case ACCEPT:
+                parseResponseForAcceptAppointments(jsonResponse);
+                break;
+            case CANCEL:
+                parseResponseForCancelAppointments(jsonResponse);
+                break;
+            case CHANGE:
+                parseResponseForChangeAppointments(jsonResponse);
+                break;
+            case VIEWDETAIL:
+                parseResponseForViewAppointments(jsonResponse);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void parseResponseForLoadAppointments(String jsonResponse){
         try {
             AppoinmentWSBuilder modelBuilder = new  AppoinmentWSBuilder();
             AppointmentListWSModel listModel = new AppointmentListWSModel();
@@ -157,5 +232,33 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             if(mCallback!=null)
                 mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
+    }
+
+    private void parseResponseForAcceptAppointments(String jsonResponse){
+        AppoinmentWSBuilder modelBuilder = new  AppoinmentWSBuilder();
+        modelBuilder.withAction(AppConstants.APPOINTMENT_ACTION.ACCEPT);
+        modelBuilder.withId(mParam.getAppointmentId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
+    }
+
+    private void parseResponseForCancelAppointments(String jsonResponse){
+        AppoinmentWSBuilder modelBuilder = new  AppoinmentWSBuilder();
+        modelBuilder.withAction(AppConstants.APPOINTMENT_ACTION.CANCEL);
+        modelBuilder.withId(mParam.getAppointmentId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
+    }
+
+    private void parseResponseForChangeAppointments(String jsonResponse){
+        AppoinmentWSBuilder modelBuilder = new  AppoinmentWSBuilder();
+        modelBuilder.withAction(AppConstants.APPOINTMENT_ACTION.CHANGE);
+        modelBuilder.withId(mParam.getAppointmentId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
+    }
+
+    private void parseResponseForViewAppointments(String jsonResponse){
+        //waiting for api work
     }
 }

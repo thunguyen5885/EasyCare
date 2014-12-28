@@ -15,6 +15,6 @@ public interface IExaminationAppointmentPresenter extends IPresenter<IExaminatio
      void AcceptAnExaminationAppointment(String appointmentID);
      void CancelAnExaminationAppointment(String appointmentID);
      void loadAnExaminationAppointmentForDoctor(String appointmentID);
-     void ChangeAnExaminationAppointment(String appointmentID,Date newDateTime,int oldAddressID,int addressChangeID,String doctorNotes);
+     void ChangeAnExaminationAppointment(String appointmentID,String date,String time,int addressChangeID,String doctorNotes);
 
 }

@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import vn.easycare.layers.services.models.AppointmentWSModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/26/2014.
@@ -29,7 +30,7 @@ public class AppoinmentWSBuilder {
     String patient_birth_date = "";
     String patient_email = "";
     String patient_id ="";
-
+    AppConstants.APPOINTMENT_ACTION action= AppConstants.APPOINTMENT_ACTION.NONE;
     public AppoinmentWSBuilder() {
     }
 
@@ -137,6 +138,11 @@ public class AppoinmentWSBuilder {
         return this;
     }
 
+    public AppoinmentWSBuilder withAction(AppConstants.APPOINTMENT_ACTION action) {
+        this.action = action;
+        return  this;
+    }
+
     public AppointmentWSModel build(){
         return new AppointmentWSModel( id,  doctor_id,  status,  time,  visit_reason,
                 first_visit,  visits,  code,  address,  insurance,
@@ -166,5 +172,6 @@ public class AppoinmentWSBuilder {
         patient_birth_date = "";
         patient_email = "";
         patient_id ="";
+        AppConstants.APPOINTMENT_ACTION action= AppConstants.APPOINTMENT_ACTION.NONE;
     }
 }

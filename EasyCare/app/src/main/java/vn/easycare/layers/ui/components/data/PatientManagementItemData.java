@@ -12,6 +12,7 @@ import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 public class PatientManagementItemData implements Serializable,IBaseItemData {
     String PatientId;
     String PatientAvatar;
+    String PatientAvatarThumb;
     String PatientName;
     String PatientBirthday;
     String PatientPhoneNumber;
@@ -21,6 +22,11 @@ public class PatientManagementItemData implements Serializable,IBaseItemData {
     int PatientCancelCount;
     int PatientChangeCount;
     int PatientCommentCount;
+
+    int totalPages;
+    int currentPage;
+    int lastPage;
+    int itemsPerPage;
 
     boolean IsPatientBlocked;
 
@@ -120,4 +126,43 @@ public class PatientManagementItemData implements Serializable,IBaseItemData {
         IsPatientBlocked = isPatientBlocked;
     }
 
+    public String getPatientAvatarThumb() {
+        return PatientAvatarThumb;
+    }
+
+    public void setPatientAvatarThumb(String patientAvatarThumb) {
+        PatientAvatarThumb = patientAvatarThumb;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public int getLastPage() {
+        return lastPage;
+    }
+
+    public void setLastPage(int lastPage) {
+        this.lastPage = lastPage;
+    }
+
+    public int getItemsPerPage() {
+        return itemsPerPage;
+    }
+
+    public void setItemsPerPage(int itemsPerPage) {
+        this.itemsPerPage = itemsPerPage;
+    }
 }
