@@ -25,6 +25,7 @@ public class DatingListFragment extends Fragment{
     // For view, control
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
+    private View mRefreshLayout;
     private DatingListPagerAdapter mPagerAdapter;
 
     // For data, object
@@ -44,6 +45,13 @@ public class DatingListFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_dating_list, container, false);
+        mRefreshLayout = v.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPagerAdapter.refreshAllItems();
+            }
+        });
         mTabLayout = (TabLayout) v.findViewById(R.id.datingListTabLayout);
         mTabLayout.createChild(mDatingList);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);

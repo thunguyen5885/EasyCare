@@ -166,7 +166,9 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
         if(mItemData != null){
             // Begin update UI
             // Set value
-            initContentForChildView(mDateLayout, mItemData.getExaminationDateTime());
+            String dateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTime());
+            String createdDateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTimeAppointmentCreated());
+            initContentForChildView(mDateLayout, dateTime);
             initContentForChildView(mDatingCodeLayout, mItemData.getExaminationCode());
             initContentForChildView(mLocationLayout, mItemData.getExaminationAddress());
             initContentForChildView(mPersonInDateLayout, mItemData.getExaminationByPerson());
@@ -175,7 +177,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
             initContentForChildView(mGenderLayout, mItemData.getPatientGender());
             initContentForChildView(mPhoneLayout, mItemData.getPatientPhone());
             initContentForChildView(mEmailLayout, mItemData.getPatientEmail());
-            initContentForChildView(mDateCreatingLayout, mItemData.getExaminationDateTimeAppointmentCreated());
+            initContentForChildView(mDateCreatingLayout, createdDateTime);
             initContentForChildView(mStatusLayout, mItemData.getExaminationState());
             initContentForChildView(mMoreInfoLayout, mItemData.getExaminationExtraInfo());
 

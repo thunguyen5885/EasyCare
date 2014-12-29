@@ -59,6 +59,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private int mSelectedMonth;
     private int mSelectedDay;
     private int mPage;
+    private int mItemCount;
 
     private DatingListAdapter mAdapter;
     private AppointmentTime mAppointmentTime;
@@ -160,7 +161,23 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         // Load new data
         loadNewData();
     }
+    public void refreshDataAndShowLoading(){
+        mEdtDatingCode.setText("");
+        mEdtPatientName.setText("");
+        mTvCalendarText.setText("");
+        mDatingCode = "";
+        mPatientName = "";
+        mDatingDate = "";
 
+        mSelectedYear = -1;
+        mSelectedMonth = -1;
+        mSelectedDay = -1;
+
+        mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+        mLoadingDialog.show();
+        // Load new data
+        loadData();
+    }
     /**
      * When user did the "Change" or "Cancel", need to refresh data
      */
@@ -216,31 +233,32 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private void loadData(){
         if(!mIsDataLoading) {
             mIsDataLoading = true;
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (mDatingCode.length() > 0 ||
-                            mPatientName.length() > 0 ||
-                            mDatingDate.length() > 0) { // Search
-                        mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mDatingType, mDatingDate, "", "", mPage);
-                    } else {
-                        // Load all
-                        mPresenter.loadExaminationAppointmentsForDoctor(mDatingType, mPage);
-                    }
-                }
-            }, 2000);
+            if (mDatingCode.length() > 0 ||
+                    mPatientName.length() > 0 ||
+                    mDatingDate.length() > 0) { // Search
+                mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mDatingType, mDatingDate, "", "", mPage);
+            } else {
+                // Load all
+                mPresenter.loadExaminationAppointmentsForDoctor(mDatingType, mPage);
+            }
         }
     }
 
     /**
      * Update GUI from list of data
      */
-    private void updateUI(boolean isEndOfList){
+    private void updateUI(final boolean isEndOfList){
         mPbLoading.setVisibility(View.GONE);
         mLvDatingList.setVisibility(View.VISIBLE);
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
+        if(mExaminationAppointmentItemDataList.size() == 0){
+            mTvNoData.setVisibility(View.VISIBLE);
+        }else{
+            mTvNoData.setVisibility(View.GONE);
+        }
+
         if(mAdapter == null){
             mAdapter = new DatingListAdapter(getContext());
             mAdapter.setWaitingList(mDatingType == AppConstants.EXAMINATION_STATUS.WAITING);
@@ -252,11 +270,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             mAdapter.setEndOfList(isEndOfList);
             mAdapter.notifyDataSetChanged();
         }
-        if(mExaminationAppointmentItemDataList.size() == 0){
-            mTvNoData.setVisibility(View.VISIBLE);
-        }else{
-            mTvNoData.setVisibility(View.GONE);
-        }
+
     }
     public void setDateType(AppConstants.EXAMINATION_STATUS dateType){
         mDatingType = dateType;
@@ -398,14 +412,21 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
                 if(mExaminationAppointmentItemDataList != null){
                     mExaminationAppointmentItemDataList.clear();
                 }
+                mItemCount = examinationAppointmentItemsList.get(0).getTotalItems();
                 mExaminationAppointmentItemDataList.addAll(examinationAppointmentItemsList);
             }else{ // Load more here
                 mExaminationAppointmentItemDataList.addAll(examinationAppointmentItemsList);
             }
-            isEndOfList = false;
-            mLvDatingList.removeFooterView(mLoadMoreView);
-            mLoadMoreView.loadMoreComplete();
-            mLvDatingList.addFooterView(mLoadMoreView);
+            if(mItemCount == mExaminationAppointmentItemDataList.size()){
+                isEndOfList = true;
+                mLoadMoreView.closeView();
+                mLvDatingList.removeFooterView(mLoadMoreView);
+            }else{
+                isEndOfList = false;
+                mLvDatingList.removeFooterView(mLoadMoreView);
+                mLoadMoreView.loadMoreComplete();
+                mLvDatingList.addFooterView(mLoadMoreView);
+            }
         }else{ // Maybe failed or data is end of list
             isEndOfList = true;
             mLoadMoreView.closeView();
@@ -440,7 +461,16 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
 
     @Override
     public void DisplayMessageIncaseError(String message) {
+        // Reset
+        mIsDataLoading = false;
+        mIsNeedToRefresh = false;
 
+        mLvDatingList.removeFooterView(mLoadMoreView);
+        mLoadMoreView.loadMoreComplete();
+        mLvDatingList.addFooterView(mLoadMoreView);
+
+        // Update UI anyway
+        updateUI(true);
     }
 
     private void processWhenUpdateDone(String message, AppConstants.EXAMINATION_STATUS status){

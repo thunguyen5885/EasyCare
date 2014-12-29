@@ -232,13 +232,20 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 item.setPatientName(appointmentModel.getPatient_full_name());
                 item.setExaminationDateTime(appointmentModel.getTime());
                 item.setExaminationReason(appointmentModel.getVisit_reason());
-                item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.values()[appointmentModel.getStatus()]);
+                if(appointmentModel.getStatus() == 0) {
+                    item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.WAITING);
+                }else if(appointmentModel.getStatus() == 1){
+                    item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.ACCEPTED);
+                }else{
+                    item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.CANCEL);
+                }
                 item.setPatientGender(appointmentModel.getPatient_gender() == 1 ? mContext.getResources().getString(R.string.gender_man):mContext.getResources().getString(R.string.gender_women));
                 item.setPatientPhone(appointmentModel.getPatient_phone());
                 item.setPatientEmail(appointmentModel.getPatient_email());
                 item.setExaminationCode(appointmentModel.getCode());
                 item.setExaminationAddress(appointmentModel.getAddress());
                 item.setExaminationByPerson(appointmentModel.getDoctor_id());
+                item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
              /*?????????????
                 item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
                 item.setExaminationState(appointmentModel.getPage_currentPage());
@@ -272,6 +279,8 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
 
     @Override
     public void onWSResponseFailed(WSError error) {
-
+        if(mCallback != null){
+            mCallback.onResponseFail(error.getErrorMessage());
+        }
     }
 }

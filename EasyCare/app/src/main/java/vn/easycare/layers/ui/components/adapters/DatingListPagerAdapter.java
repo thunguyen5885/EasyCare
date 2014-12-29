@@ -52,19 +52,17 @@ public class DatingListPagerAdapter extends PagerAdapter{
             datingListLayout = (DatingListLayout)mViewMaps.get(position);
         }else{
             datingListLayout = new DatingListLayout(mViewPager.getContext());
-
-            if(position == 0) {
-                datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
-            }else if(position == 1){
-                datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
-            }else{
-                datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
-            }
-            datingListLayout.setPatientId(mPatientId);
-            datingListLayout.loadNewData();
-
             mViewMaps.put(position, datingListLayout);
         }
+        if(position == 0) {
+            datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
+        }else if(position == 1){
+            datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
+        }else{
+            datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
+        }
+        datingListLayout.setPatientId(mPatientId);
+        datingListLayout.loadNewData();
         container.addView(datingListLayout);
         return datingListLayout;
     }
@@ -79,6 +77,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
             curItem.enforceToRefreshForDataChanged();
         }
     }
+
     private IBroadCastToSynData mBroadCastToSynData = new IBroadCastToSynData() {
         @Override
         public void broadCast(AppConstants.EXAMINATION_STATUS status) {
@@ -99,4 +98,17 @@ public class DatingListPagerAdapter extends PagerAdapter{
             }
         }
     };
+    public void refreshAllItems(){
+        for(int index = 0; index < mViewMaps.size(); index++){
+            View view = mViewMaps.get(index);
+            if(view instanceof DatingListLayout){
+                DatingListLayout datingListLayout = (DatingListLayout)view;
+                if(mViewPager.getCurrentItem() == index) {
+                    datingListLayout.refreshDataAndShowLoading();
+                }else {
+                    datingListLayout.refreshDataWhenDataChanged();
+                }
+            }
+        }
+    }
 }

@@ -85,8 +85,8 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
             viewHolder.mPatientPhone = (TextView) convertView.findViewById(R.id.tvPatientPhone);
             viewHolder.mPatientEmail = (TextView) convertView.findViewById(R.id.tvPatientEmail);
-            viewHolder.mBtnBlock = (Button) convertView.findViewById(R.id.btnBlock);
-            viewHolder.mBtnDating = (Button) convertView.findViewById(R.id.btnDating);
+            viewHolder.mBtnBlock = (TextView) convertView.findViewById(R.id.btnBlock);
+            viewHolder.mBtnDating = (TextView) convertView.findViewById(R.id.btnDating);
             viewHolder.mBottomIndicator = convertView.findViewById(R.id.bottomIndicator);
             viewHolder.mEndOfListIndicator = convertView.findViewById(R.id.endOfListIndicator);
             convertView.setTag(viewHolder);
@@ -191,8 +191,8 @@ public class PatientListAdapter extends BaseAdapter{
         private TextView mPatientName;
         private TextView mPatientPhone;
         private TextView mPatientEmail;
-        private Button mBtnBlock;
-        private Button mBtnDating;
+        private TextView mBtnBlock;
+        private TextView mBtnDating;
         private View mBottomIndicator;
         private View mEndOfListIndicator;
     }

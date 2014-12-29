@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by phan on 8/7/2014.
@@ -107,4 +110,21 @@ public class AppFnUtils {
             }
         }
     }
+    public static String convertDateFormat(String fromDateFormat,
+                                           String toDateFormat, String dateStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat(fromDateFormat);
+        Date date = null;
+        try {
+            //Log.d("CCDateUtilss",
+            //		"Need to remove the colon from the date string in the timeszone");
+            date = sdf.parse(dateStr);
+            SimpleDateFormat timeFormat = new SimpleDateFormat(toDateFormat);
+            return timeFormat.format(date);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

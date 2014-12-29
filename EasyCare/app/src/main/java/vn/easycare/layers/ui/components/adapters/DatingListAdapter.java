@@ -20,6 +20,7 @@ import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.fragments.DatingDetailFragment;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 
 /**
@@ -84,20 +85,16 @@ public class DatingListAdapter extends BaseAdapter{
             viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvDatingTime);
             viewHolder.mTvPatientDisease = (TextView) convertView.findViewById(R.id.tvPatientDisease);
             viewHolder.mButtonLayout = convertView.findViewById(R.id.datingListButtonLayout);
-            viewHolder.mBtnCalendarChange = (Button) convertView.findViewById(R.id.btnCalendarChange);
-            viewHolder.mBtnCalendarAccept = (Button) convertView.findViewById(R.id.btnCalendarAccept);
-            viewHolder.mBtnCalendarCancel = (Button) convertView.findViewById(R.id.btnCalendarCancel);
+            viewHolder.mBtnCalendarChange = (TextView) convertView.findViewById(R.id.btnCalendarChange);
+            viewHolder.mBtnCalendarAccept = (TextView) convertView.findViewById(R.id.btnCalendarAccept);
+            viewHolder.mBtnCalendarCancel = (TextView) convertView.findViewById(R.id.btnCalendarCancel);
             viewHolder.mBottomSeparatorLayout = convertView.findViewById(R.id.bottomIndicator);
             viewHolder.mEndOfListLayout = convertView.findViewById(R.id.endOfListIndicator);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        if(mIsWaitingList){
-            viewHolder.mButtonLayout.setVisibility(View.GONE);
-        }else{
-            viewHolder.mButtonLayout.setVisibility(View.VISIBLE);
-        }
+
         // Set onClick
         viewHolder.mTvPatientName.setTag(position);
         viewHolder.mTvPatientName.setOnClickListener(mOnClickListener);
@@ -112,6 +109,7 @@ public class DatingListAdapter extends BaseAdapter{
         }else{
             viewHolder.mButtonLayout.setVisibility(View.GONE);
         }
+
         if(mIsEndOfList && position == getCount() - 1){
             viewHolder.mEndOfListLayout.setVisibility(View.VISIBLE);
             viewHolder.mBottomSeparatorLayout.setVisibility(View.GONE);
@@ -130,7 +128,8 @@ public class DatingListAdapter extends BaseAdapter{
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
         viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
         viewHolder.mTvPatientName.setText(itemData.getPatientName());
-        viewHolder.mTvDatingTime.setText(itemData.getExaminationDateTime().toString());
+        String displayDate = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, itemData.getExaminationDateTime().toString());
+        viewHolder.mTvDatingTime.setText(displayDate);
         viewHolder.mTvPatientDisease.setText(itemData.getExaminationReason());
 //        viewHolder.mTvPatientName.setText("Nguyen Van A");
 //        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
@@ -180,15 +179,15 @@ public class DatingListAdapter extends BaseAdapter{
             }
         }
     };
-    private static class ViewHolder{
+    private class ViewHolder{
         private NetworkImageView mPatientAvatar;
         private TextView mTvPatientName;
         private TextView mTvDatingTime;
         private TextView mTvPatientDisease;
         private View mButtonLayout;
-        private Button mBtnCalendarChange;
-        private Button mBtnCalendarAccept;
-        private Button mBtnCalendarCancel;
+        private TextView mBtnCalendarChange;
+        private TextView mBtnCalendarAccept;
+        private TextView mBtnCalendarCancel;
         private View mBottomSeparatorLayout;
         private View mEndOfListLayout;
     }

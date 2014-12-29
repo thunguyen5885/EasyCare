@@ -34,6 +34,10 @@ public class AppConstants {
 
     public static String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
+    /*Define all date format*/
+    public static final String DATE_FORMAT_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_DD_MM_YYYY_HH_MM = "dd/MM/yyyy, HH:mm";
+
     /* Define all keys for screen transition*/
     public static final String APPOINTMENT_ID_KEY = "appointment_id_key";
     public static final String PATIENT_DETAIL_KEY = "patient_detail_key";

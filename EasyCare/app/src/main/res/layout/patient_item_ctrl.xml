@@ -70,20 +70,22 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="@dimen/common_padding">
-                <Button
+                <TextView
                     android:id="@+id/btnBlock"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:gravity="center"
                     android:text="@string/patient_list_block"
                     android:textColor="@color/header_background_color"
                     android:textSize="@dimen/text_medium"
                     android:paddingLeft="@dimen/footer_vertical_padding"
                     android:paddingRight="@dimen/footer_vertical_padding"
                     android:background="@drawable/layout_item_selector_with_corner_hightlight_border"/>
-                <Button
+                <TextView
                     android:id="@+id/btnDating"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
+                    android:gravity="center"
                     android:text="@string/patient_list_datings"
                     android:textSize="@dimen/text_medium"
                     android:textColor="@color/header_background_color"

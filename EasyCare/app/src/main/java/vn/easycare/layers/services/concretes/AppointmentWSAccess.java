@@ -22,7 +22,7 @@ import vn.easycare.utils.AppConstants;
  */
 public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel,AppointmentWSParamModel> {
     private static final String APPOINTMENT_URI = WEBSERVICE_HOST +
-    "/doctors/appointments?token=%s&appointmentCode=%s&appointmentStatus=%s&patientName=%s[&appointmentDate=%s&startDate=%s&endDate=%s&patientId=%s]&numberOfRecords=%s&page=%s";
+    "/doctors/appointments?token=%s&appointmentCode=%s&appointmentStatus=%s&patientName=%s&appointmentDate=%s&startDate=%s&endDate=%s&patientId=%s&numberOfRecords=%s&page=%s";
     private static final String APPOINTMENT_ACCEPT_URI = WEBSERVICE_HOST + "/doctors/appointments/accept";
     private static final String APPOINTMENT_CANCEL_URI = WEBSERVICE_HOST + "/doctors/appointments/reject";
     private static final String APPOINTMENT_CHANGE_URI = WEBSERVICE_HOST + "/doctors/appointments/update?token=%s&id=%s&date=%s&time=%s&address=%s";
@@ -202,14 +202,16 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 modelBuilder.withPatient_notes(jsonObj.get(Res_patient_notes).toString());
                 modelBuilder.withCreated_at(jsonObj.get(Res_created_at).toString());
 
-                JSONObject PatientjsonObj = (JSONObject)jsonObj.get(Res_patient);
-                modelBuilder.withPatient_full_name(PatientjsonObj.get(Res_full_name).toString());
-                modelBuilder.withPatient_gender(Integer.valueOf(jsonObj.get(Res_gender).toString()).intValue());
-                modelBuilder.withPatient_phone(PatientjsonObj.get(Res_phone).toString());
-                modelBuilder.withPatient_birth_date(PatientjsonObj.get(Res_birth_date).toString());
-                modelBuilder.withPatient_email(PatientjsonObj.get(Res_email).toString());
-                modelBuilder.withPatient_id(PatientjsonObj.get(Res_id).toString());
-
+                Object PatientObj = jsonObj.get(Res_patient);
+                if(PatientObj instanceof JSONObject) {
+                    JSONObject PatientjsonObj = (JSONObject) PatientObj;
+                    modelBuilder.withPatient_full_name(PatientjsonObj.get(Res_full_name).toString());
+                    modelBuilder.withPatient_gender(Integer.valueOf(PatientjsonObj.get(Res_gender).toString()).intValue());
+                    modelBuilder.withPatient_phone(PatientjsonObj.get(Res_phone).toString());
+                    modelBuilder.withPatient_birth_date(PatientjsonObj.get(Res_birth_date).toString());
+                    modelBuilder.withPatient_email(PatientjsonObj.get(Res_email).toString());
+                    modelBuilder.withPatient_id(PatientjsonObj.get(Res_id).toString());
+                }
 
                 listModel.getListAppointments().add(modelBuilder.build());
 
