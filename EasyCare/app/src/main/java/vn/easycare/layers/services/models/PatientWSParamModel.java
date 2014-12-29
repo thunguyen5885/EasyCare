@@ -7,7 +7,7 @@ import vn.easycare.utils.AppConstants;
  * Created by phannguyen on 12/28/14.
  */
 public class PatientWSParamModel implements IWebServiceParamModel{
-    String token;;
+    String token;
     String isbanned;
     String page;
     AppConstants.PATIENT_ACTION action;

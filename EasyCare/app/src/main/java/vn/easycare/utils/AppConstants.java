@@ -18,6 +18,10 @@ public class AppConstants {
         NONE, ACCEPT, CANCEL, CHANGE, VIEWDETAIL
     }
 
+    public static enum SCHEDULE_ACTION {
+        NONE, CREATE, UPDATE, DELETE, VIEWDETAIL
+    }
+
     public static enum EXAMINATION_STATUS {
         WAITING(0), ACCEPTED(1), CANCEL(-1);
         private int value;
