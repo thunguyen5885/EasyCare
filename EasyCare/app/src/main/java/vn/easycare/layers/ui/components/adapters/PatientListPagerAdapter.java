@@ -69,4 +69,17 @@ public class PatientListPagerAdapter extends PagerAdapter{
             }
         }
     };
+    public void refreshAllItems(){
+        for(int index = 0; index < mViewMaps.size(); index++){
+            View view = mViewMaps.get(index);
+            if(view instanceof PatientListLayout){
+                PatientListLayout patientListLayout = (PatientListLayout)view;
+                if(mViewPager.getCurrentItem() == index) {
+                    patientListLayout.refreshDataWithLoadingDialog();
+                }else {
+                    patientListLayout.refreshData();
+                }
+            }
+        }
+    }
 }

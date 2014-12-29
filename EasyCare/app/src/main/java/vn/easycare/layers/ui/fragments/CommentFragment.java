@@ -38,6 +38,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     private TextView mTvNoData;
     private CommentAdapter mCommentAdapter;
     private LoadMoreLayout mLoadMoreView;
+    private View mRefreshLayout;
     private Dialog mLoadingDialog;
 
     // For data, object
@@ -53,6 +54,13 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
+        mRefreshLayout = v.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshData();
+            }
+        });
         mCommentListView = (ListView) v.findViewById(R.id.commentListView);
         mTvNoData = (TextView) v.findViewById(R.id.tvNoData);
         mLoadMoreView = new LoadMoreLayout(getActivity());
@@ -96,7 +104,13 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
         mCommentListView.setVisibility(View.GONE);
         loadData();
     }
-
+    private void refreshData(){
+        mPage = 1;
+        mCommentAndAssessmentItemDatas.clear();
+        mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
+        mLoadingDialog.show();
+        loadData();
+    }
     /**
      * Reload data to get the newest data after enable "Not-display"
      */
@@ -142,13 +156,20 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
                 if(mCommentAndAssessmentItemDatas != null){
                     mCommentAndAssessmentItemDatas.clear();
                 }
+                mTotalItemCount = commentAndAssessmentItemsList.get(0).getTotalPages();
                 mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);
             }else{ // Load more here
                 mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);
             }
-            mCommentListView.removeFooterView(mLoadMoreView);
-            mLoadMoreView.loadMoreComplete();
-            mCommentListView.addFooterView(mLoadMoreView);
+            // Decide to hide load more or not
+            if(mCommentAndAssessmentItemDatas.size() == mTotalItemCount){ // End of list
+                mLoadMoreView.closeView();
+                mCommentListView.removeFooterView(mLoadMoreView);
+            }else {
+                mCommentListView.removeFooterView(mLoadMoreView);
+                mLoadMoreView.loadMoreComplete();
+                mCommentListView.addFooterView(mLoadMoreView);
+            }
         }else{ // Maybe failed or data is end of list
             mLoadMoreView.closeView();
             mCommentListView.removeFooterView(mLoadMoreView);

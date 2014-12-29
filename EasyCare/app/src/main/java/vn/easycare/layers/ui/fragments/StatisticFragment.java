@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import vn.easycare.layers.ui.presenters.InformationStatisticPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IInformationStatisticPresenter;
 import vn.easycare.layers.ui.views.IInformationStatisticView;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
@@ -38,7 +40,9 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
     private View mUserCommentWaitingCommentLayout;
     private View mUserCommentAssetCommentLayout;
     private View mStatisticLayout;
+    private View mRefreshLayout;
     private ProgressBar mPbLoading;
+    private Dialog mLoadingDialog;
 
     // For data, object
     private InformationStatisticItemData mItemData;
@@ -59,7 +63,13 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         mUserCommentCommonCommentLayout = v.findViewById(R.id.statisticCommonCommentLayout);
         mUserCommentWaitingCommentLayout = v.findViewById(R.id.statisticWaitingCommentLayout);
         mUserCommentAssetCommentLayout = v.findViewById(R.id.statisticAssetCommentLayout);
-
+        mRefreshLayout = v.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshData();
+            }
+        });
         // Init view for common info
         initViewForCommonInfo(mCommonCommentDetailInfoLayout, R.drawable.ic_detail_info, R.string.statistic_detail_info);
         initViewForCommonInfo(mCommonCommentOrderCountLayout, R.drawable.ic_seat_count, R.string.statistic_order_count);
@@ -106,6 +116,14 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         mPresenter.loadAllInfoStatisticForDoctor();
 
     }
+    private void refreshData(){
+        mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
+        mLoadingDialog.show();
+        if(mPresenter == null){
+            mPresenter = new InformationStatisticPresenterImpl(this, getActivity());
+        }
+        mPresenter.loadAllInfoStatisticForDoctor();
+    }
     private void initViewForUserComment(View parentView, int posterId, int titleId){
         ImageView ivPoster = (ImageView) parentView.findViewById(R.id.ivUserCommentPoster);
         ivPoster.setImageResource(posterId);
@@ -130,6 +148,9 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         tvRating.setText(String.valueOf(rating));
     }
     private void updateData(){
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
         if(mItemData != null) {
             mStatisticLayout.setVisibility(View.VISIBLE);
             mPbLoading.setVisibility(View.GONE);

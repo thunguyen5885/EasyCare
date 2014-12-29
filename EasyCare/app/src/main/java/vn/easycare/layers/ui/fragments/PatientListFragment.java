@@ -25,6 +25,7 @@ public class PatientListFragment extends Fragment {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private PatientListPagerAdapter mPagerAdapter;
+    private View mRefreshLayout;
 
     // For data, object
     private List<String> mPatientList;
@@ -42,6 +43,13 @@ public class PatientListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_patient_list, container, false);
+        mRefreshLayout = v.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPagerAdapter.refreshAllItems();
+            }
+        });
         mTabLayout = (TabLayout) v.findViewById(R.id.patientListTabLayout);
         mTabLayout.createChild(mPatientList);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);

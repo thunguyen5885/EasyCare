@@ -43,6 +43,7 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     private Dialog mLoadingDialog;
     private int mPage;
     private boolean mIsBlackList;
+    private int mItemCount;
 
     public PatientListLayout(Context context) {
         super(context);
@@ -98,6 +99,14 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
 
         loadData();
     }
+    public void refreshDataWithLoadingDialog(){
+        mPage = 1;
+        mManagementItemDatas.clear();
+        mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+        mLoadingDialog.show();
+
+        loadData();
+    }
     private void loadMoreData(){
         mPage ++;
         mLoadMoreView.beginLoading();
@@ -105,24 +114,22 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     }
 
     private void loadData(){
-        // Delay 2s(just for fake data)
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if(mIsBlackList){
-                    mPresenter.loadAllBlockedPatientsForDoctor(mPage);
-                }else{
-                    mPresenter.loadAllAvailablePatientsForDoctor(mPage);
-                }
-            }
-        }, 2000);
-
+        if(mIsBlackList){
+            mPresenter.loadAllBlockedPatientsForDoctor(mPage);
+        }else{
+            mPresenter.loadAllAvailablePatientsForDoctor(mPage);
+        }
     }
     public void updateUI(boolean isEndOfList){
         mPbLoading.setVisibility(View.GONE);
         mPatientListView.setVisibility(View.VISIBLE);
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
+        }
+        if(mManagementItemDatas.size() == 0){
+            mTvNoData.setVisibility(VISIBLE);
+        }else{
+            mTvNoData.setVisibility(GONE);
         }
         if(mAdapter == null){
             mAdapter = new PatientListAdapter(getContext());
@@ -134,11 +141,6 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         }else{
             mAdapter.setIsEndOfList(isEndOfList);
             mAdapter.notifyDataSetChanged();
-        }
-        if(mManagementItemDatas.size() == 0){
-            mTvNoData.setVisibility(VISIBLE);
-        }else{
-            mTvNoData.setVisibility(GONE);
         }
     }
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
@@ -152,12 +154,8 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         public void onBlockClicked(final String patientId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.blockAPatient(patientId);
-                }
-            }, 2000);
+            mPresenter.blockAPatient(patientId);
+
 
         }
 
@@ -165,12 +163,8 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         public void onUnblockClicked(final String patientId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.unblockAPatient(patientId);
-                }
-            }, 2000);
+            mPresenter.unblockAPatient(patientId);
+
         }
     };
     @Override
@@ -182,15 +176,22 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
                 if (mManagementItemDatas != null) {
                     mManagementItemDatas.clear();
                 }
+                mItemCount = patientManagementItemsList.get(0).getTotalPages();
                 mManagementItemDatas.addAll(patientManagementItemsList);
             } else { // Failed or go to end of list
                 mManagementItemDatas.addAll(patientManagementItemsList);
             }
-            isEndOfList = false;
-            //mPatientListView.removeFooterView();
-            mPatientListView.removeFooterView(mLoadMoreView);
-            mLoadMoreView.loadMoreComplete();
-            mPatientListView.addFooterView(mLoadMoreView);
+
+            if(mItemCount == mManagementItemDatas.size()){ // End of list
+                isEndOfList = true;
+                mLoadMoreView.closeView();
+                mPatientListView.removeFooterView(mLoadMoreView);
+            }else {
+                isEndOfList = false;
+                mPatientListView.removeFooterView(mLoadMoreView);
+                mLoadMoreView.loadMoreComplete();
+                mPatientListView.addFooterView(mLoadMoreView);
+            }
         }else { // Failed or go to end of list
             isEndOfList = true;
             mLoadMoreView.closeView();
@@ -210,14 +211,21 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
                 if (mManagementItemDatas != null) {
                     mManagementItemDatas.clear();
                 }
+                mItemCount = patientManagementItemsList.get(0).getTotalPages();
                 mManagementItemDatas.addAll(patientManagementItemsList);
             } else { // Failed or go to end of list
                 mManagementItemDatas.addAll(patientManagementItemsList);
             }
-            isEndOfList = false;
-            mPatientListView.removeFooterView(mLoadMoreView);
-            mLoadMoreView.loadMoreComplete();
-            mPatientListView.addFooterView(mLoadMoreView);
+            if(mItemCount == mManagementItemDatas.size()){
+                isEndOfList = true;
+                mLoadMoreView.closeView();
+                mPatientListView.removeFooterView(mLoadMoreView);
+            }else {
+                isEndOfList = false;
+                mPatientListView.removeFooterView(mLoadMoreView);
+                mLoadMoreView.loadMoreComplete();
+                mPatientListView.addFooterView(mLoadMoreView);
+            }
         }else { // Failed or go to end of list
             isEndOfList = true;
             mLoadMoreView.closeView();

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llCommentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,11 +25,27 @@
             style="@style/DefaultNormalTextView"
             android:text="@string/comment_comment"/>
     </LinearLayout>
+    <vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/home_item_separator_size"
+        android:layout_marginRight="@dimen/common_padding"
+        android:background="@drawable/layout_hightlight_button_with_corner"
+        custom:foreground="@drawable/layout_item_selector_with_corner"
+        android:clickable="true"
+        android:layout_below="@+id/commentTitleLayout"
+        android:layout_alignParentRight="true">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_refresh"/>
+    </vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/commentTitleLayout"
-        >
+        android:layout_below="@+id/refreshLayout"
+        android:layout_marginTop="@dimen/common_padding">
         <ListView
             android:id="@+id/commentListView"
             android:layout_width="match_parent"

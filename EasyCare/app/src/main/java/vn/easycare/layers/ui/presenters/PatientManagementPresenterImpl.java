@@ -23,7 +23,7 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     private IPatientManagementView iView;
     private IPatientManagementModel iModel;
     Context mContext;
-
+    private boolean mIsBlockPatient;
     public PatientManagementPresenterImpl(IPatientManagementView view,Context context){
         iView = view;
         iModel = new PatientManagementModel(context,this);
@@ -36,24 +36,28 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
 
     @Override
     public void loadAllAvailablePatientsForDoctor(int page) {
+        mIsBlockPatient = false;
         iModel.getAllAvailablePatientsForDoctor(page);
 
     }
 
     @Override
     public void loadAllBlockedPatientsForDoctor(int page) {
+        mIsBlockPatient = true;
         iModel.getAllBlockedPatientForDoctor(page);
 
     }
 
     @Override
     public void blockAPatient(String patientID) {
+        mIsBlockPatient = true;
         iModel.doBlockAPatient(patientID);
 
     }
 
     @Override
     public void unblockAPatient(String patientID) {
+        mIsBlockPatient = false;
         iModel.doUnblockAPatient(patientID);
 
     }
@@ -66,25 +70,20 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     @Override
     public void onResponseOK(IBaseItemData itemData) {
         PatientManagementItemData patientItem = (PatientManagementItemData)itemData;
-        if(patientItem!=null){
-            if(patientItem.isPatientBlocked()){
-                iView.DisplayMessageForBlockPatient("");
-            }else{
-                iView.DisplayMessageForUnblockPatient("");
-            }
+        if(mIsBlockPatient){
+            iView.DisplayMessageForBlockPatient("");
+        }else{
+            iView.DisplayMessageForUnblockPatient("");
         }
     }
 
     @Override
     public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
         List<PatientManagementItemData> itemPatienList = (List<PatientManagementItemData>)itemDataList;
-        if(itemPatienList!=null && itemPatienList.size()>0){
-            PatientManagementItemData aItem = itemPatienList.get(0);
-            if(aItem.isPatientBlocked()){
-                iView.DisplayAllBlockedPatientsForDoctor(itemPatienList);
-            }else{
-                iView.DisplayAllAvailablePatientsForDoctor(itemPatienList);
-            }
+        if(mIsBlockPatient){
+            iView.DisplayAllBlockedPatientsForDoctor(itemPatienList);
+        }else{
+            iView.DisplayAllAvailablePatientsForDoctor(itemPatienList);
         }
     }
 
