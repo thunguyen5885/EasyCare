@@ -2,8 +2,6 @@ package vn.easycare.layers.ui.components.views;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -176,7 +174,7 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
                 if (mManagementItemDatas != null) {
                     mManagementItemDatas.clear();
                 }
-                mItemCount = patientManagementItemsList.get(0).getTotalPages();
+                mItemCount = patientManagementItemsList.get(0).getTotalItems();
                 mManagementItemDatas.addAll(patientManagementItemsList);
             } else { // Failed or go to end of list
                 mManagementItemDatas.addAll(patientManagementItemsList);
@@ -211,7 +209,7 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
                 if (mManagementItemDatas != null) {
                     mManagementItemDatas.clear();
                 }
-                mItemCount = patientManagementItemsList.get(0).getTotalPages();
+                mItemCount = patientManagementItemsList.get(0).getTotalItems();
                 mManagementItemDatas.addAll(patientManagementItemsList);
             } else { // Failed or go to end of list
                 mManagementItemDatas.addAll(patientManagementItemsList);

@@ -14,7 +14,6 @@ import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
 import vn.easycare.layers.services.models.AppointmentListWSModel;
 import vn.easycare.layers.services.models.AppointmentWSParamModel;
-import vn.easycare.layers.services.models.CommentAndAssessmentWSParamModel;
 import vn.easycare.layers.services.models.builders.AppoinmentWSBuilder;
 import vn.easycare.utils.AppConstants;
 
@@ -216,7 +215,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
 
             }
             JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
-            listModel.setPage_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
+            listModel.setItems_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
             listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
             listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
             listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());

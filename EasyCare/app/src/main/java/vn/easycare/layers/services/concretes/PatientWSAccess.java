@@ -12,12 +12,8 @@ import java.util.Map;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
-import vn.easycare.layers.services.models.CommentAndAssessmentListWSModel;
-import vn.easycare.layers.services.models.CommentAndAssessmentWSModel;
 import vn.easycare.layers.services.models.PatientListWSModel;
-import vn.easycare.layers.services.models.PatientWSModel;
 import vn.easycare.layers.services.models.PatientWSParamModel;
-import vn.easycare.layers.services.models.builders.CommentAndAssessmentWSBuilder;
 import vn.easycare.layers.services.models.builders.PatientWSBuilder;
 import vn.easycare.utils.AppConstants;
 
@@ -143,7 +139,7 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
             }
 
             JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
-            listModel.setPage_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
+            listModel.setItems_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
             listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
             listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
             listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());

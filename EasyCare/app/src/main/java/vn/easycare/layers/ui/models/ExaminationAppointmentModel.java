@@ -3,7 +3,6 @@ package vn.easycare.layers.ui.models;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import vn.easycare.R;
@@ -18,7 +17,6 @@ import vn.easycare.layers.services.models.AppointmentListWSModel;
 import vn.easycare.layers.services.models.AppointmentWSModel;
 import vn.easycare.layers.services.models.AppointmentWSParamModel;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
-import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.IExaminationAppointmentModel;
 import vn.easycare.utils.AppConstants;
 
@@ -252,7 +250,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 item.setCurrentPage(modelList.getPage_currentPage());
                 item.setLastPage(modelList.getLastPage());
                 item.setItemsPerPage(modelList.getItemsPerPage());
-                item.setTotalPages(modelList.getPage_total());
+                item.setTotalItems(modelList.getItems_total());
                 itemDataList.add(item);
             }
             if(mCallback!=null)

@@ -134,11 +134,11 @@ public class PatientManagementItemData implements Serializable,IBaseItemData {
         PatientAvatarThumb = patientAvatarThumb;
     }
 
-    public int getTotalPages() {
+    public int getTotalItems() {
         return totalPages;
     }
 
-    public void setTotalPages(int totalPages) {
+    public void setTotalItems(int totalPages) {
         this.totalPages = totalPages;
     }
 

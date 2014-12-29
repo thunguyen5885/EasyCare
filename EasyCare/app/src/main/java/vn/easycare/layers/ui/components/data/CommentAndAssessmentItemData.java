@@ -110,11 +110,11 @@ public class CommentAndAssessmentItemData implements IBaseItemData{
         PatientId = patientId;
     }
 
-    public int getTotalPages() {
+    public int getTotalItems() {
         return totalPages;
     }
 
-    public void setTotalPages(int totalPages) {
+    public void setTotalItems(int totalPages) {
         this.totalPages = totalPages;
     }
 

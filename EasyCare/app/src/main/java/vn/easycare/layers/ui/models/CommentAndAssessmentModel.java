@@ -94,7 +94,7 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
             item.setPatientAvatarThumb(commentModel.getCommentByPatientAvatarThumbUrl());
             item.setPatientAvatar(commentModel.getCommentByPatientAvatarUrl());
             item.setDisplayed(true);
-            item.setTotalPages(listModel.getPage_total());
+            item.setTotalItems(listModel.getItems_total());
             item.setCurrentPage(listModel.getPage_currentPage());
             item.setLastPage(listModel.getLastPage());
             item.setItemsPerPage(listModel.getItemsPerPage());

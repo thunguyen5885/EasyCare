@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,7 +155,7 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
                 if(mCommentAndAssessmentItemDatas != null){
                     mCommentAndAssessmentItemDatas.clear();
                 }
-                mTotalItemCount = commentAndAssessmentItemsList.get(0).getTotalPages();
+                mTotalItemCount = commentAndAssessmentItemsList.get(0).getTotalItems();
                 mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);
             }else{ // Load more here
                 mCommentAndAssessmentItemDatas.addAll(commentAndAssessmentItemsList);

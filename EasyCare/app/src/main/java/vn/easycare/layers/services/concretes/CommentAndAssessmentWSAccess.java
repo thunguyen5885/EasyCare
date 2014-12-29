@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import vn.easycare.layers.services.AbstractWSAccess;
@@ -15,9 +14,7 @@ import vn.easycare.layers.services.WSError;
 import vn.easycare.layers.services.models.CommentAndAssessmentListWSModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSParamModel;
-import vn.easycare.layers.services.models.InfoStatisticWSParamModel;
 import vn.easycare.layers.services.models.builders.CommentAndAssessmentWSBuilder;
-import vn.easycare.layers.services.models.builders.InfoStatisticWSBuilder;
 
 /**
  * Created by phan on 12/26/2014.
@@ -101,7 +98,7 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
             }
 
             JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
-            listModel.setPage_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
+            listModel.setItems_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
             listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
             listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
             listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());

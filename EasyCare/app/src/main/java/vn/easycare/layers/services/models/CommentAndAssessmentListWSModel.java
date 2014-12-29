@@ -31,11 +31,11 @@ public class CommentAndAssessmentListWSModel implements IWebServiceModel {
         this.listComments = listComments;
     }
 
-    public int getPage_total() {
+    public int getItems_total() {
         return page_total;
     }
 
-    public void setPage_total(int page_total) {
+    public void setItems_total(int page_total) {
         this.page_total = page_total;
     }
 

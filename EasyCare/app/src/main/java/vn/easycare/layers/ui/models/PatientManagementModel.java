@@ -16,7 +16,6 @@ import vn.easycare.layers.services.models.PatientListWSModel;
 import vn.easycare.layers.services.models.PatientWSModel;
 import vn.easycare.layers.services.models.PatientWSParamModel;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
-import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.IPatientManagementModel;
 import vn.easycare.utils.AppConstants;
 
@@ -155,7 +154,7 @@ public class PatientManagementModel implements IPatientManagementModel,IWSRespon
                 item.setCurrentPage(modelList.getPage_currentPage());
                 item.setLastPage(modelList.getLastPage());
                 item.setItemsPerPage(modelList.getItemsPerPage());
-                item.setTotalPages(modelList.getPage_total());
+                item.setTotalItems(modelList.getItems_total());
                 itemDataList.add(item);
             }
             if(mCallback!=null)
