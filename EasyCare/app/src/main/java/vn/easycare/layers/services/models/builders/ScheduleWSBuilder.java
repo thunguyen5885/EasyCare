@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import vn.easycare.layers.services.models.ScheduleWSModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/29/2014.
@@ -22,6 +23,7 @@ public class ScheduleWSBuilder {
     String week_day ="";
     String doctor_address_id ="";
     String updated_at = "";
+    AppConstants.SCHEDULE_ACTION action;
     public ScheduleWSBuilder() {
     }
 
@@ -91,6 +93,11 @@ public class ScheduleWSBuilder {
 
     public ScheduleWSBuilder withUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+        return this;
+    }
+
+    public ScheduleWSBuilder withAction(AppConstants.SCHEDULE_ACTION action) {
+        this.action = action;
         return this;
     }
 

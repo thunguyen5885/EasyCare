@@ -10,10 +10,10 @@ import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
  * Created by phan on 12/24/2014.
  */
 public interface IExaminationSchedulesModel extends IBaseModel{
-    List<ExaminationScheduleItemData> getAllExaminationSchedulesForSpecificDate(String date);
-    ExaminationScheduleItemData getAnExaminationSchedule(String examinationId);
-    boolean doCreateNewExaminationSchedule(ExaminationAppointmentItemData itemData);
-    boolean doUpdateExaminationSchedule(ExaminationAppointmentItemData itemData);
-    boolean doDeleteExaminationSchedule(String examinationId);
-    List<DoctorClinicAddressItemData> loadAllAddressesForDoctor();
+    void getAllExaminationSchedulesForSpecificDate(String date);
+    void getAnExaminationSchedule(String scheduleId);
+    void doCreateNewExaminationSchedule(ExaminationScheduleItemData itemData);
+    void doUpdateExaminationSchedule(ExaminationScheduleItemData itemData);
+    void doDeleteExaminationSchedule(String scheduleId);
+    void loadAllAddressesForDoctor();
 }

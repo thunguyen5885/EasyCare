@@ -17,7 +17,7 @@ public class ScheduleWSParamModel implements IWebServiceParamModel{
     String doctor_notes;
     AppConstants.SCHEDULE_ACTION action;
 
-    public ScheduleWSParamModel(String token, String id, String date, String time_from, String time_to, String time_slots, String address_doctor_id, String doctor_notes) {
+    public ScheduleWSParamModel(String token, String id, String date, String time_from, String time_to, String time_slots, String address_doctor_id, String doctor_notes, AppConstants.SCHEDULE_ACTION action) {
         this.token = token;
         this.id = id;
         this.date = date;
@@ -26,6 +26,7 @@ public class ScheduleWSParamModel implements IWebServiceParamModel{
         this.time_slots = time_slots;
         this.address_doctor_id = address_doctor_id;
         this.doctor_notes = doctor_notes;
+        this.action = action;
     }
 
     public String getToken() {

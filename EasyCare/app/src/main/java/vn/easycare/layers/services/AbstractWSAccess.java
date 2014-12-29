@@ -86,6 +86,9 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
             case Request.Method.POST:
                 sendPostRequest();
                 break;
+            case Request.Method.DELETE:
+                sendDeleteRequest();
+                break;
            default:
                break;
 
@@ -138,6 +141,32 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
               return  getWSHeaders();
+            }
+        };
+        WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
+    }
+
+    private void sendDeleteRequest(){
+
+        StringRequest sr = new StringRequest(Request.Method.DELETE, getWSURL(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                onParseJsonResponseOK(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                onResponseFailed(error);
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                return  getWSParams();
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return  getWSHeaders();
             }
         };
         WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);

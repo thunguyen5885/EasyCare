@@ -1,6 +1,7 @@
 package vn.easycare.layers.ui.components.data;
 
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/24/2014.
@@ -14,6 +15,7 @@ public class ExaminationScheduleItemData implements IBaseItemData {
     String doctorAddressId;
     String note;
 
+    AppConstants.SCHEDULE_ACTION action;
     public ExaminationScheduleItemData() {
     }
 
@@ -81,5 +83,13 @@ public class ExaminationScheduleItemData implements IBaseItemData {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public AppConstants.SCHEDULE_ACTION getAction() {
+        return action;
+    }
+
+    public void setAction(AppConstants.SCHEDULE_ACTION action) {
+        this.action = action;
     }
 }

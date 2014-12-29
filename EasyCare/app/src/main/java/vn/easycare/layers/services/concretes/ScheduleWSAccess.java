@@ -217,6 +217,7 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
                 modelBuilder.withWeek_day(jsonObj.get(Res_week_day).toString());
                 modelBuilder.withDoctor_address_id(jsonObj.get(Res_doctor_address_id).toString());
                 modelBuilder.withUpdated_at(jsonObj.get(Res_updated_at).toString());
+                modelBuilder.withAction(AppConstants.SCHEDULE_ACTION.VIEWDETAIL);
             }
             if(mCallback!=null)
                 mCallback.onWSResponseOK(modelBuilder.build());

@@ -1,6 +1,7 @@
 package vn.easycare.layers.services.models;
 
 import vn.easycare.layers.services.IWebServiceModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/29/2014.
@@ -20,6 +21,7 @@ public class ScheduleWSModel  implements IWebServiceModel{
     String doctor_address_id;
     String updated_at;
 
+    AppConstants.SCHEDULE_ACTION action;
     public ScheduleWSModel(String id, String name, String date, String time_from, String time_to, int time_slots, String note, String doctor_id, String clinic_id, int status, String week_day, String doctor_address_id, String updated_at) {
         this.id = id;
         this.name = name;
@@ -138,5 +140,13 @@ public class ScheduleWSModel  implements IWebServiceModel{
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public AppConstants.SCHEDULE_ACTION getAction() {
+        return action;
+    }
+
+    public void setAction(AppConstants.SCHEDULE_ACTION action) {
+        this.action = action;
     }
 }
