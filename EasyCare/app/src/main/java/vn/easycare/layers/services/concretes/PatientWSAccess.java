@@ -23,6 +23,7 @@ import vn.easycare.utils.AppConstants;
 public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,PatientWSParamModel> {
     private static final String PATIENT_URI = WEBSERVICE_HOST + "/doctors/patients?token=%s&is_banned=%s&page%s";
     private static final String BAN_PATIENT_URI = WEBSERVICE_HOST + "/doctors/patients/ban";
+    private static final String NOT_BAN_PATIENT_URI = WEBSERVICE_HOST + "/doctors/patients/not_ban";
     private static final String Res_id = "id";
     private static final String Res_full_name = "full_name";
     private static final String Res_gender = "gender";
@@ -53,7 +54,7 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
             case BAN:
                 return BAN_PATIENT_URI;
             case UNBAN:
-                return  BAN_PATIENT_URI;
+                return  NOT_BAN_PATIENT_URI;
             default:
                 return "";
         }

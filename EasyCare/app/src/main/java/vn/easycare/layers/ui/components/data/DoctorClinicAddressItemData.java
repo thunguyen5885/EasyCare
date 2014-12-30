@@ -10,5 +10,27 @@ public class DoctorClinicAddressItemData implements IBaseItemData {
     String clinicAddress;
     String clinicAddressId;
 
+    public String getDoctorId() {
+        return doctorId;
+    }
 
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
+    }
+
+    public String getClinicAddress() {
+        return clinicAddress;
+    }
+
+    public void setClinicAddress(String clinicAddress) {
+        this.clinicAddress = clinicAddress;
+    }
+
+    public String getClinicAddressId() {
+        return clinicAddressId;
+    }
+
+    public void setClinicAddressId(String clinicAddressId) {
+        this.clinicAddressId = clinicAddressId;
+    }
 }
