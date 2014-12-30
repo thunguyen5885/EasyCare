@@ -8,13 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -22,11 +18,10 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
-import vn.easycare.layers.ui.fragments.DatingListForAPatientFragment;
+import vn.easycare.layers.ui.fragments.AppointmentListForAPatientFragment;
 import vn.easycare.layers.ui.fragments.PatientDetailFragment;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
-import vn.easycare.utils.FontUtil;
 
 /**
  * Created by ThuNguyen on 12/16/2014.
@@ -86,7 +81,7 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mPatientPhone = (TextView) convertView.findViewById(R.id.tvPatientPhone);
             viewHolder.mPatientEmail = (TextView) convertView.findViewById(R.id.tvPatientEmail);
             viewHolder.mBtnBlock = (TextView) convertView.findViewById(R.id.btnBlock);
-            viewHolder.mBtnDating = (TextView) convertView.findViewById(R.id.btnDating);
+            viewHolder.mBtnAppointment = (TextView) convertView.findViewById(R.id.btnAppointment);
             viewHolder.mBottomIndicator = convertView.findViewById(R.id.bottomIndicator);
             viewHolder.mEndOfListIndicator = convertView.findViewById(R.id.endOfListIndicator);
             convertView.setTag(viewHolder);
@@ -94,10 +89,10 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if(mIsBlackList){
-            viewHolder.mBtnDating.setVisibility(View.GONE);
+            viewHolder.mBtnAppointment.setVisibility(View.GONE);
             viewHolder.mBtnBlock.setText(R.string.patient_list_unblock);
         }else{
-            viewHolder.mBtnDating.setVisibility(View.VISIBLE);
+            viewHolder.mBtnAppointment.setVisibility(View.VISIBLE);
             viewHolder.mBtnBlock.setText(R.string.patient_list_block);
         }
         if(position == getCount() - 1 && mIsEndOfList){
@@ -112,8 +107,8 @@ public class PatientListAdapter extends BaseAdapter{
         viewHolder.mPatientName.setOnClickListener(mOnClickListener);
         viewHolder.mBtnBlock.setTag(position);
         viewHolder.mBtnBlock.setOnClickListener(mOnClickListener);
-        viewHolder.mBtnDating.setTag(position);
-        viewHolder.mBtnDating.setOnClickListener(mOnClickListener);
+        viewHolder.mBtnAppointment.setTag(position);
+        viewHolder.mBtnAppointment.setOnClickListener(mOnClickListener);
 
         // Calculate the avatar size
         int screenWidth = AppFnUtils.getScreenWidth((Activity)mContext);
@@ -159,7 +154,7 @@ public class PatientListAdapter extends BaseAdapter{
                         }
                     }
                     break;
-                case R.id.btnDating:
+                case R.id.btnAppointment:
                     selectedPos = (Integer) v.getTag();
                     selectedItem = mItemDataList.get(selectedPos);
 
@@ -167,9 +162,9 @@ public class PatientListAdapter extends BaseAdapter{
                     bundle.putSerializable(AppConstants.PATIENT_DETAIL_KEY, selectedItem);
 
                     // Go to patient_detail screen
-                    DatingListForAPatientFragment datingListForAPatientFragment = new DatingListForAPatientFragment();
-                    datingListForAPatientFragment.setArguments(bundle);
-                    ((HomeActivity) mContext).showFragment(datingListForAPatientFragment);
+                    AppointmentListForAPatientFragment appointmentListForAPatientFragment = new AppointmentListForAPatientFragment();
+                    appointmentListForAPatientFragment.setArguments(bundle);
+                    ((HomeActivity) mContext).showFragment(appointmentListForAPatientFragment);
                     break;
                 case R.id.tvPatientName:
                     selectedPos = (Integer) v.getTag();
@@ -192,7 +187,7 @@ public class PatientListAdapter extends BaseAdapter{
         private TextView mPatientPhone;
         private TextView mPatientEmail;
         private TextView mBtnBlock;
-        private TextView mBtnDating;
+        private TextView mBtnAppointment;
         private View mBottomIndicator;
         private View mEndOfListIndicator;
     }

@@ -1,10 +1,8 @@
 package vn.easycare.layers.ui.components.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,7 +64,7 @@ public class DateTimeAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView == null){
-            convertView = mLayoutInflater.inflate(R.layout.date_time_ctrl, null);
+            convertView = mLayoutInflater.inflate(R.layout.calendar_time_ctrl, null);
             viewHolder = new ViewHolder();
             viewHolder.mTvTime = (TextView) convertView.findViewById(R.id.tvDateTime);
             viewHolder.mHightlight = convertView.findViewById(R.id.vDateHightlight);

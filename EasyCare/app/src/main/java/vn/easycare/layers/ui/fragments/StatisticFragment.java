@@ -10,10 +10,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.List;
-
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.InformationStatisticItemData;
@@ -177,8 +173,8 @@ public class StatisticFragment extends Fragment implements IInformationStatistic
         public void onSeeWatingList() {
             // Later......
             // Go to dating list
-            DatingListFragment datingListFragment = new DatingListFragment();
-            ((HomeActivity) getActivity()).showFragment(datingListFragment);
+            AppointmentListFragment appointmentListFragment = new AppointmentListFragment();
+            ((HomeActivity) getActivity()).showFragment(appointmentListFragment);
         }
     };
 

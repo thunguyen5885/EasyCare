@@ -9,7 +9,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/common_padding"
         android:gravity="center_vertical"
-        android:clickable="true"
         android:background="@drawable/menu_item_background">
         <vn.easycare.layers.ui.components.views.CustomImageViewCircularShape
             android:id="@+id/ivMenuItemPoster"

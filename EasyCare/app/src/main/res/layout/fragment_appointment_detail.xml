@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
-        android:id="@+id/llDatingDetailLayout"
+        android:id="@+id/llAppointmentDetailLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -16,7 +16,7 @@
             android:background="@drawable/patient_list_background">
             <TextView
                 style="@style/DefaultLargeTextView"
-                android:text="@string/dating_detail"
+                android:text="@string/appointment_detail"
                 android:textColor="@color/textview_color_highlight_tab"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="@dimen/common_padding"/>
@@ -31,38 +31,38 @@
             <TextView
                 style="@style/DefaultBoldNormalTextView"
                 android:textColor="@color/textview_color_highlight_tab"
-                android:text="@string/dating_detail_dating_info"/>
+                android:text="@string/appointment_detail_appointment_info"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/footer_item_separator_background_color"
                 android:layout_marginTop="@dimen/common_padding"/>
             <include
-                android:id="@+id/datingDetailDateLayout"
+                android:id="@+id/appointmentDetailDateLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/common_padding"/>
             <include
-                android:id="@+id/datingDetailDatingCodeLayout"
+                android:id="@+id/appointmentDetailDatingCodeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/home_item_separator_size"/>
             <include
-                android:id="@+id/datingDetailLocationLayout"
+                android:id="@+id/appointmentDetailLocationLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/home_item_separator_size"/>
             <include
-                android:id="@+id/datingDetailPersonInDateLayout"
+                android:id="@+id/appointmentDetailPersonInDateLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/home_item_separator_size"/>
             <include
-                android:id="@+id/datingDetailRequestReasonLayout"
+                android:id="@+id/appointmentDetailRequestReasonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
@@ -83,32 +83,32 @@
             <TextView
                 style="@style/DefaultBoldNormalTextView"
                 android:textColor="@color/textview_color_highlight_tab"
-                android:text="@string/dating_detail_info_of_person_in_treat"/>
+                android:text="@string/appointment_detail_info_of_person_in_treat"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/footer_item_separator_background_color"
                 android:layout_marginTop="@dimen/common_padding"/>
             <include
-                android:id="@+id/datingDetailNameLayout"
+                android:id="@+id/appointmentDetailNameLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/common_padding"/>
             <include
-                android:id="@+id/datingDetailGenderLayout"
+                android:id="@+id/appointmentDetailGenderLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/home_item_separator_size"/>
             <include
-                android:id="@+id/datingDetailPhoneLayout"
+                android:id="@+id/appointmentDetailPhoneLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/home_item_separator_size"/>
             <include
-                android:id="@+id/datingDetailEmailLayout"
+                android:id="@+id/appointmentDetailEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
@@ -120,19 +120,19 @@
                 android:layout_marginTop="@dimen/statistic_vertical_padding"/>
 
             <include
-                android:id="@+id/datingDetailDateCreatingLayout"
+                android:id="@+id/appointmentDetailDateCreatingLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/statistic_vertical_padding"/>
             <include
-                android:id="@+id/datingDetailStatusLayout"
+                android:id="@+id/appointmentDetailStatusLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
                 android:layout_marginTop="@dimen/home_item_separator_size"/>
             <include
-                android:id="@+id/datingDetailMoreInfoLayout"
+                android:id="@+id/appointmentDetailMoreInfoLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/key_and_value_type_layout_ctrl"
@@ -148,7 +148,7 @@
                     android:layout_centerVertical="true">
                     <TextView
                         style="@style/DefaultBoldNormalTextView"
-                        android:text="@string/dating_detail_hint_of_doctor"/>
+                        android:text="@string/appointment_detail_hint_of_doctor"/>
                 </FrameLayout>
                 <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
                     android:id="@+id/sendLayout"
@@ -169,7 +169,7 @@
                         android:paddingBottom="5dp"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:text="@string/dating_detail_send"/>
+                        android:text="@string/appointment_detail_send"/>
                 </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
                 <EditText
                     android:id="@+id/edtDoctorComment"
@@ -196,7 +196,7 @@
             android:background="@color/footer_item_separator_background_color"
             android:layout_marginTop="@dimen/statistic_vertical_padding"/>
         <LinearLayout
-            android:id="@+id/datingListButtonLayout"
+            android:id="@+id/appointmentListButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -213,7 +213,7 @@
                 android:paddingTop="@dimen/home_item_separator_size"
                 android:paddingBottom="@dimen/home_item_separator_size"
                 android:layout_marginLeft="@dimen/home_item_separator_size"
-                android:text="@string/dating_list_calendar_change"
+                android:text="@string/appointment_list_calendar_change"
                 android:textColor="@color/header_background_color"
                 android:textSize="@dimen/text_small"
                 android:background="@drawable/layout_item_selector_with_corner_hightlight_border"/>
@@ -224,7 +224,7 @@
                 android:layout_weight="1"
                 android:paddingTop="@dimen/home_item_separator_size"
                 android:paddingBottom="@dimen/home_item_separator_size"
-                android:text="@string/dating_list_cancel"
+                android:text="@string/appointment_list_cancel"
                 android:textSize="@dimen/text_small"
                 android:textColor="@color/header_background_color"
                 android:layout_marginLeft="@dimen/home_item_separator_size"
@@ -236,7 +236,7 @@
                 android:layout_weight="1"
                 android:paddingTop="@dimen/home_item_separator_size"
                 android:paddingBottom="@dimen/home_item_separator_size"
-                android:text="@string/dating_list_accept"
+                android:text="@string/appointment_list_accept"
                 android:textSize="@dimen/text_small"
                 android:textColor="@color/header_background_color"
                 android:layout_marginLeft="@dimen/home_item_separator_size"

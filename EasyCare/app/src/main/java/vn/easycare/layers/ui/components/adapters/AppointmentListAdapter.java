@@ -7,26 +7,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
 import java.util.List;
 
 import vn.easycare.R;
-import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
-import vn.easycare.layers.ui.fragments.DatingDetailFragment;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/16/2014.
  */
-public class DatingListAdapter extends BaseAdapter{
+public class AppointmentListAdapter extends BaseAdapter{
     public interface IDatingItemClickListener{
         public void onDatingDetail(ExaminationAppointmentItemData itemData);
         public void onDatingCalendarChange(ExaminationAppointmentItemData itemData);
@@ -42,7 +38,7 @@ public class DatingListAdapter extends BaseAdapter{
 
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDatas;
 
-    public DatingListAdapter(Context context){
+    public AppointmentListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
@@ -78,13 +74,13 @@ public class DatingListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView == null){
-            convertView = mLayoutInflater.inflate(R.layout.dating_item_ctrl, null);
+            convertView = mLayoutInflater.inflate(R.layout.appointment_item_ctrl, null);
             viewHolder = new ViewHolder();
             viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatarThumb);
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
-            viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvDatingTime);
+            viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvAppointmentTime);
             viewHolder.mTvPatientDisease = (TextView) convertView.findViewById(R.id.tvPatientDisease);
-            viewHolder.mButtonLayout = convertView.findViewById(R.id.datingListButtonLayout);
+            viewHolder.mButtonLayout = convertView.findViewById(R.id.appointmentListButtonLayout);
             viewHolder.mBtnCalendarChange = (TextView) convertView.findViewById(R.id.btnCalendarChange);
             viewHolder.mBtnCalendarAccept = (TextView) convertView.findViewById(R.id.btnCalendarAccept);
             viewHolder.mBtnCalendarCancel = (TextView) convertView.findViewById(R.id.btnCalendarCancel);

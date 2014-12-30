@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white">
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/commentTitleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,36 +15,43 @@
         android:layout_marginBottom="@dimen/common_padding"
         android:layout_marginLeft="@dimen/common_padding">
         <TextView
+            android:id="@+id/tvTitle1"
             style="@style/DefaultLightLargeTextView"
             android:textStyle="bold"
-            android:text="@string/comment_patient_management"/>
+            android:text="@string/comment_patient_management"
+            android:layout_centerVertical="true"/>
+        <TextView
+            android:id="@+id/tvTitleSeparator"
+            style="@style/DefaultNormalTextView"
+            android:text=" / "
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tvTitle1"/>
         <TextView
             style="@style/DefaultNormalTextView"
-            android:text=" / "/>
-        <TextView
-            style="@style/DefaultNormalTextView"
-            android:text="@string/comment_comment"/>
-    </LinearLayout>
-    <vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/home_item_separator_size"
-        android:layout_marginRight="@dimen/common_padding"
-        android:background="@drawable/layout_hightlight_button_with_corner"
-        custom:foreground="@drawable/layout_item_selector_with_corner"
-        android:clickable="true"
-        android:layout_below="@+id/commentTitleLayout"
-        android:layout_alignParentRight="true">
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_refresh"/>
-    </vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout>
+            android:text="@string/comment_comment"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/tvTitleSeparator"/>
+
+        <vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/home_item_separator_size"
+            android:layout_marginRight="@dimen/common_padding"
+            android:clickable="true"
+            android:layout_alignParentRight="true">
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_refresh"/>
+        </vn.easycare.layers.ui.components.views.foreground.ForegroundLinearLayout>
+    </RelativeLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/refreshLayout"
+        android:layout_below="@+id/commentTitleLayout"
         android:layout_marginTop="@dimen/common_padding">
         <ListView
             android:id="@+id/commentListView"

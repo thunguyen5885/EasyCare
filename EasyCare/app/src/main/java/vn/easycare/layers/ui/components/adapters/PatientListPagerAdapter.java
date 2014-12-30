@@ -47,10 +47,11 @@ public class PatientListPagerAdapter extends PagerAdapter{
         }else{
             patientListLayout = new PatientListLayout(mViewPager.getContext());
             patientListLayout.setPatientListBroadcastListener(mPatientListBroadcastListener);
+            patientListLayout.setBlackList(position != 0);
+            patientListLayout.loadNewData();
             mViewMaps.put(position, patientListLayout);
         }
-        patientListLayout.setBlackList(position != 0);
-        patientListLayout.loadNewData();
+
         container.addView(patientListLayout);
         return patientListLayout;
     }

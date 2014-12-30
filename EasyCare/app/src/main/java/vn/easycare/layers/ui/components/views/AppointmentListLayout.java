@@ -22,10 +22,10 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
-import vn.easycare.layers.ui.components.adapters.DatingListAdapter;
-import vn.easycare.layers.ui.components.adapters.DatingListPagerAdapter;
+import vn.easycare.layers.ui.components.adapters.AppointmentListAdapter;
+import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
-import vn.easycare.layers.ui.fragments.DatingDetailFragment;
+import vn.easycare.layers.ui.fragments.AppointmentDetailFragment;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
 import vn.easycare.layers.ui.views.IExaminationAppointmentView;
@@ -36,14 +36,14 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/17/2014.
  */
-public class DatingListLayout extends LinearLayout implements IExaminationAppointmentView{
+public class AppointmentListLayout extends LinearLayout implements IExaminationAppointmentView{
     private static final int DATE_ITEM_PER_PAGE = 10;
 
     // For control, layout
     private ListView mLvDatingList;
     private ProgressBar mPbLoading;
     private TextView mTvNoData;
-    private EditText mEdtDatingCode;
+    private EditText mEdtAppointmentCode;
     private EditText mEdtPatientName;
     private View mSelectCalendarView;
     private TextView mTvCalendarText;
@@ -61,12 +61,12 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private int mPage;
     private int mItemCount;
 
-    private DatingListAdapter mAdapter;
+    private AppointmentListAdapter mAdapter;
     private AppointmentTime mAppointmentTime;
-    private AppConstants.EXAMINATION_STATUS mDatingType;
+    private AppConstants.EXAMINATION_STATUS mAppointmentType;
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
     private IExaminationAppointmentPresenter mPresenter;
-    private DatingListPagerAdapter.IBroadCastToSynData mIBroadCast;
+    private AppointmentListPagerAdapter.IBroadCastToSynData mIBroadCast;
 
     // Key search
     private String mDatingCode;
@@ -74,17 +74,17 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     private String mDatingDate;
 
     private LayoutInflater mLayoutInflater;
-    public DatingListLayout(Context context) {
+    public AppointmentListLayout(Context context) {
         super(context);
         init(context);
     }
 
-    public DatingListLayout(Context context, AttributeSet attrs) {
+    public AppointmentListLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public DatingListLayout(Context context, AttributeSet attrs, int defStyle) {
+    public AppointmentListLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -97,27 +97,27 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         mDatingCode = "";
         mPatientName = "";
         mDatingDate = "";
-        mDatingType = AppConstants.EXAMINATION_STATUS.WAITING;
+        mAppointmentType = AppConstants.EXAMINATION_STATUS.WAITING;
         mPage = 1;
         mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
         mAppointmentTime = new AppointmentTime();
 
         mLayoutInflater = LayoutInflater.from(context);
-        View view = mLayoutInflater.inflate(R.layout.dating_pager_item_ctrl, null);
+        View view = mLayoutInflater.inflate(R.layout.appointment_pager_item_ctrl, null);
         mPbLoading = (ProgressBar) view.findViewById(R.id.pbLoading);
         mTvNoData = (TextView) view.findViewById(R.id.tvNoData);
 
         mLoadMoreView = new LoadMoreLayout(getContext());
         mLoadMoreView.setOnLoadMoreClickListener(mILoadMoreClickListener);
-        mLvDatingList = (ListView)view.findViewById(R.id.lvDatingList);
+        mLvDatingList = (ListView)view.findViewById(R.id.lvAppointmentList);
         mLvDatingList.addFooterView(mLoadMoreView);
 
-        mEdtDatingCode = (EditText)view.findViewById(R.id.edtDatingCode);
+        mEdtAppointmentCode = (EditText)view.findViewById(R.id.edtAppointmentCode);
         mEdtPatientName = (EditText)view. findViewById(R.id.edtPatientName);
         mSelectCalendarView = view.findViewById(R.id.rlSelectCalendarLayout);
         mSelectCalendarView.setOnClickListener(mOnClickListener);
         mTvCalendarText = (TextView)view.findViewById(R.id.tvCalendarText);
-        mSearchLayout = view.findViewById(R.id.datingListSearchLayout);
+        mSearchLayout = view.findViewById(R.id.appointmentListSearchLayout);
         mSearchLayout.setOnClickListener(mOnClickListener);
         addView(view);
 
@@ -131,7 +131,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     public void setNeedToRefresh(boolean isNeedToRefresh){
         mIsNeedToRefresh = isNeedToRefresh;
     }
-    public void setIBroadCast(DatingListPagerAdapter.IBroadCastToSynData broadCast){
+    public void setIBroadCast(AppointmentListPagerAdapter.IBroadCastToSynData broadCast){
         mIBroadCast = broadCast;
     }
     public void setPatientId(String patientId){
@@ -147,7 +147,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
     }
 
     public void refreshDataWithNonSearch(){
-        mEdtDatingCode.setText("");
+        mEdtAppointmentCode.setText("");
         mEdtPatientName.setText("");
         mTvCalendarText.setText("");
         mDatingCode = "";
@@ -162,7 +162,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         loadNewData();
     }
     public void refreshDataAndShowLoading(){
-        mEdtDatingCode.setText("");
+        mEdtAppointmentCode.setText("");
         mEdtPatientName.setText("");
         mTvCalendarText.setText("");
         mDatingCode = "";
@@ -182,7 +182,7 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
      * When user did the "Change" or "Cancel", need to refresh data
      */
     public void refreshDataWhenDataChanged(){
-        mEdtDatingCode.setText("");
+        mEdtAppointmentCode.setText("");
         mEdtPatientName.setText("");
         mTvCalendarText.setText("");
         mDatingCode = "";
@@ -236,10 +236,10 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             if (mDatingCode.length() > 0 ||
                     mPatientName.length() > 0 ||
                     mDatingDate.length() > 0) { // Search
-                mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mDatingType, mDatingDate, "", "", mPage);
+                mPresenter.searchExaminationAppointments(mDatingCode, mPatientName, mAppointmentType, mDatingDate, "", "", mPage);
             } else {
                 // Load all
-                mPresenter.loadExaminationAppointmentsForDoctor(mDatingType, mPage);
+                mPresenter.loadExaminationAppointmentsForDoctor(mAppointmentType, mPage);
             }
         }
     }
@@ -260,8 +260,8 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         }
 
         if(mAdapter == null){
-            mAdapter = new DatingListAdapter(getContext());
-            mAdapter.setWaitingList(mDatingType == AppConstants.EXAMINATION_STATUS.WAITING);
+            mAdapter = new AppointmentListAdapter(getContext());
+            mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
             mAdapter.setEndOfList(isEndOfList);
             mAdapter.setDatingItemClickListener(mDatingItemClickListener);
             mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
@@ -272,8 +272,8 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
         }
 
     }
-    public void setDateType(AppConstants.EXAMINATION_STATUS dateType){
-        mDatingType = dateType;
+    public void setDateType(AppConstants.EXAMINATION_STATUS appointmentType){
+        mAppointmentType = appointmentType;
     }
     private void showDatePickerDialog(){
         Calendar calendar = Calendar.getInstance();
@@ -305,9 +305,9 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
                 case R.id.rlSelectCalendarLayout:
                     showDatePickerDialog();
                     break;
-                case R.id.datingListSearchLayout:
+                case R.id.appointmentListSearchLayout:
                     // Update data for search
-                    mDatingCode = mEdtDatingCode.getText().toString().trim();
+                    mDatingCode = mEdtAppointmentCode.getText().toString().trim();
                     mPatientName = mEdtPatientName.getText().toString().trim();
                     mDatingDate = mTvCalendarText.getText().toString().trim();
                     if(mDatingCode.length() > 0 || mPatientName.length() > 0 || mDatingDate.length() > 0) {
@@ -336,15 +336,15 @@ public class DatingListLayout extends LinearLayout implements IExaminationAppoin
             mTvCalendarText.setText(mSelectedDay + "/" + (mSelectedMonth + 1) + "/" + mSelectedYear);
         }
     };
-    private DatingListAdapter.IDatingItemClickListener mDatingItemClickListener = new DatingListAdapter.IDatingItemClickListener() {
+    private AppointmentListAdapter.IDatingItemClickListener mDatingItemClickListener = new AppointmentListAdapter.IDatingItemClickListener() {
         @Override
         public void onDatingDetail(ExaminationAppointmentItemData itemData) {
-            DatingDetailFragment datingDetailFragment = new DatingDetailFragment();
+            AppointmentDetailFragment appointmentDetailFragment = new AppointmentDetailFragment();
             Bundle bundle = new Bundle();
             bundle.putSerializable(AppConstants.APPOINTMENT_ID_KEY, itemData);
-            bundle.putBoolean(AppConstants.EXAMINATION_TYPE_KEY, mDatingType == AppConstants.EXAMINATION_STATUS.WAITING);
-            datingDetailFragment.setArguments(bundle);
-            ((HomeActivity) getContext()).showFragment(datingDetailFragment);
+            bundle.putBoolean(AppConstants.EXAMINATION_TYPE_KEY, mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
+            appointmentDetailFragment.setArguments(bundle);
+            ((HomeActivity) getContext()).showFragment(appointmentDetailFragment);
         }
 
         @Override

@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,28 +23,28 @@ import vn.easycare.utils.DateFnUtils;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class DateCreatingFragment extends Fragment implements View.OnClickListener{
+public class CalendarCreatingFragment extends Fragment implements View.OnClickListener{
     // For control, layout
     private View mCalendarLayout;
     private View mNextDayLayout;
     private View mPreviousDayLayout;
     private TextView mTvDay;
-    private ListView mDatingTimeListView;
+    private ListView mCalendarListView;
     private DateTimeAdapter mDateTimeAdapter;
     // For data, object
     private MyDate mMyDate;
     private boolean mIsClicked = false;
-    public DateCreatingFragment(){
+    public CalendarCreatingFragment(){
         mMyDate = new MyDate();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_date_creating, container, false);
+        View v = inflater.inflate(R.layout.fragment_calendar_creating, container, false);
         mCalendarLayout = v.findViewById(R.id.calendarLayout);
         mNextDayLayout = v.findViewById(R.id.nextDayLayout);
         mPreviousDayLayout = v.findViewById(R.id.previousDayLayout);
         mTvDay = (TextView) v.findViewById(R.id.tvDateTime);
-        mDatingTimeListView = (ListView) v.findViewById(R.id.datingTimeListView);
+        mCalendarListView = (ListView) v.findViewById(R.id.calendarListView);
 
         // Set on click
         mCalendarLayout.setOnClickListener(this);
@@ -70,7 +69,7 @@ public class DateCreatingFragment extends Fragment implements View.OnClickListen
 
         // Create data for listview
         mDateTimeAdapter = new DateTimeAdapter(getActivity());
-        mDatingTimeListView.setAdapter(mDateTimeAdapter);
+        mCalendarListView.setAdapter(mDateTimeAdapter);
     }
 
     @Override
