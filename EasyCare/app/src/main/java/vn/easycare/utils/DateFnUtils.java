@@ -3,7 +3,7 @@ package vn.easycare.utils;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import vn.easycare.layers.ui.fragments.DateCreatingFragment;
+import vn.easycare.layers.ui.fragments.CalendarCreatingFragment;
 
 /**
  * Created by ThuNguyen on 12/21/2014.
@@ -42,14 +42,14 @@ public class DateFnUtils {
         return result;
     }
 
-    public static void nextDate(DateCreatingFragment.MyDate myDate){
+    public static void nextDate(CalendarCreatingFragment.MyDate myDate){
         Calendar calendar = Calendar.getInstance();
         calendar.set(myDate.getSelectedYear(), myDate.getSelectedMonth() , myDate.getSelectedDay());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
 
         myDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
-    public static void previousDate(DateCreatingFragment.MyDate myDate){
+    public static void previousDate(CalendarCreatingFragment.MyDate myDate){
         Calendar calendar = Calendar.getInstance();
         calendar.set(myDate.getSelectedYear(), myDate.getSelectedMonth() , myDate.getSelectedDay());
         calendar.add(Calendar.DAY_OF_MONTH, -1);

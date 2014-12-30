@@ -3,24 +3,20 @@ package vn.easycare.utils;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import vn.easycare.R;
-import vn.easycare.layers.ui.components.views.DatingListLayout;
-import vn.easycare.layers.ui.fragments.DatingDetailFragment;
+import vn.easycare.layers.ui.components.views.AppointmentListLayout;
+import vn.easycare.layers.ui.fragments.AppointmentDetailFragment;
 
 
 public class DialogUtil {
-	public static void showDateTimeDialog(Context context, DatingListLayout.AppointmentTime appointmentTime,
+	public static void showDateTimeDialog(Context context, AppointmentListLayout.AppointmentTime appointmentTime,
                                           final DatePicker.OnDateChangedListener onDateChangedListener,
                                           TimePicker.OnTimeChangedListener onTimeChangeListener,
                                           final OnClickListener mOnAcceptClickListener){
@@ -62,7 +58,7 @@ public class DialogUtil {
         });
 		dialog.show();
 	}
-    public static void showDateTimeDialog(Context context, DatingDetailFragment.AppointmentTime appointmentTime,
+    public static void showDateTimeDialog(Context context, AppointmentDetailFragment.AppointmentTime appointmentTime,
                                           final DatePicker.OnDateChangedListener onDateChangedListener,
                                           TimePicker.OnTimeChangedListener onTimeChangeListener,
                                           final OnClickListener mOnAcceptClickListener){

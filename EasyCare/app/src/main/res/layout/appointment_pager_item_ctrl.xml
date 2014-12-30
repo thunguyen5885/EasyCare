@@ -16,7 +16,7 @@
         android:paddingTop="@dimen/statistic_vertical_padding"
         android:background="@color/main_background_color">
         <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
-            android:id="@+id/datingListSearchLayout"
+            android:id="@+id/appointmentListSearchLayout"
             android:layout_width="60dp"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
@@ -28,19 +28,19 @@
                 android:id="@+id/tvSearch"
                 style="@style/DefaultTinyTextView"
                 android:textColor="@color/white"
-                android:text="@string/dating_list_search"
+                android:text="@string/appointment_list_search"
                 android:layout_width="match_parent"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 />
         </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
         <EditText
-            android:id="@+id/edtDatingCode"
+            android:id="@+id/edtAppointmentCode"
             android:layout_width="70dp"
             android:layout_height="25dp"
             android:background="@drawable/layout_button_with_corner"
             android:textColorHint="@color/textview_color_grey"
-            android:hint="@string/dating_list_dating_code"
+            android:hint="@string/appointment_list_appointment_code"
             android:textColor="@color/textview_color_default"
             android:textSize="@dimen/text_tiny"
             android:paddingLeft="2dp"
@@ -53,7 +53,7 @@
             android:layout_height="25dp"
             android:background="@drawable/layout_button_with_corner"
             android:textColorHint="@color/textview_color_grey"
-            android:hint="@string/dating_list_patient_name"
+            android:hint="@string/appointment_list_patient_name"
             android:textColor="@color/textview_color_default"
             android:textSize="@dimen/text_tiny"
             android:gravity="center"
@@ -61,12 +61,12 @@
             android:paddingRight="2dp"
             android:singleLine="true"
             android:layout_marginLeft="3dp"
-            android:layout_toRightOf="@+id/edtDatingCode"/>
+            android:layout_toRightOf="@+id/edtAppointmentCode"/>
         <RelativeLayout
             android:id="@+id/rlSelectCalendarLayout"
             android:layout_width="match_parent"
             android:layout_height="25dp"
-            android:layout_toLeftOf="@+id/datingListSearchLayout"
+            android:layout_toLeftOf="@+id/appointmentListSearchLayout"
             android:layout_toRightOf="@+id/edtPatientName"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
@@ -108,7 +108,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/vSeparator">
         <ListView
-            android:id="@+id/lvDatingList"
+            android:id="@+id/lvAppointmentList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"

@@ -32,8 +32,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/home_item_separator_size"
-                        android:background="@drawable/layout_hightlight_button_with_corner"
-                        custom:foreground="@drawable/layout_item_selector_with_corner"
                         android:clickable="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true">

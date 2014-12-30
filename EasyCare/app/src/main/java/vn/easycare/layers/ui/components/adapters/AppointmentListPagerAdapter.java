@@ -7,14 +7,13 @@ import android.view.ViewGroup;
 
 import java.util.HashMap;
 
-import vn.easycare.layers.ui.components.views.DatingListLayout;
-import vn.easycare.layers.ui.components.views.PatientListLayout;
+import vn.easycare.layers.ui.components.views.AppointmentListLayout;
 import vn.easycare.utils.AppConstants;
 
 /**
  * Created by Thu Nguyen on 12/16/2014.
  */
-public class DatingListPagerAdapter extends PagerAdapter{
+public class AppointmentListPagerAdapter extends PagerAdapter{
     public interface IBroadCastToSynData{
         public void broadCast(AppConstants.EXAMINATION_STATUS status);
     }
@@ -22,7 +21,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
     private HashMap<Integer, View> mViewMaps;
     private String mPatientId;
 
-    public DatingListPagerAdapter(ViewPager viewPager){
+    public AppointmentListPagerAdapter(ViewPager viewPager){
         mViewPager = viewPager;
         mViewMaps = new HashMap<Integer, View>();
     }
@@ -47,24 +46,25 @@ public class DatingListPagerAdapter extends PagerAdapter{
     }
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        DatingListLayout datingListLayout;
+        AppointmentListLayout appointmentListLayout;
         if(mViewMaps.containsKey(position)){
-            datingListLayout = (DatingListLayout)mViewMaps.get(position);
+            appointmentListLayout = (AppointmentListLayout)mViewMaps.get(position);
         }else{
-            datingListLayout = new DatingListLayout(mViewPager.getContext());
-            mViewMaps.put(position, datingListLayout);
+            appointmentListLayout = new AppointmentListLayout(mViewPager.getContext());
+            if(position == 0) {
+                appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
+            }else if(position == 1){
+                appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
+            }else{
+                appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
+            }
+            appointmentListLayout.setPatientId(mPatientId);
+            appointmentListLayout.loadNewData();
+            mViewMaps.put(position, appointmentListLayout);
         }
-        if(position == 0) {
-            datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
-        }else if(position == 1){
-            datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
-        }else{
-            datingListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
-        }
-        datingListLayout.setPatientId(mPatientId);
-        datingListLayout.loadNewData();
-        container.addView(datingListLayout);
-        return datingListLayout;
+
+        container.addView(appointmentListLayout);
+        return appointmentListLayout;
     }
 
     /**
@@ -72,7 +72,7 @@ public class DatingListPagerAdapter extends PagerAdapter{
      */
     public void updateDataIfAnyForCurrentItem(){
         int currentPos = mViewPager.getCurrentItem();
-        DatingListLayout curItem = (DatingListLayout) mViewMaps.get(currentPos);
+        AppointmentListLayout curItem = (AppointmentListLayout) mViewMaps.get(currentPos);
         if(curItem != null) {
             curItem.enforceToRefreshForDataChanged();
         }
@@ -86,14 +86,14 @@ public class DatingListPagerAdapter extends PagerAdapter{
 //            waitingDatingListLayout.setNeedToRefresh(true);
             switch (status){
                 case ACCEPTED:
-                    DatingListLayout acceptDatingListLayout = (DatingListLayout) mViewMaps.get(1);
-                    acceptDatingListLayout.refreshDataWithNonSearch();
+                    AppointmentListLayout acceptAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(1);
+                    acceptAppointmentListLayout.refreshDataWithNonSearch();
                     break;
                 case WAITING:
                     break;
                 case CANCEL:
-                    DatingListLayout cancelDatingListLayout = (DatingListLayout) mViewMaps.get(2);
-                    cancelDatingListLayout.refreshDataWithNonSearch();
+                    AppointmentListLayout cancelAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(2);
+                    cancelAppointmentListLayout.refreshDataWithNonSearch();
                     break;
             }
         }
@@ -101,12 +101,12 @@ public class DatingListPagerAdapter extends PagerAdapter{
     public void refreshAllItems(){
         for(int index = 0; index < mViewMaps.size(); index++){
             View view = mViewMaps.get(index);
-            if(view instanceof DatingListLayout){
-                DatingListLayout datingListLayout = (DatingListLayout)view;
+            if(view instanceof AppointmentListLayout){
+                AppointmentListLayout appointmentListLayout = (AppointmentListLayout)view;
                 if(mViewPager.getCurrentItem() == index) {
-                    datingListLayout.refreshDataAndShowLoading();
+                    appointmentListLayout.refreshDataAndShowLoading();
                 }else {
-                    datingListLayout.refreshDataWhenDataChanged();
+                    appointmentListLayout.refreshDataWhenDataChanged();
                 }
             }
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llDatingListForAPatientLayout"
+    android:id="@+id/llApointmentListForAPatientLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -11,7 +11,7 @@
         android:background="@drawable/patient_list_background">
         <TextView
             style="@style/DefaultLargeTextView"
-            android:text="@string/dating_list"
+            android:text="@string/appointment_list"
             android:textColor="@color/textview_color_highlight_tab"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/common_padding"/>
@@ -110,12 +110,12 @@
         </LinearLayout>
     </LinearLayout>
     <vn.easycare.layers.ui.components.views.TabLayout
-        android:id="@+id/datingListTabLayout"
+        android:id="@+id/appointmentListTabLayout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/main_background_color"/>
     <android.support.v4.view.ViewPager
-        android:id="@+id/datingListViewPager"
+        android:id="@+id/appointmentListViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"/>

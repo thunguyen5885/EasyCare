@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
-import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
 import vn.easycare.utils.AppFnUtils;
 
 /**
@@ -20,12 +19,12 @@ import vn.easycare.utils.AppFnUtils;
  */
 public class HomeFragment extends Fragment implements View.OnClickListener{
     public interface IHomeItemOnClickListner{
-        public void onHomeItemDatingManagementClicked();
+        public void onHomeItemAppointmentManagementClicked();
         public void onHomeItemCalendarCreatingClicked();
         public void onHomeItemPatientListClicked();
         public void onHomeItemStatisticClicked();
     }
-    private View mDatingManagementLayout;
+    private View mAppointmentManagementLayout;
     private View mCalendarCreatingLayout;
     private View mPatientListLayout;
     private View mStatisticLayout;
@@ -44,13 +43,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
-        mDatingManagementLayout = v.findViewById(R.id.homeItemDatingManagementLayout);
+        mAppointmentManagementLayout = v.findViewById(R.id.homeItemDatingManagementLayout);
         mCalendarCreatingLayout = v.findViewById(R.id.homeItemCalendarCreatingLayout);
         mPatientListLayout = v.findViewById(R.id.homeItemPatientListLayout);
         mStatisticLayout = v.findViewById(R.id.homeItemStatisticLayout);
 
         // Initialize the home item layout
-        initHomeItemLayout(mDatingManagementLayout, R.string.home_dating_management, R.drawable.ic_dating_management);
+        initHomeItemLayout(mAppointmentManagementLayout, R.string.home_dating_management, R.drawable.ic_dating_management);
         initHomeItemLayout(mCalendarCreatingLayout, R.string.home_calendar_creating, R.drawable.ic_calendar_creating);
         initHomeItemLayout(mPatientListLayout, R.string.home_patient_list, R.drawable.ic_patient_list);
         initHomeItemLayout(mStatisticLayout, R.string.home_statistic, R.drawable.ic_statistic);
@@ -103,7 +102,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
         int parentViewId = (Integer) v.getTag();
         switch(parentViewId){
             case R.id.homeItemDatingManagementLayout:
-                mHomeItemOnClickListener.onHomeItemDatingManagementClicked();
+                mHomeItemOnClickListener.onHomeItemAppointmentManagementClicked();
                 break;
             case R.id.homeItemCalendarCreatingLayout:
                 mHomeItemOnClickListener.onHomeItemCalendarCreatingClicked();
@@ -131,15 +130,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener{
 
     private IHomeItemOnClickListner mHomeItemOnClickListener = new IHomeItemOnClickListner() {
         @Override
-        public void onHomeItemDatingManagementClicked() {
-            DatingListFragment datingListFragment = new DatingListFragment();
-            ((HomeActivity) getActivity()).showFragment(datingListFragment);
+        public void onHomeItemAppointmentManagementClicked() {
+            AppointmentListFragment appointmentListFragment = new AppointmentListFragment();
+            ((HomeActivity) getActivity()).showFragment(appointmentListFragment);
         }
 
         @Override
         public void onHomeItemCalendarCreatingClicked() {
-            DateCreatingFragment dateCreatingFragment = new DateCreatingFragment();
-            ((HomeActivity)getActivity()).showFragment(dateCreatingFragment);
+            CalendarCreatingFragment calendarCreatingFragment = new CalendarCreatingFragment();
+            ((HomeActivity)getActivity()).showFragment(calendarCreatingFragment);
         }
 
         @Override

@@ -15,14 +15,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
-import vn.easycare.layers.ui.components.views.DatingListLayout;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
 import vn.easycare.layers.ui.views.IExaminationAppointmentView;
@@ -33,10 +31,10 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class DatingDetailFragment extends Fragment implements View.OnClickListener, IExaminationAppointmentView{
+public class AppointmentDetailFragment extends Fragment implements View.OnClickListener, IExaminationAppointmentView{
     // For control, layout
-    private View mDateLayout;
-    private View mDatingCodeLayout;
+    private View mAppointmentLayout;
+    private View mAppointmentCodeLayout;
     private View mLocationLayout;
     private View mPersonInDateLayout;
     private View mRequestReasonLayout;
@@ -44,7 +42,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     private View mGenderLayout;
     private View mPhoneLayout;
     private View mEmailLayout;
-    private View mDateCreatingLayout;
+    private View mCalendarCreatingLayout;
     private View mStatusLayout;
     private View mMoreInfoLayout;
     private View mSendLayout;
@@ -60,7 +58,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     private IExaminationAppointmentPresenter mPresenter;
     private Dialog mLoadingDialog;
     private AppointmentTime mAppointmentTime;
-    public DatingDetailFragment(){
+    public AppointmentDetailFragment(){
 
     }
 
@@ -74,39 +72,39 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mPresenter = new ExaminationAppointmentPresenterImpl(this, getActivity());
         mAppointmentTime = new AppointmentTime();
-        View v = inflater.inflate(R.layout.fragment_dating_detail, container, false);
-        mDateLayout = v.findViewById(R.id.datingDetailDateLayout);
-        mDatingCodeLayout = v.findViewById(R.id.datingDetailDatingCodeLayout);
-        mLocationLayout = v.findViewById(R.id.datingDetailLocationLayout);
-        mPersonInDateLayout = v.findViewById(R.id.datingDetailPersonInDateLayout);
-        mRequestReasonLayout = v.findViewById(R.id.datingDetailRequestReasonLayout);
-        mNameLayout = v.findViewById(R.id.datingDetailNameLayout);
-        mGenderLayout = v.findViewById(R.id.datingDetailGenderLayout);
-        mPhoneLayout = v.findViewById(R.id.datingDetailPhoneLayout);
-        mEmailLayout = v.findViewById(R.id.datingDetailEmailLayout);
-        mDateCreatingLayout = v.findViewById(R.id.datingDetailDateCreatingLayout);
-        mStatusLayout = v.findViewById(R.id.datingDetailStatusLayout);
-        mMoreInfoLayout = v.findViewById(R.id.datingDetailMoreInfoLayout);
+        View v = inflater.inflate(R.layout.fragment_appointment_detail, container, false);
+        mAppointmentLayout = v.findViewById(R.id.appointmentDetailDateLayout);
+        mAppointmentCodeLayout = v.findViewById(R.id.appointmentDetailDatingCodeLayout);
+        mLocationLayout = v.findViewById(R.id.appointmentDetailLocationLayout);
+        mPersonInDateLayout = v.findViewById(R.id.appointmentDetailPersonInDateLayout);
+        mRequestReasonLayout = v.findViewById(R.id.appointmentDetailRequestReasonLayout);
+        mNameLayout = v.findViewById(R.id.appointmentDetailNameLayout);
+        mGenderLayout = v.findViewById(R.id.appointmentDetailGenderLayout);
+        mPhoneLayout = v.findViewById(R.id.appointmentDetailPhoneLayout);
+        mEmailLayout = v.findViewById(R.id.appointmentDetailEmailLayout);
+        mCalendarCreatingLayout = v.findViewById(R.id.appointmentDetailDateCreatingLayout);
+        mStatusLayout = v.findViewById(R.id.appointmentDetailStatusLayout);
+        mMoreInfoLayout = v.findViewById(R.id.appointmentDetailMoreInfoLayout);
         mSendLayout = v.findViewById(R.id.sendLayout);
         mEdtDoctorComment = (EditText)v.findViewById(R.id.edtDoctorComment);
-        mDatingListButtonLayout = v.findViewById(R.id.datingListButtonLayout);
+        mDatingListButtonLayout = v.findViewById(R.id.appointmentListButtonLayout);
         mBtnCalendarChange = (Button) v.findViewById(R.id.btnCalendarChange);
         mBtnCalendarCancel = (Button) v.findViewById(R.id.btnCalendarCancel);
         mBtnCalendarAccept = (Button) v.findViewById(R.id.btnCalendarAccept);
 
         // Init title for all views
-        initTitleForChildView(mDateLayout, R.string.dating_detail_day);
-        initTitleForChildView(mDatingCodeLayout, R.string.dating_detail_dating_code);
-        initTitleForChildView(mLocationLayout, R.string.dating_detail_location);
-        initTitleForChildView(mPersonInDateLayout, R.string.dating_detail_person_in_date);
-        initTitleForChildView(mRequestReasonLayout, R.string.dating_detail_treat_reason);
-        initTitleForChildView(mNameLayout, R.string.dating_detail_name);
-        initTitleForChildView(mGenderLayout, R.string.dating_detail_gender);
-        initTitleForChildView(mPhoneLayout, R.string.dating_detail_phone);
-        initTitleForChildView(mEmailLayout, R.string.dating_detail_email);
-        initTitleForChildView(mDateCreatingLayout, R.string.dating_detail_date_creating);
-        initTitleForChildView(mStatusLayout, R.string.dating_detail_status);
-        initTitleForChildView(mMoreInfoLayout, R.string.dating_detail_extra_info);
+        initTitleForChildView(mAppointmentLayout, R.string.appointment_detail_day);
+        initTitleForChildView(mAppointmentCodeLayout, R.string.appointment_detail_dating_code);
+        initTitleForChildView(mLocationLayout, R.string.appointment_detail_location);
+        initTitleForChildView(mPersonInDateLayout, R.string.appointment_detail_person_in_date);
+        initTitleForChildView(mRequestReasonLayout, R.string.appointment_detail_treat_reason);
+        initTitleForChildView(mNameLayout, R.string.appointment_detail_name);
+        initTitleForChildView(mGenderLayout, R.string.appointment_detail_gender);
+        initTitleForChildView(mPhoneLayout, R.string.appointment_detail_phone);
+        initTitleForChildView(mEmailLayout, R.string.appointment_detail_email);
+        initTitleForChildView(mCalendarCreatingLayout, R.string.appointment_detail_date_creating);
+        initTitleForChildView(mStatusLayout, R.string.appointment_detail_status);
+        initTitleForChildView(mMoreInfoLayout, R.string.appointment_detail_extra_info);
         // Set on click
         mSendLayout.setOnClickListener(this);
         mBtnCalendarChange.setOnClickListener(this);
@@ -168,8 +166,8 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
             // Set value
             String dateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTime());
             String createdDateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTimeAppointmentCreated());
-            initContentForChildView(mDateLayout, dateTime);
-            initContentForChildView(mDatingCodeLayout, mItemData.getExaminationCode());
+            initContentForChildView(mAppointmentLayout, dateTime);
+            initContentForChildView(mAppointmentCodeLayout, mItemData.getExaminationCode());
             initContentForChildView(mLocationLayout, mItemData.getExaminationAddress());
             initContentForChildView(mPersonInDateLayout, mItemData.getExaminationByPerson());
             initContentForChildView(mRequestReasonLayout, mItemData.getExaminationReason());
@@ -177,7 +175,7 @@ public class DatingDetailFragment extends Fragment implements View.OnClickListen
             initContentForChildView(mGenderLayout, mItemData.getPatientGender());
             initContentForChildView(mPhoneLayout, mItemData.getPatientPhone());
             initContentForChildView(mEmailLayout, mItemData.getPatientEmail());
-            initContentForChildView(mDateCreatingLayout, createdDateTime);
+            initContentForChildView(mCalendarCreatingLayout, createdDateTime);
             initContentForChildView(mStatusLayout, mItemData.getExaminationState());
             initContentForChildView(mMoreInfoLayout, mItemData.getExaminationExtraInfo());
 

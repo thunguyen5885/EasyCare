@@ -16,8 +16,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
-import vn.easycare.layers.ui.components.adapters.DatingListPagerAdapter;
-import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.components.views.TabLayout;
@@ -27,7 +26,7 @@ import vn.easycare.utils.AppFnUtils;
 /**
  * Created by Thu Nguyen on 12/16/2014.
  */
-public class DatingListForAPatientFragment extends Fragment{
+public class AppointmentListForAPatientFragment extends Fragment{
     // For view, control
     private NetworkImageView mPatientAvatar;
     private TextView mTvPatientName;
@@ -37,26 +36,26 @@ public class DatingListForAPatientFragment extends Fragment{
     private TextView mTvPatientAddress;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private DatingListPagerAdapter mPagerAdapter;
+    private AppointmentListPagerAdapter mPagerAdapter;
 
     // For data, object
-    private List<String> mDatingList;
+    private List<String> mAppointmentList;
     private PatientManagementItemData mPatientManagementItemData;
-    public DatingListForAPatientFragment(){
-        mDatingList = new ArrayList<String>();
+    public AppointmentListForAPatientFragment(){
+        mAppointmentList = new ArrayList<String>();
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mDatingList.add(activity.getString(R.string.dating_list_waiting));
-        mDatingList.add(activity.getString(R.string.dating_list_approved));
-        mDatingList.add(activity.getString(R.string.dating_list_cancel));
+        mAppointmentList.add(activity.getString(R.string.appointment_list_waiting));
+        mAppointmentList.add(activity.getString(R.string.appointment_list_approved));
+        mAppointmentList.add(activity.getString(R.string.appointment_list_cancel));
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_dating_list_for_a_patient, container, false);
+        View v = inflater.inflate(R.layout.fragment_appointment_list_for_a_patient, container, false);
         mPatientAvatar = (NetworkImageView) v.findViewById(R.id.patientAvatarThumb);
         mTvPatientName = (TextView) v.findViewById(R.id.tvPatientName);
         mTvPatientBirthday = (TextView) v.findViewById(R.id.tvPatientBirthday);
@@ -64,10 +63,10 @@ public class DatingListForAPatientFragment extends Fragment{
         mTvPatientEmail = (TextView) v.findViewById(R.id.tvPatientEmail);
         mTvPatientAddress = (TextView) v.findViewById(R.id.tvPatientLocation);
 
-        mTabLayout = (TabLayout) v.findViewById(R.id.datingListTabLayout);
-        mTabLayout.createChild(mDatingList);
+        mTabLayout = (TabLayout) v.findViewById(R.id.appointmentListTabLayout);
+        mTabLayout.createChild(mAppointmentList);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);
-        mViewPager = (ViewPager) v.findViewById(R.id.datingListViewPager);
+        mViewPager = (ViewPager) v.findViewById(R.id.appointmentListViewPager);
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);
 
         // Apply font
@@ -98,7 +97,7 @@ public class DatingListForAPatientFragment extends Fragment{
         }
 
         // Show tabs
-        mPagerAdapter = new DatingListPagerAdapter(mViewPager);
+        mPagerAdapter = new AppointmentListPagerAdapter(mViewPager);
         if(mPatientManagementItemData != null){
             mPagerAdapter.setPatientId(mPatientManagementItemData.getPatientId());
         }

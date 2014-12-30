@@ -53,35 +53,35 @@
     <string name="patient_list_datings">Các cuộc hẹn</string>
 
     <!-- Define string for dating_list screen-->
-    <string name="dating_list">Quản lý lịch hẹn khám</string>
-    <string name="dating_list_waiting">Chờ duyệt</string>
-    <string name="dating_list_approved">Đã duyệt</string>
-    <string name="dating_list_cancel">Hủy</string>
-    <string name="dating_list_dating_code">Mã cuộc hẹn</string>
-    <string name="dating_list_patient_name">Tên bệnh nhân</string>
-    <string name="dating_list_search">Tìm kiếm</string>
-    <string name="dating_list_calendar_change">Đổi lịch</string>
-    <string name="dating_list_accept">Đồng ý</string>
-    <string name="dating_list_accept_ok">Chấp nhận</string>
+    <string name="appointment_list">Quản lý lịch hẹn khám</string>
+    <string name="appointment_list_waiting">Chờ duyệt</string>
+    <string name="appointment_list_approved">Đã duyệt</string>
+    <string name="appointment_list_cancel">Hủy</string>
+    <string name="appointment_list_appointment_code">Mã cuộc hẹn</string>
+    <string name="appointment_list_patient_name">Tên bệnh nhân</string>
+    <string name="appointment_list_search">Tìm kiếm</string>
+    <string name="appointment_list_calendar_change">Đổi lịch</string>
+    <string name="appointment_list_accept">Đồng ý</string>
+    <string name="appointment_list_accept_ok">Chấp nhận</string>
     
     <!-- Define string for dating_detail screen-->
-    <string name="dating_detail">Chi tiết cuộc hẹn khám</string>
-    <string name="dating_detail_dating_info">Thông tin cuộc hẹn</string>
-    <string name="dating_detail_day">Ngày</string>
-    <string name="dating_detail_dating_code">Mã cuộc hẹn</string>
-    <string name="dating_detail_location">Địa điểm</string>
-    <string name="dating_detail_person_in_date">Người hẹn</string>
-    <string name="dating_detail_treat_reason">Lý do khám</string>
-    <string name="dating_detail_info_of_person_in_treat">Thông tin người khám</string>
-    <string name="dating_detail_name">Họ tên</string>
-    <string name="dating_detail_gender">Giới tính</string>
-    <string name="dating_detail_phone">Điện thoại</string>
-    <string name="dating_detail_email">Email</string>
-    <string name="dating_detail_date_creating">Ngày tạo hẹn</string>
-    <string name="dating_detail_status">Trạng thái</string>
-    <string name="dating_detail_extra_info">Thông tin thêm</string>
-    <string name="dating_detail_hint_of_doctor">Chú thích b.sĩ</string>
-    <string name="dating_detail_send">Gửi</string>
+    <string name="appointment_detail">Chi tiết cuộc hẹn khám</string>
+    <string name="appointment_detail_appointment_info">Thông tin cuộc hẹn</string>
+    <string name="appointment_detail_day">Ngày</string>
+    <string name="appointment_detail_dating_code">Mã cuộc hẹn</string>
+    <string name="appointment_detail_location">Địa điểm</string>
+    <string name="appointment_detail_person_in_date">Người hẹn</string>
+    <string name="appointment_detail_treat_reason">Lý do khám</string>
+    <string name="appointment_detail_info_of_person_in_treat">Thông tin người khám</string>
+    <string name="appointment_detail_name">Họ tên</string>
+    <string name="appointment_detail_gender">Giới tính</string>
+    <string name="appointment_detail_phone">Điện thoại</string>
+    <string name="appointment_detail_email">Email</string>
+    <string name="appointment_detail_date_creating">Ngày tạo hẹn</string>
+    <string name="appointment_detail_status">Trạng thái</string>
+    <string name="appointment_detail_extra_info">Thông tin thêm</string>
+    <string name="appointment_detail_hint_of_doctor">Chú thích b.sĩ</string>
+    <string name="appointment_detail_send">Gửi</string>
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>
     <string name="footer_privacy_policy">Chính sách bảo mật</string>

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.toolbox.NetworkImageView;
 
@@ -25,7 +24,7 @@ import vn.easycare.utils.AppFnUtils;
 public class MenuFragment extends Fragment implements View.OnClickListener{
     public interface IOnMenuItemOnClickListener{
         public void onMenuItemUserClicked();
-        public void onMenuItemDatingManagementClicked();
+        public void onMenuItemAppointmentManagementClicked();
         public void onMenuItemCalendarCreatingClicked();
         public void onMenuItemPatientListClicked();
         public void onMenuItemCommentClicked();
@@ -33,7 +32,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
     }
     // For layout, control
 	private View mMenuItemUser;
-    private View mMenuItemDatingManagement;
+    private View mMenuItemAppointmentManagement;
     private View mMenuItemCalendarCreating;
     private View mMenuItemPatientList;
     private View mMenuItemComment;
@@ -66,7 +65,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 		
 		View v = inflater.inflate(R.layout.fragment_menu, container, false);
 		mMenuItemUser = v.findViewById(R.id.menuItemUser);
-        mMenuItemDatingManagement = v.findViewById(R.id.menuItemDatingManagement);
+        mMenuItemAppointmentManagement = v.findViewById(R.id.menuItemDatingManagement);
         mMenuItemCalendarCreating = v.findViewById(R.id.menuItemCalendarCreating);
         mMenuItemPatientList = v.findViewById(R.id.menuItemPatientList);
         mMenuItemComment = v.findViewById(R.id.menuItemComment);
@@ -74,7 +73,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
         //initMenuItem(mMenuItemUser, 0, );
         //initMenuItem(mMenuItemUser, R.string.menu_test_user, R.drawable.ic_no_avatar);
-        initMenuItem(mMenuItemDatingManagement, R.string.menu_dating_management, R.drawable.ic_menu_dating_management);
+        initMenuItem(mMenuItemAppointmentManagement, R.string.menu_dating_management, R.drawable.ic_menu_dating_management);
         initMenuItem(mMenuItemCalendarCreating, R.string.menu_calendar_creating, R.drawable.ic_menu_calendar_creating);
         initMenuItem(mMenuItemPatientList, R.string.menu_patient_list, R.drawable.ic_patient_list);
         initMenuItem(mMenuItemComment, R.string.menu_comment, R.drawable.ic_menu_comment);
@@ -153,8 +152,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
                     mMenuItemOnClickListener.onMenuItemUserClicked();
                     break;
                 case R.id.menuItemDatingManagement:
-                    mMenuItemSeletedItem = mMenuItemDatingManagement;
-                    mMenuItemOnClickListener.onMenuItemDatingManagementClicked();
+                    mMenuItemSeletedItem = mMenuItemAppointmentManagement;
+                    mMenuItemOnClickListener.onMenuItemAppointmentManagementClicked();
                     break;
                 case R.id.menuItemCalendarCreating:
                     mMenuItemSeletedItem = mMenuItemCalendarCreating;
@@ -183,17 +182,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         }
 
         @Override
-        public void onMenuItemDatingManagementClicked() {
+        public void onMenuItemAppointmentManagementClicked() {
             // Go to dating management screen
-            DatingListFragment datingListFragment = new DatingListFragment();
-            ((HomeActivity) getActivity()).showFragmentFromMenu(datingListFragment);
+            AppointmentListFragment appointmentListFragment = new AppointmentListFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(appointmentListFragment);
         }
 
         @Override
         public void onMenuItemCalendarCreatingClicked() {
             // Go to calendar creating screen
-            DateCreatingFragment dateCreatingFragment = new DateCreatingFragment();
-            ((HomeActivity) getActivity()).showFragmentFromMenu(dateCreatingFragment);
+            CalendarCreatingFragment calendarCreatingFragment = new CalendarCreatingFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(calendarCreatingFragment);
         }
 
         @Override
