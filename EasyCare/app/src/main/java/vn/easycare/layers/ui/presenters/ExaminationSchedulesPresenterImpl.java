@@ -2,8 +2,10 @@ package vn.easycare.layers.ui.presenters;
 
 import android.content.Context;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
@@ -77,8 +79,17 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
 
     @Override
     public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
-        List<ExaminationScheduleItemData> itemScheduleList = (List<ExaminationScheduleItemData>)itemDataList;
-        iView.DisplayAllExaminationSchedulesForSeletedDate(itemScheduleList);
+        if(itemDataList instanceof List<?>){
+            ParameterizedType pt = (ParameterizedType)itemDataList.getClass().getGenericSuperclass();
+            String innerClass = pt.getActualTypeArguments()[0].toString().replace("class ", "");
+            if(innerClass.equals(ExaminationScheduleItemData.class)){
+                List<ExaminationScheduleItemData> itemScheduleList = (List<ExaminationScheduleItemData>)itemDataList;
+                iView.DisplayAllExaminationSchedulesForSeletedDate(itemScheduleList);
+            }else if(innerClass.equals(DoctorClinicAddressItemData.class)){
+                List<DoctorClinicAddressItemData> itemAddressesList = (List<DoctorClinicAddressItemData>)itemDataList;
+                iView.DisplayAllDoctorClinicAddresses(itemAddressesList);
+            }
+        }
     }
 
     @Override

@@ -244,8 +244,10 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 item.setPatientEmail(appointmentModel.getPatient_email());
                 item.setExaminationCode(appointmentModel.getCode());
                 item.setExaminationAddress(appointmentModel.getAddress());
-                item.setExaminationByPerson(appointmentModel.getDoctor_id());
+                item.setExaminationByPerson(appointmentModel.getExamine_for());
                 item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
+                item.setPatientAvatar(appointmentModel.getPatient_avatar());
+                item.setPatientAvatarThumb(appointmentModel.getPatient_avatarThumb());
              /*?????????????
                 item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
                 item.setExaminationState(appointmentModel.getPage_currentPage());
@@ -265,11 +267,46 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
 
         }
         else if(result instanceof AppointmentWSModel){
-            AppointmentWSModel model = (AppointmentWSModel)result;
+            AppointmentWSModel appointmentModel = (AppointmentWSModel)result;
             ExaminationAppointmentItemData item = new ExaminationAppointmentItemData();
-            item.setAction(model.getAction());
-            item.setExaminationId(model.getId());
-            //view detail appointment need more info, waiting for api work
+            item.setAction(appointmentModel.getAction());
+            item.setExaminationId(appointmentModel.getId());
+            //view detail appointment need more info
+            item.setPatientName(appointmentModel.getPatient_full_name());
+            item.setExaminationDateTime(appointmentModel.getTime());
+            item.setExaminationReason(appointmentModel.getVisit_reason());
+            if(appointmentModel.getStatus() == 0) {
+                item.setExaminationState("Q&A");
+            }else if(appointmentModel.getStatus() == 1){
+                item.setExaminationState("Q&A");
+            }else if(appointmentModel.getStatus() == -1){
+                item.setExaminationState("QA");
+            }
+            else if(appointmentModel.getStatus() == -2){
+                item.setExaminationState("QA");
+            }
+            else if(appointmentModel.getStatus() == -3){
+                item.setExaminationState("QA");
+            }
+            else if(appointmentModel.getStatus() == 2){
+                item.setExaminationState("QA");
+            }
+            else if(appointmentModel.getStatus() == 3){
+                item.setExaminationState("QA");
+            }
+            item.setPatientGender(appointmentModel.getPatient_gender() == 1 ? mContext.getResources().getString(R.string.gender_man):mContext.getResources().getString(R.string.gender_women));
+            item.setPatientPhone(appointmentModel.getPatient_phone());
+            item.setPatientEmail(appointmentModel.getPatient_email());
+            item.setExaminationCode(appointmentModel.getCode());
+            item.setExaminationAddress(appointmentModel.getAddress());
+            item.setExaminationByPerson(appointmentModel.getExamine_for());
+            item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
+            item.setPatientAvatar(appointmentModel.getPatient_avatar());
+            item.setPatientAvatarThumb(appointmentModel.getPatient_avatarThumb());
+
+            item.setExaminationDoctorNote(appointmentModel.getDoctor_notes());
+            item.setExaminationFirstVisit(appointmentModel.getFirst_visit()==0?false:true);
+
             if(mCallback!=null)
                 mCallback.onResponseOK(item);
 

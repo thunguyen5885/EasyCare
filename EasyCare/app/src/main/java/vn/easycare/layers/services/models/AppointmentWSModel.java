@@ -27,9 +27,12 @@ public class AppointmentWSModel implements IWebServiceModel {
     String patient_birth_date;
     String patient_email;
     String patient_id;
+    String patient_avatar;
+    String patient_avatarThumb;
+    String examine_for;
     AppConstants.APPOINTMENT_ACTION action;
 
-    public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id) {
+    public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id, String patient_avatar, String patient_avatarThumb, String examine_for) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.status = status;
@@ -50,6 +53,9 @@ public class AppointmentWSModel implements IWebServiceModel {
         this.patient_birth_date = patient_birth_date;
         this.patient_email = patient_email;
         this.patient_id = patient_id;
+        this.patient_avatar = patient_avatar;
+        this.patient_avatarThumb = patient_avatarThumb;
+        this.examine_for = examine_for;
     }
 
     public String getId() {
@@ -218,5 +224,29 @@ public class AppointmentWSModel implements IWebServiceModel {
 
     public void setAction(AppConstants.APPOINTMENT_ACTION action) {
         this.action = action;
+    }
+
+    public String getPatient_avatar() {
+        return patient_avatar;
+    }
+
+    public void setPatient_avatar(String patient_avatar) {
+        this.patient_avatar = patient_avatar;
+    }
+
+    public String getPatient_avatarThumb() {
+        return patient_avatarThumb;
+    }
+
+    public void setPatient_avatarThumb(String patient_avatarThumb) {
+        this.patient_avatarThumb = patient_avatarThumb;
+    }
+
+    public String getExamine_for() {
+        return examine_for;
+    }
+
+    public void setExamine_for(String examine_for) {
+        this.examine_for = examine_for;
     }
 }

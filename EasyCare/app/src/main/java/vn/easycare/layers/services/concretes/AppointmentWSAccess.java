@@ -29,6 +29,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String APPOINTMENT_VIEW_URI = WEBSERVICE_HOST + "/doctors/appointments/%s?token=%s";
 
     private static final String Res_appointments = "appointments";
+    private static final String Res_appointment = "appointment";
     private static final String Res_id = "id";
     private static final String Res_doctor_id = "doctor_id";
     private static final String Res_status = "status";
@@ -54,6 +55,9 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String Res_currentPage = "currentPage";
     private static final String Res_lastPage = "lastPage";
     private static final String Res_itemsPerPage = "itemsPerPage";
+    private static final String Res_avatar = "avatar";
+    private static final String Res_avatar_thumb = "avatar_thumb";
+    private static final String Res_examine_for = "examine_for";
 
     private static final String Param_Token = "token";
     private static final String Param_appointmentCode = "appointmentCode";
@@ -211,6 +215,8 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                     modelBuilder.withPatient_birth_date(PatientjsonObj.get(Res_birth_date).toString());
                     modelBuilder.withPatient_email(PatientjsonObj.get(Res_email).toString());
                     modelBuilder.withPatient_id(PatientjsonObj.get(Res_id).toString());
+                    modelBuilder.withPatient_avatar(PatientjsonObj.get(Res_avatar).toString());
+                    modelBuilder.withPatient_avatarThumb(PatientjsonObj.get(Res_avatar_thumb).toString());
                 }
 
                 listModel.getListAppointments().add(modelBuilder.build());
@@ -260,6 +266,49 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     }
 
     private void parseResponseForViewAppointments(String jsonResponse){
-        //waiting for api work
+        try {
+            AppoinmentWSBuilder modelBuilder = new  AppoinmentWSBuilder();
+
+            JSONObject jsonBigObj = new JSONObject(jsonResponse);
+            JSONObject jsonObj = (JSONObject)jsonBigObj.get(Res_appointment);
+            if(jsonObj!=null){
+                modelBuilder.withId(jsonObj.get(Res_id).toString());
+                modelBuilder.withStatus(Integer.valueOf(jsonObj.get(Res_status).toString()).intValue());
+                modelBuilder.withTime(jsonObj.get(Res_time).toString());
+                modelBuilder.withVisit_reason(jsonObj.get(Res_visit_reason).toString());
+                modelBuilder.withFirst_visit(Integer.valueOf(jsonObj.get(Res_first_visit).toString()).intValue());
+
+                modelBuilder.withCode(jsonObj.get(Res_code).toString());
+                modelBuilder.withAddress(jsonObj.get(Res_address).toString());
+                modelBuilder.withInsurance(Integer.valueOf(jsonObj.get(Res_insurance).toString()).intValue());
+                modelBuilder.withInsurance_company(jsonObj.get(Res_insurance_company).toString());
+                modelBuilder.withDoctor_notes(jsonObj.get(Res_doctor_notes).toString());
+                modelBuilder.withPatient_notes(jsonObj.get(Res_patient_notes).toString());
+                modelBuilder.withCreated_at(jsonObj.get(Res_created_at).toString());
+                modelBuilder.withExamine_for(jsonObj.get(Res_examine_for).toString());
+                Object PatientObj = jsonObj.get(Res_patient);
+                if(PatientObj instanceof JSONObject) {
+                    JSONObject PatientjsonObj = (JSONObject) PatientObj;
+                    modelBuilder.withPatient_full_name(PatientjsonObj.get(Res_full_name).toString());
+                    modelBuilder.withPatient_gender(Integer.valueOf(PatientjsonObj.get(Res_gender).toString()).intValue());
+                    modelBuilder.withPatient_phone(PatientjsonObj.get(Res_phone).toString());
+                    modelBuilder.withPatient_birth_date(PatientjsonObj.get(Res_birth_date).toString());
+                    modelBuilder.withPatient_email(PatientjsonObj.get(Res_email).toString());
+                    modelBuilder.withPatient_id(PatientjsonObj.get(Res_id).toString());
+                    modelBuilder.withPatient_avatar(PatientjsonObj.get(Res_avatar).toString());
+                    modelBuilder.withPatient_avatarThumb(PatientjsonObj.get(Res_avatar_thumb).toString());
+                }
+
+            }
+            if(mCallback!=null)
+                mCallback.onWSResponseOK(modelBuilder.build());
+        } catch (JSONException e) {
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+        }
+        catch (Exception e) {
+            if(mCallback!=null)
+                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+        }
     }
 }

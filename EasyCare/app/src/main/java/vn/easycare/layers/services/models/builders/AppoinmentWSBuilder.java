@@ -30,6 +30,9 @@ public class AppoinmentWSBuilder {
     String patient_birth_date = "";
     String patient_email = "";
     String patient_id ="";
+    String patient_avatar = "";
+    String patient_avatarThumb = "";
+    String examine_for = "";
     AppConstants.APPOINTMENT_ACTION action= AppConstants.APPOINTMENT_ACTION.NONE;
     public AppoinmentWSBuilder() {
     }
@@ -143,12 +146,27 @@ public class AppoinmentWSBuilder {
         return  this;
     }
 
+    public AppoinmentWSBuilder withPatient_avatar(String patient_avatar) {
+        this.patient_avatar = patient_avatar;
+        return  this;
+    }
+
+    public AppoinmentWSBuilder withPatient_avatarThumb(String patient_avatarThumb) {
+        this.patient_avatarThumb = patient_avatarThumb;
+        return  this;
+    }
+
+    public AppoinmentWSBuilder withExamine_for(String examine_for) {
+        this.examine_for = examine_for;
+        return  this;
+    }
+
     public AppointmentWSModel build(){
         return new AppointmentWSModel( id,  doctor_id,  status,  time,  visit_reason,
                 first_visit,  visits,  code,  address,  insurance,
                 insurance_company,  doctor_notes,  patient_notes,
                 created_at,  patient_full_name,  patient_gender,
-                patient_phone, patient_birth_date, patient_email, patient_id);
+                patient_phone, patient_birth_date, patient_email, patient_id,patient_avatar,patient_avatarThumb,examine_for);
     }
 
     public void Clear(){
@@ -172,6 +190,9 @@ public class AppoinmentWSBuilder {
         patient_birth_date = "";
         patient_email = "";
         patient_id ="";
+        patient_avatar = "";
+        patient_avatarThumb = "";
+        examine_for = "";
         AppConstants.APPOINTMENT_ACTION action= AppConstants.APPOINTMENT_ACTION.NONE;
     }
 }

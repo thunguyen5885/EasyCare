@@ -14,6 +14,7 @@ import vn.easycare.utils.AppConstants;
 public class ExaminationAppointmentItemData implements IBaseItemData,Serializable {
     String ExaminationId;
     String PatientAvatar;
+    String PatientAvatarThumb;
     String PatientName;
     String PatientGender;
     String PatientPhone;
@@ -29,7 +30,6 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
     String ExaminationState;
     String ExaminationExtraInfo;
     String ExaminationDoctorNote;
-
     boolean ExaminationFirstVisit;
 
     int totalPages;
@@ -43,13 +43,15 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
     public ExaminationAppointmentItemData() {
     }
 
-    public ExaminationAppointmentItemData(String examinationId, String patientAvatar, String patientName, String examinationDateTime, String examinationReasion, AppConstants.EXAMINATION_STATUS examinationStatus) {
+    public ExaminationAppointmentItemData(String examinationId, String patientAvatar,String patientAvatarThumb, String patientName, String examinationDateTime, String examinationReasion, AppConstants.EXAMINATION_STATUS examinationStatus) {
         ExaminationId = examinationId;
         PatientAvatar = patientAvatar;
         PatientName = patientName;
         ExaminationDateTime = examinationDateTime;
         ExaminationReason = examinationReasion;
         ExaminationStatus = examinationStatus;
+        PatientAvatarThumb = patientAvatarThumb;
+
     }
     public String getExaminationId(){return ExaminationId;}
     public void setExaminationId(String examinationId){ExaminationId = examinationId;}
@@ -219,5 +221,13 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
 
     public void setAction(AppConstants.APPOINTMENT_ACTION action) {
         this.action = action;
+    }
+
+    public String getPatientAvatarThumb() {
+        return PatientAvatarThumb;
+    }
+
+    public void setPatientAvatarThumb(String patientAvatarThumb) {
+        PatientAvatarThumb = patientAvatarThumb;
     }
 }

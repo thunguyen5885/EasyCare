@@ -11,7 +11,11 @@ import vn.easycare.layers.services.IWebServiceModel;
 import vn.easycare.layers.services.WSAccessFactory;
 import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.services.WSError;
+import vn.easycare.layers.services.concretes.ClinicAddressWSAccess;
 import vn.easycare.layers.services.concretes.ScheduleWSAccess;
+import vn.easycare.layers.services.models.ClinicAddressListWSModel;
+import vn.easycare.layers.services.models.ClinicAddressWSModel;
+import vn.easycare.layers.services.models.ClinicAddressWSParamModel;
 import vn.easycare.layers.services.models.PatientWSModel;
 import vn.easycare.layers.services.models.ScheduleWSModel;
 import vn.easycare.layers.services.models.ScheduleWSParamModel;
@@ -141,7 +145,20 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
 
     @Override
     public void loadAllAddressesForDoctor() {
-
+        try {
+            IWebServiceAccess<ClinicAddressListWSModel,ClinicAddressWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
+                    ClinicAddressWSAccess.class,
+                    mContext,
+                    this,
+                    new ClinicAddressWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken()));
+            WS.sendRequest();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -169,6 +186,17 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
             item.setAction(scheduleModel.getAction());
             if(mCallback!=null)
                 mCallback.onResponseOK(item);
+        }else if(result instanceof ClinicAddressListWSModel){
+            ClinicAddressListWSModel addressListModel = (ClinicAddressListWSModel)result;
+            List<DoctorClinicAddressItemData> itemDataList = new ArrayList<DoctorClinicAddressItemData>();
+            for(ClinicAddressWSModel model : addressListModel.getClinicAddressesList()){
+                DoctorClinicAddressItemData item = new DoctorClinicAddressItemData();
+                item.setClinicAddress(model.getClinicAddress());
+                item.setClinicAddressId(model.getClinicAddressId());
+                itemDataList.add(item);
+            }
+            if(mCallback!=null)
+                mCallback.onResponseOK(itemDataList);
         }
     }
 
