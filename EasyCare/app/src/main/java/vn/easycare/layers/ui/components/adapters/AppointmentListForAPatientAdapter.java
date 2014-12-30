@@ -1,6 +1,5 @@
 package vn.easycare.layers.ui.components.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -9,20 +8,17 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
-
 import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
-import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/16/2014.
  */
-public class AppointmentListAdapter extends BaseAdapter{
+public class AppointmentListForAPatientAdapter extends BaseAdapter{
     public interface IAppointmentItemClickListener {
         public void onAppointmentDetail(ExaminationAppointmentItemData itemData);
         public void onAppointmentCalendarChange(ExaminationAppointmentItemData itemData);
@@ -34,11 +30,11 @@ public class AppointmentListAdapter extends BaseAdapter{
     private boolean mIsWaitingList = false;
     private boolean mIsClicked = false;
     private boolean mIsEndOfList = false;
-    private IAppointmentItemClickListener mAppointmentItemClickListener;
+    private IAppointmentItemClickListener mDatingItemClickListener;
 
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDatas;
 
-    public AppointmentListAdapter(Context context){
+    public AppointmentListForAPatientAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
@@ -52,7 +48,7 @@ public class AppointmentListAdapter extends BaseAdapter{
         mIsEndOfList = isEndOfList;
     }
     public void setAppointmentItemClickListener(IAppointmentItemClickListener appointmentItemClickListener){
-        mAppointmentItemClickListener = appointmentItemClickListener;
+        mDatingItemClickListener = appointmentItemClickListener;
     }
     @Override
     public int getCount() {
@@ -74,11 +70,10 @@ public class AppointmentListAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView == null){
-            convertView = mLayoutInflater.inflate(R.layout.appointment_item_ctrl, null);
+            convertView = mLayoutInflater.inflate(R.layout.appointment_for_a_patient_item_ctrl, null);
             viewHolder = new ViewHolder();
-            viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatarThumb);
-            viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
-            viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvAppointmentTime);
+            viewHolder.mAppointmentPatientItemLayout = convertView.findViewById(R.id.appointmentPatientItemLayout);
+            viewHolder.mTvAppointmentTime = (TextView) convertView.findViewById(R.id.tvAppointmentTime);
             viewHolder.mTvPatientDisease = (TextView) convertView.findViewById(R.id.tvPatientDisease);
             viewHolder.mButtonLayout = convertView.findViewById(R.id.appointmentListButtonLayout);
             viewHolder.mBtnCalendarChange = (TextView) convertView.findViewById(R.id.btnCalendarChange);
@@ -92,8 +87,9 @@ public class AppointmentListAdapter extends BaseAdapter{
         }
 
         // Set onClick
-        viewHolder.mTvPatientName.setTag(position);
-        viewHolder.mTvPatientName.setOnClickListener(mOnClickListener);
+        viewHolder.mAppointmentPatientItemLayout.setTag(position);
+        viewHolder.mAppointmentPatientItemLayout.setClickable(true);
+        viewHolder.mAppointmentPatientItemLayout.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarChange.setTag(position);
         viewHolder.mBtnCalendarChange.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarAccept.setTag(position);
@@ -113,23 +109,12 @@ public class AppointmentListAdapter extends BaseAdapter{
             viewHolder.mEndOfListLayout.setVisibility(View.GONE);
             viewHolder.mBottomSeparatorLayout.setVisibility(View.VISIBLE);
         }
-        // Calculate the avatar size
-        int screenWidth = AppFnUtils.getScreenWidth((Activity)mContext);
-        int avatarSize = screenWidth / 5;
-        viewHolder.mPatientAvatar.getLayoutParams().width = avatarSize;
-        viewHolder.mPatientAvatar.getLayoutParams().height = avatarSize;
 
         // Set item data
         ExaminationAppointmentItemData itemData = mExaminationAppointmentItemDatas.get(position);
-        viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
-        viewHolder.mTvPatientName.setText(itemData.getPatientName());
         String displayDate = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, itemData.getExaminationDateTime().toString());
-        viewHolder.mTvDatingTime.setText(displayDate);
+        viewHolder.mTvAppointmentTime.setText(displayDate);
         viewHolder.mTvPatientDisease.setText(itemData.getExaminationReason());
-//        viewHolder.mTvPatientName.setText("Nguyen Van A");
-//        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
-//        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView);
@@ -152,33 +137,32 @@ public class AppointmentListAdapter extends BaseAdapter{
             ExaminationAppointmentItemData selectedItem = mExaminationAppointmentItemDatas.get(selectedPos);
             String appointmentId = selectedItem.getExaminationId();
             switch (v.getId()){
-                case R.id.tvPatientName:
-                    if(mAppointmentItemClickListener != null){
-                        mAppointmentItemClickListener.onAppointmentDetail(selectedItem);
+                case R.id.appointmentPatientItemLayout:
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onAppointmentDetail(selectedItem);
                     }
                     break;
                 case R.id.btnCalendarChange:
-                    if(mAppointmentItemClickListener != null){
-                        mAppointmentItemClickListener.onAppointmentCalendarChange(selectedItem);
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onAppointmentCalendarChange(selectedItem);
                     }
                     break;
                 case R.id.btnCalendarCancel:
-                    if(mAppointmentItemClickListener != null){
-                        mAppointmentItemClickListener.onAppointmentCalendarCancel(appointmentId);
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onAppointmentCalendarCancel(appointmentId);
                     }
                     break;
                 case R.id.btnCalendarAccept:
-                    if(mAppointmentItemClickListener != null){
-                        mAppointmentItemClickListener.onAppointmentCalendarAccept(appointmentId);
+                    if(mDatingItemClickListener != null){
+                        mDatingItemClickListener.onAppointmentCalendarAccept(appointmentId);
                     }
                     break;
             }
         }
     };
     private class ViewHolder{
-        private NetworkImageView mPatientAvatar;
-        private TextView mTvPatientName;
-        private TextView mTvDatingTime;
+        private View mAppointmentPatientItemLayout;
+        private TextView mTvAppointmentTime;
         private TextView mTvPatientDisease;
         private View mButtonLayout;
         private TextView mBtnCalendarChange;

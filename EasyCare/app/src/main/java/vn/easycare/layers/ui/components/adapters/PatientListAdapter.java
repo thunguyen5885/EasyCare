@@ -89,7 +89,7 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         if(mIsBlackList){
-            viewHolder.mBtnAppointment.setVisibility(View.GONE);
+            //viewHolder.mBtnAppointment.setVisibility(View.GONE);
             viewHolder.mBtnBlock.setText(R.string.patient_list_unblock);
         }else{
             viewHolder.mBtnAppointment.setVisibility(View.VISIBLE);

@@ -16,6 +16,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.adapters.AppointmentListForAPatientPagerAdapter;
 import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
@@ -36,7 +37,7 @@ public class AppointmentListForAPatientFragment extends Fragment{
     private TextView mTvPatientAddress;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
-    private AppointmentListPagerAdapter mPagerAdapter;
+    private AppointmentListForAPatientPagerAdapter mPagerAdapter;
 
     // For data, object
     private List<String> mAppointmentList;
@@ -97,7 +98,7 @@ public class AppointmentListForAPatientFragment extends Fragment{
         }
 
         // Show tabs
-        mPagerAdapter = new AppointmentListPagerAdapter(mViewPager);
+        mPagerAdapter = new AppointmentListForAPatientPagerAdapter(mViewPager);
         if(mPatientManagementItemData != null){
             mPagerAdapter.setPatientId(mPatientManagementItemData.getPatientId());
         }

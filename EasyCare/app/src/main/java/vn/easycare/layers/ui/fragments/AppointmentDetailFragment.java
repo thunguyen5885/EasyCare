@@ -20,6 +20,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
@@ -57,7 +58,7 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
     private ExaminationAppointmentItemData mItemData;
     private IExaminationAppointmentPresenter mPresenter;
     private Dialog mLoadingDialog;
-    private AppointmentTime mAppointmentTime;
+    private AppointmentTimeData appointmentTimeData;
     public AppointmentDetailFragment(){
 
     }
@@ -71,7 +72,7 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mPresenter = new ExaminationAppointmentPresenterImpl(this, getActivity());
-        mAppointmentTime = new AppointmentTime();
+        appointmentTimeData = new AppointmentTimeData();
         View v = inflater.inflate(R.layout.fragment_appointment_detail, container, false);
         mAppointmentLayout = v.findViewById(R.id.appointmentDetailDateLayout);
         mAppointmentCodeLayout = v.findViewById(R.id.appointmentDetailDatingCodeLayout);
@@ -229,15 +230,15 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
                 //...................
                 //itemData.
                 // Show datetime dialog here
-                DialogUtil.showDateTimeDialog(getActivity(), mAppointmentTime, new DatePicker.OnDateChangedListener() {
+                DialogUtil.showDateTimeDialog(getActivity(), appointmentTimeData, new DatePicker.OnDateChangedListener() {
                     @Override
                     public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        mAppointmentTime.set(year, monthOfYear, dayOfMonth);
+                        appointmentTimeData.set(year, monthOfYear, dayOfMonth);
                     }
                 }, new TimePicker.OnTimeChangedListener() {
                     @Override
                     public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                        mAppointmentTime.set(hourOfDay, minute);
+                        appointmentTimeData.set(hourOfDay, minute);
                     }
                 }, new View.OnClickListener() {
                     @Override
@@ -354,68 +355,5 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
 
         }
     }
-    public class AppointmentTime{
-        private int year;
-        private int month;
-        private int day;
-        private int hour;
-        private int minute;
 
-        public AppointmentTime(){
-            year = -1;
-            month = -1;
-            day = -1;
-            hour = -1;
-            minute = -1;
-        }
-        public void set(int year, int month, int day){
-            this.year = year;
-            this.month = month;
-            this.day = day;
-        }
-        public void set(int hour, int minute){
-            this.hour = hour;
-            this.minute = minute;
-        }
-
-        public int getYear() {
-            return year;
-        }
-
-        public void setYear(int year) {
-            this.year = year;
-        }
-
-        public int getMonth() {
-            return month;
-        }
-
-        public void setMonth(int month) {
-            this.month = month;
-        }
-
-        public int getDay() {
-            return day;
-        }
-
-        public void setDay(int day) {
-            this.day = day;
-        }
-
-        public int getHour() {
-            return hour;
-        }
-
-        public void setHour(int hour) {
-            this.hour = hour;
-        }
-
-        public int getMinute() {
-            return minute;
-        }
-
-        public void setMinute(int minute) {
-            this.minute = minute;
-        }
-    }
 }

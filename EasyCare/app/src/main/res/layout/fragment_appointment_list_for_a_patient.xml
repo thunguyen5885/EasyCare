@@ -11,7 +11,7 @@
         android:background="@drawable/patient_list_background">
         <TextView
             style="@style/DefaultLargeTextView"
-            android:text="@string/appointment_list"
+            android:text="@string/appointment_for_a_patient"
             android:textColor="@color/textview_color_highlight_tab"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/common_padding"/>
@@ -109,6 +109,10 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/footer_item_separator_background_color"/>
     <vn.easycare.layers.ui.components.views.TabLayout
         android:id="@+id/appointmentListTabLayout"
         android:layout_width="match_parent"

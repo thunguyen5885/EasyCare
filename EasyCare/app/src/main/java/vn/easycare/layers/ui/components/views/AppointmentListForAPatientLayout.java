@@ -22,7 +22,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
-import vn.easycare.layers.ui.components.adapters.AppointmentListAdapter;
+import vn.easycare.layers.ui.components.adapters.AppointmentListForAPatientAdapter;
 import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
@@ -37,7 +37,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/17/2014.
  */
-public class AppointmentListLayout extends LinearLayout implements IExaminationAppointmentView{
+public class AppointmentListForAPatientLayout extends LinearLayout implements IExaminationAppointmentView{
     private static final int DATE_ITEM_PER_PAGE = 10;
 
     // For control, layout
@@ -45,7 +45,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     private ProgressBar mPbLoading;
     private TextView mTvNoData;
     private EditText mEdtAppointmentCode;
-    private EditText mEdtPatientName;
     private View mSelectCalendarView;
     private TextView mTvCalendarText;
     private View mSearchLayout;
@@ -62,7 +61,7 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     private int mPage;
     private int mItemCount;
 
-    private AppointmentListAdapter mAdapter;
+    private AppointmentListForAPatientAdapter mAdapter;
     private AppointmentTimeData appointmentTimeData;
     private AppConstants.EXAMINATION_STATUS mAppointmentType;
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
@@ -75,17 +74,17 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     private String mAppointmentDate;
 
     private LayoutInflater mLayoutInflater;
-    public AppointmentListLayout(Context context) {
+    public AppointmentListForAPatientLayout(Context context) {
         super(context);
         init(context);
     }
 
-    public AppointmentListLayout(Context context, AttributeSet attrs) {
+    public AppointmentListForAPatientLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public AppointmentListLayout(Context context, AttributeSet attrs, int defStyle) {
+    public AppointmentListForAPatientLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context);
     }
@@ -104,7 +103,7 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
         appointmentTimeData = new AppointmentTimeData();
 
         mLayoutInflater = LayoutInflater.from(context);
-        View view = mLayoutInflater.inflate(R.layout.appointment_pager_item_ctrl, null);
+        View view = mLayoutInflater.inflate(R.layout.appointment_for_a_patient_pager_item_ctrl, null);
         mPbLoading = (ProgressBar) view.findViewById(R.id.pbLoading);
         mTvNoData = (TextView) view.findViewById(R.id.tvNoData);
 
@@ -114,7 +113,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
         mLvAppointmentList.addFooterView(mLoadMoreView);
 
         mEdtAppointmentCode = (EditText)view.findViewById(R.id.edtAppointmentCode);
-        mEdtPatientName = (EditText)view. findViewById(R.id.edtPatientName);
         mSelectCalendarView = view.findViewById(R.id.rlSelectCalendarLayout);
         mSelectCalendarView.setOnClickListener(mOnClickListener);
         mTvCalendarText = (TextView)view.findViewById(R.id.tvCalendarText);
@@ -149,7 +147,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
 
     public void refreshDataWithNonSearch(){
         mEdtAppointmentCode.setText("");
-        mEdtPatientName.setText("");
         mTvCalendarText.setText("");
         mAppointmentCode = "";
         mPatientName = "";
@@ -164,7 +161,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     }
     public void refreshDataAndShowLoading(){
         mEdtAppointmentCode.setText("");
-        mEdtPatientName.setText("");
         mTvCalendarText.setText("");
         mAppointmentCode = "";
         mPatientName = "";
@@ -184,7 +180,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
      */
     public void refreshDataWhenDataChanged(){
         mEdtAppointmentCode.setText("");
-        mEdtPatientName.setText("");
         mTvCalendarText.setText("");
         mAppointmentCode = "";
         mPatientName = "";
@@ -261,7 +256,7 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
         }
 
         if(mAdapter == null){
-            mAdapter = new AppointmentListAdapter(getContext());
+            mAdapter = new AppointmentListForAPatientAdapter(getContext());
             mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
             mAdapter.setEndOfList(isEndOfList);
             mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
@@ -309,7 +304,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
                 case R.id.appointmentListSearchLayout:
                     // Update data for search
                     mAppointmentCode = mEdtAppointmentCode.getText().toString().trim();
-                    mPatientName = mEdtPatientName.getText().toString().trim();
                     mAppointmentDate = mTvCalendarText.getText().toString().trim();
                     if(mAppointmentCode.length() > 0 || mPatientName.length() > 0 || mAppointmentDate.length() > 0) {
                         beginSearch();
@@ -337,7 +331,7 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
             mTvCalendarText.setText(mSelectedDay + "/" + (mSelectedMonth + 1) + "/" + mSelectedYear);
         }
     };
-    private AppointmentListAdapter.IAppointmentItemClickListener mAppointmentItemClickListener = new AppointmentListAdapter.IAppointmentItemClickListener() {
+    private AppointmentListForAPatientAdapter.IAppointmentItemClickListener mAppointmentItemClickListener = new AppointmentListForAPatientAdapter.IAppointmentItemClickListener() {
         @Override
         public void onAppointmentDetail(ExaminationAppointmentItemData itemData) {
             AppointmentDetailFragment appointmentDetailFragment = new AppointmentDetailFragment();

@@ -82,6 +82,10 @@
     <string name="appointment_detail_extra_info">Thông tin thêm</string>
     <string name="appointment_detail_hint_of_doctor">Chú thích b.sĩ</string>
     <string name="appointment_detail_send">Gửi</string>
+
+    <!-- Define string for appointment detail for a patient screen-->
+    <string name="appointment_for_a_patient">Quản lý hẹn khám</string>
+
     <!-- Define string for footer-->
     <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>
     <string name="footer_privacy_policy">Chính sách bảo mật</string>
