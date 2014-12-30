@@ -187,15 +187,27 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
     }
 
     private void parseResponseForCreateSchedule(String jsonResponse){
-
+        ScheduleWSBuilder modelBuilder = new  ScheduleWSBuilder();
+        modelBuilder.withAction(AppConstants.SCHEDULE_ACTION.CREATE);
+        modelBuilder.withId(mParam.getScheduleId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
     }
 
     private void parseResponseForUpdateSchedule(String jsonResponse){
-
+        ScheduleWSBuilder modelBuilder = new  ScheduleWSBuilder();
+        modelBuilder.withAction(AppConstants.SCHEDULE_ACTION.UPDATE);
+        modelBuilder.withId(mParam.getScheduleId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
     }
 
     private void parseResponseForDeleteSchedule(String jsonResponse){
-
+        ScheduleWSBuilder modelBuilder = new  ScheduleWSBuilder();
+        modelBuilder.withAction(AppConstants.SCHEDULE_ACTION.DELETE);
+        modelBuilder.withId(mParam.getScheduleId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
     }
 
     private void parseResponseForViewSchedule(String jsonResponse){
