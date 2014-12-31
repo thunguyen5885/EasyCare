@@ -63,6 +63,10 @@
     <string name="appointment_list_calendar_change">Đổi lịch</string>
     <string name="appointment_list_accept">Đồng ý</string>
     <string name="appointment_list_accept_ok">Chấp nhận</string>
+    <string name="appointment_status_waiting">Chờ hẹn khám</string>
+    <string name="appointment_status_approved">Chấp nhận khám</string>
+    <string name="appointment_status_cancel">Hủy khám</string>
+    <string name="appointment_status_missing">Quá hẹn khám</string>
     
     <!-- Define string for dating_detail screen-->
     <string name="appointment_detail">Chi tiết cuộc hẹn khám</string>

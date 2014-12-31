@@ -25,7 +25,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     "/doctors/appointments?token=%s&appointmentCode=%s&appointmentStatus=%s&patientName=%s&appointmentDate=%s&startDate=%s&endDate=%s&patientId=%s&numberOfRecords=%s&page=%s";
     private static final String APPOINTMENT_ACCEPT_URI = WEBSERVICE_HOST + "/doctors/appointments/accept";
     private static final String APPOINTMENT_CANCEL_URI = WEBSERVICE_HOST + "/doctors/appointments/reject";
-    private static final String APPOINTMENT_CHANGE_URI = WEBSERVICE_HOST + "/doctors/appointments/update?token=%s&id=%s&date=%s&time=%s&address=%s";
+    private static final String APPOINTMENT_CHANGE_URI = WEBSERVICE_HOST + "/doctors/appointments/update";
     private static final String APPOINTMENT_VIEW_URI = WEBSERVICE_HOST + "/doctors/appointments/%s?token=%s";
 
     private static final String Res_appointments = "appointments";
@@ -69,6 +69,9 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String Param_patientId = "patientId";
     private static final String Param_numberOfRecords = "numberOfRecords";
     private static final String Param_page = "page";
+    private static final String Param_date = "date";
+    private static final String Param_time = "time";
+    private static final String Param_address = "address";
     private static final String Param_id = "id";
     private AppointmentWSParamModel mParam;
     @Override
@@ -92,7 +95,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             case CANCEL:
                 return  APPOINTMENT_CANCEL_URI;
             case CHANGE:
-                return  String.format(APPOINTMENT_CHANGE_URI,mParam.getToken(),mParam.getAppointmentId(),mParam.getDate(),mParam.getTime(),mParam.getAddress());
+                return APPOINTMENT_CHANGE_URI;
             case VIEWDETAIL:
                 return  String.format(APPOINTMENT_VIEW_URI,mParam.getAppointmentId(),mParam.getToken());
             default:
@@ -130,6 +133,14 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             params.put(Param_Token, mParam.getToken());
             params.put(Param_id, mParam.getAppointmentId());
             return  params;
+        }else if(mParam.getAction()== AppConstants.APPOINTMENT_ACTION.CHANGE){
+            Map<String,String> params = new HashMap<String, String>();
+            params.put(Param_Token, mParam.getToken());
+            params.put(Param_id, mParam.getAppointmentId());
+            params.put(Param_date, mParam.getDate());
+            params.put(Param_time, mParam.getTime());
+            params.put(Param_address, mParam.getAddress());
+            return  params;
         }else
             return null;
     }
@@ -149,7 +160,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             case CANCEL:
                 return Request.Method.POST;
             case CHANGE:
-                return Request.Method.GET;
+                return Request.Method.POST;
             case VIEWDETAIL:
                 return Request.Method.GET;
             default:
@@ -286,6 +297,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 modelBuilder.withPatient_notes(jsonObj.get(Res_patient_notes).toString());
                 modelBuilder.withCreated_at(jsonObj.get(Res_created_at).toString());
                 modelBuilder.withExamine_for(jsonObj.get(Res_examine_for).toString());
+                modelBuilder.withAction(AppConstants.APPOINTMENT_ACTION.VIEWDETAIL);
                 Object PatientObj = jsonObj.get(Res_patient);
                 if(PatientObj instanceof JSONObject) {
                     JSONObject PatientjsonObj = (JSONObject) PatientObj;

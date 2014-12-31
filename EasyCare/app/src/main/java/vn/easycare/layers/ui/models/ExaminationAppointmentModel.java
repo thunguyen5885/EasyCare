@@ -234,10 +234,16 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 item.setExaminationReason(appointmentModel.getVisit_reason());
                 if(appointmentModel.getStatus() == 0) {
                     item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.WAITING);
-                }else if(appointmentModel.getStatus() == 1){
+                    item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_waiting));
+                }else if(appointmentModel.getStatus() == 1 || appointmentModel.getStatus() == 3){
                     item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.ACCEPTED);
-                }else{
+                    item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_approved));
+                }else if(appointmentModel.getStatus() == -1 || appointmentModel.getStatus() == -2 || appointmentModel.getStatus() == -3){
                     item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.CANCEL);
+                    item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_cancel));
+                }else if(appointmentModel.getStatus() == -4){
+                    item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.MISSING);
+                    item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_missing));
                 }
                 item.setPatientGender(appointmentModel.getPatient_gender() == 1 ? mContext.getResources().getString(R.string.gender_man):mContext.getResources().getString(R.string.gender_women));
                 item.setPatientPhone(appointmentModel.getPatient_phone());
@@ -249,8 +255,6 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 item.setPatientAvatar(appointmentModel.getPatient_avatar());
                 item.setPatientAvatarThumb(appointmentModel.getPatient_avatarThumb());
              /*?????????????
-                item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
-                item.setExaminationState(appointmentModel.getPage_currentPage());
                 item.setExaminationExtraInfo(appointmentModel.getLastPage());
                 ??????????
                 */
@@ -276,23 +280,17 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
             item.setExaminationDateTime(appointmentModel.getTime());
             item.setExaminationReason(appointmentModel.getVisit_reason());
             if(appointmentModel.getStatus() == 0) {
-                item.setExaminationState("Q&A");
-            }else if(appointmentModel.getStatus() == 1){
-                item.setExaminationState("Q&A");
-            }else if(appointmentModel.getStatus() == -1){
-                item.setExaminationState("QA");
-            }
-            else if(appointmentModel.getStatus() == -2){
-                item.setExaminationState("QA");
-            }
-            else if(appointmentModel.getStatus() == -3){
-                item.setExaminationState("QA");
-            }
-            else if(appointmentModel.getStatus() == 2){
-                item.setExaminationState("QA");
-            }
-            else if(appointmentModel.getStatus() == 3){
-                item.setExaminationState("QA");
+                item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.WAITING);
+                item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_waiting));
+            }else if(appointmentModel.getStatus() == 1 || appointmentModel.getStatus() == 3){
+                item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.ACCEPTED);
+                item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_approved));
+            }else if(appointmentModel.getStatus() == -1 || appointmentModel.getStatus() == -2 || appointmentModel.getStatus() == -3){
+                item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.CANCEL);
+                item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_cancel));
+            }else if(appointmentModel.getStatus() == -4){
+                item.setExaminationStatus(AppConstants.EXAMINATION_STATUS.MISSING);
+                item.setExaminationState(mContext.getResources().getString(R.string.appointment_status_missing));
             }
             item.setPatientGender(appointmentModel.getPatient_gender() == 1 ? mContext.getResources().getString(R.string.gender_man):mContext.getResources().getString(R.string.gender_women));
             item.setPatientPhone(appointmentModel.getPatient_phone());
@@ -303,7 +301,10 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
             item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
             item.setPatientAvatar(appointmentModel.getPatient_avatar());
             item.setPatientAvatarThumb(appointmentModel.getPatient_avatarThumb());
-
+                /*?????????????
+                item.setExaminationExtraInfo(appointmentModel.getLastPage());
+                ??????????
+                */
             item.setExaminationDoctorNote(appointmentModel.getDoctor_notes());
             item.setExaminationFirstVisit(appointmentModel.getFirst_visit()==0?false:true);
 

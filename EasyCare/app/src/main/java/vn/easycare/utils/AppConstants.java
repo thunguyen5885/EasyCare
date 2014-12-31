@@ -23,7 +23,7 @@ public class AppConstants {
     }
 
     public static enum EXAMINATION_STATUS {
-        WAITING(0), ACCEPTED(1), CANCEL(-1);
+        WAITING(0), ACCEPTED(1)/*3*/, CANCEL(-1)/*-2,-3*/, MISSING(-4);
         private int value;
 
         private EXAMINATION_STATUS(int value) {
