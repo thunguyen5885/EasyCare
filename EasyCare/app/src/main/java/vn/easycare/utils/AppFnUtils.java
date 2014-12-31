@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -126,5 +127,19 @@ public class AppFnUtils {
         }
         return null;
     }
-
+    public static Calendar getCalendarFromDateFormat(String dateFormat, String dateStr){
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        Date date = null;
+        Calendar calendar = Calendar.getInstance();
+        try {
+            //Log.d("CCDateUtilss",
+            //		"Need to remove the colon from the date string in the timeszone");
+            date = sdf.parse(dateStr);
+            calendar.setTime(date);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return calendar;
+    }
 }

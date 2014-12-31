@@ -52,7 +52,7 @@ public class AppointmentListFragment extends Fragment{
             }
         });
         mTabLayout = (TabLayout) v.findViewById(R.id.appointmentListTabLayout);
-        mTabLayout.createChild(mAppointmentList);
+        mTabLayout.createChild(mAppointmentList, false);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);
         mViewPager = (ViewPager) v.findViewById(R.id.appointmentListViewPager);
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);

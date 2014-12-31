@@ -94,10 +94,40 @@ public class PatientDetailFragment extends Fragment {
                         DataSingleton.getInstance(getActivity()).getImageLoader());
 
                 mTvPatientName.setText(mPatientManagementItemData.getPatientName());
-                mTvPatientBirthday.setText(mPatientManagementItemData.getPatientBirthday());
-                mTvPatientPhone.setText(mPatientManagementItemData.getPatientPhoneNumber());
-                mTvPatientEmail.setText(mPatientManagementItemData.getPatientEmailAddress());
-                mTvPatientAddress.setText(mPatientManagementItemData.getPatientAddress());
+
+                if(mPatientManagementItemData.getPatientBirthday() != null &&
+                        mPatientManagementItemData.getPatientBirthday().length() > 0){
+                    String birthDay = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD, AppConstants.DATE_FORMAT_DD_MM_YYYY, mPatientManagementItemData.getPatientBirthday());
+                    mTvPatientBirthday.setText(birthDay);
+                    mTvPatientBirthday.setTextColor(getResources().getColor(R.color.textview_color_default));
+                }else{
+                    mTvPatientBirthday.setText(R.string.nothing_data);
+                    mTvPatientBirthday.setTextColor(getResources().getColor(R.color.textview_color_grey));
+                }
+                if(mPatientManagementItemData.getPatientPhoneNumber() != null &&
+                        mPatientManagementItemData.getPatientPhoneNumber().length() > 0){
+                    mTvPatientPhone.setText(mPatientManagementItemData.getPatientPhoneNumber());
+                    mTvPatientPhone.setTextColor(getResources().getColor(R.color.textview_color_default));
+                }else{
+                    mTvPatientPhone.setText(R.string.nothing_data);
+                    mTvPatientPhone.setTextColor(getResources().getColor(R.color.textview_color_grey));
+                }
+                if(mPatientManagementItemData.getPatientEmailAddress() != null &&
+                        mPatientManagementItemData.getPatientEmailAddress().length() > 0){
+                    mTvPatientEmail.setText(mPatientManagementItemData.getPatientEmailAddress());
+                    mTvPatientEmail.setTextColor(getResources().getColor(R.color.textview_color_default));
+                }else{
+                    mTvPatientEmail.setText(R.string.nothing_data);
+                    mTvPatientEmail.setTextColor(getResources().getColor(R.color.textview_color_grey));
+                }
+                if(mPatientManagementItemData.getPatientAddress() != null &&
+                        mPatientManagementItemData.getPatientAddress().length() > 0){
+                    mTvPatientAddress.setText(mPatientManagementItemData.getPatientAddress());
+                    mTvPatientAddress.setTextColor(getResources().getColor(R.color.textview_color_default));
+                }else{
+                    mTvPatientAddress.setText(R.string.nothing_data);
+                    mTvPatientAddress.setTextColor(getResources().getColor(R.color.textview_color_grey));
+                }
                 mTvPatientOrderCount.setText(String.valueOf(mPatientManagementItemData.getPatientOrderCount()));
                 mTvPatientCancelCount.setText(String.valueOf(mPatientManagementItemData.getPatientCancelCount()));
                 mTvPatientChangeCount.setText(String.valueOf(mPatientManagementItemData.getPatientChangeCount()));

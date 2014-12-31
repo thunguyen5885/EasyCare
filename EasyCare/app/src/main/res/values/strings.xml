@@ -85,7 +85,7 @@
     <string name="appointment_detail_status">Trạng thái</string>
     <string name="appointment_detail_extra_info">Thông tin thêm</string>
     <string name="appointment_detail_hint_of_doctor">Chú thích b.sĩ</string>
-    <string name="appointment_detail_send">Gửi</string>
+    <string name="appointment_detail_save">Lưu</string>
 
     <!-- Define string for appointment detail for a patient screen-->
     <string name="appointment_for_a_patient">Quản lý hẹn khám</string>

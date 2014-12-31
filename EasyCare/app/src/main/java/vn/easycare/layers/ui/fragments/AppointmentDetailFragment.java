@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.util.Calendar;
 import java.util.List;
 
 import vn.easycare.R;
@@ -34,7 +36,9 @@ import vn.easycare.utils.DialogUtil;
  */
 public class AppointmentDetailFragment extends Fragment implements View.OnClickListener, IExaminationAppointmentView{
     // For control, layout
-    private View mAppointmentLayout;
+    private View mAppointmentDetailLayout;
+    private ProgressBar mPbLoading;
+    private View mAppointmentDetailDateLayout;
     private View mAppointmentCodeLayout;
     private View mLocationLayout;
     private View mPersonInDateLayout;
@@ -48,6 +52,7 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
     private View mMoreInfoLayout;
     private View mSendLayout;
     private EditText mEdtDoctorComment;
+    private TextView mTvDoctorComment;
     private View mDatingListButtonLayout;
     private Button mBtnCalendarChange;
     private Button mBtnCalendarCancel;
@@ -55,10 +60,13 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
 
     // For data, object
     boolean mIsCLicked = false;
+
     private ExaminationAppointmentItemData mItemData;
     private IExaminationAppointmentPresenter mPresenter;
     private Dialog mLoadingDialog;
     private AppointmentTimeData appointmentTimeData;
+
+
     public AppointmentDetailFragment(){
 
     }
@@ -74,7 +82,9 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
         mPresenter = new ExaminationAppointmentPresenterImpl(this, getActivity());
         appointmentTimeData = new AppointmentTimeData();
         View v = inflater.inflate(R.layout.fragment_appointment_detail, container, false);
-        mAppointmentLayout = v.findViewById(R.id.appointmentDetailDateLayout);
+        mAppointmentDetailLayout = v.findViewById(R.id.llAppointmentDetailLayout);
+        mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
+        mAppointmentDetailDateLayout = v.findViewById(R.id.appointmentDetailDateLayout);
         mAppointmentCodeLayout = v.findViewById(R.id.appointmentDetailDatingCodeLayout);
         mLocationLayout = v.findViewById(R.id.appointmentDetailLocationLayout);
         mPersonInDateLayout = v.findViewById(R.id.appointmentDetailPersonInDateLayout);
@@ -88,13 +98,14 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
         mMoreInfoLayout = v.findViewById(R.id.appointmentDetailMoreInfoLayout);
         mSendLayout = v.findViewById(R.id.sendLayout);
         mEdtDoctorComment = (EditText)v.findViewById(R.id.edtDoctorComment);
+        mTvDoctorComment = (TextView) v.findViewById(R.id.tvDoctorComment);
         mDatingListButtonLayout = v.findViewById(R.id.appointmentListButtonLayout);
         mBtnCalendarChange = (Button) v.findViewById(R.id.btnCalendarChange);
         mBtnCalendarCancel = (Button) v.findViewById(R.id.btnCalendarCancel);
         mBtnCalendarAccept = (Button) v.findViewById(R.id.btnCalendarAccept);
 
         // Init title for all views
-        initTitleForChildView(mAppointmentLayout, R.string.appointment_detail_day);
+        initTitleForChildView(mAppointmentDetailDateLayout, R.string.appointment_detail_day);
         initTitleForChildView(mAppointmentCodeLayout, R.string.appointment_detail_dating_code);
         initTitleForChildView(mLocationLayout, R.string.appointment_detail_location);
         initTitleForChildView(mPersonInDateLayout, R.string.appointment_detail_person_in_date);
@@ -150,41 +161,28 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
 
         Bundle bundle = getArguments();
         if(bundle != null){
-            Object object = bundle.getSerializable(AppConstants.APPOINTMENT_ID_KEY);
-            if(object != null && object instanceof ExaminationAppointmentItemData){
-                mItemData = (ExaminationAppointmentItemData) object;
-            }
             boolean isWaitingType = bundle.getBoolean(AppConstants.EXAMINATION_TYPE_KEY, false);
             if(isWaitingType){
                 mDatingListButtonLayout.setVisibility(View.VISIBLE);
+                mSendLayout.setVisibility(View.VISIBLE);
+                mEdtDoctorComment.setVisibility(View.VISIBLE);
+                mTvDoctorComment.setVisibility(View.GONE);
             }else{
                 mDatingListButtonLayout.setVisibility(View.GONE);
+                mSendLayout.setVisibility(View.GONE);
+                mEdtDoctorComment.setVisibility(View.GONE);
+                mTvDoctorComment.setVisibility(View.VISIBLE);
+            }
+
+            String appointmentId = bundle.getString(AppConstants.APPOINTMENT_ID_KEY, "");
+            if(appointmentId != null && appointmentId.length() > 0){
+                mAppointmentDetailLayout.setVisibility(View.GONE);
+                mPbLoading.setVisibility(View.VISIBLE);
+
+                // Call API to get appointment detail
+                mPresenter.loadAnExaminationAppointmentForDoctor(appointmentId);
             }
         }
-
-        if(mItemData != null){
-            // Begin update UI
-            // Set value
-            String dateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTime());
-            String createdDateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTimeAppointmentCreated());
-            initContentForChildView(mAppointmentLayout, dateTime);
-            initContentForChildView(mAppointmentCodeLayout, mItemData.getExaminationCode());
-            initContentForChildView(mLocationLayout, mItemData.getExaminationAddress());
-            initContentForChildView(mPersonInDateLayout, mItemData.getExaminationByPerson());
-            initContentForChildView(mRequestReasonLayout, mItemData.getExaminationReason());
-            initContentForChildView(mNameLayout, mItemData.getPatientName());
-            initContentForChildView(mGenderLayout, mItemData.getPatientGender());
-            initContentForChildView(mPhoneLayout, mItemData.getPatientPhone());
-            initContentForChildView(mEmailLayout, mItemData.getPatientEmail());
-            initContentForChildView(mCalendarCreatingLayout, createdDateTime);
-            initContentForChildView(mStatusLayout, mItemData.getExaminationState());
-            initContentForChildView(mMoreInfoLayout, mItemData.getExaminationExtraInfo());
-
-            initExtraMoreForChildView(mPersonInDateLayout, mItemData.isExaminationFirstVisit());
-
-            mEdtDoctorComment.setText(mItemData.getExaminationDoctorNote());
-        }
-
     }
 
     @Override
@@ -227,8 +225,8 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
                 break;
             case R.id.btnCalendarChange:
                 // Update appointment time from data
-                //...................
-                //itemData.
+                Calendar calendar = AppFnUtils.getCalendarFromDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, mItemData.getExaminationDateTime());
+                appointmentTimeData.set(calendar);
                 // Show datetime dialog here
                 DialogUtil.showDateTimeDialog(getActivity(), appointmentTimeData, new DatePicker.OnDateChangedListener() {
                     @Override
@@ -245,36 +243,63 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
                     public void onClick(View v) {
                         mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                         mLoadingDialog.show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Change examination based on appointment time
-                                mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), "", "", 0, null);
-                            }
-                        }, 2000);
+                        // Change examination based on appointment time
+                        String updatedDate = appointmentTimeData.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY);
+                        String updatedTime = appointmentTimeData.generateTimeString(AppConstants.TIME_FORMAT_HH_MM);
+                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), updatedDate, updatedTime, 0, null);
+
                     }
                 });
                 break;
             case R.id.btnCalendarCancel:
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPresenter.CancelAnExaminationAppointment(mItemData.getExaminationId());
-                    }
-                }, 2000);
+
+                mPresenter.CancelAnExaminationAppointment(mItemData.getExaminationId());
                 break;
             case R.id.btnCalendarAccept:
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPresenter.AcceptAnExaminationAppointment(mItemData.getExaminationId());
-                    }
-                }, 2000);
+
+                mPresenter.AcceptAnExaminationAppointment(mItemData.getExaminationId());
                 break;
+        }
+    }
+    private void updateUI(){
+        mPbLoading.setVisibility(View.GONE);
+        mAppointmentDetailLayout.setVisibility(View.VISIBLE);
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+
+        if(mItemData != null){
+            // Begin update UI
+            // Set value
+            String dateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTime());
+            String createdDateTime = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, mItemData.getExaminationDateTimeAppointmentCreated());
+            initContentForChildView(mAppointmentDetailDateLayout, dateTime);
+            initContentForChildView(mAppointmentCodeLayout, mItemData.getExaminationCode());
+            initContentForChildView(mLocationLayout, mItemData.getExaminationAddress());
+            initContentForChildView(mPersonInDateLayout, mItemData.getExaminationByPerson());
+            initContentForChildView(mRequestReasonLayout, mItemData.getExaminationReason());
+            initContentForChildView(mNameLayout, mItemData.getPatientName());
+            initContentForChildView(mGenderLayout, mItemData.getPatientGender());
+            initContentForChildView(mPhoneLayout, mItemData.getPatientPhone());
+            initContentForChildView(mEmailLayout, mItemData.getPatientEmail());
+            initContentForChildView(mCalendarCreatingLayout, createdDateTime);
+            initContentForChildView(mStatusLayout, mItemData.getExaminationState());
+            initContentForChildView(mMoreInfoLayout, mItemData.getExaminationExtraInfo());
+
+            initExtraMoreForChildView(mPersonInDateLayout, mItemData.isExaminationFirstVisit());
+
+            mEdtDoctorComment.setText(mItemData.getExaminationDoctorNote());
+            if(mItemData.getExaminationDoctorNote() != null && mItemData.getExaminationDoctorNote().length() > 0) {
+                mTvDoctorComment.setText(": " + mItemData.getExaminationDoctorNote());
+                mTvDoctorComment.setTextColor(getResources().getColor(R.color.textview_color_default));
+            }else{
+                mTvDoctorComment.setText(": " + getActivity().getString(R.string.nothing_data));
+                mTvDoctorComment.setTextColor(getResources().getColor(R.color.textview_color_grey));
+            }
         }
     }
     private void initTitleForChildView(View parentView, int titleId){
@@ -327,12 +352,13 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
 
     @Override
     public void DisplayDetailForAnAppointment(ExaminationAppointmentItemData item) {
-
+        mItemData = item;
+        updateUI();
     }
 
     @Override
     public void DisplayMessageIncaseError(String message) {
-
+        updateUI();
     }
 
     private void processWhenUpdateDone(String message){

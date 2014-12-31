@@ -41,6 +41,9 @@ public class AppConstants {
     /*Define all date format*/
     public static final String DATE_FORMAT_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_DD_MM_YYYY_HH_MM = "dd/MM/yyyy, HH:mm";
+    public static final String DATE_FORMAT_DD_MM_YYYY = "dd/MM/yyyy";
+    public static final String DATE_FORMAT_YYYY_MM_DD = "yyyy-MM-dd";
+    public static final String TIME_FORMAT_HH_MM = "HH:mm";
 
     /* Define all keys for screen transition*/
     public static final String APPOINTMENT_ID_KEY = "appointment_id_key";

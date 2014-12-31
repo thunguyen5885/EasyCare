@@ -136,6 +136,17 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
     public void setPatientId(String patientId){
         mPatientId = patientId;
     }
+    private void resetField(){
+        mEdtAppointmentCode.setText("");
+        mTvCalendarText.setText("");
+        mAppointmentCode = "";
+        mPatientName = "";
+        mAppointmentDate = "";
+
+        mSelectedYear = -1;
+        mSelectedMonth = -1;
+        mSelectedDay = -1;
+    }
     /**
      * Enforce to refresh to sync data from the change of other tabs
      */
@@ -146,49 +157,29 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
     }
 
     public void refreshDataWithNonSearch(){
-        mEdtAppointmentCode.setText("");
-        mTvCalendarText.setText("");
-        mAppointmentCode = "";
-        mPatientName = "";
-        mAppointmentDate = "";
-
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
+        resetField();
 
         // Load new data
         loadNewData();
     }
     public void refreshDataAndShowLoading(){
-        mEdtAppointmentCode.setText("");
-        mTvCalendarText.setText("");
-        mAppointmentCode = "";
-        mPatientName = "";
-        mAppointmentDate = "";
-
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
+       resetField();
 
         mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
         mLoadingDialog.show();
         // Load new data
+        mPage = 1;
+        mExaminationAppointmentItemDataList.clear();
         loadData();
     }
     /**
      * When user did the "Change" or "Cancel", need to refresh data
      */
     public void refreshDataWhenDataChanged(){
-        mEdtAppointmentCode.setText("");
-        mTvCalendarText.setText("");
-        mAppointmentCode = "";
-        mPatientName = "";
-        mAppointmentDate = "";
+        resetField();
 
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
-
+        mPage = 1;
+        mExaminationAppointmentItemDataList.clear();
         loadData();
     }
     public void loadNewData(){
@@ -232,10 +223,10 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
             if (mAppointmentCode.length() > 0 ||
                     mPatientName.length() > 0 ||
                     mAppointmentDate.length() > 0) { // Search
-                mPresenter.searchExaminationAppointments(mAppointmentCode, mPatientName, mAppointmentType, mAppointmentDate, "", "", mPage);
+                mPresenter.searchExaminationAppointments(mAppointmentCode, mPatientName, (mPatientId != null)?mPatientId:"", mAppointmentType, mAppointmentDate, "", "", mPage);
             } else {
                 // Load all
-                mPresenter.loadExaminationAppointmentsForDoctor(mAppointmentType, mPage);
+                mPresenter.loadExaminationAppointmentsForDoctor(mAppointmentType, (mPatientId != null)?mPatientId:"", mPage);
             }
         }
     }
@@ -336,7 +327,7 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
         public void onAppointmentDetail(ExaminationAppointmentItemData itemData) {
             AppointmentDetailFragment appointmentDetailFragment = new AppointmentDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putSerializable(AppConstants.APPOINTMENT_ID_KEY, itemData);
+            bundle.putString(AppConstants.APPOINTMENT_ID_KEY, itemData.getExaminationId());
             bundle.putBoolean(AppConstants.EXAMINATION_TYPE_KEY, mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
             appointmentDetailFragment.setArguments(bundle);
             ((HomeActivity) getContext()).showFragment(appointmentDetailFragment);
@@ -462,7 +453,6 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
 
         mLvAppointmentList.removeFooterView(mLoadMoreView);
         mLoadMoreView.loadMoreComplete();
-        mLvAppointmentList.addFooterView(mLoadMoreView);
 
         // Update UI anyway
         updateUI(true);

@@ -40,6 +40,7 @@ public class DialogUtil {
         datePicker.init(appointmentTime.getYear(), appointmentTime.getMonth(), appointmentTime.getDay(), onDateChangedListener);
         datePicker.setCalendarViewShown(false);
         datePicker.setClipToPadding(false);
+        //datePicker.setSpinnersShown(true);
 
         TimePicker timePicker = (TimePicker)dialog.findViewById(R.id.timePicker);
         timePicker.setCurrentHour(appointmentTime.getHour());

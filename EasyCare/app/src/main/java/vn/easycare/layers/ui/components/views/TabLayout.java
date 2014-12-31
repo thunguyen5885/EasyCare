@@ -25,6 +25,7 @@ public class TabLayout extends LinearLayout{
     private LayoutInflater mInflater;
     private View mSelectedView;
     private int mSelectedPos;
+    private boolean mIsNormalFontSize = false;
     private IOnTabItemClickListener mOnTabItemClickListner;
     public TabLayout(Context context) {
         super(context);
@@ -48,7 +49,8 @@ public class TabLayout extends LinearLayout{
         mInflater = LayoutInflater.from(context);
     }
 
-    public void createChild(List<String> childList){
+    public void createChild(List<String> childList, boolean isNormalFontSize){
+        mIsNormalFontSize = isNormalFontSize;
         if(childList != null && childList.size() > 0){
             // Calculate the child width
             int screenWidth = AppFnUtils.getScreenWidth((Activity) getContext());
@@ -67,6 +69,8 @@ public class TabLayout extends LinearLayout{
                 updateChildView(child, false);
                 addView(child);
             }
+            // Apply font style here
+            AppFnUtils.applyFontForTextViewChild(this);
         }
     }
     public void setSelection(int selection){
@@ -101,6 +105,13 @@ public class TabLayout extends LinearLayout{
         if(childView != null) {
             TextView tvTitle = (TextView) childView.findViewById(R.id.tvTabTitle);
             tvTitle.setText(title);
+            if(mIsNormalFontSize){
+                tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        getResources().getDimension(R.dimen.text_medium));
+            }else{
+                tvTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX,
+                        getResources().getDimension(R.dimen.text_light_big));
+            }
         }
     }
     private OnClickListener mOnClickListener = new OnClickListener() {

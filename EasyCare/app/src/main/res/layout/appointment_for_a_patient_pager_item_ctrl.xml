@@ -10,15 +10,12 @@
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
-        android:paddingBottom="@dimen/statistic_vertical_padding"
-        android:paddingTop="@dimen/statistic_vertical_padding"
+        android:padding="7dp"
         android:background="@color/main_background_color">
         <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
             android:id="@+id/appointmentListSearchLayout"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingLeft="@dimen/home_item_separator_size"
@@ -93,6 +90,7 @@
             android:background="@drawable/layout_button_with_corner"
             android:layout_toLeftOf="@+id/rlSelectCalendarLayout"
             android:layout_toRightOf="@+id/rlChooseTimeSearch"
+            android:layout_marginLeft="3dp"
             android:layout_centerVertical="true"
             android:textColorHint="@color/textview_color_grey"
             android:hint="@string/appointment_list_appointment_code"
@@ -111,7 +109,7 @@
         android:layout_height="1dp"
         android:layout_below="@+id/searchLayout"
         android:background="@color/footer_item_separator_background_color"
-        android:layout_marginBottom="@dimen/common_padding"/>
+        android:layout_marginBottom="@dimen/home_item_separator_size"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -133,7 +131,7 @@
             android:visibility="gone"/>
         <TextView
             android:id="@+id/tvNoData"
-            style="@style/DefaultLightLargeTextView"
+            style="@style/DefaultNormalTextView"
             android:text="@string/empty_data"
             android:layout_gravity="center"
             android:visibility="gone"/>

@@ -1,5 +1,10 @@
 package vn.easycare.layers.ui.components.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by ThuNguyen on 12/30/2014.
  */
@@ -26,7 +31,13 @@ public class AppointmentTimeData {
         this.hour = hour;
         this.minute = minute;
     }
-
+    public void set(Calendar calendar){
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
+    }
     public int getYear() {
         return year;
     }
@@ -65,5 +76,23 @@ public class AppointmentTimeData {
 
     public void setMinute(int minute) {
         this.minute = minute;
+    }
+
+    public String generateDateString(String dateFormat){
+        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+
+        return sdf.format(calendar.getTime());
+
+    }
+    public String generateTimeString(String timeFormat){
+        SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        return sdf.format(calendar.getTime());
     }
 }

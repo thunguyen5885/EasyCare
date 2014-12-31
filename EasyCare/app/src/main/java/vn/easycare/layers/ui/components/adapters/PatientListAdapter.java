@@ -121,8 +121,20 @@ public class PatientListAdapter extends BaseAdapter{
         viewHolder.mPatientAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
         viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
         viewHolder.mPatientName.setText(itemData.getPatientName());
-        viewHolder.mPatientEmail.setText(itemData.getPatientEmailAddress());
-        viewHolder.mPatientPhone.setText(itemData.getPatientPhoneNumber());
+        if(itemData.getPatientEmailAddress() != null && itemData.getPatientEmailAddress().length() > 0) {
+            viewHolder.mPatientEmail.setText(itemData.getPatientEmailAddress());
+            viewHolder.mPatientEmail.setTextColor(mContext.getResources().getColor(R.color.textview_color_default));
+        }else{
+            viewHolder.mPatientEmail.setText(R.string.nothing_data);
+            viewHolder.mPatientEmail.setTextColor(mContext.getResources().getColor(R.color.textview_color_grey));
+        }
+        if(itemData.getPatientPhoneNumber() != null && itemData.getPatientPhoneNumber().length() > 0) {
+            viewHolder.mPatientPhone.setText(itemData.getPatientPhoneNumber());
+            viewHolder.mPatientPhone.setTextColor(mContext.getResources().getColor(R.color.textview_color_default));
+        }else{
+            viewHolder.mPatientPhone.setText(R.string.nothing_data);
+            viewHolder.mPatientPhone.setTextColor(mContext.getResources().getColor(R.color.textview_color_grey));
+        }
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView);

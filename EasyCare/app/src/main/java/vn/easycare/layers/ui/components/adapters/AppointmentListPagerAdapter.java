@@ -58,7 +58,6 @@ public class AppointmentListPagerAdapter extends PagerAdapter{
             }else{
                 appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
             }
-            appointmentListLayout.setPatientId(mPatientId);
             appointmentListLayout.loadNewData();
             mViewMaps.put(position, appointmentListLayout);
         }

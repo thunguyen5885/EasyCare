@@ -52,7 +52,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     private LoadMoreLayout mLoadMoreView;
     private Dialog mLoadingDialog;
     // For data, object
-    private String mPatientId;
     private boolean mIsDataLoading = false;
     private boolean mIsNeedToRefresh = false;
 
@@ -135,65 +134,46 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     public void setIBroadCast(AppointmentListPagerAdapter.IBroadCastToSynData broadCast){
         mIBroadCast = broadCast;
     }
-    public void setPatientId(String patientId){
-        mPatientId = patientId;
+    private void resetField(){
+        mEdtAppointmentCode.setText("");
+        mEdtPatientName.setText("");
+        mTvCalendarText.setText("");
+        mAppointmentCode = "";
+        mPatientName = "";
+        mAppointmentDate = "";
+
+        mSelectedYear = -1;
+        mSelectedMonth = -1;
+        mSelectedDay = -1;
     }
-    /**
-     * Enforce to refresh to sync data from the change of other tabs
-     */
     public void enforceToRefreshForDataChanged(){
         if(mIsNeedToRefresh){
             refreshDataWithNonSearch();
         }
     }
-
     public void refreshDataWithNonSearch(){
-        mEdtAppointmentCode.setText("");
-        mEdtPatientName.setText("");
-        mTvCalendarText.setText("");
-        mAppointmentCode = "";
-        mPatientName = "";
-        mAppointmentDate = "";
-
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
+        resetField();
 
         // Load new data
         loadNewData();
     }
     public void refreshDataAndShowLoading(){
-        mEdtAppointmentCode.setText("");
-        mEdtPatientName.setText("");
-        mTvCalendarText.setText("");
-        mAppointmentCode = "";
-        mPatientName = "";
-        mAppointmentDate = "";
-
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
+       resetField();
 
         mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
         mLoadingDialog.show();
         // Load new data
+        mPage = 1;
+        mExaminationAppointmentItemDataList.clear();
         loadData();
     }
     /**
      * When user did the "Change" or "Cancel", need to refresh data
      */
     public void refreshDataWhenDataChanged(){
-        mEdtAppointmentCode.setText("");
-        mEdtPatientName.setText("");
-        mTvCalendarText.setText("");
-        mAppointmentCode = "";
-        mPatientName = "";
-        mAppointmentDate = "";
-
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
-
+        resetField();
+        mPage = 1;
+        mExaminationAppointmentItemDataList.clear();
         loadData();
     }
     public void loadNewData(){
@@ -237,10 +217,10 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
             if (mAppointmentCode.length() > 0 ||
                     mPatientName.length() > 0 ||
                     mAppointmentDate.length() > 0) { // Search
-                mPresenter.searchExaminationAppointments(mAppointmentCode, mPatientName, mAppointmentType, mAppointmentDate, "", "", mPage);
+                mPresenter.searchExaminationAppointments(mAppointmentCode, mPatientName, "", mAppointmentType, mAppointmentDate, "", "", mPage);
             } else {
                 // Load all
-                mPresenter.loadExaminationAppointmentsForDoctor(mAppointmentType, mPage);
+                mPresenter.loadExaminationAppointmentsForDoctor(mAppointmentType, "", mPage);
             }
         }
     }
@@ -342,7 +322,7 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
         public void onAppointmentDetail(ExaminationAppointmentItemData itemData) {
             AppointmentDetailFragment appointmentDetailFragment = new AppointmentDetailFragment();
             Bundle bundle = new Bundle();
-            bundle.putSerializable(AppConstants.APPOINTMENT_ID_KEY, itemData);
+            bundle.putString(AppConstants.APPOINTMENT_ID_KEY, itemData.getExaminationId());
             bundle.putBoolean(AppConstants.EXAMINATION_TYPE_KEY, mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
             appointmentDetailFragment.setArguments(bundle);
             ((HomeActivity) getContext()).showFragment(appointmentDetailFragment);
@@ -352,8 +332,9 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
         public void onAppointmentCalendarChange(final ExaminationAppointmentItemData itemData) {
             // TODO
             // Update appointment time from data
-            //...................
-            //itemData.
+            Calendar calendar = AppFnUtils.getCalendarFromDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, itemData.getExaminationDateTime());
+            appointmentTimeData.set(calendar);
+
             // Show datetime dialog here
             DialogUtil.showDateTimeDialog(getContext(), appointmentTimeData, new DatePicker.OnDateChangedListener() {
                 @Override
@@ -368,10 +349,11 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
             }, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+                    mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
                     mLoadingDialog.show();
-                    // Change examination based on appointment time
-                    mPresenter.ChangeAnExaminationAppointment(itemData);*/
+                    String updatedDate = appointmentTimeData.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY);
+                    String updatedTime = appointmentTimeData.generateTimeString(AppConstants.TIME_FORMAT_HH_MM);
+                    mPresenter.ChangeAnExaminationAppointment(itemData.getExaminationId(), updatedDate, updatedTime, 0, null);
                 }
             });
 
@@ -382,25 +364,16 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
         public void onAppointmentCalendarCancel(final String appointmentId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.CancelAnExaminationAppointment(appointmentId);
-                }
-            }, 2000);
 
+            mPresenter.CancelAnExaminationAppointment(appointmentId);
         }
 
         @Override
         public void onAppointmentCalendarAccept(final String appointmentId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.AcceptAnExaminationAppointment(appointmentId);
-                }
-            }, 2000);
+
+            mPresenter.AcceptAnExaminationAppointment(appointmentId);
         }
     };
 
@@ -468,7 +441,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
 
         mLvAppointmentList.removeFooterView(mLoadMoreView);
         mLoadMoreView.loadMoreComplete();
-        mLvAppointmentList.addFooterView(mLoadMoreView);
 
         // Update UI anyway
         updateUI(true);

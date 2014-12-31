@@ -51,7 +51,7 @@ public class PatientListFragment extends Fragment {
             }
         });
         mTabLayout = (TabLayout) v.findViewById(R.id.patientListTabLayout);
-        mTabLayout.createChild(mPatientList);
+        mTabLayout.createChild(mPatientList, false);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);
         mViewPager = (ViewPager) v.findViewById(R.id.patientListViewPager);
         mViewPager.setOnPageChangeListener(mOnPageChangeListener);

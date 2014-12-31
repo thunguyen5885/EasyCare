@@ -7,10 +7,10 @@
     android:background="@color/main_background_color">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@drawable/patient_list_background">
         <TextView
-            style="@style/DefaultLargeTextView"
+            style="@style/DefaultLightLargeTextView"
             android:text="@string/appointment_for_a_patient"
             android:textColor="@color/textview_color_highlight_tab"
             android:layout_gravity="center_vertical"
@@ -20,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/statistic_vertical_padding"
-        android:paddingBottom="@dimen/statistic_vertical_padding"
+        android:paddingTop="@dimen/home_item_separator_size"
+        android:paddingBottom="@dimen/home_item_separator_size"
         android:background="@color/white">
         <FrameLayout
             android:layout_width="0dp"
@@ -42,14 +42,15 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/tvPatientName"
-                style="@style/DefaultBoldNormalTextView"
+                style="@style/DefaultSmallTextView"
+                android:textStyle="bold"
                 android:textColor="@color/textview_color_highlight"
-                android:layout_marginTop="-5dp"/>
+                android:layout_marginTop="-2dp"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/common_padding">
+                android:layout_marginTop="@dimen/home_item_separator_size">
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -57,14 +58,14 @@
                     android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tvPatientBirthday"
-                    style="@style/DefaultNormalTextView"
+                    style="@style/DefaultSmallTextView"
                     android:layout_marginLeft="@dimen/common_padding"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/home_item_separator_size">
+                android:layout_marginTop="2dp">
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -72,14 +73,14 @@
                     android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tvPatientPhone"
-                    style="@style/DefaultNormalTextView"
+                    style="@style/DefaultSmallTextView"
                     android:layout_marginLeft="@dimen/common_padding"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/home_item_separator_size">
+                android:layout_marginTop="2dp">
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="12dp"
@@ -87,14 +88,14 @@
                     android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tvPatientEmail"
-                    style="@style/DefaultNormalTextView"
+                    style="@style/DefaultSmallTextView"
                     android:layout_marginLeft="@dimen/common_padding"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="@dimen/home_item_separator_size">
+                android:layout_marginTop="2dp">
                 <ImageView
                     android:layout_width="12dp"
                     android:layout_height="18dp"
@@ -102,8 +103,7 @@
                     android:layout_gravity="center_vertical"/>
                 <TextView
                     android:id="@+id/tvPatientLocation"
-                    style="@style/DefaultNormalTextView"
-
+                    style="@style/DefaultSmallTextView"
                     android:singleLine="false"
                     android:layout_marginLeft="@dimen/common_padding"/>
             </LinearLayout>
@@ -116,7 +116,7 @@
     <vn.easycare.layers.ui.components.views.TabLayout
         android:id="@+id/appointmentListTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@color/main_background_color"/>
     <android.support.v4.view.ViewPager
         android:id="@+id/appointmentListViewPager"
