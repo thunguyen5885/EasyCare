@@ -189,7 +189,6 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
     private void parseResponseForCreateSchedule(String jsonResponse){
         ScheduleWSBuilder modelBuilder = new  ScheduleWSBuilder();
         modelBuilder.withAction(AppConstants.SCHEDULE_ACTION.CREATE);
-        modelBuilder.withId(mParam.getScheduleId());
         if(mCallback!=null)
             mCallback.onWSResponseOK(modelBuilder.build());
     }

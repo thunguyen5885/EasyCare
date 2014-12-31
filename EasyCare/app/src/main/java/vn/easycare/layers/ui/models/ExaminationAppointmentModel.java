@@ -32,14 +32,14 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
         mCallback = callback;
     }
     @Override
-    public void getExaminationAppointmentsForDoctor(AppConstants.EXAMINATION_STATUS status, int page) {
+    public void getExaminationAppointmentsForDoctor(AppConstants.EXAMINATION_STATUS status, String patientId, int page) {
         try {
             IWebServiceAccess<AppointmentListWSModel,AppointmentWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
                     AppointmentWSAccess.class,
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), page+"",
-                            "",status.getValue()+"", "", "","", "", "", "10","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
+                            "",status.getValue()+"", "", "","", "", patientId, "10","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -84,7 +84,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
         return itemDataList;
     }
     @Override
-    public void doSearchExaminationAppointments( String appointmentCode, String patientName,
+    public void doSearchExaminationAppointments( String appointmentCode, String patientName,String patientId,
                                                  AppConstants.EXAMINATION_STATUS status, String date,
                                                  String startDate, String endDate, int page) {
         try {
@@ -93,7 +93,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), page+"",
-                            appointmentCode,status.getValue()+"", patientName, date,startDate, endDate, "", "10","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
+                            appointmentCode,status.getValue()+"", patientName, date,startDate, endDate, patientId, "10","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -102,8 +102,6 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-
     }
 
     private List<ExaminationAppointmentItemData> fakeDataSearching(String appointmentCode, String patientName, AppConstants.EXAMINATION_STATUS status, String date, String startDate, String endDate, int page){

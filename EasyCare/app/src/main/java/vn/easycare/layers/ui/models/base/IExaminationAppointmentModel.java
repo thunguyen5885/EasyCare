@@ -11,8 +11,8 @@ import vn.easycare.utils.AppConstants;
  * Created by phannguyen on 12/13/14.
  */
 public interface IExaminationAppointmentModel extends IBaseModel{
-    void getExaminationAppointmentsForDoctor( AppConstants.EXAMINATION_STATUS status, int page);
-    void doSearchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,String date,String startDate,String endDate,int page);
+    void getExaminationAppointmentsForDoctor( AppConstants.EXAMINATION_STATUS status,String patientId, int page);
+    void doSearchExaminationAppointments(String appointmentCode,String patientName,String patientId,AppConstants.EXAMINATION_STATUS status,String date,String startDate,String endDate,int page);
     void doAcceptAnExaminationAppointment( String appointmentID);
     void doCancelAnExaminationAppointment( String appointmentID);
     void getAnExaminationAppointmentForDoctor(String appointmentID);

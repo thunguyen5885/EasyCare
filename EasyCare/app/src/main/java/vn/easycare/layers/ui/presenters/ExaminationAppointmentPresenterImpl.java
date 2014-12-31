@@ -35,13 +35,13 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void loadExaminationAppointmentsForDoctor(AppConstants.EXAMINATION_STATUS status,int page) {
-        iModel.getExaminationAppointmentsForDoctor(status, page);
+    public void loadExaminationAppointmentsForDoctor(AppConstants.EXAMINATION_STATUS status,String patientId,int page) {
+        iModel.getExaminationAppointmentsForDoctor(status,patientId, page);
     }
 
     @Override
-    public void searchExaminationAppointments(String appointmentCode,String patientName,AppConstants.EXAMINATION_STATUS status,String date,String startDate, String endDate,int page) {
-        iModel.doSearchExaminationAppointments(appointmentCode, patientName, status, date,startDate,endDate, page);
+    public void searchExaminationAppointments(String appointmentCode,String patientName,String patientId,AppConstants.EXAMINATION_STATUS status,String date,String startDate, String endDate,int page) {
+        iModel.doSearchExaminationAppointments(appointmentCode, patientName,patientId, status, date,startDate,endDate, page);
     }
 
     @Override
