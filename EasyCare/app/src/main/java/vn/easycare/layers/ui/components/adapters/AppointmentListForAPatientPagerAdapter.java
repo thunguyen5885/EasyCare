@@ -87,13 +87,13 @@ public class AppointmentListForAPatientPagerAdapter extends PagerAdapter{
             switch (status){
                 case ACCEPTED:
                     AppointmentListForAPatientLayout acceptAppointmentListLayout = (AppointmentListForAPatientLayout) mViewMaps.get(1);
-                    acceptAppointmentListLayout.refreshDataWithNonSearch();
+                    acceptAppointmentListLayout.refreshDataWhenDataChanged();
                     break;
                 case WAITING:
                     break;
                 case CANCEL:
                     AppointmentListForAPatientLayout cancelAppointmentListLayout = (AppointmentListForAPatientLayout) mViewMaps.get(2);
-                    cancelAppointmentListLayout.refreshDataWithNonSearch();
+                    cancelAppointmentListLayout.refreshDataWhenDataChanged();
                     break;
             }
         }

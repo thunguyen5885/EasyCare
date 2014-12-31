@@ -252,7 +252,6 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
             mAdapter.setEndOfList(isEndOfList);
             mAdapter.notifyDataSetChanged();
         }
-
     }
     public void setDateType(AppConstants.EXAMINATION_STATUS appointmentType){
         mAppointmentType = appointmentType;
