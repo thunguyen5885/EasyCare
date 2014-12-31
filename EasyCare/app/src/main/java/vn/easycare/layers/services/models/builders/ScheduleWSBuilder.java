@@ -102,7 +102,7 @@ public class ScheduleWSBuilder {
     }
 
     public ScheduleWSModel build(){
-       return new ScheduleWSModel(id, name, date, time_from, time_to, time_slots, note, doctor_id, clinic_id, status, week_day,  doctor_address_id,updated_at);
+       return new ScheduleWSModel(id, name, date, time_from, time_to, time_slots, note, doctor_id, clinic_id, status, week_day,  doctor_address_id,updated_at,action);
     }
 
     public void Clear(){

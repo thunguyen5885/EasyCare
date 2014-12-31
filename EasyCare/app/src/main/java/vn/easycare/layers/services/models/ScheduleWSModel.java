@@ -22,7 +22,8 @@ public class ScheduleWSModel  implements IWebServiceModel{
     String updated_at;
 
     AppConstants.SCHEDULE_ACTION action;
-    public ScheduleWSModel(String id, String name, String date, String time_from, String time_to, int time_slots, String note, String doctor_id, String clinic_id, int status, String week_day, String doctor_address_id, String updated_at) {
+
+    public ScheduleWSModel(String id, String name, String date, String time_from, String time_to, int time_slots, String note, String doctor_id, String clinic_id, int status, String week_day, String doctor_address_id, String updated_at, AppConstants.SCHEDULE_ACTION action) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -36,6 +37,7 @@ public class ScheduleWSModel  implements IWebServiceModel{
         this.week_day = week_day;
         this.doctor_address_id = doctor_address_id;
         this.updated_at = updated_at;
+        this.action = action;
     }
 
     public String getId() {

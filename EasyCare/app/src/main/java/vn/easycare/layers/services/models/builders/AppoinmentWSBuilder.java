@@ -166,7 +166,7 @@ public class AppoinmentWSBuilder {
                 first_visit,  visits,  code,  address,  insurance,
                 insurance_company,  doctor_notes,  patient_notes,
                 created_at,  patient_full_name,  patient_gender,
-                patient_phone, patient_birth_date, patient_email, patient_id,patient_avatar,patient_avatarThumb,examine_for);
+                patient_phone, patient_birth_date, patient_email, patient_id,patient_avatar,patient_avatarThumb,examine_for,action);
     }
 
     public void Clear(){

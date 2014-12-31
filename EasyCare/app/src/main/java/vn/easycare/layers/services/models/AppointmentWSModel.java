@@ -32,7 +32,7 @@ public class AppointmentWSModel implements IWebServiceModel {
     String examine_for;
     AppConstants.APPOINTMENT_ACTION action;
 
-    public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id, String patient_avatar, String patient_avatarThumb, String examine_for) {
+    public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id, String patient_avatar, String patient_avatarThumb, String examine_for, AppConstants.APPOINTMENT_ACTION action) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.status = status;
@@ -56,6 +56,7 @@ public class AppointmentWSModel implements IWebServiceModel {
         this.patient_avatar = patient_avatar;
         this.patient_avatarThumb = patient_avatarThumb;
         this.examine_for = examine_for;
+        this.action = action;
     }
 
     public String getId() {
