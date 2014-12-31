@@ -23,6 +23,7 @@ import java.util.List;
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
+import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
@@ -359,6 +360,16 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
     @Override
     public void DisplayMessageIncaseError(String message) {
         updateUI();
+    }
+
+    @Override
+    public void DisplayMessageForUpdateDoctorNote(String message) {
+
+    }
+
+    @Override
+    public void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList) {
+
     }
 
     private void processWhenUpdateDone(String message){

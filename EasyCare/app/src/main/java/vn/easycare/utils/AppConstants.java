@@ -15,7 +15,7 @@ public class AppConstants {
     }
 
     public static enum APPOINTMENT_ACTION {
-        NONE, ACCEPT, CANCEL, CHANGE, VIEWDETAIL
+        NONE, ACCEPT, CANCEL, CHANGE, VIEWDETAIL,UPDATE_DOCTOR_NOTE
     }
 
     public static enum SCHEDULE_ACTION {

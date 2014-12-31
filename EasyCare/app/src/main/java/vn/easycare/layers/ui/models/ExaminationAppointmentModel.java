@@ -13,9 +13,14 @@ import vn.easycare.layers.services.WSAccessFactory;
 import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.services.WSError;
 import vn.easycare.layers.services.concretes.AppointmentWSAccess;
+import vn.easycare.layers.services.concretes.ClinicAddressWSAccess;
 import vn.easycare.layers.services.models.AppointmentListWSModel;
 import vn.easycare.layers.services.models.AppointmentWSModel;
 import vn.easycare.layers.services.models.AppointmentWSParamModel;
+import vn.easycare.layers.services.models.ClinicAddressListWSModel;
+import vn.easycare.layers.services.models.ClinicAddressWSModel;
+import vn.easycare.layers.services.models.ClinicAddressWSParamModel;
+import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.models.base.IExaminationAppointmentModel;
 import vn.easycare.utils.AppConstants;
@@ -39,7 +44,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), page+"",
-                            "",status.getValue()+"", "", "","", "", patientId, "10","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
+                            "",status.getValue()+"", "", "","", "", patientId, "10","","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -93,7 +98,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), page+"",
-                            appointmentCode,status.getValue()+"", patientName, date,startDate, endDate, patientId, "10","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
+                            appointmentCode,status.getValue()+"", patientName, date,startDate, endDate, patientId, "10","","","","","",AppConstants.APPOINTMENT_ACTION.NONE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -146,7 +151,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), "",
-                            "","", "", "","", "", "", "10",appointmentID,"","","",AppConstants.APPOINTMENT_ACTION.ACCEPT));
+                            "","", "", "","", "", "", "10",appointmentID,"","","","",AppConstants.APPOINTMENT_ACTION.ACCEPT));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -165,7 +170,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), "",
-                            "","", "", "","", "", "", "10",appointmentID,"","","",AppConstants.APPOINTMENT_ACTION.CANCEL));
+                            "","", "", "","", "", "", "10",appointmentID,"","","","",AppConstants.APPOINTMENT_ACTION.CANCEL));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -184,7 +189,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), "",
-                            "","", "", "","", "", "", "10",appointmentID,"","","",AppConstants.APPOINTMENT_ACTION.VIEWDETAIL));
+                            "","", "", "","", "", "", "10",appointmentID,"","","","",AppConstants.APPOINTMENT_ACTION.VIEWDETAIL));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -203,7 +208,25 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), "",
-                            "","", "", "","", "", "", "10",appointmentID,addressChangeID+"",date,time,AppConstants.APPOINTMENT_ACTION.CHANGE));
+                            "","", "", "","", "", "", "10",appointmentID,addressChangeID+"",date,time,"",AppConstants.APPOINTMENT_ACTION.CHANGE));
+            WS.sendRequest();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void loadAllAddressesForDoctor() {
+        try {
+            IWebServiceAccess<ClinicAddressListWSModel,ClinicAddressWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
+                    ClinicAddressWSAccess.class,
+                    mContext,
+                    this,
+                    new ClinicAddressWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken()));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -217,6 +240,25 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
     @Override
     public void setResponseCallback(IResponseUIDataCallback callback) {
 
+    }
+
+    @Override
+    public void doUpdateDoctorNotes(String appointmentID, String doctorNotes) {
+        try {
+            IWebServiceAccess<AppointmentListWSModel,AppointmentWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
+                    AppointmentWSAccess.class,
+                    mContext,
+                    this,
+                    new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), "",
+                            "","", "", "","", "", "", "10",appointmentID,"","","",doctorNotes,AppConstants.APPOINTMENT_ACTION.UPDATE_DOCTOR_NOTE));
+            WS.sendRequest();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -308,7 +350,17 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
 
             if(mCallback!=null)
                 mCallback.onResponseOK(item);
-
+        }else if(result instanceof ClinicAddressListWSModel){
+            ClinicAddressListWSModel addressListModel = (ClinicAddressListWSModel)result;
+            List<DoctorClinicAddressItemData> itemDataList = new ArrayList<DoctorClinicAddressItemData>();
+            for(ClinicAddressWSModel model : addressListModel.getClinicAddressesList()){
+                DoctorClinicAddressItemData item = new DoctorClinicAddressItemData();
+                item.setClinicAddress(model.getClinicAddress());
+                item.setClinicAddressId(model.getClinicAddressId());
+                itemDataList.add(item);
+            }
+            if(mCallback!=null)
+                mCallback.onResponseOK(itemDataList);
         }
 
     }

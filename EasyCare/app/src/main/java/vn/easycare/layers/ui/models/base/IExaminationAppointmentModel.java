@@ -17,5 +17,7 @@ public interface IExaminationAppointmentModel extends IBaseModel{
     void doCancelAnExaminationAppointment( String appointmentID);
     void getAnExaminationAppointmentForDoctor(String appointmentID);
     void doChangeAnExaminationAppointment(String appointmentID, String date,String time, int addressChangeID);
+    void loadAllAddressesForDoctor();
+    void doUpdateDoctorNotes(String appointmentID,String doctorNotes);
 
 }

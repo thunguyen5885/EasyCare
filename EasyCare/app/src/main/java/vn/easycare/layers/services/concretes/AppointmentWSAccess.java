@@ -27,6 +27,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String APPOINTMENT_CANCEL_URI = WEBSERVICE_HOST + "/doctors/appointments/reject";
     private static final String APPOINTMENT_CHANGE_URI = WEBSERVICE_HOST + "/doctors/appointments/update";
     private static final String APPOINTMENT_VIEW_URI = WEBSERVICE_HOST + "/doctors/appointments/%s?token=%s";
+    private static final String DOCTOR_UPDATE_URI = WEBSERVICE_HOST + "/doctors/appointments/update_doctor_note";
 
     private static final String Res_appointments = "appointments";
     private static final String Res_appointment = "appointment";
@@ -73,6 +74,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String Param_time = "time";
     private static final String Param_address = "address";
     private static final String Param_id = "id";
+    private static final String Param_doctor_notes = "doctor_notes";
     private AppointmentWSParamModel mParam;
     @Override
     public String getWSURL() {
@@ -98,6 +100,8 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 return APPOINTMENT_CHANGE_URI;
             case VIEWDETAIL:
                 return  String.format(APPOINTMENT_VIEW_URI,mParam.getAppointmentId(),mParam.getToken());
+            case UPDATE_DOCTOR_NOTE:
+                return  DOCTOR_UPDATE_URI;
             default:
                 return "";
         }
@@ -141,6 +145,12 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             params.put(Param_time, mParam.getTime());
             params.put(Param_address, mParam.getAddress());
             return  params;
+        }else if(mParam.getAction()== AppConstants.APPOINTMENT_ACTION.UPDATE_DOCTOR_NOTE){
+            Map<String,String> params = new HashMap<String, String>();
+            params.put(Param_Token, mParam.getToken());
+            params.put(Param_id, mParam.getAppointmentId());
+            params.put(Param_doctor_notes, mParam.getDoctor_notes());
+            return  params;
         }else
             return null;
     }
@@ -163,6 +173,8 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 return Request.Method.POST;
             case VIEWDETAIL:
                 return Request.Method.GET;
+            case UPDATE_DOCTOR_NOTE:
+                return Request.Method.POST;
             default:
                 return Request.Method.GET;
         }
@@ -184,6 +196,9 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 break;
             case VIEWDETAIL:
                 parseResponseForViewAppointments(jsonResponse);
+                break;
+            case UPDATE_DOCTOR_NOTE:
+                parseResponseForUpdateDoctorNote(jsonResponse);
                 break;
             default:
                 break;
@@ -322,5 +337,13 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             if(mCallback!=null)
                 mCallback.onWSResponseFailed(new WSError(e.getMessage()));
         }
+    }
+
+    private void parseResponseForUpdateDoctorNote(String jsonResponse){
+        AppoinmentWSBuilder modelBuilder = new  AppoinmentWSBuilder();
+        modelBuilder.withAction(AppConstants.APPOINTMENT_ACTION.UPDATE_DOCTOR_NOTE);
+        modelBuilder.withId(mParam.getAppointmentId());
+        if(mCallback!=null)
+            mCallback.onWSResponseOK(modelBuilder.build());
     }
 }

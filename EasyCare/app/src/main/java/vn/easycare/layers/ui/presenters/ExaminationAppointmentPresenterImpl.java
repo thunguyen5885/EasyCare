@@ -2,11 +2,14 @@ package vn.easycare.layers.ui.presenters;
 
 import android.content.Context;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.List;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 import vn.easycare.layers.ui.models.ExaminationAppointmentModel;
 import vn.easycare.layers.ui.models.base.IBaseModel;
@@ -40,6 +43,11 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
+    public void updateDoctorNotes(String appointmentID, String doctorNotes) {
+        iModel.doUpdateDoctorNotes(appointmentID,doctorNotes);
+    }
+
+    @Override
     public void searchExaminationAppointments(String appointmentCode,String patientName,String patientId,AppConstants.EXAMINATION_STATUS status,String date,String startDate, String endDate,int page) {
         iModel.doSearchExaminationAppointments(appointmentCode, patientName,patientId, status, date,startDate,endDate, page);
     }
@@ -68,6 +76,11 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
+    public void loadAllAddressesForDoctor() {
+        iModel.loadAllAddressesForDoctor();
+    }
+
+    @Override
     public void onResponseOK(IBaseItemData itemData) {
         ExaminationAppointmentItemData appointmentItem = (ExaminationAppointmentItemData) itemData;
         if(appointmentItem!=null){
@@ -84,14 +97,26 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
                 case VIEWDETAIL:
                     iView.DisplayDetailForAnAppointment(appointmentItem);
                     break;
+                case UPDATE_DOCTOR_NOTE:
+                    iView.DisplayMessageForUpdateDoctorNote(mContext.getResources().getString(R.string.update_doctor_note_ok));
+                    break;
             }
         }
     }
 
     @Override
     public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
-        List<ExaminationAppointmentItemData> appointmentItemsList = (List<ExaminationAppointmentItemData>) itemDataList;
-        iView.DisplayExaminationAppointmentsForDoctor(appointmentItemsList);
+        if(itemDataList instanceof List<?>){
+            ParameterizedType pt = (ParameterizedType)itemDataList.getClass().getGenericSuperclass();
+            String innerClass = pt.getActualTypeArguments()[0].toString().replace("class ", "");
+            if(innerClass.equals(ExaminationAppointmentItemData.class)){
+                List<ExaminationAppointmentItemData> appointmentItemsList = (List<ExaminationAppointmentItemData>) itemDataList;
+                iView.DisplayExaminationAppointmentsForDoctor(appointmentItemsList);
+            }else if(innerClass.equals(DoctorClinicAddressItemData.class)){
+                List<DoctorClinicAddressItemData> itemAddressesList = (List<DoctorClinicAddressItemData>)itemDataList;
+                iView.DisplayAllDoctorClinicAddresses(itemAddressesList);
+            }
+        }
     }
 
     @Override

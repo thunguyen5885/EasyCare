@@ -21,11 +21,12 @@ public class AppointmentWSParamModel implements IWebServiceParamModel{
     String address;
     String time;
     String date;
+    String doctor_notes;
     AppConstants.APPOINTMENT_ACTION action;
 
     public AppointmentWSParamModel(String token, String page, String appointmentCode, String appointmentStatus, String patientName,
                                    String appointmentDate, String startDate, String endDate, String patientId, String numberOfRecords,
-                                   String appointmentId, String address, String time, String date, AppConstants.APPOINTMENT_ACTION action) {
+                                   String appointmentId, String address, String time, String date,String doctor_notes, AppConstants.APPOINTMENT_ACTION action) {
         this.token = token;
         this.page = page;
         this.appointmentCode = appointmentCode;
@@ -40,6 +41,7 @@ public class AppointmentWSParamModel implements IWebServiceParamModel{
         this.address = address;
         this.time = time;
         this.date = date;
+        this.doctor_notes = doctor_notes;
         this.action = action;
     }
 
@@ -161,5 +163,13 @@ public class AppointmentWSParamModel implements IWebServiceParamModel{
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getDoctor_notes() {
+        return doctor_notes;
+    }
+
+    public void setDoctor_notes(String doctor_notes) {
+        this.doctor_notes = doctor_notes;
     }
 }

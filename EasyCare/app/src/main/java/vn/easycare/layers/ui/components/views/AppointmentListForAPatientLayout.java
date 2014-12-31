@@ -25,6 +25,7 @@ import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.AppointmentListForAPatientAdapter;
 import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
+import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.fragments.AppointmentDetailFragment;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
@@ -441,6 +442,11 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
     }
 
     @Override
+    public void DisplayMessageForUpdateDoctorNote(String message) {
+
+    }
+
+    @Override
     public void DisplayDetailForAnAppointment(ExaminationAppointmentItemData item) {
 
     }
@@ -456,6 +462,11 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
 
         // Update UI anyway
         updateUI(true);
+    }
+
+    @Override
+    public void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList) {
+
     }
 
     private void processWhenUpdateDone(String message, AppConstants.EXAMINATION_STATUS status){

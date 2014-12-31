@@ -11,4 +11,5 @@
     <string name="cancel_appointment_fail">Lịch hẹn khám đã huỷ thất bại</string>
     <string name="change_appointment_ok">Lịch hẹn khám đã đổi thành công</string>
     <string name="change_appointment_fail">Lịch hẹn khám đã đổi thất bại</string>
+    <string name="update_doctor_note_ok">Gửi ghi chú của bác sĩ thành công</string>
 </resources>
