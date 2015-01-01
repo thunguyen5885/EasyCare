@@ -10,8 +10,8 @@ import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 public interface IBaseModel {
     void setResponseCallback(IResponseUIDataCallback callback);
     interface IResponseUIDataCallback {
-        void onResponseOK(IBaseItemData itemData);
-        void onResponseOK(List<? extends IBaseItemData> itemDataList);
+        <T extends IBaseItemData> void onResponseOK(T itemData,Class<T>... itemDataClass);
+        <T extends IBaseItemData> void onResponseOK(List<T> itemDataList,Class<T>... itemDataClass);
         void onResponseFail(String message);
     }
 }

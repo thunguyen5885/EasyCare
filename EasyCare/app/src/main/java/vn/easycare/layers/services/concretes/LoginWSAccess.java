@@ -44,14 +44,14 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
             AuthorizationWSBuilder modelBuilder = new  AuthorizationWSBuilder();
             JSONObject jsonBigObj = new JSONObject(jsonResponse);
 
-            modelBuilder.withSessionToken(jsonBigObj.get(Res_Token).toString());
+            modelBuilder.withSessionToken(jsonBigObj.optString(Res_Token,""));
             JSONObject jsonUserObj = (JSONObject)jsonBigObj.get(Res_User);
             if(jsonUserObj!=null){
-                modelBuilder.withUserAvatar(jsonUserObj.getString(Res_avatar));
-                modelBuilder.withUserAvatarThumb(jsonUserObj.getString(Res_avatar_thumb));
-                modelBuilder.withUserEmail(jsonUserObj.getString(Res_email));
-                modelBuilder.withUserFullname(jsonUserObj.getString(Res_full_name));
-                modelBuilder.withUserId(jsonUserObj.getString(Res_Id));
+                modelBuilder.withUserAvatar(jsonUserObj.optString(Res_avatar,""));
+                modelBuilder.withUserAvatarThumb(jsonUserObj.optString(Res_avatar_thumb,""));
+                modelBuilder.withUserEmail(jsonUserObj.optString(Res_email,""));
+                modelBuilder.withUserFullname(jsonUserObj.optString(Res_full_name,""));
+                modelBuilder.withUserId(jsonUserObj.optString(Res_Id,""));
             }
 
             if(mCallback!=null)

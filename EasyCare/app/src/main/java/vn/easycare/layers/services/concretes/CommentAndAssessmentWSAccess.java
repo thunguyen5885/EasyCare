@@ -78,19 +78,19 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
             for (int i = 0 ; i < comments.length(); i++) {
                 JSONObject jsonObj = comments.getJSONObject(i);
                 modelBuilder.Clear();
-                modelBuilder.withId(jsonObj.get(Res_id).toString());
-                modelBuilder.withComment(jsonObj.get(Res_comment).toString());
-                modelBuilder.withCommonRating(Integer.valueOf(jsonObj.get(Res_commonRating).toString()).intValue());
-                modelBuilder.withFacilityRating(Integer.valueOf(jsonObj.get(Res_facilityRating).toString()).intValue());
-                modelBuilder.withWaitingTimeRating(Integer.valueOf(jsonObj.get(Res_waitingTimeRating).toString()).intValue());
-                modelBuilder.withIsShow(Integer.valueOf(jsonObj.get(Res_isShow).toString()).intValue());
-                modelBuilder.withCreatedAt(jsonObj.get(Res_createdAt).toString());
+                modelBuilder.withId(jsonObj.optString(Res_id,""));
+                modelBuilder.withComment(jsonObj.optString(Res_comment,""));
+                modelBuilder.withCommonRating(Integer.valueOf(jsonObj.optString(Res_commonRating,"0")).intValue());
+                modelBuilder.withFacilityRating(Integer.valueOf(jsonObj.optString(Res_facilityRating,"0")).intValue());
+                modelBuilder.withWaitingTimeRating(Integer.valueOf(jsonObj.optString(Res_waitingTimeRating,"0")).intValue());
+                modelBuilder.withIsShow(Integer.valueOf(jsonObj.optString(Res_isShow,"0")).intValue());
+                modelBuilder.withCreatedAt(jsonObj.optString(Res_createdAt,""));
 
                 JSONObject commentByJsonObj = (JSONObject)jsonObj.get(Res_commentBy);
-                modelBuilder.withCommentByPatientId(commentByJsonObj.get(Res_id).toString());
-                modelBuilder.withCommentByPatientName(commentByJsonObj.get(Res_full_name).toString());
-                modelBuilder.withCommentByPatientAvatarUrl(commentByJsonObj.get(Res_avatar).toString());
-                modelBuilder.withCommentByPatientAvatarThumbUrl(commentByJsonObj.get(Res_avatar_thumb).toString());
+                modelBuilder.withCommentByPatientId(commentByJsonObj.optString(Res_id,""));
+                modelBuilder.withCommentByPatientName(commentByJsonObj.optString(Res_full_name,""));
+                modelBuilder.withCommentByPatientAvatarUrl(commentByJsonObj.optString(Res_avatar,""));
+                modelBuilder.withCommentByPatientAvatarThumbUrl(commentByJsonObj.optString(Res_avatar_thumb,""));
 
                 CommentAndAssessmentWSModel model = modelBuilder.build();
                 if(model.getIsShow()==1)
@@ -98,10 +98,10 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
             }
 
             JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
-            listModel.setItems_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
-            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
-            listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
-            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());
+            listModel.setItems_total(Integer.valueOf(pageJsonObj.optString(Res_pagetotal,"0")).intValue());
+            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.optString(Res_currentPage,"0")).intValue());
+            listModel.setLastPage(Integer.valueOf(pageJsonObj.optString(Res_lastPage,"0")).intValue());
+            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.optString(Res_itemsPerPage,"0")).intValue());
 
 
             if(mCallback!=null)

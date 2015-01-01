@@ -160,18 +160,18 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
             for (int i = 0 ; i < schedules.length(); i++) {
                 JSONObject jsonObj = schedules.getJSONObject(i);
                 modelBuilder.Clear();
-                modelBuilder.withId(jsonObj.get(Res_id).toString());
-                modelBuilder.withName(jsonObj.get(Res_name).toString());
-                modelBuilder.withDate(jsonObj.get(Res_date).toString());
-                modelBuilder.withTime_from(jsonObj.get(Res_time_from).toString());
-                modelBuilder.withTime_to(jsonObj.get(Res_time_to).toString());
-                modelBuilder.withTime_slots(Integer.valueOf(jsonObj.get(Res_time_slots).toString()).intValue());
-                modelBuilder.withNote(jsonObj.get(Res_note).toString());
-                modelBuilder.withDoctor_id(jsonObj.get(Res_doctor_id).toString());
-                modelBuilder.withClinic_id(jsonObj.get(Res_clinic_id).toString());
-                modelBuilder.withStatus(Integer.valueOf(jsonObj.get(Res_status).toString()).intValue());
-                modelBuilder.withWeek_day(jsonObj.get(Res_week_day).toString());
-                modelBuilder.withDoctor_address_id(jsonObj.get(Res_doctor_address_id).toString());
+                modelBuilder.withId(jsonObj.optString(Res_id,""));
+                modelBuilder.withName(jsonObj.optString(Res_name,""));
+                modelBuilder.withDate(jsonObj.optString(Res_date,""));
+                modelBuilder.withTime_from(jsonObj.optString(Res_time_from,""));
+                modelBuilder.withTime_to(jsonObj.optString(Res_time_to,""));
+                modelBuilder.withTime_slots(Integer.valueOf(jsonObj.optString(Res_time_slots,"0")).intValue());
+                modelBuilder.withNote(jsonObj.optString(Res_note,""));
+                modelBuilder.withDoctor_id(jsonObj.optString(Res_doctor_id,""));
+                modelBuilder.withClinic_id(jsonObj.optString(Res_clinic_id,""));
+                modelBuilder.withStatus(Integer.valueOf(jsonObj.optString(Res_status,"0")).intValue());
+                modelBuilder.withWeek_day(jsonObj.optString(Res_week_day,""));
+                modelBuilder.withDoctor_address_id(jsonObj.optString(Res_doctor_address_id,""));
                 listModel.getListSchedules().add(modelBuilder.build());
             }
             if(mCallback!=null)
@@ -215,19 +215,19 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
             JSONObject jsonBigObj = new JSONObject(jsonResponse);
             JSONObject jsonObj = (JSONObject)jsonBigObj.get(Res_schedule);
             if(jsonObj!=null){
-                modelBuilder.withId(jsonObj.get(Res_id).toString());
-                modelBuilder.withName(jsonObj.get(Res_name).toString());
-                modelBuilder.withDate(jsonObj.get(Res_date).toString());
-                modelBuilder.withTime_from(jsonObj.get(Res_time_from).toString());
-                modelBuilder.withTime_to(jsonObj.get(Res_time_to).toString());
-                modelBuilder.withTime_slots(Integer.valueOf(jsonObj.get(Res_time_slots).toString()).intValue());
-                modelBuilder.withNote(jsonObj.get(Res_note).toString());
-                modelBuilder.withDoctor_id(jsonObj.get(Res_doctor_id).toString());
-                modelBuilder.withClinic_id(jsonObj.get(Res_clinic_id).toString());
-                modelBuilder.withStatus(Integer.valueOf(jsonObj.get(Res_status).toString()).intValue());
-                modelBuilder.withWeek_day(jsonObj.get(Res_week_day).toString());
-                modelBuilder.withDoctor_address_id(jsonObj.get(Res_doctor_address_id).toString());
-                modelBuilder.withUpdated_at(jsonObj.get(Res_updated_at).toString());
+                modelBuilder.withId(jsonObj.optString(Res_id,""));
+                modelBuilder.withName(jsonObj.optString(Res_name,""));
+                modelBuilder.withDate(jsonObj.optString(Res_date,""));
+                modelBuilder.withTime_from(jsonObj.optString(Res_time_from,""));
+                modelBuilder.withTime_to(jsonObj.optString(Res_time_to,""));
+                modelBuilder.withTime_slots(Integer.valueOf(jsonObj.optString(Res_time_slots,"0")).intValue());
+                modelBuilder.withNote(jsonObj.optString(Res_note,""));
+                modelBuilder.withDoctor_id(jsonObj.optString(Res_doctor_id,""));
+                modelBuilder.withClinic_id(jsonObj.optString(Res_clinic_id,""));
+                modelBuilder.withStatus(Integer.valueOf(jsonObj.optString(Res_status,"0")).intValue());
+                modelBuilder.withWeek_day(jsonObj.optString(Res_week_day,""));
+                modelBuilder.withDoctor_address_id(jsonObj.optString(Res_doctor_address_id,""));
+                modelBuilder.withUpdated_at(jsonObj.optString(Res_updated_at,""));
                 modelBuilder.withAction(AppConstants.SCHEDULE_ACTION.VIEWDETAIL);
             }
             if(mCallback!=null)

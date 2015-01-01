@@ -81,7 +81,7 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void onResponseOK(IBaseItemData itemData) {
+    public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
         ExaminationAppointmentItemData appointmentItem = (ExaminationAppointmentItemData) itemData;
         if(appointmentItem!=null){
             switch (appointmentItem.getAction()){
@@ -105,19 +105,16 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
-        if(itemDataList instanceof List<?>){
-            ParameterizedType pt = (ParameterizedType)itemDataList.getClass().getGenericSuperclass();
-            String innerClass = pt.getActualTypeArguments()[0].toString().replace("class ", "");
-            if(innerClass.equals(ExaminationAppointmentItemData.class)){
-                List<ExaminationAppointmentItemData> appointmentItemsList = (List<ExaminationAppointmentItemData>) itemDataList;
-                iView.DisplayExaminationAppointmentsForDoctor(appointmentItemsList);
-            }else if(innerClass.equals(DoctorClinicAddressItemData.class)){
-                List<DoctorClinicAddressItemData> itemAddressesList = (List<DoctorClinicAddressItemData>)itemDataList;
-                iView.DisplayAllDoctorClinicAddresses(itemAddressesList);
-            }
+    public <T extends IBaseItemData> void onResponseOK(List<T> itemDataList, Class<T>... itemDataClass) {
+        if(itemDataClass[0].equals(ExaminationAppointmentItemData.class)){
+            List<ExaminationAppointmentItemData> appointmentItemsList = (List<ExaminationAppointmentItemData>) itemDataList;
+            iView.DisplayExaminationAppointmentsForDoctor(appointmentItemsList);
+        }else if(itemDataClass[0].equals(DoctorClinicAddressItemData.class)){
+            List<DoctorClinicAddressItemData> itemAddressesList = (List<DoctorClinicAddressItemData>)itemDataList;
+            iView.DisplayAllDoctorClinicAddresses(itemAddressesList);
         }
     }
+
 
     @Override
     public void onResponseFail(String message) {

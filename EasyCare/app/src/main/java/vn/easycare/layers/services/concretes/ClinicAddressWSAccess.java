@@ -50,7 +50,7 @@ public class ClinicAddressWSAccess extends AbstractWSAccess<ClinicAddressListWSM
                 while( keys.hasNext() ){
                     String key = (String)keys.next();
                     modelBuilder.Clear();
-                    modelBuilder.withClinicAddress(addressesObj.get(key).toString());
+                    modelBuilder.withClinicAddress(addressesObj.optString(key,""));
                     modelBuilder.withClinicAddressId(key);
                     listModel.getClinicAddressesList().add(modelBuilder.build());
                 }

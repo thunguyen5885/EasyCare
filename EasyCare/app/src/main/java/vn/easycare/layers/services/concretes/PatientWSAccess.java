@@ -119,19 +119,19 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
             for (int i = 0 ; i < patients.length(); i++) {
                 JSONObject jsonObj = patients.getJSONObject(i);
                 modelBuilder.Clear();
-                modelBuilder.withId(jsonObj.get(Res_id).toString());
-                modelBuilder.withFull_name(jsonObj.get(Res_full_name).toString());
-                modelBuilder.withGender(Integer.valueOf(jsonObj.get(Res_gender).toString()).intValue());
-                modelBuilder.withBirthday(jsonObj.get(Res_birthday).toString());
-                modelBuilder.withEmail(jsonObj.get(Res_email).toString());
-                modelBuilder.withPhone(jsonObj.get(Res_phone).toString());
-                modelBuilder.withAddress(jsonObj.get(Res_address).toString());
-                modelBuilder.withAvatar(jsonObj.get(Res_avatar).toString());
-                modelBuilder.withAvatar_thumb(jsonObj.get(Res_avatar_thumb).toString());
-                modelBuilder.withVisits(Integer.valueOf(jsonObj.get(Res_visits).toString()).intValue());
-                modelBuilder.withCancelVisits(Integer.valueOf(jsonObj.get(Res_cancelVisits).toString()).intValue());
-                modelBuilder.withNumberChangeAppointment(Integer.valueOf(jsonObj.get(Res_numberChangeAppointment).toString()).intValue());
-                modelBuilder.withTotalComment(Integer.valueOf(jsonObj.get(Res_totalComment).toString()).intValue());
+                modelBuilder.withId(jsonObj.optString(Res_id,""));
+                modelBuilder.withFull_name(jsonObj.optString(Res_full_name,""));
+                modelBuilder.withGender(Integer.valueOf(jsonObj.optString(Res_gender,"0")).intValue());
+                modelBuilder.withBirthday(jsonObj.optString(Res_birthday,""));
+                modelBuilder.withEmail(jsonObj.optString(Res_email,""));
+                modelBuilder.withPhone(jsonObj.optString(Res_phone,""));
+                modelBuilder.withAddress(jsonObj.optString(Res_address,""));
+                modelBuilder.withAvatar(jsonObj.optString(Res_avatar,""));
+                modelBuilder.withAvatar_thumb(jsonObj.optString(Res_avatar_thumb,""));
+                modelBuilder.withVisits(Integer.valueOf(jsonObj.optString(Res_visits,"0")).intValue());
+                modelBuilder.withCancelVisits(Integer.valueOf(jsonObj.optString(Res_cancelVisits,"0")).intValue());
+                modelBuilder.withNumberChangeAppointment(Integer.valueOf(jsonObj.optString(Res_numberChangeAppointment,"0")).intValue());
+                modelBuilder.withTotalComment(Integer.valueOf(jsonObj.optString(Res_totalComment,"0")).intValue());
                ////////
                 modelBuilder.withBanned(Integer.valueOf(mParam.getIsbanned()).intValue());
                 /////////
@@ -140,10 +140,10 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
             }
 
             JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
-            listModel.setItems_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
-            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
-            listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
-            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());
+            listModel.setItems_total(Integer.valueOf(pageJsonObj.optString(Res_pagetotal,"0")).intValue());
+            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.optString(Res_currentPage,"0")).intValue());
+            listModel.setLastPage(Integer.valueOf(pageJsonObj.optString(Res_lastPage,"0")).intValue());
+            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.optString(Res_itemsPerPage,"0")).intValue());
 
 
             if(mCallback!=null)

@@ -216,43 +216,43 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             for (int i = 0 ; i < appointments.length(); i++) {
                 JSONObject jsonObj = appointments.getJSONObject(i);
                 modelBuilder.Clear();
-                modelBuilder.withId(jsonObj.get(Res_id).toString());
-                modelBuilder.withDoctor_id(jsonObj.get(Res_doctor_id).toString());
-                modelBuilder.withStatus(Integer.valueOf(jsonObj.get(Res_status).toString()).intValue());
-                modelBuilder.withTime(jsonObj.get(Res_time).toString());
-                modelBuilder.withVisit_reason(jsonObj.get(Res_visit_reason).toString());
-                modelBuilder.withFirst_visit(Integer.valueOf(jsonObj.get(Res_first_visit).toString()).intValue());
-                modelBuilder.withVisits(Integer.valueOf(jsonObj.get(Res_visits).toString()).intValue());
+                modelBuilder.withId(jsonObj.optString(Res_id,""));
+                modelBuilder.withDoctor_id(jsonObj.optString(Res_doctor_id,""));
+                modelBuilder.withStatus(Integer.valueOf(jsonObj.optString(Res_status,"0")).intValue());
+                modelBuilder.withTime(jsonObj.optString(Res_time,""));
+                modelBuilder.withVisit_reason(jsonObj.optString(Res_visit_reason,""));
+                modelBuilder.withFirst_visit(Integer.valueOf(jsonObj.optString(Res_first_visit,"0")).intValue());
+                modelBuilder.withVisits(Integer.valueOf(jsonObj.optString(Res_visits,"0")).intValue());
 
-                modelBuilder.withCode(jsonObj.get(Res_code).toString());
-                modelBuilder.withAddress(jsonObj.get(Res_address).toString());
-                modelBuilder.withInsurance(Integer.valueOf(jsonObj.get(Res_insurance).toString()).intValue());
-                modelBuilder.withInsurance_company(jsonObj.get(Res_insurance_company).toString());
-                modelBuilder.withDoctor_notes(jsonObj.get(Res_doctor_notes).toString());
-                modelBuilder.withPatient_notes(jsonObj.get(Res_patient_notes).toString());
-                modelBuilder.withCreated_at(jsonObj.get(Res_created_at).toString());
+                modelBuilder.withCode(jsonObj.optString(Res_code,""));
+                modelBuilder.withAddress(jsonObj.optString(Res_address,""));
+                modelBuilder.withInsurance(Integer.valueOf(jsonObj.optString(Res_insurance,"0")).intValue());
+                modelBuilder.withInsurance_company(jsonObj.optString(Res_insurance_company,""));
+                modelBuilder.withDoctor_notes(jsonObj.optString(Res_doctor_notes,""));
+                modelBuilder.withPatient_notes(jsonObj.optString(Res_patient_notes,""));
+                modelBuilder.withCreated_at(jsonObj.optString(Res_created_at,""));
 
                 Object PatientObj = jsonObj.get(Res_patient);
                 if(PatientObj instanceof JSONObject) {
                     JSONObject PatientjsonObj = (JSONObject) PatientObj;
-                    modelBuilder.withPatient_full_name(PatientjsonObj.get(Res_full_name).toString());
-                    modelBuilder.withPatient_gender(Integer.valueOf(PatientjsonObj.get(Res_gender).toString()).intValue());
-                    modelBuilder.withPatient_phone(PatientjsonObj.get(Res_phone).toString());
-                    modelBuilder.withPatient_birth_date(PatientjsonObj.get(Res_birth_date).toString());
-                    modelBuilder.withPatient_email(PatientjsonObj.get(Res_email).toString());
-                    modelBuilder.withPatient_id(PatientjsonObj.get(Res_id).toString());
-                    modelBuilder.withPatient_avatar(PatientjsonObj.get(Res_avatar).toString());
-                    modelBuilder.withPatient_avatarThumb(PatientjsonObj.get(Res_avatar_thumb).toString());
+                    modelBuilder.withPatient_full_name(PatientjsonObj.optString(Res_full_name,""));
+                    modelBuilder.withPatient_gender(Integer.valueOf(PatientjsonObj.optString(Res_gender,"0")).intValue());
+                    modelBuilder.withPatient_phone(PatientjsonObj.optString(Res_phone,""));
+                    modelBuilder.withPatient_birth_date(PatientjsonObj.optString(Res_birth_date,""));
+                    modelBuilder.withPatient_email(PatientjsonObj.optString(Res_email,""));
+                    modelBuilder.withPatient_id(PatientjsonObj.optString(Res_id,""));
+                    modelBuilder.withPatient_avatar(PatientjsonObj.optString(Res_avatar,""));
+                    modelBuilder.withPatient_avatarThumb(PatientjsonObj.optString(Res_avatar_thumb,""));
                 }
 
                 listModel.getListAppointments().add(modelBuilder.build());
 
             }
             JSONObject pageJsonObj = (JSONObject)jsonBigObj.get(Res_paging);
-            listModel.setItems_total(Integer.valueOf(pageJsonObj.get(Res_pagetotal).toString()).intValue());
-            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.get(Res_currentPage).toString()).intValue());
-            listModel.setLastPage(Integer.valueOf(pageJsonObj.get(Res_lastPage).toString()).intValue());
-            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.get(Res_itemsPerPage).toString()).intValue());
+            listModel.setItems_total(Integer.valueOf(pageJsonObj.optString(Res_pagetotal,"0")).intValue());
+            listModel.setPage_currentPage(Integer.valueOf(pageJsonObj.optString(Res_currentPage,"0")).intValue());
+            listModel.setLastPage(Integer.valueOf(pageJsonObj.optString(Res_lastPage,"0")).intValue());
+            listModel.setItemsPerPage(Integer.valueOf(pageJsonObj.optString(Res_itemsPerPage,"0")).intValue());
 
 
             if(mCallback!=null)
@@ -298,32 +298,32 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             JSONObject jsonBigObj = new JSONObject(jsonResponse);
             JSONObject jsonObj = (JSONObject)jsonBigObj.get(Res_appointment);
             if(jsonObj!=null){
-                modelBuilder.withId(jsonObj.get(Res_id).toString());
-                modelBuilder.withStatus(Integer.valueOf(jsonObj.get(Res_status).toString()).intValue());
-                modelBuilder.withTime(jsonObj.get(Res_time).toString());
-                modelBuilder.withVisit_reason(jsonObj.get(Res_visit_reason).toString());
-                modelBuilder.withFirst_visit(Integer.valueOf(jsonObj.get(Res_first_visit).toString()).intValue());
+                modelBuilder.withId(jsonObj.optString(Res_id,""));
+                modelBuilder.withStatus(Integer.valueOf(jsonObj.optString(Res_status,"0")).intValue());
+                modelBuilder.withTime(jsonObj.optString(Res_time,""));
+                modelBuilder.withVisit_reason(jsonObj.optString(Res_visit_reason,""));
+                modelBuilder.withFirst_visit(Integer.valueOf(jsonObj.optString(Res_first_visit,"0")).intValue());
 
-                modelBuilder.withCode(jsonObj.get(Res_code).toString());
-                modelBuilder.withAddress(jsonObj.get(Res_address).toString());
-                modelBuilder.withInsurance(Integer.valueOf(jsonObj.get(Res_insurance).toString()).intValue());
-                modelBuilder.withInsurance_company(jsonObj.get(Res_insurance_company).toString());
-                modelBuilder.withDoctor_notes(jsonObj.get(Res_doctor_notes).toString());
-                modelBuilder.withPatient_notes(jsonObj.get(Res_patient_notes).toString());
-                modelBuilder.withCreated_at(jsonObj.get(Res_created_at).toString());
-                modelBuilder.withExamine_for(jsonObj.get(Res_examine_for).toString());
+                modelBuilder.withCode(jsonObj.optString(Res_code,""));
+                modelBuilder.withAddress(jsonObj.optString(Res_address,""));
+                modelBuilder.withInsurance(Integer.valueOf(jsonObj.optString(Res_insurance,"0")).intValue());
+                modelBuilder.withInsurance_company(jsonObj.optString(Res_insurance_company,""));
+                modelBuilder.withDoctor_notes(jsonObj.optString(Res_doctor_notes,""));
+                modelBuilder.withPatient_notes(jsonObj.optString(Res_patient_notes,""));
+                modelBuilder.withCreated_at(jsonObj.optString(Res_created_at,""));
+                modelBuilder.withExamine_for(jsonObj.optString(Res_examine_for,""));
                 modelBuilder.withAction(AppConstants.APPOINTMENT_ACTION.VIEWDETAIL);
                 Object PatientObj = jsonObj.get(Res_patient);
                 if(PatientObj instanceof JSONObject) {
                     JSONObject PatientjsonObj = (JSONObject) PatientObj;
-                    modelBuilder.withPatient_full_name(PatientjsonObj.get(Res_full_name).toString());
-                    modelBuilder.withPatient_gender(Integer.valueOf(PatientjsonObj.get(Res_gender).toString()).intValue());
-                    modelBuilder.withPatient_phone(PatientjsonObj.get(Res_phone).toString());
-                    modelBuilder.withPatient_birth_date(PatientjsonObj.get(Res_birth_date).toString());
-                    modelBuilder.withPatient_email(PatientjsonObj.get(Res_email).toString());
-                    modelBuilder.withPatient_id(PatientjsonObj.get(Res_id).toString());
-                    modelBuilder.withPatient_avatar(PatientjsonObj.get(Res_avatar).toString());
-                    modelBuilder.withPatient_avatarThumb(PatientjsonObj.get(Res_avatar_thumb).toString());
+                    modelBuilder.withPatient_full_name(PatientjsonObj.optString(Res_full_name,""));
+                    modelBuilder.withPatient_gender(Integer.valueOf(PatientjsonObj.optString(Res_gender,"0")).intValue());
+                    modelBuilder.withPatient_phone(PatientjsonObj.optString(Res_phone,""));
+                    modelBuilder.withPatient_birth_date(PatientjsonObj.optString(Res_birth_date,""));
+                    modelBuilder.withPatient_email(PatientjsonObj.optString(Res_email,""));
+                    modelBuilder.withPatient_id(PatientjsonObj.optString(Res_id,""));
+                    modelBuilder.withPatient_avatar(PatientjsonObj.optString(Res_avatar,""));
+                    modelBuilder.withPatient_avatarThumb(PatientjsonObj.optString(Res_avatar_thumb,""));
                 }
 
             }

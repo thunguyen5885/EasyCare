@@ -307,7 +307,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 itemDataList.add(item);
             }
             if(mCallback!=null)
-                mCallback.onResponseOK(itemDataList);
+                mCallback.onResponseOK(itemDataList,ExaminationAppointmentItemData.class);
 
         }
         else if(result instanceof AppointmentWSModel){
@@ -349,7 +349,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
             item.setExaminationFirstVisit(appointmentModel.getFirst_visit()==0?false:true);
 
             if(mCallback!=null)
-                mCallback.onResponseOK(item);
+                mCallback.onResponseOK(item,ExaminationAppointmentItemData.class);
         }else if(result instanceof ClinicAddressListWSModel){
             ClinicAddressListWSModel addressListModel = (ClinicAddressListWSModel)result;
             List<DoctorClinicAddressItemData> itemDataList = new ArrayList<DoctorClinicAddressItemData>();
@@ -360,7 +360,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 itemDataList.add(item);
             }
             if(mCallback!=null)
-                mCallback.onResponseOK(itemDataList);
+                mCallback.onResponseOK(itemDataList,DoctorClinicAddressItemData.class);
         }
 
     }

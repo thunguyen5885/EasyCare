@@ -49,13 +49,14 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
         }
     }
 
+
     @Override
-    public void onResponseOK(IBaseItemData itemData) {
+    public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
 
     }
 
     @Override
-    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
+    public <T extends IBaseItemData> void onResponseOK(List<T> itemDataList, Class<T>... itemDataClass) {
         List<CommentAndAssessmentItemData> commentAndAssessmentItemsList = (List<CommentAndAssessmentItemData>) itemDataList;
         iView.DisplayAllCommentAndAssessmentForDoctor(commentAndAssessmentItemsList);
     }

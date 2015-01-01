@@ -66,8 +66,9 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
       //  iView.DisplayAllDoctorClinicAddresses();
     }
 
+
     @Override
-    public void onResponseOK(IBaseItemData itemData) {
+    public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
         ExaminationScheduleItemData scheduleItemData = (ExaminationScheduleItemData)itemData;
         if(scheduleItemData.getAction()== AppConstants.SCHEDULE_ACTION.VIEWDETAIL)
             iView.DisplayAnExaminationSchedule(scheduleItemData);
@@ -78,17 +79,13 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
     }
 
     @Override
-    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
-        if(itemDataList instanceof List<?>){
-            ParameterizedType pt = (ParameterizedType)itemDataList.getClass().getGenericSuperclass();
-            String innerClass = pt.getActualTypeArguments()[0].toString().replace("class ", "");
-            if(innerClass.equals(ExaminationScheduleItemData.class)){
-                List<ExaminationScheduleItemData> itemScheduleList = (List<ExaminationScheduleItemData>)itemDataList;
-                iView.DisplayAllExaminationSchedulesForSeletedDate(itemScheduleList);
-            }else if(innerClass.equals(DoctorClinicAddressItemData.class)){
-                List<DoctorClinicAddressItemData> itemAddressesList = (List<DoctorClinicAddressItemData>)itemDataList;
-                iView.DisplayAllDoctorClinicAddresses(itemAddressesList);
-            }
+    public <T extends IBaseItemData> void onResponseOK(List<T> itemDataList, Class<T>... itemDataClass) {
+        if(itemDataClass[0].equals(ExaminationScheduleItemData.class)){
+            List<ExaminationScheduleItemData> itemScheduleList = (List<ExaminationScheduleItemData>)itemDataList;
+            iView.DisplayAllExaminationSchedulesForSeletedDate(itemScheduleList);
+        }else if(itemDataClass[0].equals(DoctorClinicAddressItemData.class)){
+            List<DoctorClinicAddressItemData> itemAddressesList = (List<DoctorClinicAddressItemData>)itemDataList;
+            iView.DisplayAllDoctorClinicAddresses(itemAddressesList);
         }
     }
 

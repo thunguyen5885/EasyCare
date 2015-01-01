@@ -67,8 +67,9 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
         iView.DisplayAllAppointmentForPatient(patientID);
     }
 
+
     @Override
-    public void onResponseOK(IBaseItemData itemData) {
+    public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
         PatientManagementItemData patientItem = (PatientManagementItemData)itemData;
         if(mIsBlockPatient){
             iView.DisplayMessageForBlockPatient("");
@@ -78,12 +79,12 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     }
 
     @Override
-    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
-        List<PatientManagementItemData> itemPatienList = (List<PatientManagementItemData>)itemDataList;
+    public <T extends IBaseItemData> void onResponseOK(List<T> itemDataList, Class<T>... itemDataClass) {
+        List<PatientManagementItemData> itemPatientList = (List<PatientManagementItemData>)itemDataList;
         if(mIsBlockPatient){
-            iView.DisplayAllBlockedPatientsForDoctor(itemPatienList);
+            iView.DisplayAllBlockedPatientsForDoctor(itemPatientList);
         }else{
-            iView.DisplayAllAvailablePatientsForDoctor(itemPatienList);
+            iView.DisplayAllAvailablePatientsForDoctor(itemPatientList);
         }
     }
 

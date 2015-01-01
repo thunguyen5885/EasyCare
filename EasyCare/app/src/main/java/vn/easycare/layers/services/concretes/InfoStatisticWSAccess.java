@@ -69,16 +69,16 @@ public class InfoStatisticWSAccess extends AbstractWSAccess<InfoStatisticWSModel
             JSONObject jsonBigObj = new JSONObject(jsonResponse);
             JSONObject jsonObj = (JSONObject)jsonBigObj.get(Res_statistics);
             if(jsonObj!=null) {
-                modelBuilder.withTotalViewed(Integer.valueOf(jsonObj.get(Res_totalViewed).toString()).intValue());
-                modelBuilder.withTotalAppointment(Integer.valueOf(jsonObj.get(Res_totalAppointment).toString()).intValue());
-                modelBuilder.withTotalWaitingAppointment(Integer.valueOf(jsonObj.get(Res_totalWaitingAppointment).toString()).intValue());
-                modelBuilder.withTotalCommonRating(Integer.valueOf(jsonObj.get(Res_totalCommonRating).toString()).intValue());
-                modelBuilder.withTotalFacilityRating(Integer.valueOf(jsonObj.get(Res_totalFacilityRating).toString()).intValue());
-                modelBuilder.withTotalWaitingTimeRating(Integer.valueOf(jsonObj.get(Res_totalWaitingTimeRating).toString()).intValue());
-                modelBuilder.withTotalComment(Integer.valueOf(jsonObj.get(Res_totalComment).toString()).intValue());
-                modelBuilder.withAvgCommonRating(Float.valueOf(jsonObj.get(Res_avgCommonRating).toString()).floatValue());
-                modelBuilder.withAvgFacilityRating(Float.valueOf(jsonObj.get(Res_avgFacilityRating).toString()).floatValue());
-                modelBuilder.withAvgWaitingTimeRating(Float.valueOf(jsonObj.get(Res_avgWaitingTimeRating).toString()).floatValue());
+                modelBuilder.withTotalViewed(Integer.valueOf(jsonObj.optString(Res_totalViewed,"0")).intValue());
+                modelBuilder.withTotalAppointment(Integer.valueOf(jsonObj.optString(Res_totalAppointment,"0")).intValue());
+                modelBuilder.withTotalWaitingAppointment(Integer.valueOf(jsonObj.optString(Res_totalWaitingAppointment,"0")).intValue());
+                modelBuilder.withTotalCommonRating(Integer.valueOf(jsonObj.optString(Res_totalCommonRating,"0")).intValue());
+                modelBuilder.withTotalFacilityRating(Integer.valueOf(jsonObj.optString(Res_totalFacilityRating,"0")).intValue());
+                modelBuilder.withTotalWaitingTimeRating(Integer.valueOf(jsonObj.optString(Res_totalWaitingTimeRating,"0")).intValue());
+                modelBuilder.withTotalComment(Integer.valueOf(jsonObj.optString(Res_totalComment,"0")).intValue());
+                modelBuilder.withAvgCommonRating(Float.valueOf(jsonObj.optString(Res_avgCommonRating,"0")).floatValue());
+                modelBuilder.withAvgFacilityRating(Float.valueOf(jsonObj.optString(Res_avgFacilityRating,"0")).floatValue());
+                modelBuilder.withAvgWaitingTimeRating(Float.valueOf(jsonObj.optString(Res_avgWaitingTimeRating,"0")).floatValue());
             }
             if(mCallback!=null)
                 mCallback.onWSResponseOK(modelBuilder.build());

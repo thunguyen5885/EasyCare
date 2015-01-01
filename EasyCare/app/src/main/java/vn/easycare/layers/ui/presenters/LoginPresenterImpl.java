@@ -43,13 +43,14 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
 
     }
 
+
     @Override
-    public void onResponseOK(IBaseItemData itemData) {
+    public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
         iView.LoginOK("");
     }
 
     @Override
-    public void onResponseOK(List<? extends IBaseItemData> itemDataList) {
+    public <T extends IBaseItemData> void onResponseOK(List<T> itemDataList, Class<T>... itemDataClass) {
 
     }
 

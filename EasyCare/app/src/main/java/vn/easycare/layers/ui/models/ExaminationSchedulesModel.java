@@ -178,14 +178,14 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
                 itemDataList.add(item);
             }
             if(mCallback!=null)
-                mCallback.onResponseOK(itemDataList);
+                mCallback.onResponseOK(itemDataList,ExaminationScheduleItemData.class);
         }else if(result instanceof ScheduleWSModel){
             ScheduleWSModel scheduleModel = (ScheduleWSModel)result;
             ExaminationScheduleItemData item = new ExaminationScheduleItemData();
             item.setScheduleId(scheduleModel.getId());
             item.setAction(scheduleModel.getAction());
             if(mCallback!=null)
-                mCallback.onResponseOK(item);
+                mCallback.onResponseOK(item,ExaminationScheduleItemData.class);
         }else if(result instanceof ClinicAddressListWSModel){
             ClinicAddressListWSModel addressListModel = (ClinicAddressListWSModel)result;
             List<DoctorClinicAddressItemData> itemDataList = new ArrayList<DoctorClinicAddressItemData>();
@@ -196,7 +196,7 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
                 itemDataList.add(item);
             }
             if(mCallback!=null)
-                mCallback.onResponseOK(itemDataList);
+                mCallback.onResponseOK(itemDataList,DoctorClinicAddressItemData.class);
         }
     }
 

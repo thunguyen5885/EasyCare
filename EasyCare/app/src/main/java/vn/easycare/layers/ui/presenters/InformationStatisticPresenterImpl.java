@@ -36,13 +36,14 @@ public class InformationStatisticPresenterImpl implements IInformationStatisticP
         iModel.getAllInfoStatisticForDoctor();
     }
 
+
     @Override
-    public void onResponseOK(IBaseItemData itemData) {
+    public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
         iView.DisplayAllInfoStatisticForDoctor((InformationStatisticItemData) itemData);
     }
 
     @Override
-    public void onResponseOK(List<? extends  IBaseItemData> itemDataList) {
+    public <T extends IBaseItemData> void onResponseOK(List<T> itemDataList, Class<T>... itemDataClass) {
 
     }
 
