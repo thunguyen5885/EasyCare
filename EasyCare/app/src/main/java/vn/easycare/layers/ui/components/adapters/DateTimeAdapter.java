@@ -15,6 +15,7 @@ import java.util.Random;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 import vn.easycare.layers.ui.fragments.TimeRangeSelectionFragment;
 import vn.easycare.utils.AppFnUtils;
 
@@ -30,6 +31,7 @@ public class DateTimeAdapter extends BaseAdapter{
     // For data, object
     private List<String> mTimeList = new ArrayList<String>();
     private boolean mIsClicked = false;
+    private List<ExaminationScheduleItemData> mItemDataList;
     public DateTimeAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
@@ -45,6 +47,7 @@ public class DateTimeAdapter extends BaseAdapter{
         mTimeList.add("21:00");
 
     }
+    public void setItemDataList(List<ExaminationScheduleItemData> itemDataList){mItemDataList = itemDataList;}
     @Override
     public int getCount() {
         return mTimeList.size();
@@ -81,6 +84,8 @@ public class DateTimeAdapter extends BaseAdapter{
         viewHolder.mAdd.setTag(position);
         viewHolder.mAdd.setOnClickListener(mOnClickListener);
 
+        viewHolder.mHightlight.setTag(position);
+        viewHolder.mHightlight.setOnClickListener(mOnClickListener);
         // Set data
         String timeAtPos = mTimeList.get(position);
         if(timeAtPos.contains("00")){
@@ -118,6 +123,7 @@ public class DateTimeAdapter extends BaseAdapter{
             }, 500);
             switch (v.getId()){
                 case R.id.ivDateAdd:
+                case R.id.vDateHightlight:
                     // Go to time range screen
                     TimeRangeSelectionFragment timeRangeSelectionFragment = new TimeRangeSelectionFragment();
                     ((HomeActivity)mContext).showFragment(timeRangeSelectionFragment);

@@ -95,4 +95,7 @@ public class AppointmentTimeData {
         calendar.set(Calendar.MINUTE, minute);
         return sdf.format(calendar.getTime());
     }
+    public boolean isValidateDate(){
+        return year != -1 && month != -1 && day != -1;
+    }
 }

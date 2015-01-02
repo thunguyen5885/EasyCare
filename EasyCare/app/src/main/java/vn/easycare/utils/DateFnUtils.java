@@ -3,6 +3,7 @@ package vn.easycare.utils;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.fragments.CalendarCreatingFragment;
 
 /**
@@ -42,16 +43,16 @@ public class DateFnUtils {
         return result;
     }
 
-    public static void nextDate(CalendarCreatingFragment.MyDate myDate){
+    public static void nextDate(AppointmentTimeData myDate){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(myDate.getSelectedYear(), myDate.getSelectedMonth() , myDate.getSelectedDay());
+        calendar.set(myDate.getYear(), myDate.getMonth() , myDate.getDay());
         calendar.add(Calendar.DAY_OF_MONTH, 1);
 
         myDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
-    public static void previousDate(CalendarCreatingFragment.MyDate myDate){
+    public static void previousDate(AppointmentTimeData myDate){
         Calendar calendar = Calendar.getInstance();
-        calendar.set(myDate.getSelectedYear(), myDate.getSelectedMonth() , myDate.getSelectedDay());
+        calendar.set(myDate.getYear(), myDate.getMonth() , myDate.getDay());
         calendar.add(Calendar.DAY_OF_MONTH, -1);
 
         myDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));

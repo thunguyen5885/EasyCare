@@ -220,7 +220,7 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
                     @Override
                     public void run() {
                         // Change examination based on appointment time
-                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), "", "", 0, mEdtDoctorComment.getText().toString());
+                        mPresenter.updateDoctorNotes(mItemData.getExaminationId(), mEdtDoctorComment.getText().toString().trim());
                     }
                 }, 2000);
                 break;
@@ -364,7 +364,10 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
 
     @Override
     public void DisplayMessageForUpdateDoctorNote(String message) {
-
+        boolean isUpdatedDone = true;
+        if(isUpdatedDone){
+            // Display message done for user
+        }
     }
 
     @Override
