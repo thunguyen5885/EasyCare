@@ -6,7 +6,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
-import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
 import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 import vn.easycare.layers.ui.models.ExaminationSchedulesModel;
@@ -57,7 +56,6 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
     @Override
     public void deleteExaminationSchedule(String scheduleId) {
         iModel.doDeleteExaminationSchedule(scheduleId);
-
     }
 
     @Override
@@ -75,7 +73,7 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
         else if(scheduleItemData.getAction()== AppConstants.SCHEDULE_ACTION.CREATE ||
                 scheduleItemData.getAction()== AppConstants.SCHEDULE_ACTION.UPDATE ||
                 scheduleItemData.getAction()== AppConstants.SCHEDULE_ACTION.DELETE)
-            iView.DisplayMessageForScheduleAction("");
+            iView.DisplayMessageForScheduleActionComplete("");
     }
 
     @Override
@@ -91,6 +89,6 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
 
     @Override
     public void onResponseFail(String message) {
-
+        iView.DisplayMessageIncaseError(message);
     }
 }

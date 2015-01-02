@@ -82,15 +82,17 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
                 params.put(Param_time_to, mParam.getTime_to());
                 params.put(Param_time_slots, mParam.getTime_slots());
                 params.put(Param_doctor_address_id, mParam.getAddress_doctor_id());
+                params.put(Param_doctor_notes, mParam.getDoctor_notes());
                 return  params;
             case UPDATE:
                 params.put(Param_Token, mParam.getToken());
                 params.put(Param_Id, mParam.getScheduleId());
-                params.put(Param_date, mParam.getDate());
+                params.put(Param_date, mParam.getDate());//waiting for confirm......??????????????????????
                 params.put(Param_time_from, mParam.getTime_from());
                 params.put(Param_time_to, mParam.getTime_to());
                 params.put(Param_time_slots, mParam.getTime_slots());
                 params.put(Param_doctor_address_id, mParam.getAddress_doctor_id());
+                params.put(Param_doctor_notes, mParam.getDoctor_notes());
                 return  params;
             case DELETE:
                 params.put(Param_Token, mParam.getToken());

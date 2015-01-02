@@ -11,6 +11,7 @@ import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 public interface IExaminationSchedulesView {
     void DisplayAllExaminationSchedulesForSeletedDate(List<ExaminationScheduleItemData> scheduleItemsList);
     void DisplayAnExaminationSchedule(ExaminationScheduleItemData scheduleItem);
-    void DisplayMessageForScheduleAction(String message);
+    void DisplayMessageForScheduleActionComplete(String message);
     void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList);
+    void DisplayMessageIncaseError(String message);
 }
