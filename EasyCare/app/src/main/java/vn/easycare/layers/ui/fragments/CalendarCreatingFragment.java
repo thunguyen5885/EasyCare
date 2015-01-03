@@ -1,6 +1,7 @@
 package vn.easycare.layers.ui.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
     private boolean mIsClicked = false;
     private List<ExaminationScheduleItemData> mItemDataList;
     private IExaminationSchedulesPresenter mPresenter;
-    
+    private ProgressBar mPbLoading;
 
     public CalendarCreatingFragment(){
         mMyDate = new AppointmentTimeData();
@@ -62,6 +64,7 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
         mPreviousDayLayout = v.findViewById(R.id.previousDayLayout);
         mTvDay = (TextView) v.findViewById(R.id.tvDateTime);
         mCalendarListView = (ListView) v.findViewById(R.id.calendarListView);
+        mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
 
         // Set on click
         mCalendarLayout.setOnClickListener(this);
@@ -83,10 +86,6 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
 
         // Update text
         loadData();
-
-        // Create data for listview
-        mDateTimeAdapter = new DateTimeAdapter(getActivity());
-        mCalendarListView.setAdapter(mDateTimeAdapter);
     }
 
     @Override
@@ -139,6 +138,9 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
         // Update date time text
         updateDateTimeText();
 
+        mPbLoading.setVisibility(View.VISIBLE);
+        mCalendarListView.setVisibility(View.GONE);
+
         // Call API to get the schedules
         mPresenter.loadAllExaminationSchedulesForSpecificDate(mMyDate.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD));
     }
@@ -148,7 +150,17 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
         }
     }
     private void updateUI(){
+        mPbLoading.setVisibility(View.GONE);
+        mCalendarListView.setVisibility(View.VISIBLE);
 
+        if(mDateTimeAdapter == null) {
+            // Create data for listview
+            mDateTimeAdapter = new DateTimeAdapter(getActivity());
+            mDateTimeAdapter.setItemDataList(mItemDataList);
+            mCalendarListView.setAdapter(mDateTimeAdapter);
+        }else {
+            mDateTimeAdapter.notifyDataSetChanged();
+        }
     }
     private void animationForNext(){
         mTvDay.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.anim_slide_in_left));
@@ -175,7 +187,8 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
 
     @Override
     public void DisplayAllExaminationSchedulesForSeletedDate(List<ExaminationScheduleItemData> scheduleItemsList) {
-
+        mItemDataList = scheduleItemsList;
+        updateUI();
     }
 
     @Override

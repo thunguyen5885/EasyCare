@@ -1,12 +1,14 @@
 package vn.easycare.layers.ui.components.data;
 
+import java.io.Serializable;
+
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/24/2014.
  */
-public class ExaminationScheduleItemData implements IBaseItemData {
+public class ExaminationScheduleItemData implements IBaseItemData, Serializable {
     String scheduleId;
     String scheduleDate;//yyyy-MM-dd
     String timeFrom;//hh:mm:ss
@@ -91,5 +93,36 @@ public class ExaminationScheduleItemData implements IBaseItemData {
 
     public void setAction(AppConstants.SCHEDULE_ACTION action) {
         this.action = action;
+    }
+
+    public int getHourFrom(){
+        if(timeFrom != null && timeFrom.contains(":")) {
+            String[] timeArr = timeFrom.split(":");
+            return Integer.parseInt(timeArr[0]);
+        }
+        return 0;
+
+    }
+    public int getHourTo(){
+        if(timeTo != null && timeTo.contains(":")) {
+            String[] timeArr = timeTo.split(":");
+            return Integer.parseInt(timeArr[0]);
+        }
+        return 0;
+    }
+    public int getMinuteFrom(){
+        if(timeFrom != null && timeFrom.contains(":")) {
+            String[] timeArr = timeFrom.split(":");
+            return Integer.parseInt(timeArr[1]);
+        }
+        return 0;
+    }
+    public int getMinuteTo(){
+        if(timeTo != null && timeTo.contains(":")) {
+            String[] timeArr = timeTo.split(":");
+            return Integer.parseInt(timeArr[1]);
+        }
+        return 0;
+
     }
 }

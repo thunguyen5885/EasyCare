@@ -29,25 +29,75 @@ public class DateTimeAdapter extends BaseAdapter{
     private LayoutInflater mLayoutInflater;
 
     // For data, object
-    private List<String> mTimeList = new ArrayList<String>();
+    private List<MyTime> mTimeList = new ArrayList<MyTime>();
     private boolean mIsClicked = false;
     private List<ExaminationScheduleItemData> mItemDataList;
     public DateTimeAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
-
-        // Create data
-        for(int index = START_TIME; index < END_TIME; index++){
-            String time = (index < 10) ? ("0" + index) : (index + "");
-            mTimeList.add(time + ":00");
-            mTimeList.add(time + ":15");
-            mTimeList.add(time + ":30");
-            mTimeList.add(time + ":45");
-        }
-        mTimeList.add("21:00");
-
     }
-    public void setItemDataList(List<ExaminationScheduleItemData> itemDataList){mItemDataList = itemDataList;}
+    public void setItemDataList(List<ExaminationScheduleItemData> itemDataList){
+        mItemDataList = itemDataList;
+        createDisplayList();
+    }
+
+    private void createDisplayList(){
+        for(int index = START_TIME; index < END_TIME; index++){
+            ExaminationScheduleItemData foundItem = null;
+            int pos = 0;
+            for(; pos < mItemDataList.size(); pos++){
+                ExaminationScheduleItemData itemData = mItemDataList.get(pos);
+                if(index <= itemData.getHourTo() && index >= itemData.getHourFrom()){
+                    foundItem = itemData;
+                    break;
+                }
+            }
+            if(foundItem != null){
+                int timeSlot = foundItem.getTimeSlot();
+                for(int hourIndex = foundItem.getHourFrom(); hourIndex <= foundItem.getHourTo(); hourIndex++){
+                    int timeSlotThreshold = 59;
+                    if(hourIndex == foundItem.getHourTo()){
+                        timeSlotThreshold = foundItem.getMinuteTo();
+                    }
+                    int timeSlotStart = 0;
+                    if(hourIndex == foundItem.getHourFrom()){
+                        timeSlotStart = foundItem.getMinuteFrom();
+                    }
+                    for(int timeSlotIndex = timeSlotStart; timeSlotIndex <= timeSlotThreshold; timeSlotIndex += timeSlot) {
+                        MyTime myTime = new MyTime();
+                        myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ((timeSlotIndex > 9)?(timeSlotIndex+""):("0" + timeSlotIndex));
+                        myTime.isSelected = false;
+                        myTime.selectedPosInMainList = -1;
+
+                        boolean isInRange = hourIndex > foundItem.getHourFrom() || (hourIndex == foundItem.getHourFrom() && timeSlot <= foundItem.getMinuteFrom());
+                        if(isInRange){
+                            myTime.isSelected = true;
+                            myTime.selectedPosInMainList = pos;
+                        }
+                        mTimeList.add(myTime);
+                    }
+                }
+                index = foundItem.getHourTo();
+            }else{
+                MyTime myTime = new MyTime();
+                myTime.displayText = (index > 9 ? (index + ""): ("0"+index)) + ":00";
+                myTime.isSelected = false;
+                myTime.selectedPosInMainList = -1;
+                mTimeList.add(myTime);
+
+            }
+        }
+    }
+    private ExaminationScheduleItemData findTimeStartInList(int hour){
+        ExaminationScheduleItemData foundItem = null;
+        for(ExaminationScheduleItemData itemData: mItemDataList){
+            if(hour <= itemData.getHourTo() && hour >= itemData.getHourFrom()){
+                foundItem = itemData;
+                break;
+            }
+        }
+        return  foundItem;
+    }
     @Override
     public int getCount() {
         return mTimeList.size();
@@ -86,18 +136,18 @@ public class DateTimeAdapter extends BaseAdapter{
 
         viewHolder.mHightlight.setTag(position);
         viewHolder.mHightlight.setOnClickListener(mOnClickListener);
-        // Set data
-        String timeAtPos = mTimeList.get(position);
+        // Set data text
+        String timeAtPos = mTimeList.get(position).displayText;
         if(timeAtPos.contains("00")){
             viewHolder.mTvTime.setTextColor(mContext.getResources().getColor(R.color.textview_color_default));
         }else {
             viewHolder.mTvTime.setTextColor(mContext.getResources().getColor(R.color.textview_color_grey));
         }
         viewHolder.mTvTime.setText(timeAtPos);
-        // Random to set background
-        Random random = new Random();
-        int rand = random.nextInt(10);
-        if(rand % 2 != 0){
+
+        // Set background
+        boolean isSelected = mTimeList.get(position).isSelected;
+        if(isSelected){
             viewHolder.mHightlight.setBackgroundColor(mContext.getResources().getColor(R.color.header_background_color));
         }else{
             viewHolder.mHightlight.setBackgroundColor(Color.TRANSPARENT);
@@ -131,6 +181,11 @@ public class DateTimeAdapter extends BaseAdapter{
             }
         }
     };
+    private class MyTime{
+        private boolean isSelected;
+        private int selectedPosInMainList;
+        private String displayText;
+    }
     private static class ViewHolder{
         private TextView mTvTime;
         private View mHightlight;
