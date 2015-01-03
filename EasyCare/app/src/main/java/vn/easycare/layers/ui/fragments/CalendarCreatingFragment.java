@@ -197,12 +197,17 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
     }
 
     @Override
-    public void DisplayMessageForScheduleAction(String message) {
+    public void DisplayMessageForScheduleActionComplete(String message) {
 
     }
 
     @Override
     public void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList) {
+
+    }
+
+    @Override
+    public void DisplayMessageIncaseError(String message) {
 
     }
 }
