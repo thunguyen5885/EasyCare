@@ -365,9 +365,13 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
     @Override
     public void DisplayMessageForUpdateDoctorNote(String message) {
         boolean isUpdatedDone = true;
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
         if(isUpdatedDone){
             // Display message done for user
         }
+
     }
 
     @Override

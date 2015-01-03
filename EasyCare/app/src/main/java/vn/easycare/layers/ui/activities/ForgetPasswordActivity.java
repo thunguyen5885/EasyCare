@@ -32,7 +32,7 @@ import vn.easycare.utils.AppFnUtils;
  * Created by phan on 12/15/2014.
  */
 public class ForgetPasswordActivity extends BaseActivity implements CommonHeader.IOnHeaderClickListener{
-    final String REQUEST_NEW_PASS_URL = "http://edev.easycare.vn/api/v1/users/login?email=gdgfdgd&password=ldgfd";
+    final String REQUEST_NEW_PASS_URL = "http://edev.easycare.vn/api/v1/users/request_new_password?email=%s";
     EditText edtUserEmail;
     private CommonHeader mCommonHeader;
     @Override
@@ -53,9 +53,9 @@ public class ForgetPasswordActivity extends BaseActivity implements CommonHeader
         submitLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // sendRequestNewPassword(edtUserEmail.getText().toString());
-                volleyTest();
-                Toast.makeText(ForgetPasswordActivity.this, "Send clicked", Toast.LENGTH_SHORT).show();
+                sendRequestNewPassword(edtUserEmail.getText().toString());
+                //volleyTest();
+                //Toast.makeText(ForgetPasswordActivity.this, "Send clicked", Toast.LENGTH_SHORT).show();
             }
         });
         // Apply font
@@ -86,7 +86,7 @@ public class ForgetPasswordActivity extends BaseActivity implements CommonHeader
     }
 
     private void sendRequestNewPassword(final String email){
-        StringRequest sr = new StringRequest(Request.Method.GET, REQUEST_NEW_PASS_URL, new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.GET, String.format(REQUEST_NEW_PASS_URL,email), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(ForgetPasswordActivity.this, ForgetPasswordActivity.this.getResources().getString(R.string.forget_password_message_ok), Toast.LENGTH_SHORT).show();
@@ -94,7 +94,12 @@ public class ForgetPasswordActivity extends BaseActivity implements CommonHeader
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(ForgetPasswordActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                NetworkResponse response = error.networkResponse;
+                if(response != null && response.data != null){
+                    String texterror = new String(response.data);
+                    Toast.makeText(ForgetPasswordActivity.this, texterror, Toast.LENGTH_SHORT).show();
+                }
+
             }
         }){
             @Override
