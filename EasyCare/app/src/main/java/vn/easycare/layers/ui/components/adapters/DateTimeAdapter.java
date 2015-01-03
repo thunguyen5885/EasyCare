@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -43,41 +45,48 @@ public class DateTimeAdapter extends BaseAdapter{
 
     private void createDisplayList(){
         for(int index = START_TIME; index < END_TIME; index++){
-            ExaminationScheduleItemData foundItem = null;
-            int pos = 0;
-            for(; pos < mItemDataList.size(); pos++){
+
+            HashMap<Integer, ExaminationScheduleItemData> foundItemMap = new HashMap<Integer, ExaminationScheduleItemData>();
+            for(int pos = 0; pos < mItemDataList.size(); pos++){
                 ExaminationScheduleItemData itemData = mItemDataList.get(pos);
                 if(index <= itemData.getHourTo() && index >= itemData.getHourFrom()){
-                    foundItem = itemData;
-                    break;
+                    foundItemMap.put(pos, itemData);
                 }
             }
-            if(foundItem != null){
-                int timeSlot = foundItem.getTimeSlot();
-                for(int hourIndex = foundItem.getHourFrom(); hourIndex <= foundItem.getHourTo(); hourIndex++){
-                    int timeSlotThreshold = 59;
-                    if(hourIndex == foundItem.getHourTo()){
-                        timeSlotThreshold = foundItem.getMinuteTo();
-                    }
-                    int timeSlotStart = 0;
-                    if(hourIndex == foundItem.getHourFrom()){
-                        timeSlotStart = foundItem.getMinuteFrom();
-                    }
-                    for(int timeSlotIndex = timeSlotStart; timeSlotIndex <= timeSlotThreshold; timeSlotIndex += timeSlot) {
-                        MyTime myTime = new MyTime();
-                        myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ((timeSlotIndex > 9)?(timeSlotIndex+""):("0" + timeSlotIndex));
-                        myTime.isSelected = false;
-                        myTime.selectedPosInMainList = -1;
+            if(foundItemMap.size() > 0){
+                Iterator<Integer> iterator = foundItemMap.keySet().iterator();
+                
+                while(iterator.hasNext()) {
+                    Integer selectedPos = iterator.next();
+                    ExaminationScheduleItemData foundItem = foundItemMap.get(selectedPos);
+                    if (foundItem != null) {
+                        int timeSlot = foundItem.getTimeSlot();
+                        for (int hourIndex = foundItem.getHourFrom(); hourIndex <= foundItem.getHourTo(); hourIndex++) {
+                            int timeSlotThreshold = 59;
+                            if (hourIndex == foundItem.getHourTo()) {
+                                timeSlotThreshold = foundItem.getMinuteTo();
+                            }
+                            int timeSlotStart = 0;
+                            if (hourIndex == foundItem.getHourFrom()) {
+                                timeSlotStart = foundItem.getMinuteFrom();
+                            }
+                            for (int timeSlotIndex = timeSlotStart; timeSlotIndex <= timeSlotThreshold; timeSlotIndex += timeSlot) {
+                                MyTime myTime = new MyTime();
+                                myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ((timeSlotIndex > 9) ? (timeSlotIndex + "") : ("0" + timeSlotIndex));
+                                myTime.isSelected = false;
+                                myTime.selectedPosInMainList = -1;
 
-                        boolean isInRange = hourIndex > foundItem.getHourFrom() || (hourIndex == foundItem.getHourFrom() && timeSlot <= foundItem.getMinuteFrom());
-                        if(isInRange){
-                            myTime.isSelected = true;
-                            myTime.selectedPosInMainList = pos;
+                                boolean isInRange = hourIndex > foundItem.getHourFrom() || (hourIndex == foundItem.getHourFrom() && timeSlot <= foundItem.getMinuteFrom());
+                                if (isInRange) {
+                                    myTime.isSelected = true;
+                                    myTime.selectedPosInMainList = selectedPos;
+                                }
+                                mTimeList.add(myTime);
+                            }
                         }
-                        mTimeList.add(myTime);
+                        index = foundItem.getHourTo();
                     }
                 }
-                index = foundItem.getHourTo();
             }else{
                 MyTime myTime = new MyTime();
                 myTime.displayText = (index > 9 ? (index + ""): ("0"+index)) + ":00";
