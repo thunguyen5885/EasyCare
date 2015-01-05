@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.fragments;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,11 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.adapters.SimpleTextAdapter;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 import vn.easycare.layers.ui.presenters.ExaminationSchedulesPresenterImpl;
@@ -23,6 +24,7 @@ import vn.easycare.layers.ui.presenters.base.IExaminationSchedulesPresenter;
 import vn.easycare.layers.ui.views.IExaminationSchedulesView;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by ThuNguyen on 12/13/2014.
@@ -47,6 +49,7 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
     private View mSaveLayout;
     private View mDeleteLayout;
 
+    private Dialog mLoadingDialog;
     // For data, object
     private boolean mIsClicked = false;
     private IExaminationSchedulesPresenter mPresenter;
@@ -56,6 +59,12 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
     private List<CalendarTime> mTimeFromList;
     private List<CalendarTime> mTimeToList;
     private List<Integer> mTimeSlotList;
+
+    private int mTimeFromIndex;
+    private int mTimeToIndex;
+    private int mTimeSlotIndex;
+    private int mAddressIndex;
+
     public TimeRangeSelectionFragment(){
 
     }
@@ -99,8 +108,11 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         mPresenter.loadAllAddressesForDoctor();
 
         // Create time slot list
-        mTimeSlotList = Arrays.asList(TIME_SLOTS);
-
+        //mTimeSlotList = Arrays.asList(TIME_SLOTS);
+        mTimeSlotList = new ArrayList<Integer>();
+        for(int index = 1; index <= 30; index++){
+           mTimeSlotList.add(index);
+        }
         // Get arguments
         Bundle bundle = getArguments();
         if(bundle != null){
@@ -134,18 +146,44 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         mTvDate.setText(mItemData.getScheduleDate());
         mTimeFromList = createCalendarTimeListFromTimeSlot(0);
         mTimeToList = createCalendarTimeListFromTimeSlot(0);
+
+        // For time info
+        mTimeFromIndex = 0;
+        mTimeToIndex = 0;
+        mTimeSlotIndex = 0;
+        mAddressIndex = 0;
+        updateTime();
     }
     private void updateUIWithUpdatedItem(){
         mDeleteLayout.setVisibility(View.VISIBLE);
         mTvDate.setText(AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD, AppConstants.DATE_FORMAT_DD_MM_YYYY, mItemData.getScheduleDate()));
         mTimeFromList = createCalendarTimeListFromTimeSlot(mItemData.getTimeSlot());
         mTimeToList = createCalendarTimeListFromTimeSlot(mItemData.getTimeSlot());
-        mTvAverageTime.setText(String.valueOf(mItemData.getTimeSlot()));
-        mTvFromTime.setText(mItemData.getDisplayForHourMinuteFrom());
-        mTvToTime.setText(mItemData.getDisplayForHourMinuteTo());
         mEdtComment.setText(mItemData.getNote());
+        mTimeFromIndex = findItemInCalendarTimeList(mTimeFromList, mItemData.getHourFrom(), mItemData.getMinuteFrom());
+        mTimeToIndex = findItemInCalendarTimeList(mTimeToList, mItemData.getHourTo(), mItemData.getMinuteTo());
+        mTimeSlotIndex = findItemInSlotList(mTimeSlotList, mItemData.getTimeSlot());
+
+        updateTime();
     }
 
+    private void updateTime(){
+        if(mTimeFromIndex >= 0 && mTimeToIndex >= 0 && mTimeSlotIndex >= 0) {
+            CalendarTime timeFrom = mTimeFromList.get(mTimeFromIndex);
+            CalendarTime timeTo = mTimeToList.get(mTimeToIndex);
+            mTvFromTime.setText(timeFrom.getDisplayText());
+            mTvToTime.setText(timeTo.getDisplayText());
+
+            mTvAverageTime.setText(String.valueOf(mTimeSlotList.get(mTimeSlotIndex)));
+        }
+
+    }
+    private void updateAddress(){
+        if(mAddressIndex != -1){
+            DoctorClinicAddressItemData addressData = mDoctorAddressList.get(mAddressIndex);
+            mTvOfficeAddress.setText(addressData.getClinicAddress());
+        }
+    }
     @Override
     public void onClick(View v) {
         if(mIsClicked){
@@ -160,24 +198,63 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         }, 500);
         switch (v.getId()) {
             case R.id.rlFromTime:
-                Toast.makeText(getActivity(), "FromTime clicked", Toast.LENGTH_SHORT).show();
+                DialogUtil.showListViewDialog(getActivity(), mTimeFromList, new SimpleTextAdapter.IOnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(int selectedPos) {
+                        mTimeFromIndex = selectedPos;
+                        updateTime();
+                    }
+                });
                 break;
             case R.id.rlToTime:
-                Toast.makeText(getActivity(), "ToTime clicked", Toast.LENGTH_SHORT).show();
+                DialogUtil.showListViewDialog(getActivity(), mTimeToList, new SimpleTextAdapter.IOnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(int selectedPos) {
+                        mTimeToIndex = selectedPos;
+                        updateTime();
+                    }
+                });
                 break;
             case R.id.rlAverageTime:
-                Toast.makeText(getActivity(), "AverageTime clicked", Toast.LENGTH_SHORT).show();
+                DialogUtil.showListViewDialog(getActivity(), mTimeSlotList, new SimpleTextAdapter.IOnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(int selectedPos) {
+                        mTimeSlotIndex = selectedPos;
+                        updateTime();
+                    }
+                });
                 break;
             case R.id.rlOfficeAddressLayout:
-                Toast.makeText(getActivity(), "OfficeAddress clicked", Toast.LENGTH_SHORT).show();
+                DialogUtil.showListViewDialog(getActivity(), mDoctorAddressList, new SimpleTextAdapter.IOnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(int selectedPos) {
+                        mAddressIndex = selectedPos;
+                        updateAddress();
+                    }
+                });
                 break;
             case R.id.cancelLayout:
                 ((HomeActivity) getActivity()).onBackPressed();
                 break;
             case R.id.saveLayout:
-                ((HomeActivity) getActivity()).onBackPressed();
+                // Update data
+                mItemData.setDoctorAddressId(mDoctorAddressList.get(mAddressIndex).getClinicAddressId());
+                mItemData.setTimeFrom(mTimeFromList.get(mTimeFromIndex).getDisplayText());
+                mItemData.setTimeTo(mTimeToList.get(mTimeToIndex).getDisplayText());
+                mItemData.setTimeSlot(mTimeSlotList.get(mTimeSlotIndex));
+                mItemData.setNote(mEdtComment.getText().toString());
+
+                // Show dialog and start to update
+                mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
+                mLoadingDialog.show();
+                mPresenter.updateExaminationSchedule(mItemData);
+
                 break;
             case R.id.deleteLayout:
+                // Show dialog and start to update
+                mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
+                mLoadingDialog.show();
+                mPresenter.deleteExaminationSchedule(mItemData.getScheduleId());
                 break;
         }
     }
@@ -194,13 +271,26 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
 
     @Override
     public void DisplayMessageForScheduleActionComplete(String message) {
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        // Show dialog confirm done
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((HomeActivity) getActivity()).onBackPressed();
+            }
+        }, 500);
 
     }
 
     @Override
     public void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList) {
         mDoctorAddressList = doctorClinicAddressItemsList;
-
+        if(mDoctorAddressList != null && mDoctorAddressList.size() > 0){
+            mAddressIndex = findItemInAddressList(mDoctorAddressList, mItemData.getDoctorAddressId());
+            updateAddress();
+        }
     }
 
     @Override
@@ -229,7 +319,6 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
     private class CalendarTime{
         private int hour;
         private int minute;
-        private String displayText;
 
         public String getDisplayText(){
             String text = "";
@@ -244,7 +333,43 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
                 text += "0" + minute + "";
             }
             return text;
-
         }
+
+        @Override
+        public String toString() {
+            return getDisplayText();
+        }
+    }
+    private int findItemInCalendarTimeList(List<CalendarTime> calendarList, int hour, int minute){
+        int foundIndex = 0;
+        for(int index = 0; index < calendarList.size(); index++){
+            CalendarTime calendarTime = calendarList.get(index);
+            if(calendarTime.hour == hour && calendarTime.minute == minute){
+                foundIndex = index;
+                break;
+            }
+        }
+        return foundIndex;
+    }
+    private int findItemInSlotList(List<Integer> slotList, int slot){
+        int foundIndex = 0;
+        for(int index = 0; index < slotList.size(); index++){
+            if(slotList.get(index) == slot){
+                foundIndex = index;
+                break;
+            }
+        }
+        return foundIndex;
+    }
+    private int findItemInAddressList(List<DoctorClinicAddressItemData> addressList, String addressId){
+        int foundIndex = 0;
+        for(int index = 0; index < addressList.size(); index++){
+            DoctorClinicAddressItemData itemData = addressList.get(index);
+            if(itemData.getClinicAddressId().equalsIgnoreCase(addressId)){
+                foundIndex = index;
+                break;
+            }
+        }
+        return foundIndex;
     }
 }

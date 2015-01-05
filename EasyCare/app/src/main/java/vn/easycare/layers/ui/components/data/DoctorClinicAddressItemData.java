@@ -33,4 +33,9 @@ public class DoctorClinicAddressItemData implements IBaseItemData {
     public void setClinicAddressId(String clinicAddressId) {
         this.clinicAddressId = clinicAddressId;
     }
+
+    @Override
+    public String toString() {
+        return clinicAddress;
+    }
 }
