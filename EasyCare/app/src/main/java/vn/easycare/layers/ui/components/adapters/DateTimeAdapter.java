@@ -55,24 +55,37 @@ public class DateTimeAdapter extends BaseAdapter{
             }
             if(foundItemMap.size() > 0){
                 Iterator<Integer> iterator = foundItemMap.keySet().iterator();
-                
+                List<String> checkDuplicateList = new ArrayList<String>();
                 while(iterator.hasNext()) {
                     Integer selectedPos = iterator.next();
                     ExaminationScheduleItemData foundItem = foundItemMap.get(selectedPos);
                     if (foundItem != null) {
                         int timeSlot = foundItem.getTimeSlot();
                         for (int hourIndex = foundItem.getHourFrom(); hourIndex <= foundItem.getHourTo(); hourIndex++) {
+                            // Calculate the time slot threshold
                             int timeSlotThreshold = 59;
                             if (hourIndex == foundItem.getHourTo()) {
                                 timeSlotThreshold = foundItem.getMinuteTo();
                             }
+                            // Calculate the time slot for beginning
                             int timeSlotStart = 0;
                             if (hourIndex == foundItem.getHourFrom()) {
                                 timeSlotStart = foundItem.getMinuteFrom();
                             }
+                            // Add the atom time first if the minute value is over 0
+                            if(timeSlotStart != 0 && hourIndex == foundItem.getHourFrom()){
+                                if(!checkDuplicateList.contains(String.valueOf(hourIndex))){
+                                    MyTime myTime = new MyTime();
+                                    myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ":00";
+                                    myTime.isSelected = false;
+                                    myTime.selectedPosInMainList = -1;
+                                    mTimeList.add(myTime);
+                                    checkDuplicateList.add(String.valueOf(hourIndex));
+                                }
+                            }
                             for (int timeSlotIndex = timeSlotStart; timeSlotIndex <= timeSlotThreshold; timeSlotIndex += timeSlot) {
                                 MyTime myTime = new MyTime();
-                                myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ((timeSlotIndex > 9) ? (timeSlotIndex + "") : ("0" + timeSlotIndex));
+                                myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ":" + ((timeSlotIndex > 9) ? (timeSlotIndex + "") : ("0" + timeSlotIndex));
                                 myTime.isSelected = false;
                                 myTime.selectedPosInMainList = -1;
 
