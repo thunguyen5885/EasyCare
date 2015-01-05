@@ -1,5 +1,6 @@
 package vn.easycare.layers.ui.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.views.ILoginView;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DialogUtil;
 
 
 public class LoginActivity extends BaseActivity implements ILoginView{
@@ -88,12 +90,28 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void LoginFail(String message) {
         //show message for login fail
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        DialogUtil.createInformDialog(this, "", message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 
     @Override
     public void ShowIncorrectAccountInfoMessage(String errorMessage) {
         //show message for email or password format not correct
-        Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
+        DialogUtil.createInformDialog(this, "", errorMessage,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 }

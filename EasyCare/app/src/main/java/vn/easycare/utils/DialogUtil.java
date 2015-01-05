@@ -122,7 +122,7 @@ public class DialogUtil {
     }
 
     public static Dialog createInformDialog(Context context, String title, String message,DialogInterface.OnClickListener okListener){
-        AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(context,android.R.style.Theme_Holo_Dialog);
+        AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(context);
         confirmDialogBuilder.setTitle(title);
         confirmDialogBuilder.setMessage(message);
         confirmDialogBuilder.setPositiveButton("OK",okListener);

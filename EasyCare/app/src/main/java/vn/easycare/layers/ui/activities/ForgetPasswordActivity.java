@@ -1,5 +1,7 @@
 package vn.easycare.layers.ui.activities;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +29,7 @@ import vn.easycare.layers.ui.base.BaseActivity;
 import vn.easycare.layers.ui.components.CommonHeader;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by phan on 12/15/2014.
@@ -89,7 +92,15 @@ public class ForgetPasswordActivity extends BaseActivity implements CommonHeader
         StringRequest sr = new StringRequest(Request.Method.GET, String.format(REQUEST_NEW_PASS_URL,email), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(ForgetPasswordActivity.this, ForgetPasswordActivity.this.getResources().getString(R.string.forget_password_message_ok), Toast.LENGTH_SHORT).show();
+                DialogUtil.createInformDialog(ForgetPasswordActivity.this, "", ForgetPasswordActivity.this.getResources().getString(R.string.forget_password_message_ok),
+                        new DialogInterface.OnClickListener(){
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).show();
+               // Toast.makeText(ForgetPasswordActivity.this, ForgetPasswordActivity.this.getResources().getString(R.string.forget_password_message_ok), Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -97,7 +108,15 @@ public class ForgetPasswordActivity extends BaseActivity implements CommonHeader
                 NetworkResponse response = error.networkResponse;
                 if(response != null && response.data != null){
                     String texterror = new String(response.data);
-                    Toast.makeText(ForgetPasswordActivity.this, texterror, Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(ForgetPasswordActivity.this, texterror, Toast.LENGTH_SHORT).show();
+                    DialogUtil.createInformDialog(ForgetPasswordActivity.this, "", texterror,
+                            new DialogInterface.OnClickListener(){
+
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            }).show();
                 }
 
             }
