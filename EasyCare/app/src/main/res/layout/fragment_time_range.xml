@@ -183,7 +183,6 @@
                     custom:foreground="@drawable/layout_item_selector_with_corner"
                     >
                     <TextView
-                        android:id="@+id/tvSend"
                         style="@style/DefaultLightLargeTextView"
                         android:layout_width="match_parent"
                         android:layout_centerInParent="true"
@@ -193,6 +192,28 @@
                         android:textStyle="bold"
                         android:text="@string/time_range_cancel"
                         android:background="@drawable/layout_button_with_corner"/>
+                </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
+                <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
+                    android:id="@+id/deleteLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/home_item_separator_size"
+                    android:layout_marginRight="@dimen/home_item_separator_size"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    custom:foreground="@drawable/layout_item_selector_with_corner">
+                    <TextView
+                        style="@style/DefaultLightLargeTextView"
+                        android:layout_width="match_parent"
+                        android:layout_centerInParent="true"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="@string/time_range_delete"
+                        android:background="@drawable/layout_hightlight_button_with_corner"/>
                 </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
                 <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
                     android:id="@+id/saveLayout"

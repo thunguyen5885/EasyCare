@@ -8,7 +8,7 @@ import vn.easycare.utils.AppConstants;
 /**
  * Created by phan on 12/24/2014.
  */
-public class ExaminationScheduleItemData implements IBaseItemData, Serializable {
+public class ExaminationScheduleItemData implements IBaseItemData, Serializable, Comparable {
     String scheduleId;
     String scheduleDate;//yyyy-MM-dd
     String timeFrom;//hh:mm:ss
@@ -124,5 +124,62 @@ public class ExaminationScheduleItemData implements IBaseItemData, Serializable 
         }
         return 0;
 
+    }
+    public String getDisplayForHourMinuteFrom(){
+        String text = "";
+        int hour = getHourFrom();
+        int minute = getMinuteFrom();
+        if(hour > 9){
+            text += hour + ":";
+        }else{
+            text += "0" + hour + ":";
+        }
+        if(minute > 9){
+            text += minute + "";
+        }else{
+            text += "0" + minute + "";
+        }
+        return text;
+    }
+    public String getDisplayForHourMinuteTo(){
+        String text = "";
+        int hour = getHourTo();
+        int minute = getMinuteTo();
+        if(hour > 9){
+            text += hour + ":";
+        }else{
+            text += "0" + hour + ":";
+        }
+        if(minute > 9){
+            text += minute + "";
+        }else{
+            text += "0" + minute + "";
+        }
+        return text;
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        if(another instanceof ExaminationScheduleItemData){
+            ExaminationScheduleItemData examinationScheduleItemData = (ExaminationScheduleItemData)another;
+            int hour = examinationScheduleItemData.getHourFrom();
+            int minute = examinationScheduleItemData.getMinuteFrom();
+
+            int selectedHour = getHourFrom();
+            int selectedMinute = getMinuteFrom();
+
+            if(hour > selectedHour){
+                return -1;
+            }else if(hour == selectedHour){
+                if(minute > selectedMinute){
+                    return -1;
+                }else if(minute < selectedMinute){
+                    return 1;
+                }
+            }else{
+                return 1;
+            }
+        }
+        return 0;
     }
 }

@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +18,16 @@ import java.util.Random;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
 import vn.easycare.layers.ui.fragments.TimeRangeSelectionFragment;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by ThuNguyen on 12/21/2014.
  */
-public class DateTimeAdapter extends BaseAdapter{
+public class CalendarTimeAdapter extends BaseAdapter{
     private static final int START_TIME = 7;
     private static final int END_TIME = 21;
     private Context mContext;
@@ -34,7 +37,9 @@ public class DateTimeAdapter extends BaseAdapter{
     private List<MyTime> mTimeList = new ArrayList<MyTime>();
     private boolean mIsClicked = false;
     private List<ExaminationScheduleItemData> mItemDataList;
-    public DateTimeAdapter(Context context){
+    private AppointmentTimeData mAppointmentTime;
+
+    public CalendarTimeAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
@@ -42,10 +47,12 @@ public class DateTimeAdapter extends BaseAdapter{
         mItemDataList = itemDataList;
         createDisplayList();
     }
-
+    public void setAppointmentTime(AppointmentTimeData appointmentTime){
+        mAppointmentTime = appointmentTime;
+    }
     private void createDisplayList(){
-        for(int index = START_TIME; index < END_TIME; index++){
-
+        mTimeList.clear();
+        for(int index = START_TIME; index <= END_TIME; index++){
             HashMap<Integer, ExaminationScheduleItemData> foundItemMap = new HashMap<Integer, ExaminationScheduleItemData>();
             for(int pos = 0; pos < mItemDataList.size(); pos++){
                 ExaminationScheduleItemData itemData = mItemDataList.get(pos);
@@ -84,16 +91,12 @@ public class DateTimeAdapter extends BaseAdapter{
                                 }
                             }
                             for (int timeSlotIndex = timeSlotStart; timeSlotIndex <= timeSlotThreshold; timeSlotIndex += timeSlot) {
+                                checkDuplicateList.add(String.valueOf(hourIndex));
                                 MyTime myTime = new MyTime();
                                 myTime.displayText = (hourIndex > 9 ? (hourIndex + "") : ("0" + hourIndex)) + ":" + ((timeSlotIndex > 9) ? (timeSlotIndex + "") : ("0" + timeSlotIndex));
-                                myTime.isSelected = false;
-                                myTime.selectedPosInMainList = -1;
+                                myTime.isSelected = true;
+                                myTime.selectedPosInMainList = selectedPos;
 
-                                boolean isInRange = hourIndex > foundItem.getHourFrom() || (hourIndex == foundItem.getHourFrom() && timeSlot <= foundItem.getMinuteFrom());
-                                if (isInRange) {
-                                    myTime.isSelected = true;
-                                    myTime.selectedPosInMainList = selectedPos;
-                                }
                                 mTimeList.add(myTime);
                             }
                         }
@@ -106,7 +109,6 @@ public class DateTimeAdapter extends BaseAdapter{
                 myTime.isSelected = false;
                 myTime.selectedPosInMainList = -1;
                 mTimeList.add(myTime);
-
             }
         }
     }
@@ -198,7 +200,27 @@ public class DateTimeAdapter extends BaseAdapter{
                 case R.id.vDateHightlight:
                     // Go to time range screen
                     TimeRangeSelectionFragment timeRangeSelectionFragment = new TimeRangeSelectionFragment();
-                    ((HomeActivity)mContext).showFragment(timeRangeSelectionFragment);
+
+                    // Decide to get the item data
+                    ExaminationScheduleItemData itemData = null;
+                    Integer selectedTimeIndex = (Integer)v.getTag();
+                    MyTime selectedTimeItem = mTimeList.get(selectedTimeIndex);
+                    if(selectedTimeItem != null){
+                        if(selectedTimeItem.isSelected){ // Click on the highlight item
+                            int selectedPosInMainList = selectedTimeItem.selectedPosInMainList;
+                            itemData = mItemDataList.get(selectedPosInMainList);
+                        }else{
+                            // Create empty data
+                            itemData = new ExaminationScheduleItemData("", mAppointmentTime.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY),"", "", 0, "", "");
+                        }
+                    }else{
+                        // Create empty data
+                        itemData = new ExaminationScheduleItemData("", mAppointmentTime.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY),"", "", 0, "", "");
+                    }
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(AppConstants.CALENDAR_ID_KEY, itemData);
+                    timeRangeSelectionFragment.setArguments(bundle);
+                    ((HomeActivity) mContext).showFragment(timeRangeSelectionFragment);
                     break;
             }
         }

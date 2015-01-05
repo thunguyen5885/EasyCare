@@ -1,5 +1,6 @@
 package vn.easycare.layers.services.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import vn.easycare.layers.services.IWebServiceModel;
@@ -11,6 +12,7 @@ public class SchedulesListWSModel implements IWebServiceModel {
     List<ScheduleWSModel> listSchedules;
 
     public SchedulesListWSModel() {
+        listSchedules = new ArrayList<ScheduleWSModel>();
     }
 
     public SchedulesListWSModel(List<ScheduleWSModel> listSchedules) {

@@ -120,6 +120,7 @@
     <string name="time_range_comment">Chú thích</string>
     <string name="time_range_cancel">HỦY</string>
     <string name="time_range_save">LƯU LẠI</string>
+    <string name="time_range_delete">XÓA</string>
     <!-- Define string for forget password screen-->
     <string name="submit">Gửi</string>
     <string name="forget_password_title">Quên mật khẩu</string>

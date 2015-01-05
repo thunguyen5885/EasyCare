@@ -39,7 +39,9 @@ public class DateFnUtils {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         int dateOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        result += mDateOfWeekMap.get(dateOfWeek) + ", " + day + "/" + (month + 1) + "/" + year;
+        String dateStr = (day > 9)?(day + ""):("0" + day);
+        String monthStr = ((month + 1) > 9) ? ((month + 1) + "") : ("0" + (month + 1));
+        result += mDateOfWeekMap.get(dateOfWeek) + ", " + dateStr + "/" + monthStr + "/" + year;
         return result;
     }
 

@@ -247,17 +247,17 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
             mTvNoData.setVisibility(View.GONE);
         }
 
-        if(mAdapter == null){
-            mAdapter = new AppointmentListForAPatientAdapter(getContext());
-            mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
-            mAdapter.setEndOfList(isEndOfList);
-            mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
-            mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
-            mLvAppointmentList.setAdapter(mAdapter);
-        }else{
-            mAdapter.setEndOfList(isEndOfList);
-            mAdapter.notifyDataSetChanged();
-        }
+//        if(mAdapter == null){
+        mAdapter = new AppointmentListForAPatientAdapter(getContext());
+        mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
+        mAdapter.setEndOfList(isEndOfList);
+        mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
+        mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
+        mLvAppointmentList.setAdapter(mAdapter);
+//        }else{
+//            mAdapter.setEndOfList(isEndOfList);
+//            mAdapter.notifyDataSetChanged();
+//        }
 
     }
     public void setDateType(AppConstants.EXAMINATION_STATUS appointmentType){

@@ -129,17 +129,17 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
         }else{
             mTvNoData.setVisibility(GONE);
         }
-        if(mAdapter == null){
+//        if(mAdapter == null){
             mAdapter = new PatientListAdapter(getContext());
             mAdapter.setBlackList(mIsBlackList);
             mAdapter.setIsEndOfList(isEndOfList);
             mAdapter.setPatientListClickListener(mOnPatientListClickListener);
             mAdapter.setItemDataList(mManagementItemDatas);
             mPatientListView.setAdapter(mAdapter);
-        }else{
-            mAdapter.setIsEndOfList(isEndOfList);
-            mAdapter.notifyDataSetChanged();
-        }
+//        }else{
+//            mAdapter.setIsEndOfList(isEndOfList);
+//            mAdapter.notifyDataSetChanged();
+//        }
     }
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
         @Override
