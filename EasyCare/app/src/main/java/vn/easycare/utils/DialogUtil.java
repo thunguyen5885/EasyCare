@@ -1,8 +1,10 @@
 package vn.easycare.utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -76,4 +78,22 @@ public class DialogUtil {
 
         return dialog;
     }
+
+    public static Dialog createConfirmYesNoDialog(Context context, String title, String message,DialogInterface.OnClickListener yesListener, DialogInterface.OnClickListener noListener){
+        AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(context,android.R.style.Theme_Holo_Dialog);
+        confirmDialogBuilder.setTitle(title);
+        confirmDialogBuilder.setMessage(message);
+        confirmDialogBuilder.setPositiveButton("Yes",yesListener);
+        confirmDialogBuilder.setNegativeButton("No",noListener);
+        return confirmDialogBuilder.create();
+    }
+
+    public static Dialog createInformDialog(Context context, String title, String message,DialogInterface.OnClickListener okListener){
+        AlertDialog.Builder confirmDialogBuilder = new AlertDialog.Builder(context,android.R.style.Theme_Holo_Dialog);
+        confirmDialogBuilder.setTitle(title);
+        confirmDialogBuilder.setMessage(message);
+        confirmDialogBuilder.setPositiveButton("OK",okListener);
+        return confirmDialogBuilder.create();
+    }
+
 }
