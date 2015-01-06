@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void LoginOK(String message) {
         //move to home screen
-        mLoginPresenter.DoRegisterDeviceId("");
+        mLoginPresenter.DoRegisterDeviceId("1234567890");//reg id for testing
 
     }
 

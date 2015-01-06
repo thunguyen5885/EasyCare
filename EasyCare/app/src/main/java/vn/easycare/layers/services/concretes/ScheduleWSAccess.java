@@ -52,7 +52,7 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
     private static final String Param_time_to = "time_to";
     private static final String Param_time_slots = "time_slots";
     private static final String Param_doctor_address_id = "doctor_address_id";
-    private static final String Param_doctor_notes = "doctor_notes";
+    private static final String Param_doctor_notes = "note";
     ScheduleWSParamModel mParam;
     @Override
     public String getWSURL() {
@@ -95,15 +95,27 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
                 params.put(Param_doctor_address_id, mParam.getAddress_doctor_id());
                 params.put(Param_doctor_notes, mParam.getDoctor_notes());
                 return  params;
-            case DELETE:
+            /*case DELETE:
                 params.put(Param_Token, mParam.getToken());
                 params.put(Param_Id, mParam.getScheduleId());
-                return  params;
+                return  params;*/
             default:
                 break;
         }
         return null;
 
+    }
+
+    @Override
+    public Map<String, String> getWSHeaders() {
+
+        Map<String,String> params = new HashMap<String, String>();
+        params.put("Content-Type","application/x-www-form-urlencoded");
+        if(mParam.getAction() == AppConstants.SCHEDULE_ACTION.DELETE){
+            params.put(Param_Token, mParam.getToken());
+            params.put(Param_Id, mParam.getScheduleId());
+        }
+        return params;
     }
 
     @Override
