@@ -8,6 +8,8 @@ import vn.easycare.R;
 import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.services.IWebServiceModel;
 import vn.easycare.layers.services.WSError;
+import vn.easycare.layers.ui.components.data.GCMItemData;
+import vn.easycare.layers.ui.components.data.LoginItemData;
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
 import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.ILoginModel;
@@ -39,6 +41,11 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
     }
 
     @Override
+    public void DoRegisterDeviceId(String registrationDeviceId) {
+        iModel.registerDeviceIdGCM(registrationDeviceId);
+    }
+
+    @Override
     public void init(ILoginView view) {
 
     }
@@ -46,7 +53,12 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
 
     @Override
     public <T extends IBaseItemData> void onResponseOK(T itemData, Class<T>... itemDataClass) {
-        iView.LoginOK("");
+        if(itemDataClass[0].equals(LoginItemData.class)){
+            iView.LoginOK("");
+        }else if(itemDataClass[0].equals(GCMItemData.class)){
+            iView.RegisterGCMIdOK("");
+        }
+
     }
 
     @Override
@@ -57,5 +69,10 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
     @Override
     public void onResponseFail(String message,String functionTitle) {
         iView.LoginFail(message);
+    }
+
+    @Override
+    public void onUnauthorized() {
+        iView.UnauthorizedProcessing();
     }
 }

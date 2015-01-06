@@ -367,8 +367,9 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        if(mCallback != null){
+        if(error.getStatusCode() == AppConstants.HTTP_STATUS_UNAUTHORIZED)
+            mCallback.onUnauthorized();
+        else
             mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
-        }
     }
 }

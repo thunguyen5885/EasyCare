@@ -92,4 +92,8 @@ public class PatientManagementPresenterImpl implements IPatientManagementPresent
     public void onResponseFail(String message,String functionTitle) {
         iView.DisplayMessageIncaseError(message,functionTitle);
     }
+    @Override
+    public void onUnauthorized() {
+        iView.UnauthorizedProcessing();
+    }
 }

@@ -17,6 +17,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.adapters.SimpleTextAdapter;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationScheduleItemData;
@@ -30,7 +31,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class TimeRangeSelectionFragment extends Fragment implements IExaminationSchedulesView, View.OnClickListener{
+public class TimeRangeSelectionFragment extends BaseFragment implements IExaminationSchedulesView, View.OnClickListener{
     private static final int START_TIME = 7;
     private static final int END_TIME = 21;
     private static final Integer[] TIME_SLOTS = {0, 5, 10, 15, 20, 25, 30};

@@ -91,4 +91,9 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
     public void onResponseFail(String message,String functionTitle) {
         iView.DisplayMessageIncaseError(message,functionTitle);
     }
+
+    @Override
+    public void onUnauthorized() {
+        iView.UnauthorizedProcessing();
+    }
 }

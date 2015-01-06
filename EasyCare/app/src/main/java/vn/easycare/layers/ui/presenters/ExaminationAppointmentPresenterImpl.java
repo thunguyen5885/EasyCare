@@ -120,4 +120,9 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     public void onResponseFail(String message,String functionTitle) {
         iView.DisplayMessageIncaseError(message,functionTitle);
     }
+
+    @Override
+    public void onUnauthorized() {
+        iView.UnauthorizedProcessing();
+    }
 }

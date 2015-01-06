@@ -28,6 +28,7 @@ import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.components.views.base.BaseLinearLayout;
 import vn.easycare.layers.ui.fragments.AppointmentDetailFragment;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
@@ -39,7 +40,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/17/2014.
  */
-public class AppointmentListForAPatientLayout extends LinearLayout implements IExaminationAppointmentView{
+public class AppointmentListForAPatientLayout extends BaseLinearLayout implements IExaminationAppointmentView{
     private static final int DATE_ITEM_PER_PAGE = 10;
 
     // For control, layout
@@ -472,6 +473,9 @@ public class AppointmentListForAPatientLayout extends LinearLayout implements IE
                     }
                 }).show();
     }
+
+
+
     @Override
     public void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList) {
 

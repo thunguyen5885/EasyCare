@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.data.InformationStatisticItemData;
 import vn.easycare.layers.ui.presenters.InformationStatisticPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IInformationStatisticPresenter;
@@ -23,7 +24,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class StatisticFragment extends Fragment implements IInformationStatisticView{
+public class StatisticFragment extends BaseFragment implements IInformationStatisticView{
 
 
     public interface IStatisticOnClickListener{

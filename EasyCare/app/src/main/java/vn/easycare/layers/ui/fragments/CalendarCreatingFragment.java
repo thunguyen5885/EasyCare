@@ -22,6 +22,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.adapters.CalendarTimeAdapter;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
@@ -37,7 +38,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class CalendarCreatingFragment extends Fragment implements IExaminationSchedulesView, View.OnClickListener{
+public class CalendarCreatingFragment extends BaseFragment implements IExaminationSchedulesView, View.OnClickListener{
     // For control, layout
     private View mCalendarLayout;
     private View mNextDayLayout;

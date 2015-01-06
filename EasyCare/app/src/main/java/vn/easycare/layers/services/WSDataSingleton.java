@@ -19,6 +19,7 @@ public class WSDataSingleton {
     private String doctorId="";
     private String doctorEmail="";
     private String doctorAvatarThumb="";
+
     public static WSDataSingleton getInstance(Context context) {
         synchronized (lock) {
             if (instance == null) {
@@ -85,4 +86,6 @@ public class WSDataSingleton {
     public void setDoctorAvatarThumb(String doctorAvatarThumb) {
         this.doctorAvatarThumb = doctorAvatarThumb;
     }
+
+
 }

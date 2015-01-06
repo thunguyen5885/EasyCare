@@ -63,7 +63,7 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
         else{
             errMessage = error.getMessage();
         }
-        WSError errorObj = new WSError(errMessage,getRequestTitle());
+        WSError errorObj = new WSError(errMessage,getRequestTitle(),response.statusCode);
         if(mCallback!=null)
             mCallback.onWSResponseFailed(errorObj);
     }

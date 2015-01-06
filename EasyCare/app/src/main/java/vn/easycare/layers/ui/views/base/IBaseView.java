@@ -7,6 +7,6 @@ import android.content.Context;
  */
 public interface IBaseView {
     void DisplayMessageIncaseError(String message,String funcTitle);
-
+    void UnauthorizedProcessing();
 
 }

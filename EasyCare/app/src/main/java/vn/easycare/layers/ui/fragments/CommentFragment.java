@@ -16,6 +16,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.adapters.CommentAdapter;
 import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
 import vn.easycare.layers.ui.components.views.LoadMoreLayout;
@@ -28,7 +29,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class CommentFragment extends Fragment implements ICommentAndAssessmentView{
+public class CommentFragment extends BaseFragment implements ICommentAndAssessmentView{
     public static final int COMMENT_NUM_PER_PAGE = 3;
     private int mTotalItemCount = 0;
 

@@ -80,9 +80,8 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void LoginOK(String message) {
         //move to home screen
-        finish();
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
+        mLoginPresenter.DoRegisterDeviceId("");
+
     }
 
     @Override
@@ -100,6 +99,13 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     }
 
     @Override
+    public void RegisterGCMIdOK(String message) {
+        finish();
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void DisplayMessageIncaseError(String message, String funcTitle) {
         DialogUtil.createInformDialog(this, funcTitle, message,
                 new DialogInterface.OnClickListener() {
@@ -110,4 +116,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                     }
                 }).show();
     }
+
+
 }

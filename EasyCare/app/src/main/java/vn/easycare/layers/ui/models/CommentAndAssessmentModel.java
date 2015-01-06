@@ -18,6 +18,7 @@ import vn.easycare.layers.services.models.CommentAndAssessmentWSModel;
 import vn.easycare.layers.services.models.CommentAndAssessmentWSParamModel;
 import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
 import vn.easycare.layers.ui.models.base.ICommentAndAssessmentModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/16/2014.
@@ -106,8 +107,9 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        if(mCallback!=null) {
-            mCallback.onResponseFail(error.getErrorMessage(), error.getFunctionTitle());
-        }
+        if(error.getStatusCode() == AppConstants.HTTP_STATUS_UNAUTHORIZED)
+            mCallback.onUnauthorized();
+        else
+            mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }

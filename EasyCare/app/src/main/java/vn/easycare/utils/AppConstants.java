@@ -14,6 +14,10 @@ public class AppConstants {
         NONE, BAN, UNBAN
     }
 
+    public static enum AUTHORIZATION_ACTION {
+        LOGIN, REGISTER_DEVICE_ID
+    }
+
     public static enum APPOINTMENT_ACTION {
         NONE, ACCEPT, CANCEL, CHANGE, VIEWDETAIL,UPDATE_DOCTOR_NOTE
     }
@@ -53,5 +57,8 @@ public class AppConstants {
     public static final String PATIENT_DETAIL_KEY = "patient_detail_key";
     public static final String EXAMINATION_TYPE_KEY = "examination_type_key";
     public static final String CALENDAR_ID_KEY = "calendar_id_key";
+
+    public static final int HTTP_STATUS_UNAUTHORIZED = 401;
+    public static final int APP_EXCEPTION_STATUS_CODE = -100;
 
 }

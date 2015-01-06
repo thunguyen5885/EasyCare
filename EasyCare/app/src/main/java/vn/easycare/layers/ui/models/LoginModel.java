@@ -2,8 +2,6 @@ package vn.easycare.layers.ui.models;
 
 import android.content.Context;
 
-import java.util.List;
-
 import vn.easycare.R;
 import vn.easycare.layers.services.IWSResponse;
 import vn.easycare.layers.services.IWebServiceAccess;
@@ -11,11 +9,12 @@ import vn.easycare.layers.services.IWebServiceModel;
 import vn.easycare.layers.services.WSAccessFactory;
 import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.services.WSError;
-import vn.easycare.layers.services.concretes.LoginWSAccess;
+import vn.easycare.layers.services.concretes.AuthorizationWSAccess;
 import vn.easycare.layers.services.models.AuthorizationWSModel;
 import vn.easycare.layers.services.models.AuthorizationWSParamModel;
+import vn.easycare.layers.ui.components.data.GCMItemData;
+import vn.easycare.layers.ui.components.data.LoginItemData;
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
-import vn.easycare.layers.ui.models.base.IBaseModel;
 import vn.easycare.layers.ui.models.base.ILoginModel;
 import vn.easycare.utils.AppConstants;
 
@@ -35,10 +34,10 @@ public class LoginModel implements ILoginModel, IWSResponse{
     public void getLoginAuthentication(String email, String password) {
         try {
             IWebServiceAccess<AuthorizationWSModel,AuthorizationWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
-                    LoginWSAccess.class,
+                    AuthorizationWSAccess.class,
                     mContext,
                     this,
-                    new AuthorizationWSParamModel(email,password));
+                    new AuthorizationWSParamModel(email,password,"", AppConstants.AUTHORIZATION_ACTION.LOGIN,""));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -68,6 +67,24 @@ public class LoginModel implements ILoginModel, IWSResponse{
     }
 
     @Override
+    public void registerDeviceIdGCM(String gcmDeviceid) {
+        try {
+            IWebServiceAccess<AuthorizationWSModel,AuthorizationWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
+                    AuthorizationWSAccess.class,
+                    mContext,
+                    this,
+                    new AuthorizationWSParamModel("","",gcmDeviceid, AppConstants.AUTHORIZATION_ACTION.REGISTER_DEVICE_ID,WSDataSingleton.getInstance(mContext).getSessionToken()));
+            WS.sendRequest();
+        } catch (InstantiationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void setResponseCallback(IResponseUIDataCallback callback) {
         this.mCallback = callback;
     }
@@ -79,20 +96,28 @@ public class LoginModel implements ILoginModel, IWSResponse{
         if(model.getErrorMessageIfAny()!=null && !model.getErrorMessageIfAny().isEmpty()){
             mCallback.onResponseFail(model.getErrorMessageIfAny(),mContext.getResources().getString(R.string.title_login));
         }else{
-            WSDataSingleton.getInstance(mContext).setSessionToken(model.getCurrentSessionToken());
-            WSDataSingleton.getInstance(mContext).setDoctorAvatar(model.getUserAvatar());
-            WSDataSingleton.getInstance(mContext).setDoctorAvatarThumb(model.getUserAvatarThumb());
-            WSDataSingleton.getInstance(mContext).setDoctorEmail(model.getUserEmail());
-            WSDataSingleton.getInstance(mContext).setDoctorFullName(model.getUserFullname());
-            WSDataSingleton.getInstance(mContext).setDoctorId(model.getUserId());
-            IBaseItemData item = null;
-            mCallback.onResponseOK(item);
+            if(model.getAction()== AppConstants.AUTHORIZATION_ACTION.LOGIN) {
+                WSDataSingleton.getInstance(mContext).setSessionToken(model.getCurrentSessionToken());
+                WSDataSingleton.getInstance(mContext).setDoctorAvatar(model.getUserAvatar());
+                WSDataSingleton.getInstance(mContext).setDoctorAvatarThumb(model.getUserAvatarThumb());
+                WSDataSingleton.getInstance(mContext).setDoctorEmail(model.getUserEmail());
+                WSDataSingleton.getInstance(mContext).setDoctorFullName(model.getUserFullname());
+                WSDataSingleton.getInstance(mContext).setDoctorId(model.getUserId());
+                LoginItemData item = new LoginItemData();
+                mCallback.onResponseOK(item,LoginItemData.class);
+            }else if(model.getAction()== AppConstants.AUTHORIZATION_ACTION.REGISTER_DEVICE_ID){
+                GCMItemData item = new GCMItemData();
+                mCallback.onResponseOK(item,GCMItemData.class);
+            }
         }
 
     }
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
+        if(error.getStatusCode() == AppConstants.HTTP_STATUS_UNAUTHORIZED)
+            mCallback.onUnauthorized();
+        else
+            mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }

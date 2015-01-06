@@ -66,4 +66,9 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
 
         iView.DisplayMessageIncaseError(message,functionTitle);
     }
+
+    @Override
+    public void onUnauthorized() {
+        iView.UnauthorizedProcessing();
+    }
 }

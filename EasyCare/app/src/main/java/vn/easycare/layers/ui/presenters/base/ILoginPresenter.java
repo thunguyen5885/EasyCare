@@ -8,4 +8,5 @@ import vn.easycare.layers.ui.views.ILoginView;
  */
 public interface ILoginPresenter extends IPresenter <ILoginView>{
     void DoAuthenticateUser(String email,String password);
+    void DoRegisterDeviceId(String registrationDeviceId);
 }

@@ -23,6 +23,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
@@ -36,7 +37,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/13/2014.
  */
-public class AppointmentDetailFragment extends Fragment implements View.OnClickListener, IExaminationAppointmentView{
+public class AppointmentDetailFragment extends BaseFragment implements View.OnClickListener, IExaminationAppointmentView{
     // For control, layout
     private View mAppointmentDetailLayout;
     private ProgressBar mPbLoading;
@@ -372,6 +373,8 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
                     }
                 }).show();
     }
+
+
 
     @Override
     public void DisplayMessageForUpdateDoctorNote(String message) {

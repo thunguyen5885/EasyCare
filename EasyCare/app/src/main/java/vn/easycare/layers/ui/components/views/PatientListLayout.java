@@ -18,6 +18,7 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.components.adapters.PatientListAdapter;
 import vn.easycare.layers.ui.components.adapters.PatientListPagerAdapter;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
+import vn.easycare.layers.ui.components.views.base.BaseFrameLayout;
 import vn.easycare.layers.ui.presenters.PatientManagementPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IPatientManagementPresenter;
 import vn.easycare.layers.ui.views.IPatientManagementView;
@@ -27,7 +28,7 @@ import vn.easycare.utils.DialogUtil;
 /**
  * Created by ThuNguyen on 12/16/2014.
  */
-public class PatientListLayout extends FrameLayout implements IPatientManagementView{
+public class PatientListLayout extends BaseFrameLayout implements IPatientManagementView{
     private LayoutInflater mLayoutInflater;
     private LoadMoreLayout mLoadMoreView;
     private ListView mPatientListView;
@@ -271,6 +272,8 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     public void DisplayAllAppointmentForPatient(String patientID) {
 
     }
+
+
 
     @Override
     public void DisplayMessageIncaseError(String message,String funcTitle) {

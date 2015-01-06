@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import vn.easycare.layers.services.models.AuthorizationWSModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phannguyen on 12/21/14.
@@ -16,6 +17,7 @@ public class AuthorizationWSBuilder {
     String userAvatar="";
     String userAvatarThumb="";
     String errorMessageIfAny="";
+    AppConstants.AUTHORIZATION_ACTION action;
 
     public AuthorizationWSBuilder() {
 
@@ -60,7 +62,12 @@ public class AuthorizationWSBuilder {
         return this;
     }
 
+    public AuthorizationWSBuilder withAction(AppConstants.AUTHORIZATION_ACTION action) {
+        this.action = action;
+        return this;
+    }
+
     public AuthorizationWSModel build(){
-        return new AuthorizationWSModel(currentSessionToken, userId, userEmail, userFullname, userAvatar, userAvatarThumb, errorMessageIfAny);
+        return new AuthorizationWSModel(currentSessionToken, userId, userEmail, userFullname, userAvatar, userAvatarThumb, errorMessageIfAny,action);
     }
 }

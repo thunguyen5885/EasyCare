@@ -13,6 +13,7 @@ import vn.easycare.layers.services.models.InfoStatisticWSModel;
 import vn.easycare.layers.services.models.InfoStatisticWSParamModel;
 import vn.easycare.layers.ui.components.data.InformationStatisticItemData;
 import vn.easycare.layers.ui.models.base.IInformationStatisticModel;
+import vn.easycare.utils.AppConstants;
 
 /**
  * Created by phan on 12/16/2014.
@@ -84,8 +85,9 @@ public class InformationStatisticModel implements IInformationStatisticModel,IWS
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        if(mCallback != null) {
-            mCallback.onResponseFail(error.getErrorMessage(), error.getFunctionTitle());
-        }
+        if(error.getStatusCode() == AppConstants.HTTP_STATUS_UNAUTHORIZED)
+            mCallback.onUnauthorized();
+        else
+            mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }

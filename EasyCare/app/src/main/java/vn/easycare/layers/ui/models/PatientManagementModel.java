@@ -173,8 +173,9 @@ public class PatientManagementModel implements IPatientManagementModel,IWSRespon
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        if(mCallback != null) {
-            mCallback.onResponseFail(error.getErrorMessage(), error.getFunctionTitle());
-        }
+        if(error.getStatusCode() == AppConstants.HTTP_STATUS_UNAUTHORIZED)
+            mCallback.onUnauthorized();
+        else
+            mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }
