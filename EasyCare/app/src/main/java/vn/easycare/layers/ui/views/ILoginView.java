@@ -8,5 +8,5 @@ import vn.easycare.layers.ui.views.base.IBaseView;
 public interface ILoginView extends IBaseView {
     void LoginOK(String message);
     void LoginFail(String message);
-    void ShowIncorrectAccountInfoMessage(String errorMessage);
+
 }

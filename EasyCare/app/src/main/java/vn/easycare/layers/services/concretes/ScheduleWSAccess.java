@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
@@ -151,6 +152,24 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
         }
     }
 
+    @Override
+    public String getRequestTitle() {
+        switch (mParam.getAction()){
+            case NONE:
+                return mContext.getResources().getString(R.string.title_schedule_list);
+            case CREATE:
+                return mContext.getResources().getString(R.string.title_schedule_create);
+            case UPDATE:
+                return mContext.getResources().getString(R.string.title_schedule_update);
+            case DELETE:
+                return mContext.getResources().getString(R.string.title_schedule_delete);
+            case VIEWDETAIL:
+                return mContext.getResources().getString(R.string.title_schedule_view);
+            default:
+                return mContext.getResources().getString(R.string.title_schedule_list);
+        }
+
+    }
     private void parseResponseForGetSchedules(String jsonResponse){
         try {
             ScheduleWSBuilder modelBuilder = new  ScheduleWSBuilder();
@@ -180,11 +199,11 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 
@@ -236,11 +255,11 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
                 mCallback.onWSResponseOK(modelBuilder.build());
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 }

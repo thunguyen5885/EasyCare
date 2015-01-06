@@ -368,7 +368,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
     @Override
     public void onWSResponseFailed(WSError error) {
         if(mCallback != null){
-            mCallback.onResponseFail(error.getErrorMessage());
+            mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
         }
     }
 }

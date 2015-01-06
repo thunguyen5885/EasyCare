@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSDataSingleton;
@@ -63,6 +64,10 @@ public class InfoStatisticWSAccess extends AbstractWSAccess<InfoStatisticWSModel
     }
 
     @Override
+    public String getRequestTitle() {
+        return mContext.getResources().getString(R.string.title_info_statistic);
+    }
+    @Override
     public void onParseJsonResponseOK(String jsonResponse) {
         try {
             InfoStatisticWSBuilder modelBuilder = new  InfoStatisticWSBuilder();
@@ -84,11 +89,11 @@ public class InfoStatisticWSAccess extends AbstractWSAccess<InfoStatisticWSModel
                 mCallback.onWSResponseOK(modelBuilder.build());
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 

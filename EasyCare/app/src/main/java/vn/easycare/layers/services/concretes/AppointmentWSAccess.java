@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
@@ -179,6 +180,27 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 return Request.Method.GET;
         }
     }
+
+    @Override
+    public String getRequestTitle() {
+        switch (mParam.getAction()){
+            case NONE:
+                return mContext.getResources().getString(R.string.title_appointment_list);
+            case ACCEPT:
+                return mContext.getResources().getString(R.string.title_appointment_accept);
+            case CANCEL:
+                return mContext.getResources().getString(R.string.title_appointment_cancel);
+            case CHANGE:
+                return mContext.getResources().getString(R.string.title_appointment_change);
+            case VIEWDETAIL:
+                return mContext.getResources().getString(R.string.title_appointment_detailview);
+            case UPDATE_DOCTOR_NOTE:
+                return mContext.getResources().getString(R.string.title_appointment_update_doctor_note);
+            default:
+                return mContext.getResources().getString(R.string.title_appointment_list);
+        }
+    }
+
     @Override
     public void onParseJsonResponseOK(String jsonResponse) {
         switch (mParam.getAction()){
@@ -259,11 +281,11 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 
@@ -331,11 +353,11 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 mCallback.onWSResponseOK(modelBuilder.build());
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 

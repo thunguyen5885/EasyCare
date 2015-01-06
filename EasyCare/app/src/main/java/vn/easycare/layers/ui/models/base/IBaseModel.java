@@ -12,6 +12,6 @@ public interface IBaseModel {
     interface IResponseUIDataCallback {
         <T extends IBaseItemData> void onResponseOK(T itemData,Class<T>... itemDataClass);
         <T extends IBaseItemData> void onResponseOK(List<T> itemDataList,Class<T>... itemDataClass);
-        void onResponseFail(String message);
+        void onResponseFail(String message,String functionTitle);
     }
 }

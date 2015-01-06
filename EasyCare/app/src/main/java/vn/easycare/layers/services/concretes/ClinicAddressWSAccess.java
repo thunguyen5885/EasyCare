@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
@@ -59,16 +60,21 @@ public class ClinicAddressWSAccess extends AbstractWSAccess<ClinicAddressListWSM
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 
     @Override
     public int getMethod() {
         return Request.Method.GET;
+    }
+
+    @Override
+    public String getRequestTitle() {
+        return mContext.getResources().getString(R.string.title_clinic_address_list);
     }
 }

@@ -88,7 +88,7 @@ public class ExaminationSchedulesPresenterImpl implements IExaminationSchedulesP
     }
 
     @Override
-    public void onResponseFail(String message) {
-        iView.DisplayMessageIncaseError(message);
+    public void onResponseFail(String message,String functionTitle) {
+        iView.DisplayMessageIncaseError(message,functionTitle);
     }
 }

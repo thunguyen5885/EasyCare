@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
@@ -91,7 +89,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     public void LoginFail(String message) {
         //show message for login fail
         //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        DialogUtil.createInformDialog(this, "", message,
+        DialogUtil.createInformDialog(this, this.getResources().getString(R.string.title_login), message,
                 new DialogInterface.OnClickListener() {
 
                     @Override
@@ -102,10 +100,8 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     }
 
     @Override
-    public void ShowIncorrectAccountInfoMessage(String errorMessage) {
-        //show message for email or password format not correct
-       // Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show();
-        DialogUtil.createInformDialog(this, "", errorMessage,
+    public void DisplayMessageIncaseError(String message, String funcTitle) {
+        DialogUtil.createInformDialog(this, funcTitle, message,
                 new DialogInterface.OnClickListener() {
 
                     @Override

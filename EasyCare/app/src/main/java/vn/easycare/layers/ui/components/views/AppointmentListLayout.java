@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.components.views;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -439,17 +440,27 @@ public class AppointmentListLayout extends LinearLayout implements IExaminationA
     }
 
     @Override
-    public void DisplayMessageIncaseError(String message) {
-        // Reset
-        mIsDataLoading = false;
-        mIsNeedToRefresh = false;
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
 
-        mLvAppointmentList.removeFooterView(mLoadMoreView);
-        mLoadMoreView.loadMoreComplete();
+        DialogUtil.createInformDialog(this.getContext(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
 
-        // Update UI anyway
-        updateUI(true);
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // Reset
+                        mIsDataLoading = false;
+                        mIsNeedToRefresh = false;
+
+                        mLvAppointmentList.removeFooterView(mLoadMoreView);
+                        mLoadMoreView.loadMoreComplete();
+
+                        // Update UI anyway
+                        updateUI(true);
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
+
 
     @Override
     public void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList) {

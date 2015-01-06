@@ -55,7 +55,7 @@ public class LoginPresenterImpl  implements ILoginPresenter, IBaseModel.IRespons
     }
 
     @Override
-    public void onResponseFail(String message) {
+    public void onResponseFail(String message,String functionTitle) {
         iView.LoginFail(message);
     }
 }

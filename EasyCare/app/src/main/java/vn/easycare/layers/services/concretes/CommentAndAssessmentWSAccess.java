@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
@@ -67,6 +68,10 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
     }
 
     @Override
+    public String getRequestTitle() {
+        return mContext.getResources().getString(R.string.title_comments_list);
+    }
+    @Override
     public void onParseJsonResponseOK(String jsonResponse) {
         try {
             CommentAndAssessmentWSBuilder modelBuilder = new  CommentAndAssessmentWSBuilder();
@@ -108,11 +113,11 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 }

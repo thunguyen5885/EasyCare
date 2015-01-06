@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.fragments;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -232,7 +233,16 @@ public class CalendarCreatingFragment extends Fragment implements IExaminationSc
     }
 
     @Override
-    public void DisplayMessageIncaseError(String message) {
-        updateUI();
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
+
+        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        updateUI();
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 }

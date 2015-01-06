@@ -172,6 +172,6 @@ public class PatientManagementModel implements IPatientManagementModel,IWSRespon
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onResponseFail(error.getErrorMessage());
+        mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }

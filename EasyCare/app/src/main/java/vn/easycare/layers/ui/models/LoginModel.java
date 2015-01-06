@@ -77,7 +77,7 @@ public class LoginModel implements ILoginModel, IWSResponse{
     public void onWSResponseOK(IWebServiceModel result) {
         AuthorizationWSModel model  = (AuthorizationWSModel) result;
         if(model.getErrorMessageIfAny()!=null && !model.getErrorMessageIfAny().isEmpty()){
-            mCallback.onResponseFail(model.getErrorMessageIfAny());
+            mCallback.onResponseFail(model.getErrorMessageIfAny(),mContext.getResources().getString(R.string.title_login));
         }else{
             WSDataSingleton.getInstance(mContext).setSessionToken(model.getCurrentSessionToken());
             WSDataSingleton.getInstance(mContext).setDoctorAvatar(model.getUserAvatar());
@@ -93,6 +93,6 @@ public class LoginModel implements ILoginModel, IWSResponse{
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onResponseFail(error.getErrorMessage());
+        mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }

@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -293,10 +294,7 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         }
     }
 
-    @Override
-    public void DisplayMessageIncaseError(String message) {
 
-    }
     private List<CalendarTime> createCalendarTimeListFromTimeSlot(int timeSlot){
         List<CalendarTime> resultList = new ArrayList<CalendarTime>();
         for(int index = START_TIME; index < END_TIME; index++){
@@ -316,6 +314,21 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         }
         return resultList;
     }
+
+    @Override
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
+
+        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+    }
+
     private class CalendarTime{
         private int hour;
         private int minute;

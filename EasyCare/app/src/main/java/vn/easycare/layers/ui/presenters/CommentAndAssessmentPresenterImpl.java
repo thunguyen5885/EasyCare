@@ -62,8 +62,8 @@ public class CommentAndAssessmentPresenterImpl implements ICommentAndAssessmentP
     }
 
     @Override
-    public void onResponseFail(String message) {
+    public void onResponseFail(String message,String functionTitle) {
 
-        iView.DisplayMessageIncaseError(message);
+        iView.DisplayMessageIncaseError(message,functionTitle);
     }
 }

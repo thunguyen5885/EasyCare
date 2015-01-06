@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.fragments;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -191,8 +192,16 @@ public class CommentFragment extends Fragment implements ICommentAndAssessmentVi
     }
 
     @Override
-    public void DisplayMessageIncaseError(String message) {
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
 
+        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {

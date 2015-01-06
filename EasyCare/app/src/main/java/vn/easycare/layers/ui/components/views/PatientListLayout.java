@@ -2,6 +2,7 @@ package vn.easycare.layers.ui.components.views;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -272,7 +273,15 @@ public class PatientListLayout extends FrameLayout implements IPatientManagement
     }
 
     @Override
-    public void DisplayMessageIncaseError(String message) {
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
 
+        DialogUtil.createInformDialog(this.getContext(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 }

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceModel;
 import vn.easycare.layers.services.IWebServiceParamModel;
@@ -58,11 +59,11 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
                 mCallback.onWSResponseOK(modelBuilder.build());
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
 
         //mCallback.onWSResponseOK();
@@ -89,5 +90,10 @@ public class LoginWSAccess extends AbstractWSAccess<AuthorizationWSModel,Authori
     @Override
     public void setWSParams(IWebServiceParamModel params) {
         mParam = (AuthorizationWSParamModel)params;
+    }
+
+    @Override
+    public String getRequestTitle() {
+        return mContext.getResources().getString(R.string.title_login);
     }
 }

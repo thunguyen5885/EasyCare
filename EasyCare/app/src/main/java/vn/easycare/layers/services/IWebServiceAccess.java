@@ -24,4 +24,5 @@ public interface IWebServiceAccess<T extends IWebServiceModel,P extends IWebServ
     void setResponseCallback(IWSResponse callback);
     void sendRequest();
     int getMethod();
+    String getRequestTitle();
 }

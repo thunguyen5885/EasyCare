@@ -16,6 +16,5 @@ public interface IExaminationAppointmentView extends IBaseView{
     void DisplayMessageForChangeAppointment(String message);
     void DisplayMessageForUpdateDoctorNote(String message);
     void DisplayDetailForAnAppointment(ExaminationAppointmentItemData item);
-    void DisplayMessageIncaseError(String message);
     void DisplayAllDoctorClinicAddresses(List<DoctorClinicAddressItemData> doctorClinicAddressItemsList);
 }

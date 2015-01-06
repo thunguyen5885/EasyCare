@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -357,9 +358,19 @@ public class AppointmentDetailFragment extends Fragment implements View.OnClickL
         updateUI();
     }
 
+
     @Override
-    public void DisplayMessageIncaseError(String message) {
-        updateUI();
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
+
+        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        updateUI();
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 
     @Override

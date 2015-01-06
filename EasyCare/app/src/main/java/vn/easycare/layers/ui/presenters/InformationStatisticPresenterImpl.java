@@ -48,7 +48,7 @@ public class InformationStatisticPresenterImpl implements IInformationStatisticP
     }
 
     @Override
-    public void onResponseFail(String message) {
-        iView.DisplayMessageIncaseError(message);
+    public void onResponseFail(String message,String functionTitle) {
+        iView.DisplayMessageIncaseError(message,functionTitle);
     }
 }

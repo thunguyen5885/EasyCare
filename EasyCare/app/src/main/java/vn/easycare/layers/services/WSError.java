@@ -5,9 +5,11 @@ package vn.easycare.layers.services;
  */
 public class WSError {
     String errorMessage;
+    String functionTitle;
 
-    public WSError(String errorMessage) {
+    public WSError(String errorMessage, String functionTitle) {
         this.errorMessage = errorMessage;
+        this.functionTitle = functionTitle;
     }
 
     public String getErrorMessage() {
@@ -16,5 +18,13 @@ public class WSError {
 
     public void setErrorMessage(String errorMessage) {
         this.errorMessage = errorMessage;
+    }
+
+    public String getFunctionTitle() {
+        return functionTitle;
+    }
+
+    public void setFunctionTitle(String functionTitle) {
+        this.functionTitle = functionTitle;
     }
 }

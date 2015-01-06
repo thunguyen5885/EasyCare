@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.easycare.R;
 import vn.easycare.layers.services.AbstractWSAccess;
 import vn.easycare.layers.services.IWebServiceParamModel;
 import vn.easycare.layers.services.WSError;
@@ -108,6 +109,21 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
         }
     }
 
+    @Override
+    public String getRequestTitle() {
+        switch (mParam.getAction()){
+            case NONE:
+                return mContext.getResources().getString(R.string.title_patient_list);
+            case BAN:
+                return mContext.getResources().getString(R.string.title_patient_ban);
+            case UNBAN:
+                return mContext.getResources().getString(R.string.title_patient_notban);
+            default:
+                return mContext.getResources().getString(R.string.title_patient_list);
+        }
+
+    }
+
     private void parseResponseForGetAllPatient(String jsonResponse){
         try {
             PatientWSBuilder modelBuilder = new  PatientWSBuilder();
@@ -150,11 +166,11 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
                 mCallback.onWSResponseOK(listModel);
         } catch (JSONException e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
         catch (Exception e) {
             if(mCallback!=null)
-                mCallback.onWSResponseFailed(new WSError(e.getMessage()));
+                mCallback.onWSResponseFailed(new WSError(e.getMessage(),getRequestTitle()));
         }
     }
 

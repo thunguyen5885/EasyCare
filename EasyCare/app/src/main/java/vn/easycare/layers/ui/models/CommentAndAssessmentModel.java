@@ -106,6 +106,6 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onResponseFail(error.getErrorMessage());
+        mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
     }
 }
