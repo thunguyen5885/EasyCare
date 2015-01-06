@@ -2,10 +2,12 @@ package vn.easycare.layers.ui.components.adapters;
 
 import android.content.Context;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -30,6 +32,7 @@ public class SimpleTextAdapter extends BaseAdapter implements View.OnClickListen
     private boolean mIsClicked = false;
     private IOnItemClickListener mItemClickListener;
     private List<Object> mItemDataList;
+    private boolean mIsLeftAlign = true;
     public SimpleTextAdapter(Context context){
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -40,7 +43,9 @@ public class SimpleTextAdapter extends BaseAdapter implements View.OnClickListen
     public void setOnItemClickListener(IOnItemClickListener itemClickListener){
         mItemClickListener = itemClickListener;
     }
-
+    public void setLeftAlign(boolean isLeftAlign){
+        mIsLeftAlign = isLeftAlign;
+    }
     @Override
     public int getCount() {
         return (mItemDataList != null) ? mItemDataList.size() : 0;
@@ -75,6 +80,11 @@ public class SimpleTextAdapter extends BaseAdapter implements View.OnClickListen
         // Set data
         String itemData = mItemDataList.get(position).toString();
         viewHolder.mTvTitle.setText(itemData);
+        if(mIsLeftAlign) {
+            ((LinearLayout.LayoutParams) viewHolder.mTvTitle.getLayoutParams()).gravity = Gravity.LEFT;
+        }else{
+            ((LinearLayout.LayoutParams) viewHolder.mTvTitle.getLayoutParams()).gravity = Gravity.CENTER;
+        }
         if(position == getCount() - 1){
             viewHolder.mSeparator.setVisibility(View.INVISIBLE);
         }else{

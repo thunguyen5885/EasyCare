@@ -202,6 +202,8 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
 
     @Override
     public void onWSResponseFailed(WSError error) {
-
+        if(mCallback != null){
+            mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
+        }
     }
 }

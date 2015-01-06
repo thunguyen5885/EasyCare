@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -67,7 +68,7 @@ public class DialogUtil {
         });
 		dialog.show();
 	}
-    public static void showListViewDialog(Context context, Object dataList,
+    public static void showListViewDialog(Context context, Object dataList, boolean isFullScreen,
                                           final SimpleTextAdapter.IOnItemClickListener onItemClickListener){
         final Dialog dialog = new Dialog(context,android.R.style.Theme_Holo_Dialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -76,7 +77,19 @@ public class DialogUtil {
         // Get screen width
         int screenWidth = AppFnUtils.getScreenWidth((Activity) context);
         int screenHeight = AppFnUtils.getScreenHeight((Activity) context);
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        int dialogWidth = screenWidth / 2;
+        int dialogHeight = screenHeight / 2;
+        if(isFullScreen){
+            dialogWidth = screenWidth - (int)(2* context.getResources().getDimension(R.dimen.common_padding));
+        }else{
+        }
+        if(dataList instanceof List){
+            if(((List)dataList).size() > 8){
+                dialog.getWindow().setLayout(dialogWidth, dialogHeight);
+            }else{
+                dialog.getWindow().setLayout(dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        }
         dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_border_dialog);
 
         ListView lvListView = (ListView) dialog.findViewById(R.id.lvSimple);
@@ -93,6 +106,7 @@ public class DialogUtil {
                 }
             }
         });
+        adapter.setLeftAlign(isFullScreen);
         lvListView.setAdapter(adapter);
         dialog.show();
     }

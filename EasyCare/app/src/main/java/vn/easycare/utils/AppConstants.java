@@ -38,6 +38,9 @@ public class AppConstants {
 
     public static String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
+    /*Define string for sender_id for push notification*/
+    public static final String SENDER_ID = "113119615392";
+
     /*Define all date format*/
     public static final String DATE_FORMAT_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_DD_MM_YYYY_HH_MM = "dd/MM/yyyy, HH:mm";

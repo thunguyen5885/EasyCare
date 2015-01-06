@@ -164,14 +164,17 @@ public class PatientManagementModel implements IPatientManagementModel,IWSRespon
             PatientManagementItemData item = new PatientManagementItemData();
             item.setPatientId(patientModel.getId());
             item.setPatientBlocked(patientModel.getBanned()==1?true:false);
-            if(mCallback!=null)
+            if(mCallback!=null) {
                 mCallback.onResponseOK(item);
+            }
         }
 
     }
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
+        if(mCallback != null) {
+            mCallback.onResponseFail(error.getErrorMessage(), error.getFunctionTitle());
+        }
     }
 }

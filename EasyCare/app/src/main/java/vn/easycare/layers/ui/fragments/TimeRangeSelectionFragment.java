@@ -149,18 +149,19 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         mTimeToList = createCalendarTimeListFromTimeSlot(0);
 
         // For time info
-        mTimeFromIndex = 0;
-        mTimeToIndex = 0;
+        mTimeFromIndex = findItemInCalendarTimeList(mTimeFromList, mItemData.getHourFrom(), mItemData.getMinuteFrom());
+        mTimeToIndex = findItemInCalendarTimeList(mTimeToList, mItemData.getHourTo(), mItemData.getMinuteTo());
         mTimeSlotIndex = 0;
         mAddressIndex = 0;
         updateTime();
     }
     private void updateUIWithUpdatedItem(){
-        mDeleteLayout.setVisibility(View.VISIBLE);
+        mDeleteLayout.setVisibility(View.GONE);
         mTvDate.setText(AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD, AppConstants.DATE_FORMAT_DD_MM_YYYY, mItemData.getScheduleDate()));
         mTimeFromList = createCalendarTimeListFromTimeSlot(mItemData.getTimeSlot());
         mTimeToList = createCalendarTimeListFromTimeSlot(mItemData.getTimeSlot());
         mEdtComment.setText(mItemData.getNote());
+
         mTimeFromIndex = findItemInCalendarTimeList(mTimeFromList, mItemData.getHourFrom(), mItemData.getMinuteFrom());
         mTimeToIndex = findItemInCalendarTimeList(mTimeToList, mItemData.getHourTo(), mItemData.getMinuteTo());
         mTimeSlotIndex = findItemInSlotList(mTimeSlotList, mItemData.getTimeSlot());
@@ -199,34 +200,40 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         }, 500);
         switch (v.getId()) {
             case R.id.rlFromTime:
-                DialogUtil.showListViewDialog(getActivity(), mTimeFromList, new SimpleTextAdapter.IOnItemClickListener() {
+                DialogUtil.showListViewDialog(getActivity(), mTimeFromList, false, new SimpleTextAdapter.IOnItemClickListener() {
                     @Override
                     public void onItemClickListener(int selectedPos) {
                         mTimeFromIndex = selectedPos;
-                        updateTime();
+                        // Update time
+                        updateTimeToWhenTimeFromChanged(mTimeSlotList.get(mTimeSlotIndex));
                     }
                 });
                 break;
             case R.id.rlToTime:
-                DialogUtil.showListViewDialog(getActivity(), mTimeToList, new SimpleTextAdapter.IOnItemClickListener() {
+                DialogUtil.showListViewDialog(getActivity(), mTimeToList, false, new SimpleTextAdapter.IOnItemClickListener() {
                     @Override
                     public void onItemClickListener(int selectedPos) {
                         mTimeToIndex = selectedPos;
-                        updateTime();
+
+                        // Update time
+                        updateTimeFromWhenTimeToChanged(mTimeSlotList.get(mTimeSlotIndex));
+
                     }
                 });
                 break;
             case R.id.rlAverageTime:
-                DialogUtil.showListViewDialog(getActivity(), mTimeSlotList, new SimpleTextAdapter.IOnItemClickListener() {
+                DialogUtil.showListViewDialog(getActivity(), mTimeSlotList, false, new SimpleTextAdapter.IOnItemClickListener() {
                     @Override
                     public void onItemClickListener(int selectedPos) {
                         mTimeSlotIndex = selectedPos;
-                        updateTime();
+
+                        // Also update time
+                        updateTimeWhenTimeSlotChanged(mTimeSlotList.get(mTimeSlotIndex));
                     }
                 });
                 break;
             case R.id.rlOfficeAddressLayout:
-                DialogUtil.showListViewDialog(getActivity(), mDoctorAddressList, new SimpleTextAdapter.IOnItemClickListener() {
+                DialogUtil.showListViewDialog(getActivity(), mDoctorAddressList, true, new SimpleTextAdapter.IOnItemClickListener() {
                     @Override
                     public void onItemClickListener(int selectedPos) {
                         mAddressIndex = selectedPos;
@@ -234,9 +241,7 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
                     }
                 });
                 break;
-            case R.id.cancelLayout:
-                ((HomeActivity) getActivity()).onBackPressed();
-                break;
+
             case R.id.saveLayout:
                 // Update data
                 mItemData.setDoctorAddressId(mDoctorAddressList.get(mAddressIndex).getClinicAddressId());
@@ -251,6 +256,7 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
                 mPresenter.updateExaminationSchedule(mItemData);
 
                 break;
+            case R.id.cancelLayout:
             case R.id.deleteLayout:
                 // Show dialog and start to update
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
@@ -276,13 +282,15 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
             mLoadingDialog.dismiss();
         }
         // Show dialog confirm done
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ((HomeActivity) getActivity()).onBackPressed();
-            }
-        }, 500);
+        DialogUtil.createInformDialog(this.getActivity(), "", message,
+                new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        ((HomeActivity) getActivity()).onBackPressed();
+                    }
+                }).show();
     }
 
     @Override
@@ -294,7 +302,66 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
         }
     }
 
+    @Override
+    public void DisplayMessageIncaseError(String message,String funcTitle) {
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+                new DialogInterface.OnClickListener() {
 
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+    }
+    private void updateTimeWhenTimeSlotChanged(int timeSlot){
+        mTimeFromIndex = 0;
+        mTimeToIndex = 0;
+        if(mTimeFromList != null){
+            mTimeFromList.clear();
+        }
+        mTimeFromList = createCalendarTimeListFromTimeSlot(timeSlot);
+        if(mTimeToList != null){
+            mTimeToList.clear();
+        }
+        mTimeToList = createCalendarTimeListFromTimeSlot(timeSlot);
+
+        updateTime();
+    }
+    private void updateTimeFromWhenTimeToChanged(int timeSlot){
+        CalendarTime thresholdTime = mTimeToList.get(mTimeToIndex);
+        List<CalendarTime> timeFromList = createCalendarTimeListLessThanThreshold(timeSlot, thresholdTime);
+
+        CalendarTime calendarTimeFrom = mTimeFromList.get(mTimeFromIndex);
+        if(calendarTimeFrom.compareTo(thresholdTime) > 0){
+            mTimeFromIndex = 0;
+        }else{
+            mTimeFromIndex = findItemInCalendarTimeList(timeFromList, calendarTimeFrom.hour, calendarTimeFrom.minute);
+        }
+        mTimeFromList.clear();
+        mTimeFromList.addAll(timeFromList);
+
+        updateTime();
+    }
+    private void updateTimeToWhenTimeFromChanged(int timeSlot){
+
+        CalendarTime thresholdTime = mTimeFromList.get(mTimeFromIndex);
+        List<CalendarTime> timeToList = createCalendarTimeListMoreThanThreshold(timeSlot, thresholdTime);
+
+        CalendarTime calendarTimeTo = mTimeToList.get(mTimeToIndex);
+        if(calendarTimeTo.compareTo(thresholdTime) < 0){
+            mTimeToIndex = 0;
+        }else{
+            mTimeToIndex = findItemInCalendarTimeList(timeToList, calendarTimeTo.hour, calendarTimeTo.minute);
+        }
+        mTimeToList.clear();
+        mTimeToList.addAll(timeToList);
+
+        updateTime();
+    }
     private List<CalendarTime> createCalendarTimeListFromTimeSlot(int timeSlot){
         List<CalendarTime> resultList = new ArrayList<CalendarTime>();
         for(int index = START_TIME; index < END_TIME; index++){
@@ -312,23 +379,53 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
                 resultList.add(calendarTime);
             }
         }
+        // Add the last item
+        CalendarTime calendarTime = new CalendarTime();
+        calendarTime.hour = END_TIME;
+        calendarTime.minute = 0;
+        resultList.add(calendarTime);
+
         return resultList;
     }
+    private List<CalendarTime> createCalendarTimeListLessThanThreshold(int timeSlot, CalendarTime thresholdTime){
+        List<CalendarTime> resultList = new ArrayList<CalendarTime>();
+        for(int index = START_TIME; index <= thresholdTime.hour; index++){
+            int minuteThreshold = 59;
+            if(index == thresholdTime.hour){
+                minuteThreshold = thresholdTime.minute;
+            }
+            for (int slotIndex = 0; slotIndex <= minuteThreshold; slotIndex += timeSlot) {
+                CalendarTime calendarTime = new CalendarTime();
+                calendarTime.hour = index;
+                calendarTime.minute = slotIndex;
+                resultList.add(calendarTime);
+            }
 
-    @Override
-    public void DisplayMessageIncaseError(String message,String funcTitle) {
-
-        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
-                new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        dialogInterface.dismiss();
-                    }
-                }).show();
+        }
+        return resultList;
     }
+    private List<CalendarTime> createCalendarTimeListMoreThanThreshold(int timeSlot, CalendarTime thresholdTime){
+        List<CalendarTime> resultList = new ArrayList<CalendarTime>();
+        for(int index = thresholdTime.hour; index <END_TIME; index++){
+            int minuteStart = 0;
+            if(index == thresholdTime.hour){
+                minuteStart = thresholdTime.minute;
+            }
+            for (int slotIndex = minuteStart; slotIndex < 60; slotIndex += timeSlot) {
+                CalendarTime calendarTime = new CalendarTime();
+                calendarTime.hour = index;
+                calendarTime.minute = slotIndex;
+                resultList.add(calendarTime);
+            }
+        }
+        // Add the last item
+        CalendarTime calendarTime = new CalendarTime();
+        calendarTime.hour = END_TIME;
+        calendarTime.minute = 0;
+        resultList.add(calendarTime);
 
+        return resultList;
+    }
     private class CalendarTime{
         private int hour;
         private int minute;
@@ -347,11 +444,25 @@ public class TimeRangeSelectionFragment extends Fragment implements IExamination
             }
             return text;
         }
-
+        public int compareTo(CalendarTime calendarTime){
+            if(hour > calendarTime.hour){
+                return 1;
+            }else if(hour == calendarTime.hour){
+                if(minute > calendarTime.minute){
+                    return 1;
+                }else if(minute < calendarTime.minute){
+                    return -1;
+                }
+            }else{
+                return -1;
+            }
+            return 0;
+        }
         @Override
         public String toString() {
             return getDisplayText();
         }
+
     }
     private int findItemInCalendarTimeList(List<CalendarTime> calendarList, int hour, int minute){
         int foundIndex = 0;

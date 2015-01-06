@@ -164,6 +164,8 @@
                 android:paddingLeft="@dimen/home_item_separator_size"
                 android:paddingRight="@dimen/home_item_separator_size"
                 android:background="@drawable/layout_button_with_corner_1dp"
+                android:textColor="@color/textview_color_default"
+                android:textSize="@dimen/text_medium"
                 android:inputType="textImeMultiLine"
                 android:gravity="top|left"/>
             <LinearLayout

@@ -77,11 +77,15 @@ public class InformationStatisticModel implements IInformationStatisticModel,IWS
         itemData.setWaitingTimeAverageRate(model.getAvgWaitingTimeRating());
         itemData.setFacilityCommentCount(model.getTotalFacilityRating());
         itemData.setFacilityAverageRate(model.getAvgFacilityRating());
-        mCallback.onResponseOK(itemData);
+        if(mCallback != null) {
+            mCallback.onResponseOK(itemData);
+        }
     }
 
     @Override
     public void onWSResponseFailed(WSError error) {
-        mCallback.onResponseFail(error.getErrorMessage(),error.getFunctionTitle());
+        if(mCallback != null) {
+            mCallback.onResponseFail(error.getErrorMessage(), error.getFunctionTitle());
+        }
     }
 }
