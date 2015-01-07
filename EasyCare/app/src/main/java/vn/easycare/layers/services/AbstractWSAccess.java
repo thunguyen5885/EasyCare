@@ -42,6 +42,7 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
     public void onResponseFailed(VolleyError error) {
         NetworkResponse response = error.networkResponse;
         String errMessage = "";
+        int statusCode = AppConstants.APP_UNDEFINE_ERROR_STATUS_CODE;
         if(response != null && response.data != null) {
             String errorResponse = new String(response.data);
             try {
@@ -54,16 +55,17 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
                         errMessage+=jsonErrorObj.getString(key)+"\r\n";
                     }
                 }
+                statusCode = response.statusCode;
             } catch (JSONException e) {
                 errMessage = errorResponse;
-
+                statusCode = AppConstants.APP_EXCEPTION_STATUS_CODE;
             }
 
         }
         else{
             errMessage = error.getMessage();
         }
-        WSError errorObj = new WSError(errMessage,getRequestTitle(),response.statusCode);
+        WSError errorObj = new WSError(errMessage,getRequestTitle(),statusCode);
         if(mCallback!=null)
             mCallback.onWSResponseFailed(errorObj);
     }
