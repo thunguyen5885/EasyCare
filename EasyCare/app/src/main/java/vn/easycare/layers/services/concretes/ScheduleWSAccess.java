@@ -26,7 +26,7 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
     private static final String SCHEDULE_URI = WEBSERVICE_HOST + "/doctors/schedules?token=%s&date=%s";
     private static final String CREATE_SCHEDULE_URI = WEBSERVICE_HOST + "/doctors/schedules/create";
     private static final String UPDATE_SCHEDULE_URI = WEBSERVICE_HOST + "/doctors/schedules/update";
-    private static final String DELETE_SCHEDULE_URI = WEBSERVICE_HOST + "/doctors/schedules/delete";
+    private static final String DELETE_SCHEDULE_URI = WEBSERVICE_HOST + "/doctors/schedules/delete?token=%s&id=%s";
     private static final String VIEW_SCHEDULE_URI = WEBSERVICE_HOST + "/doctors/schedules/%s?token=%s";
 
     private static final String Res_id = "id";
@@ -64,7 +64,7 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
             case UPDATE:
                 return  UPDATE_SCHEDULE_URI;
             case DELETE:
-                return  DELETE_SCHEDULE_URI;
+                return  String.format(DELETE_SCHEDULE_URI,mParam.getToken(),mParam.getScheduleId());
             case VIEWDETAIL:
                 return String.format(VIEW_SCHEDULE_URI,mParam.getToken(),mParam.getDate());
             default:
@@ -106,7 +106,7 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
 
     }
 
-    @Override
+   /* @Override
     public Map<String, String> getWSHeaders() {
 
         Map<String,String> params = new HashMap<String, String>();
@@ -116,7 +116,7 @@ public class ScheduleWSAccess extends AbstractWSAccess<SchedulesListWSModel,Sche
             params.put(Param_Id, mParam.getScheduleId());
         }
         return params;
-    }
+    }*/
 
     @Override
     public void setWSParams(IWebServiceParamModel params) {
