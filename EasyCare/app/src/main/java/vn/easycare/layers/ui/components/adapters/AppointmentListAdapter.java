@@ -76,6 +76,7 @@ public class AppointmentListAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.appointment_item_ctrl, null);
             viewHolder = new ViewHolder();
+            viewHolder.mAppointmentItemLayout = convertView.findViewById(R.id.appointmentItemLayout);
             viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatarThumb);
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
             viewHolder.mTvDatingTime = (TextView) convertView.findViewById(R.id.tvAppointmentTime);
@@ -92,8 +93,8 @@ public class AppointmentListAdapter extends BaseAdapter{
         }
 
         // Set onClick
-        viewHolder.mTvPatientName.setTag(position);
-        viewHolder.mTvPatientName.setOnClickListener(mOnClickListener);
+        viewHolder.mAppointmentItemLayout.setTag(position);
+        viewHolder.mAppointmentItemLayout.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarChange.setTag(position);
         viewHolder.mBtnCalendarChange.setOnClickListener(mOnClickListener);
         viewHolder.mBtnCalendarAccept.setTag(position);
@@ -127,9 +128,6 @@ public class AppointmentListAdapter extends BaseAdapter{
         String displayDate = AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, AppConstants.DATE_FORMAT_DD_MM_YYYY_HH_MM, itemData.getExaminationDateTime().toString());
         viewHolder.mTvDatingTime.setText(displayDate);
         viewHolder.mTvPatientDisease.setText(itemData.getExaminationReason());
-//        viewHolder.mTvPatientName.setText("Nguyen Van A");
-//        viewHolder.mTvDatingTime.setText("12/12/2014, 13:13");
-//        viewHolder.mTvPatientDisease.setText("Bệnh thấp khớp, đau xương nhức mỏi, khó di chuyển và rất khó chịu");
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView);
@@ -152,7 +150,7 @@ public class AppointmentListAdapter extends BaseAdapter{
             ExaminationAppointmentItemData selectedItem = mExaminationAppointmentItemDatas.get(selectedPos);
             String appointmentId = selectedItem.getExaminationId();
             switch (v.getId()){
-                case R.id.tvPatientName:
+                case R.id.appointmentItemLayout:
                     if(mAppointmentItemClickListener != null){
                         mAppointmentItemClickListener.onAppointmentDetail(selectedItem);
                     }
@@ -186,5 +184,6 @@ public class AppointmentListAdapter extends BaseAdapter{
         private TextView mBtnCalendarCancel;
         private View mBottomSeparatorLayout;
         private View mEndOfListLayout;
+        private View mAppointmentItemLayout;
     }
 }

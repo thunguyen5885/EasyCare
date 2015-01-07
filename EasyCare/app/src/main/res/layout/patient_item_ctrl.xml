@@ -28,7 +28,7 @@
             <TextView
                 android:id="@+id/tvPatientName"
                 style="@style/DefaultBoldNormalTextView"
-                android:layout_marginTop="-10dp"
+                android:layout_marginTop="-7dp"
                 android:paddingRight="@dimen/common_padding"
                 android:paddingBottom="@dimen/home_item_separator_size"
                 android:paddingTop="@dimen/home_item_separator_size"

@@ -79,14 +79,16 @@ public class AppointmentTimeData {
     }
 
     public String generateDateString(String dateFormat){
-        SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, year);
-        calendar.set(Calendar.MONTH, month);
-        calendar.set(Calendar.DAY_OF_MONTH, day);
+        if(isValidateDate()) {
+            SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
 
-        return sdf.format(calendar.getTime());
-
+            return sdf.format(calendar.getTime());
+        }
+        return "";
     }
     public String generateTimeString(String timeFormat){
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);

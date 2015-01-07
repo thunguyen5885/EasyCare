@@ -1,6 +1,7 @@
 package vn.easycare.utils;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
@@ -59,5 +60,59 @@ public class DateFnUtils {
 
         myDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
+    public static void getCurrentDate(AppointmentTimeData myDate){
+        Calendar calendar = Calendar.getInstance();
+        myDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    }
+    public static void getDateRangeOfWeek(AppointmentTimeData fromDate, AppointmentTimeData toDate){
+        Calendar calendar = Calendar.getInstance();
+        int currentDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        // Because week start from MONDAY so calculate the SUNDAY with value = 1 separate
+        int dayNeedToSub = 0;
+        int dayNeedToAdd = 0;
+        if(currentDayOfWeek == Calendar.SUNDAY){
+            dayNeedToSub = 6;
+            dayNeedToAdd = 0;
+        }else{
+            dayNeedToSub = currentDayOfWeek - Calendar.MONDAY;
+            dayNeedToAdd = Calendar.DAY_OF_WEEK - currentDayOfWeek + 1;
+        }
+        // For from date
+        calendar.add(Calendar.DAY_OF_MONTH, -dayNeedToSub);
+        fromDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
+        // For to date
+        calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, dayNeedToAdd);
+        toDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    public static void getDateRangeOfMonth(AppointmentTimeData fromDate, AppointmentTimeData toDate){
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = 1;
+        // For from date
+        fromDate.set(year, month, day);
+
+        // For to date
+        if(month == Calendar.JANUARY || month == Calendar.MARCH ||
+                month == Calendar.MAY || month == Calendar.JULY ||
+                month == Calendar.AUGUST || month == Calendar.OCTOBER ||
+                month == Calendar.DECEMBER){
+            day = 31;
+        }else if(month == Calendar.APRIL || month == Calendar.JUNE ||
+                month == Calendar.SEPTEMBER || month == Calendar.NOVEMBER){
+            day = 30;
+        }else{ // February
+            // Check leap year
+            if(((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0)){
+                day = 29;
+            }else{
+                day = 28;
+            }
+        }
+
+        toDate.set(year, month, day);
+    }
 }

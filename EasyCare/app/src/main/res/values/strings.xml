@@ -140,4 +140,22 @@
     <string name="first_visit">Lần đầu tới khám</string>
     <string name="gender_man">Nam</string>
     <string name="gender_women">Nữ</string>
+
+    <!-- Define string for message confirm, error-->
+    <string name="message_title">Thông báo</string>
+    <string name="message_inform_schedule_create_succeed">Tạo lịch khám thành công</string>
+    <string name="message_inform_schedule_create_fail">Tạo lịch khám thất bại</string>
+    <string name="message_inform_schedule_update_succeed">Cập nhật lịch khám thành công</string>
+    <string name="message_inform_schedule_update_fail">Cập nhật lịch khám thất bại</string>
+    <string name="message_inform_schedule_delete_succeed">Xóa lịch khám thành công</string>
+    <string name="message_inform_schedule_delete_fail">Xóa lịch khám thất bại</string>
+    <string name="message_inform_schedule_get_fail">Lấy lịch khám thất bại</string>
+
+    <!-- Define string array for search criteria-->
+    <string-array name="search_criteria_for_date">
+        <item>Tất cả</item>
+        <item>Hôm nay</item>
+        <item>Tuần này</item>
+        <item>Tháng này</item>
+    </string-array>
 </resources>

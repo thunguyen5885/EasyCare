@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import vn.easycare.R;
@@ -32,9 +33,15 @@ import vn.easycare.utils.DialogUtil;
  * Created by ThuNguyen on 12/13/2014.
  */
 public class TimeRangeSelectionFragment extends BaseFragment implements IExaminationSchedulesView, View.OnClickListener{
+    private enum SCHEDULE_TYPE{
+        SCHEDULE_CREATE,
+        SCHEDULE_UPDATE,
+        SCHEDULE_DELETE
+    }
     private static final int START_TIME = 7;
     private static final int END_TIME = 21;
-    private static final Integer[] TIME_SLOTS = {0, 5, 10, 15, 20, 25, 30};
+    private static final Integer[] TIME_SLOTS = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
+    private static final int TIME_SLOT_DEFAULT = 15;
     // For control, layout
     private TextView mTvDate;
     private TextView mTvFromTime;
@@ -66,7 +73,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
     private int mTimeToIndex;
     private int mTimeSlotIndex;
     private int mAddressIndex;
-
+    private SCHEDULE_TYPE mScheduleType;
     public TimeRangeSelectionFragment(){
 
     }
@@ -110,11 +117,11 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         mPresenter.loadAllAddressesForDoctor();
 
         // Create time slot list
-        //mTimeSlotList = Arrays.asList(TIME_SLOTS);
-        mTimeSlotList = new ArrayList<Integer>();
-        for(int index = 1; index <= 30; index++){
-           mTimeSlotList.add(index);
-        }
+        mTimeSlotList = Arrays.asList(TIME_SLOTS);
+//        mTimeSlotList = new ArrayList<Integer>();
+//        for(int index = 1; index <= 30; index++){
+//           mTimeSlotList.add(index);
+//        }
         // Get arguments
         Bundle bundle = getArguments();
         if(bundle != null){
@@ -145,19 +152,21 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
     }
     private void updateUIWithNewItem(){
         mDeleteLayout.setVisibility(View.GONE);
-        mTvDate.setText(mItemData.getScheduleDate());
-        mTimeFromList = createCalendarTimeListFromTimeSlot(0);
-        mTimeToList = createCalendarTimeListFromTimeSlot(0);
+        mCancelLayout.setVisibility(View.INVISIBLE);
+        mTvDate.setText(AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD, AppConstants.DATE_FORMAT_DD_MM_YYYY, mItemData.getScheduleDate()));
+        mTimeFromList = createCalendarTimeListFromTimeSlot(TIME_SLOT_DEFAULT);
+        mTimeToList = createCalendarTimeListFromTimeSlot(TIME_SLOT_DEFAULT);
 
         // For time info
         mTimeFromIndex = findItemInCalendarTimeList(mTimeFromList, mItemData.getHourFrom(), mItemData.getMinuteFrom());
         mTimeToIndex = findItemInCalendarTimeList(mTimeToList, mItemData.getHourTo(), mItemData.getMinuteTo());
-        mTimeSlotIndex = 0;
+        mTimeSlotIndex = findItemInSlotList(mTimeSlotList, TIME_SLOT_DEFAULT);
         mAddressIndex = 0;
         updateTime();
     }
     private void updateUIWithUpdatedItem(){
         mDeleteLayout.setVisibility(View.GONE);
+        mCancelLayout.setVisibility(View.VISIBLE);
         mTvDate.setText(AppFnUtils.convertDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD, AppConstants.DATE_FORMAT_DD_MM_YYYY, mItemData.getScheduleDate()));
         mTimeFromList = createCalendarTimeListFromTimeSlot(mItemData.getTimeSlot());
         mTimeToList = createCalendarTimeListFromTimeSlot(mItemData.getTimeSlot());
@@ -254,7 +263,14 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
                 // Show dialog and start to update
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
-                mPresenter.updateExaminationSchedule(mItemData);
+                if(mItemData.getScheduleId() != null && mItemData.getScheduleId().length() > 0){ // Update
+                    mScheduleType = SCHEDULE_TYPE.SCHEDULE_UPDATE;
+                    mPresenter.updateExaminationSchedule(mItemData);
+                }else{ // Create new
+                    mScheduleType = SCHEDULE_TYPE.SCHEDULE_CREATE;
+                    mPresenter.createNewExaminationSchedule(mItemData);
+                }
+
 
                 break;
             case R.id.cancelLayout:
@@ -262,6 +278,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
                 // Show dialog and start to update
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
+                mScheduleType = SCHEDULE_TYPE.SCHEDULE_DELETE;
                 mPresenter.deleteExaminationSchedule(mItemData.getScheduleId());
                 break;
         }
@@ -282,8 +299,20 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
+        String messageInfo = "";
+        switch (mScheduleType){
+            case SCHEDULE_CREATE:
+                messageInfo = getString(R.string.message_inform_schedule_create_succeed);
+                break;
+            case SCHEDULE_UPDATE:
+                messageInfo = getString(R.string.message_inform_schedule_update_succeed);
+                break;
+            case SCHEDULE_DELETE:
+                messageInfo = getString(R.string.message_inform_schedule_delete_succeed);
+                break;
+        }
         // Show dialog confirm done
-        DialogUtil.createInformDialog(this.getActivity(), "", message,
+        DialogUtil.createInformDialog(this.getActivity(), getString(R.string.message_title), messageInfo,
                 new DialogInterface.OnClickListener() {
 
                     @Override
@@ -308,7 +337,19 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
-        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+        String messageInfo = "";
+        switch (mScheduleType){
+            case SCHEDULE_CREATE:
+                messageInfo = getString(R.string.message_inform_schedule_create_fail);
+                break;
+            case SCHEDULE_UPDATE:
+                messageInfo = getString(R.string.message_inform_schedule_update_fail);
+                break;
+            case SCHEDULE_DELETE:
+                messageInfo = getString(R.string.message_inform_schedule_delete_fail);
+                break;
+        }
+        DialogUtil.createInformDialog(this.getActivity(), getString(R.string.message_title), messageInfo,
                 new DialogInterface.OnClickListener() {
 
                     @Override

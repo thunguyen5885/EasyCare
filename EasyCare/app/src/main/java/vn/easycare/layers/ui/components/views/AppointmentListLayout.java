@@ -243,17 +243,17 @@ public class AppointmentListLayout extends BaseLinearLayout implements IExaminat
             mTvNoData.setVisibility(View.GONE);
         }
 
-        //if(mAdapter == null){
-        mAdapter = new AppointmentListAdapter(getContext());
-        mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
-        mAdapter.setEndOfList(isEndOfList);
-        mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
-        mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
-        mLvAppointmentList.setAdapter(mAdapter);
-//        }else{
-//            mAdapter.setEndOfList(isEndOfList);
-//            mAdapter.notifyDataSetChanged();
-//        }
+        if(mAdapter == null || mPage == 1){
+            mAdapter = new AppointmentListAdapter(getContext());
+            mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
+            mAdapter.setEndOfList(isEndOfList);
+            mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
+            mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
+            mLvAppointmentList.setAdapter(mAdapter);
+        }else{
+            mAdapter.setEndOfList(isEndOfList);
+            mAdapter.notifyDataSetChanged();
+        }
     }
     public void setDateType(AppConstants.EXAMINATION_STATUS appointmentType){
         mAppointmentType = appointmentType;

@@ -211,11 +211,11 @@ public class CalendarTimeAdapter extends BaseAdapter{
                             itemData = mItemDataList.get(selectedPosInMainList);
                         }else{
                             // Create empty data
-                            itemData = new ExaminationScheduleItemData("", mAppointmentTime.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY), selectedTimeItem.displayText, selectedTimeItem.displayText, 0, "", "");
+                            itemData = new ExaminationScheduleItemData("", mAppointmentTime.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD), selectedTimeItem.displayText, selectedTimeItem.displayText, 0, "", "");
                         }
                     }else{
                         // Create empty data
-                        itemData = new ExaminationScheduleItemData("", mAppointmentTime.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY),selectedTimeItem.displayText, selectedTimeItem.displayText, 0, "", "");
+                        itemData = new ExaminationScheduleItemData("", mAppointmentTime.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD),selectedTimeItem.displayText, selectedTimeItem.displayText, 0, "", "");
                     }
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(AppConstants.CALENDAR_ID_KEY, itemData);

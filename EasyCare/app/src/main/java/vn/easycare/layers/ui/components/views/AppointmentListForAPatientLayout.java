@@ -11,13 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,6 +25,7 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.AppointmentListForAPatientAdapter;
 import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
+import vn.easycare.layers.ui.components.adapters.SimpleTextAdapter;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
@@ -35,6 +36,7 @@ import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
 import vn.easycare.layers.ui.views.IExaminationAppointmentView;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
+import vn.easycare.utils.DateFnUtils;
 import vn.easycare.utils.DialogUtil;
 
 /**
@@ -51,6 +53,9 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     private View mSelectCalendarView;
     private TextView mTvCalendarText;
     private View mSearchLayout;
+    private View mChooseTimeSearch;
+    private TextView mTvChooseTimeResult;
+
     private LoadMoreLayout mLoadMoreView;
     private Dialog mLoadingDialog;
     // For data, object
@@ -63,17 +68,19 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     private int mSelectedDay;
     private int mPage;
     private int mItemCount;
+    private int mCriteriaDateIndex;
 
     private AppointmentListForAPatientAdapter mAdapter;
-    private AppointmentTimeData appointmentTimeData;
+    private AppointmentTimeData mAppointmentTimeDataForChangeCalendar;
+    private AppointmentTimeData mAppointmentTimeDataForSelectCalendar;
     private AppConstants.EXAMINATION_STATUS mAppointmentType;
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
     private IExaminationAppointmentPresenter mPresenter;
     private AppointmentListPagerAdapter.IBroadCastToSynData mIBroadCast;
+    private List<String> mDateSearchList;
 
     // Key search
     private String mAppointmentCode;
-    private String mPatientName;
     private String mAppointmentDate;
 
     private LayoutInflater mLayoutInflater;
@@ -98,13 +105,19 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
 
         // For key and result search
         mAppointmentCode = "";
-        mPatientName = "";
         mAppointmentDate = "";
         mAppointmentType = AppConstants.EXAMINATION_STATUS.WAITING;
         mPage = 1;
-        mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
-        appointmentTimeData = new AppointmentTimeData();
 
+        mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
+        mAppointmentTimeDataForChangeCalendar = new AppointmentTimeData();
+        mAppointmentTimeDataForSelectCalendar = new AppointmentTimeData();
+
+        // Get string list for criteria date for search
+        String[] criteriaArr = getResources().getStringArray(R.array.search_criteria_for_date);
+        mDateSearchList = Arrays.asList(criteriaArr);
+
+        // Inflate to get view
         mLayoutInflater = LayoutInflater.from(context);
         View view = mLayoutInflater.inflate(R.layout.appointment_for_a_patient_pager_item_ctrl, null);
         mPbLoading = (ProgressBar) view.findViewById(R.id.pbLoading);
@@ -121,6 +134,12 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
         mTvCalendarText = (TextView)view.findViewById(R.id.tvCalendarText);
         mSearchLayout = view.findViewById(R.id.appointmentListSearchLayout);
         mSearchLayout.setOnClickListener(mOnClickListener);
+        mChooseTimeSearch = view.findViewById(R.id.rlChooseTimeSearch);
+        mChooseTimeSearch.setOnClickListener(mOnClickListener);
+        mTvChooseTimeResult = (TextView) view.findViewById(R.id.tvChooseTimeResult);
+
+        // Update date search first
+        updateDateSearch(0);
         addView(view);
 
         // Apply font
@@ -143,12 +162,17 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
         mEdtAppointmentCode.setText("");
         mTvCalendarText.setText("");
         mAppointmentCode = "";
-        mPatientName = "";
         mAppointmentDate = "";
 
         mSelectedYear = -1;
         mSelectedMonth = -1;
         mSelectedDay = -1;
+
+        updateDateSearch(0);
+    }
+    private void updateDateSearch(int index){
+        mCriteriaDateIndex = index;
+        mTvChooseTimeResult.setText(mDateSearchList.get(mCriteriaDateIndex));
     }
     /**
      * Enforce to refresh to sync data from the change of other tabs
@@ -224,9 +248,22 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
         if(!mIsDataLoading) {
             mIsDataLoading = true;
             if (mAppointmentCode.length() > 0 ||
-                    mPatientName.length() > 0 ||
-                    mAppointmentDate.length() > 0) { // Search
-                mPresenter.searchExaminationAppointments(mAppointmentCode, mPatientName, (mPatientId != null)?mPatientId:"", mAppointmentType, mAppointmentDate, "", "", mPage);
+                    mAppointmentDate.length() > 0 ||
+                    mCriteriaDateIndex > 0) { // Search
+                AppointmentTimeData fromDate = new AppointmentTimeData();
+                AppointmentTimeData toDate = new AppointmentTimeData();
+                if(mCriteriaDateIndex == 1){ // Today
+                    DateFnUtils.getCurrentDate(fromDate);
+                    DateFnUtils.getCurrentDate(toDate);
+                }else if(mCriteriaDateIndex == 2){ // This week
+                    DateFnUtils.getDateRangeOfWeek(fromDate, toDate);
+                }else if(mCriteriaDateIndex == 3){ // This month
+                    DateFnUtils.getDateRangeOfMonth(fromDate, toDate);
+                }
+                String fromDateStr = fromDate.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
+                String toDateStr = toDate.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
+
+                mPresenter.searchExaminationAppointments(mAppointmentCode, "", (mPatientId != null)?mPatientId:"", mAppointmentType, mAppointmentDate, fromDateStr, toDateStr, mPage);
             } else {
                 // Load all
                 mPresenter.loadExaminationAppointmentsForDoctor(mAppointmentType, (mPatientId != null)?mPatientId:"", mPage);
@@ -249,17 +286,17 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
             mTvNoData.setVisibility(View.GONE);
         }
 
-//        if(mAdapter == null){
-        mAdapter = new AppointmentListForAPatientAdapter(getContext());
-        mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
-        mAdapter.setEndOfList(isEndOfList);
-        mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
-        mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
-        mLvAppointmentList.setAdapter(mAdapter);
-//        }else{
-//            mAdapter.setEndOfList(isEndOfList);
-//            mAdapter.notifyDataSetChanged();
-//        }
+        if(mAdapter == null || mPage == 1){
+            mAdapter = new AppointmentListForAPatientAdapter(getContext());
+            mAdapter.setWaitingList(mAppointmentType == AppConstants.EXAMINATION_STATUS.WAITING);
+            mAdapter.setEndOfList(isEndOfList);
+            mAdapter.setAppointmentItemClickListener(mAppointmentItemClickListener);
+            mAdapter.setExaminationAppointmentItemDatas(mExaminationAppointmentItemDataList);
+            mLvAppointmentList.setAdapter(mAdapter);
+        }else{
+            mAdapter.setEndOfList(isEndOfList);
+            mAdapter.notifyDataSetChanged();
+        }
 
     }
     public void setDateType(AppConstants.EXAMINATION_STATUS appointmentType){
@@ -298,12 +335,19 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
                 case R.id.appointmentListSearchLayout:
                     // Update data for search
                     mAppointmentCode = mEdtAppointmentCode.getText().toString().trim();
-                    mAppointmentDate = mTvCalendarText.getText().toString().trim();
-                    if(mAppointmentCode.length() > 0 || mPatientName.length() > 0 || mAppointmentDate.length() > 0) {
-                        beginSearch();
-                    }else{
-                        // Show dialog to confirm to need to fill at least one field.
-                    }
+                    mAppointmentDate = mAppointmentTimeDataForSelectCalendar.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
+                    beginSearch();
+
+                    break;
+                case R.id.rlChooseTimeSearch:
+                    // Show dialog to choose time
+                    DialogUtil.showListViewDialog(getContext(), mDateSearchList, false, new SimpleTextAdapter.IOnItemClickListener() {
+                        @Override
+                        public void onItemClickListener(int selectedPos) {
+                            // Update time
+                            updateDateSearch(selectedPos);
+                        }
+                    });
                     break;
             }
         }
@@ -320,9 +364,10 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
             mSelectedYear = year;
             mSelectedMonth = monthOfYear;
             mSelectedDay = dayOfMonth;
+            mAppointmentTimeDataForSelectCalendar.set(year, monthOfYear, dayOfMonth);
 
             // Update on UI
-            mTvCalendarText.setText(mSelectedDay + "/" + (mSelectedMonth + 1) + "/" + mSelectedYear);
+            mTvCalendarText.setText(mAppointmentTimeDataForSelectCalendar.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY));
         }
     };
     private AppointmentListForAPatientAdapter.IAppointmentItemClickListener mAppointmentItemClickListener = new AppointmentListForAPatientAdapter.IAppointmentItemClickListener() {
@@ -343,15 +388,15 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
             //...................
             //itemData.
             // Show datetime dialog here
-            DialogUtil.showDateTimeDialog(getContext(), appointmentTimeData, new DatePicker.OnDateChangedListener() {
+            DialogUtil.showDateTimeDialog(getContext(), mAppointmentTimeDataForChangeCalendar, new DatePicker.OnDateChangedListener() {
                 @Override
                 public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                    appointmentTimeData.set(year, monthOfYear, dayOfMonth);
+                    mAppointmentTimeDataForChangeCalendar.set(year, monthOfYear, dayOfMonth);
                 }
             }, new TimePicker.OnTimeChangedListener() {
                 @Override
                 public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-                    appointmentTimeData.set(hourOfDay, minute);
+                    mAppointmentTimeDataForChangeCalendar.set(hourOfDay, minute);
                 }
             }, new OnClickListener() {
                 @Override

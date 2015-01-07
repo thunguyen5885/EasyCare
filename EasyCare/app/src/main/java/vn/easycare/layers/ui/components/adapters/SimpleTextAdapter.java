@@ -68,14 +68,15 @@ public class SimpleTextAdapter extends BaseAdapter implements View.OnClickListen
             convertView = mInflater.inflate(R.layout.simple_text_item_ctrl, null);
             viewHolder = new ViewHolder();
             viewHolder.mTvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
+            viewHolder.mTitleLayout = convertView.findViewById(R.id.titleLayout);
             viewHolder.mSeparator = convertView.findViewById(R.id.vSeparator);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
         // Set onclick
-        viewHolder.mTvTitle.setTag(position);
-        viewHolder.mTvTitle.setOnClickListener(this);
+        viewHolder.mTitleLayout.setTag(position);
+        viewHolder.mTitleLayout.setOnClickListener(this);
 
         // Set data
         String itemData = mItemDataList.get(position).toString();
@@ -108,7 +109,7 @@ public class SimpleTextAdapter extends BaseAdapter implements View.OnClickListen
             }
         }, 500);
         switch (v.getId()){
-            case R.id.tvTitle:
+            case R.id.titleLayout:
                 Integer selectedPos = (Integer)v.getTag();
                 if(mItemClickListener != null){
                     mItemClickListener.onItemClickListener(selectedPos);
@@ -118,6 +119,7 @@ public class SimpleTextAdapter extends BaseAdapter implements View.OnClickListen
     }
 
     private static class ViewHolder{
+        private View mTitleLayout;
         private TextView mTvTitle;
         private View mSeparator;
     }

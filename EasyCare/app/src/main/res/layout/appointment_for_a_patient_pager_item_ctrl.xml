@@ -48,6 +48,7 @@
                 android:id="@+id/tvChooseTimeResult"
                 style="@style/DefaultTinyTextView"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_item_separator_size"
                 android:gravity="center"/>
         </RelativeLayout>
         <RelativeLayout

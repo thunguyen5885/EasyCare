@@ -50,13 +50,14 @@ public class CalendarCreatingFragment extends BaseFragment implements IExaminati
     // For data, object
     private AppointmentTimeData mMyDate;
     private boolean mIsClicked = false;
+    private boolean mIsDateSet = false;
     private List<ExaminationScheduleItemData> mItemDataList;
     private IExaminationSchedulesPresenter mPresenter;
     private ProgressBar mPbLoading;
     private Dialog mLoadingDialog;
 
     public CalendarCreatingFragment(){
-        mMyDate = new AppointmentTimeData();
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -84,11 +85,12 @@ public class CalendarCreatingFragment extends BaseFragment implements IExaminati
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        // Default for today
-        Calendar calendar = Calendar.getInstance();
-        mMyDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
+        if(mMyDate == null) { // Keep the last value
+            mMyDate = new AppointmentTimeData();
+            // Default for today
+            Calendar calendar = Calendar.getInstance();
+            mMyDate.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        }
         // Update text
         loadDataOnFirst();
     }
@@ -169,7 +171,7 @@ public class CalendarCreatingFragment extends BaseFragment implements IExaminati
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
-
+        mIsDateSet = false;
         // Create data for listview
         mCalendarTimeAdapter = new CalendarTimeAdapter(getActivity());
         mCalendarTimeAdapter.setItemDataList(mItemDataList);
@@ -192,8 +194,11 @@ public class CalendarCreatingFragment extends BaseFragment implements IExaminati
     private DatePickerDialog.OnDateSetListener mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mMyDate.set(year, monthOfYear, dayOfMonth);
-            loadData();
+            if(!mIsDateSet) {
+                mIsDateSet = true;
+                mMyDate.set(year, monthOfYear, dayOfMonth);
+                loadData();
+            }
         }
     };
     private void showDatePickerDialog(){
@@ -235,8 +240,7 @@ public class CalendarCreatingFragment extends BaseFragment implements IExaminati
 
     @Override
     public void DisplayMessageIncaseError(String message,String funcTitle) {
-
-        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+        DialogUtil.createInformDialog(this.getActivity(), getString(R.string.message_title), getString(R.string.message_inform_schedule_get_fail),
                 new DialogInterface.OnClickListener() {
 
                     @Override
