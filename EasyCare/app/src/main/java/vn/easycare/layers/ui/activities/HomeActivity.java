@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -15,15 +16,19 @@ import vn.easycare.layers.ui.components.CommonFooter;
 import vn.easycare.layers.ui.components.CommonHeader;
 import vn.easycare.layers.ui.fragments.HomeFragment;
 import vn.easycare.layers.ui.fragments.MenuFragment;
+import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
+import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
+import vn.easycare.layers.ui.views.ILoginView;
+import vn.easycare.utils.DialogUtil;
 
 /**
  * Created by ThuNguyen on 12/8/2014.
  */
-public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeaderClickListener{
+public class HomeActivity extends BaseActivity implements ILoginView, CommonHeader.IOnHeaderClickListener{
     // For object
     private CommonHeader mCommonHeader;
     private CommonFooter mCommonFooter;
-
+    private ILoginPresenter mLoginPresenter;
     // For layout, control, view
     private MenuFragment mMenuFragment;
     private View mMainContent;
@@ -35,7 +40,7 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
         overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_left);
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
-
+        mLoginPresenter = new LoginPresenterImpl(this, this.getApplicationContext());
         // Initialize layout here
         View headerView = findViewById(R.id.header);
         mCommonHeader = new CommonHeader(headerView);
@@ -206,5 +211,32 @@ public class HomeActivity extends BaseActivity implements CommonHeader.IOnHeader
     @Override
     public void onBack() {
         onBackPressed();
+    }
+
+    @Override
+    public void LoginOK(String message) {
+        //do nothing
+    }
+
+    @Override
+    public void LoginFail(String message) {
+        //do nothing
+    }
+
+    @Override
+    public void RegisterGCMIdOK(String message) {
+
+    }
+
+    @Override
+    public void DisplayMessageIncaseError(String message, String funcTitle) {
+        DialogUtil.createInformDialog(this, funcTitle, message,
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
     }
 }

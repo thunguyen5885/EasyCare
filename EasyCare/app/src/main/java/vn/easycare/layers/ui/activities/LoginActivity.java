@@ -80,7 +80,10 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void LoginOK(String message) {
         //move to home screen
-        mLoginPresenter.DoRegisterDeviceId("1234567890");//reg id for testing
+        finish();
+        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+
 
     }
 
@@ -100,9 +103,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void RegisterGCMIdOK(String message) {
-        finish();
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-        startActivity(intent);
+        //do nothing
     }
 
     @Override
