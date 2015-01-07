@@ -92,7 +92,7 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
                     new ScheduleWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken()
                             ,"",itemData.getScheduleDate(),itemData.getTimeFrom(),
                             itemData.getTimeTo(),itemData.getTimeSlot()+"",
-                            itemData.getDoctorAddressId(),"", AppConstants.SCHEDULE_ACTION.CREATE));
+                            itemData.getDoctorAddressId(),itemData.getNote(), AppConstants.SCHEDULE_ACTION.CREATE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -113,7 +113,7 @@ public class ExaminationSchedulesModel implements IExaminationSchedulesModel,IWS
                     new ScheduleWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken()
                             ,itemData.getScheduleId(),itemData.getScheduleDate(),itemData.getTimeFrom(),
                             itemData.getTimeTo(),itemData.getTimeSlot()+"",
-                            itemData.getDoctorAddressId(),"", AppConstants.SCHEDULE_ACTION.UPDATE));
+                            itemData.getDoctorAddressId(),itemData.getNote(), AppConstants.SCHEDULE_ACTION.UPDATE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
