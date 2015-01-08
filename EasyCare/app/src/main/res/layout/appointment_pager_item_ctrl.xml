@@ -10,55 +10,76 @@
         android:id="@+id/searchLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="7dp"
-        android:paddingRight="7dp"
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:paddingBottom="@dimen/statistic_vertical_padding"
         android:paddingTop="@dimen/statistic_vertical_padding"
         android:background="@color/main_background_color">
         <vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout
             android:id="@+id/appointmentListSearchLayout"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="25dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/home_item_separator_size"
+            android:paddingRight="@dimen/home_item_separator_size"
             android:clickable="true"
             android:background="@drawable/layout_hightlight_button_with_corner"
             custom:foreground="@drawable/layout_item_selector_with_corner">
-            <TextView
-                android:id="@+id/tvSearch"
-                style="@style/DefaultTinyTextView"
-                android:textColor="@color/white"
-                android:text="@string/appointment_list_search"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@drawable/ic_search"
                 android:layout_centerInParent="true"
-                android:gravity="center"
-                />
+            />
         </vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlChooseTimeSearch"
+            android:layout_width="65dp"
+            android:layout_height="25dp"
+            android:background="@drawable/layout_button_with_corner"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_dropdown"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/home_item_separator_size"/>
+            <TextView
+                android:id="@+id/tvChooseTimeResult"
+                style="@style/DefaultMicroTextView"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/home_item_separator_size"
+                android:gravity="center"/>
+        </RelativeLayout>
         <EditText
             android:id="@+id/edtAppointmentCode"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="25dp"
             android:background="@drawable/layout_button_with_corner"
             android:textColorHint="@color/textview_color_grey"
             android:hint="@string/appointment_list_appointment_code"
             android:textColor="@color/textview_color_default"
-            android:textSize="@dimen/text_tiny"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:gravity="center"
+            android:textSize="@dimen/text_micro"
+            android:layout_toRightOf="@+id/rlChooseTimeSearch"
+            android:layout_marginLeft="3dp"
+            android:paddingLeft="@dimen/home_item_separator_size"
+            android:paddingRight="@dimen/home_item_separator_size"
+            android:gravity="center_vertical|left"
             android:singleLine="true"/>
         <EditText
             android:id="@+id/edtPatientName"
-            android:layout_width="70dp"
+            android:layout_width="65dp"
             android:layout_height="25dp"
             android:background="@drawable/layout_button_with_corner"
             android:textColorHint="@color/textview_color_grey"
             android:hint="@string/appointment_list_patient_name"
             android:textColor="@color/textview_color_default"
-            android:textSize="@dimen/text_tiny"
-            android:gravity="center"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
+            android:textSize="@dimen/text_micro"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/home_item_separator_size"
+            android:paddingRight="@dimen/home_item_separator_size"
             android:singleLine="true"
             android:layout_marginLeft="3dp"
             android:layout_toRightOf="@+id/edtAppointmentCode"/>
@@ -89,7 +110,7 @@
                 android:layout_marginRight="@dimen/home_item_separator_size"/>
             <TextView
                 android:id="@+id/tvCalendarText"
-                style="@style/DefaultTinyTextView"
+                style="@style/DefaultMicroTextView"
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/ivDropDown"
                 android:layout_toRightOf="@+id/ivCalendar"

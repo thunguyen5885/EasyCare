@@ -135,7 +135,7 @@ public class CommentFragment extends BaseFragment implements ICommentAndAssessme
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
-        if(mCommentAdapter == null){
+        if(mCommentAdapter == null || mPage == 1){
             mCommentAdapter = new CommentAdapter(getActivity());
             mCommentAdapter.setCommentClickListener(mCommentClickListener);
             mCommentAdapter.setItemDataList(mCommentAndAssessmentItemDatas);

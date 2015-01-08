@@ -150,7 +150,18 @@
     <string name="message_inform_schedule_delete_succeed">Xóa lịch khám thành công</string>
     <string name="message_inform_schedule_delete_fail">Xóa lịch khám thất bại</string>
     <string name="message_inform_schedule_get_fail">Lấy lịch khám thất bại</string>
-
+    <string name="message_inform_ban_succeed">Chặn thành công</string>
+    <string name="message_inform_ban_fail">Chặn thất bại</string>
+    <string name="message_inform_unban_succeed">Bỏ chặn thành công</string>
+    <string name="message_inform_unban_fail">Bỏ chặn thất bại</string>
+    <string name="message_inform_appointment_change_succeed">Đổi cuộc hẹn thành công</string>
+    <string name="message_inform_appointment_change_fail">Đổi cuộc hẹn thất bại</string>
+    <string name="message_inform_appointment_cancel_succeed">Hủy cuộc hẹn thành công</string>
+    <string name="message_inform_appointment_cancel_fail">Hủy cuộc hẹn thất bại</string>
+    <string name="message_inform_appointment_accept_succeed">Chấp nhận cuộc hẹn thành công</string>
+    <string name="message_inform_appointment_accept_fail">Chấp nhận cuộc hẹn thất bại</string>
+    <string name="message_inform_doctor_note_update_succeed">Cập nhật chú thích thành công</string>
+    <string name="message_inform_doctor_note_update_fail">Cập nhật chú thích thất bại</string>
     <!-- Define string array for search criteria-->
     <string-array name="search_criteria_for_date">
         <item>Tất cả</item>

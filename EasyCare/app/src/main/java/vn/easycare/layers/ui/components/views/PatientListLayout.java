@@ -44,7 +44,7 @@ public class PatientListLayout extends BaseFrameLayout implements IPatientManage
     private int mPage;
     private boolean mIsBlackList;
     private int mItemCount;
-
+    private boolean mIsBan;
     public PatientListLayout(Context context) {
         super(context);
         init(context);
@@ -131,17 +131,17 @@ public class PatientListLayout extends BaseFrameLayout implements IPatientManage
         }else{
             mTvNoData.setVisibility(GONE);
         }
-//        if(mAdapter == null){
+        if(mAdapter == null || mPage == 1){
             mAdapter = new PatientListAdapter(getContext());
             mAdapter.setBlackList(mIsBlackList);
             mAdapter.setIsEndOfList(isEndOfList);
             mAdapter.setPatientListClickListener(mOnPatientListClickListener);
             mAdapter.setItemDataList(mManagementItemDatas);
             mPatientListView.setAdapter(mAdapter);
-//        }else{
-//            mAdapter.setIsEndOfList(isEndOfList);
-//            mAdapter.notifyDataSetChanged();
-//        }
+        }else{
+            mAdapter.setIsEndOfList(isEndOfList);
+            mAdapter.notifyDataSetChanged();
+        }
     }
     private LoadMoreLayout.ILoadMoreClickListener mOnLoadMoreClickListener = new LoadMoreLayout.ILoadMoreClickListener() {
         @Override
@@ -154,6 +154,7 @@ public class PatientListLayout extends BaseFrameLayout implements IPatientManage
         public void onBlockClicked(final String patientId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
+            mIsBan = true;
             mPresenter.blockAPatient(patientId);
 
 
@@ -163,6 +164,7 @@ public class PatientListLayout extends BaseFrameLayout implements IPatientManage
         public void onUnblockClicked(final String patientId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
+            mIsBan = false;
             mPresenter.unblockAPatient(patientId);
 
         }
@@ -277,8 +279,11 @@ public class PatientListLayout extends BaseFrameLayout implements IPatientManage
 
     @Override
     public void DisplayMessageIncaseError(String message,String funcTitle) {
-
-        DialogUtil.createInformDialog(this.getContext(), funcTitle, message,
+        String messageInfo = getContext().getString(R.string.message_inform_unban_fail);
+        if(mIsBan){
+            messageInfo = getContext().getString(R.string.message_inform_ban_fail);
+        }
+        DialogUtil.createInformDialog(this.getContext(), getResources().getString(R.string.message_title), messageInfo,
                 new DialogInterface.OnClickListener() {
 
                     @Override

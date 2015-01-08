@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ public class AppointmentListFragment extends Fragment{
     private AppointmentListPagerAdapter mPagerAdapter;
 
     // For data, object
+    private boolean mIsClicked = false;
     private List<String> mAppointmentList;
     public AppointmentListFragment(){
         mAppointmentList = new ArrayList<String>();
@@ -48,6 +50,16 @@ public class AppointmentListFragment extends Fragment{
         mRefreshLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mIsClicked){
+                    return;
+                }
+                mIsClicked = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsClicked = false;
+                    }
+                }, 500);
                 mPagerAdapter.refreshAllItems();
             }
         });

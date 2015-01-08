@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +36,13 @@ public class AppointmentListForAPatientFragment extends Fragment{
     private TextView mTvPatientPhone;
     private TextView mTvPatientEmail;
     private TextView mTvPatientAddress;
+    private View mRefreshLayout;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private AppointmentListForAPatientPagerAdapter mPagerAdapter;
 
     // For data, object
+    private boolean mIsClicked = false;
     private List<String> mAppointmentList;
     private PatientManagementItemData mPatientManagementItemData;
     public AppointmentListForAPatientFragment(){
@@ -64,6 +67,25 @@ public class AppointmentListForAPatientFragment extends Fragment{
         mTvPatientEmail = (TextView) v.findViewById(R.id.tvPatientEmail);
         mTvPatientAddress = (TextView) v.findViewById(R.id.tvPatientLocation);
 
+        mRefreshLayout = v.findViewById(R.id.refreshLayout);
+        mRefreshLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mIsClicked){
+                    return;
+                }
+                mIsClicked = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsClicked = false;
+                    }
+                }, 500);
+
+                // Refresh all items
+                mPagerAdapter.refreshAllItems();
+            }
+        });
         mTabLayout = (TabLayout) v.findViewById(R.id.appointmentListTabLayout);
         mTabLayout.createChild(mAppointmentList, true);
         mTabLayout.setOnTabItemClickListner(mOnTabItemClickListener);

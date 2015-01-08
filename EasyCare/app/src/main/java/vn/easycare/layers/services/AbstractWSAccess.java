@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,12 +48,20 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
             String errorResponse = new String(response.data);
             try {
                 JSONObject jsonObj = new JSONObject(errorResponse);
-                JSONObject jsonErrorObj = (JSONObject)jsonObj.get(Res_Errors);
-                if(jsonErrorObj!=null){
-                    Iterator<?> keys = jsonErrorObj.keys();
-                    while( keys.hasNext() ){
-                        String key = (String)keys.next();
-                        errMessage+=jsonErrorObj.getString(key)+"\r\n";
+                Object errorObj = jsonObj.get(Res_Errors);
+                if(errorObj != null) {
+                    if(errorObj instanceof JSONObject) {
+                        JSONObject jsonErrorObj = (JSONObject)errorObj;
+                        if (jsonErrorObj != null) {
+                            Iterator<?> keys = jsonErrorObj.keys();
+                            while (keys.hasNext()) {
+                                String key = (String) keys.next();
+                                errMessage += jsonErrorObj.getString(key) + "\r\n";
+                            }
+                        }
+                    }else if(errorObj instanceof JSONArray){
+                        // TODO
+                        // Do it later
                     }
                 }
                 statusCode = response.statusCode;

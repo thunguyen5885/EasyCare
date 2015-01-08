@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,7 @@ public class StatisticFragment extends BaseFragment implements IInformationStati
     private Dialog mLoadingDialog;
 
     // For data, object
+    private boolean mIsClicked = false;
     private InformationStatisticItemData mItemData;
     private IInformationStatisticPresenter mPresenter;
 
@@ -65,6 +67,16 @@ public class StatisticFragment extends BaseFragment implements IInformationStati
         mRefreshLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mIsClicked){
+                    return;
+                }
+                mIsClicked = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mIsClicked = false;
+                    }
+                }, 500);
                 refreshData();
             }
         });

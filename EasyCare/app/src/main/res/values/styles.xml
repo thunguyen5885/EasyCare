@@ -10,6 +10,19 @@
         <item name="android:textAppearance">@android:style/TextAppearance.Large.Inverse</item>
     </style>
 
+    <!-- For micro textview -->
+    <style name="MicroTextView" parent="@style/MyTextView">
+        <item name="android:textSize">@dimen/text_micro</item>
+    </style>
+
+    <style name="DefaultMicroTextView" parent="@style/MicroTextView">
+        <item name="android:textColor">@color/textview_color_default</item>
+    </style>
+
+    <style name="HighLightMicroTextView" parent="@style/MicroTextView">
+        <item name="android:textColor">@color/textview_color_highlight</item>
+    </style>
+
     <!-- For tiny textview -->
     <style name="TinyTextView" parent="@style/MyTextView">
         <item name="android:textSize">@dimen/text_tiny</item>

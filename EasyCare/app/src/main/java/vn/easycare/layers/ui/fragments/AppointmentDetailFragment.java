@@ -62,8 +62,8 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
     private Button mBtnCalendarAccept;
 
     // For data, object
-    boolean mIsCLicked = false;
-
+    private boolean mIsCLicked = false;
+    private AppConstants.EXAMINATION_STATUS mStatus;
     private ExaminationAppointmentItemData mItemData;
     private IExaminationAppointmentPresenter mPresenter;
     private Dialog mLoadingDialog;
@@ -84,6 +84,8 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mPresenter = new ExaminationAppointmentPresenterImpl(this, getActivity());
         appointmentTimeData = new AppointmentTimeData();
+        mStatus = AppConstants.EXAMINATION_STATUS.WAITING;
+
         View v = inflater.inflate(R.layout.fragment_appointment_detail, container, false);
         mAppointmentDetailLayout = v.findViewById(R.id.llAppointmentDetailLayout);
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
@@ -218,13 +220,9 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
             case R.id.sendLayout:
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        // Change examination based on appointment time
-                        mPresenter.updateDoctorNotes(mItemData.getExaminationId(), mEdtDoctorComment.getText().toString().trim());
-                    }
-                }, 2000);
+                mStatus = AppConstants.EXAMINATION_STATUS.MISSING;
+                mPresenter.updateDoctorNotes(mItemData.getExaminationId(), mEdtDoctorComment.getText().toString().trim());
+
                 break;
             case R.id.btnCalendarChange:
                 // Update appointment time from data
@@ -246,9 +244,11 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
                     public void onClick(View v) {
                         mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                         mLoadingDialog.show();
+
                         // Change examination based on appointment time
-                        String updatedDate = appointmentTimeData.generateDateString(AppConstants.DATE_FORMAT_DD_MM_YYYY);
+                        String updatedDate = appointmentTimeData.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
                         String updatedTime = appointmentTimeData.generateTimeString(AppConstants.TIME_FORMAT_HH_MM);
+                        mStatus = AppConstants.EXAMINATION_STATUS.WAITING;
                         mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), updatedDate, updatedTime, 0, null);
 
                     }
@@ -258,12 +258,14 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
 
+                mStatus = AppConstants.EXAMINATION_STATUS.CANCEL;
                 mPresenter.CancelAnExaminationAppointment(mItemData.getExaminationId());
                 break;
             case R.id.btnCalendarAccept:
                 mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getResources().getString(R.string.loading_dialog_in_progress));
                 mLoadingDialog.show();
 
+                mStatus = AppConstants.EXAMINATION_STATUS.ACCEPTED;
                 mPresenter.AcceptAnExaminationAppointment(mItemData.getExaminationId());
                 break;
         }
@@ -362,30 +364,45 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
 
     @Override
     public void DisplayMessageIncaseError(String message,String funcTitle) {
-
-        DialogUtil.createInformDialog(this.getActivity(), funcTitle, message,
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        String messageInfo = "";
+        switch (mStatus){
+            case ACCEPTED:
+                messageInfo = getString(R.string.message_inform_appointment_accept_fail);
+                break;
+            case CANCEL:
+                messageInfo = getString(R.string.message_inform_appointment_cancel_fail);
+                break;
+            case WAITING:
+                messageInfo = getString(R.string.message_inform_appointment_change_fail);
+                break;
+            case MISSING:
+                messageInfo = getString(R.string.message_inform_doctor_note_update_fail);
+                break;
+        }
+        DialogUtil.createInformDialog(this.getActivity(), getString(R.string.message_title), messageInfo,
                 new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        updateUI();
                         dialogInterface.dismiss();
                     }
                 }).show();
     }
-
-
-
     @Override
     public void DisplayMessageForUpdateDoctorNote(String message) {
-        boolean isUpdatedDone = true;
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
-        if(isUpdatedDone){
-            // Display message done for user
-        }
+        DialogUtil.createInformDialog(getActivity(), getString(R.string.message_title), getString(R.string.message_inform_doctor_note_update_succeed), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
 
+            }
+        }).show();
     }
 
     @Override
@@ -394,24 +411,35 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
     }
 
     private void processWhenUpdateDone(String message){
-        boolean isUpdatedDone = true;
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
-        if(isUpdatedDone) {
-            // Can show message update done here
-            // .....
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Gone this screen
-                    ((HomeActivity) getActivity()).onBackPressed();
-                }
-            }, 500);
-
-        }else{
-
+        String messageInfo = "";
+        switch (mStatus){
+            case ACCEPTED:
+                messageInfo = getString(R.string.message_inform_appointment_accept_succeed);
+                break;
+            case CANCEL:
+                messageInfo = getString(R.string.message_inform_appointment_cancel_succeed);
+                break;
+            case WAITING:
+                messageInfo = getString(R.string.message_inform_appointment_change_succeed);
+                break;
         }
-    }
+        DialogUtil.createInformDialog(getActivity(), getString(R.string.message_title), messageInfo, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                // Go back
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Gone this screen
+                        ((HomeActivity) getActivity()).onBackPressed();
+                    }
+                }, 500);
+            }
+        }).show();
+    };
 
 }

@@ -76,6 +76,7 @@ public class PatientListAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.patient_item_ctrl, null);
             viewHolder = new ViewHolder();
+            viewHolder.mPatientItemLayout = convertView.findViewById(R.id.patientItemLayout);
             viewHolder.mPatientAvatar = (NetworkImageView) convertView.findViewById(R.id.patientAvatarThumb);
             viewHolder.mPatientName = (TextView) convertView.findViewById(R.id.tvPatientName);
             viewHolder.mPatientPhone = (TextView) convertView.findViewById(R.id.tvPatientPhone);
@@ -103,8 +104,8 @@ public class PatientListAdapter extends BaseAdapter{
             viewHolder.mEndOfListIndicator.setVisibility(View.GONE);
         }
         // Set on click
-        viewHolder.mPatientName.setTag(position);
-        viewHolder.mPatientName.setOnClickListener(mOnClickListener);
+        viewHolder.mPatientItemLayout.setTag(position);
+        viewHolder.mPatientItemLayout.setOnClickListener(mOnClickListener);
         viewHolder.mBtnBlock.setTag(position);
         viewHolder.mBtnBlock.setOnClickListener(mOnClickListener);
         viewHolder.mBtnAppointment.setTag(position);
@@ -178,7 +179,7 @@ public class PatientListAdapter extends BaseAdapter{
                     appointmentListForAPatientFragment.setArguments(bundle);
                     ((HomeActivity) mContext).showFragment(appointmentListForAPatientFragment);
                     break;
-                case R.id.tvPatientName:
+                case R.id.patientItemLayout:
                     selectedPos = (Integer) v.getTag();
                     selectedItem = mItemDataList.get(selectedPos);
 
@@ -194,6 +195,7 @@ public class PatientListAdapter extends BaseAdapter{
         }
     };
     private static class ViewHolder{
+        private View mPatientItemLayout;
         private NetworkImageView mPatientAvatar;
         private TextView mPatientName;
         private TextView mPatientPhone;

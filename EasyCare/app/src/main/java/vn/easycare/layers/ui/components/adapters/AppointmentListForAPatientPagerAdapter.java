@@ -59,6 +59,7 @@ public class AppointmentListForAPatientPagerAdapter extends PagerAdapter{
                 appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
             }
             appointmentListLayout.setPatientId(mPatientId);
+            appointmentListLayout.setIBroadCast(mBroadCastToSynData);
             appointmentListLayout.loadNewData();
             mViewMaps.put(position, appointmentListLayout);
         }
@@ -81,9 +82,6 @@ public class AppointmentListForAPatientPagerAdapter extends PagerAdapter{
     private IBroadCastToSynData mBroadCastToSynData = new IBroadCastToSynData() {
         @Override
         public void broadCast(AppConstants.EXAMINATION_STATUS status) {
-            // Always change on the first item
-//            DatingListLayout waitingDatingListLayout = (DatingListLayout) mViewMaps.get(0);
-//            waitingDatingListLayout.setNeedToRefresh(true);
             switch (status){
                 case ACCEPTED:
                     AppointmentListForAPatientLayout acceptAppointmentListLayout = (AppointmentListForAPatientLayout) mViewMaps.get(1);

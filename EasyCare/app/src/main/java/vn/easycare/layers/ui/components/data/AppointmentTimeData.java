@@ -16,11 +16,7 @@ public class AppointmentTimeData {
     private int minute;
 
     public AppointmentTimeData(){
-        year = -1;
-        month = -1;
-        day = -1;
-        hour = -1;
-        minute = -1;
+        reset();
     }
     public void set(int year, int month, int day){
         this.year = year;
@@ -37,6 +33,13 @@ public class AppointmentTimeData {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
+    }
+    public void reset(){
+        year = -1;
+        month = -1;
+        day = -1;
+        hour = -1;
+        minute = -1;
     }
     public int getYear() {
         return year;

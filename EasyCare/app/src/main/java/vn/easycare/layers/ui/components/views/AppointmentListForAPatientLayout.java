@@ -24,6 +24,7 @@ import java.util.List;
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.components.adapters.AppointmentListForAPatientAdapter;
+import vn.easycare.layers.ui.components.adapters.AppointmentListForAPatientPagerAdapter;
 import vn.easycare.layers.ui.components.adapters.AppointmentListPagerAdapter;
 import vn.easycare.layers.ui.components.adapters.SimpleTextAdapter;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
@@ -62,10 +63,9 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     private String mPatientId;
     private boolean mIsDataLoading = false;
     private boolean mIsNeedToRefresh = false;
+    private boolean mIsClicked = false;
+    private AppConstants.EXAMINATION_STATUS mStatus;
 
-    private int mSelectedYear;
-    private int mSelectedMonth;
-    private int mSelectedDay;
     private int mPage;
     private int mItemCount;
     private int mCriteriaDateIndex;
@@ -76,7 +76,7 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     private AppConstants.EXAMINATION_STATUS mAppointmentType;
     private List<ExaminationAppointmentItemData> mExaminationAppointmentItemDataList;
     private IExaminationAppointmentPresenter mPresenter;
-    private AppointmentListPagerAdapter.IBroadCastToSynData mIBroadCast;
+    private AppointmentListForAPatientPagerAdapter.IBroadCastToSynData mIBroadCast;
     private List<String> mDateSearchList;
 
     // Key search
@@ -99,15 +99,12 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
         init(context);
     }
     private void init(Context context) {
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
-
         // For key and result search
         mAppointmentCode = "";
         mAppointmentDate = "";
         mAppointmentType = AppConstants.EXAMINATION_STATUS.WAITING;
         mPage = 1;
+        mStatus = AppConstants.EXAMINATION_STATUS.MISSING;
 
         mExaminationAppointmentItemDataList = new ArrayList<ExaminationAppointmentItemData>();
         mAppointmentTimeDataForChangeCalendar = new AppointmentTimeData();
@@ -152,7 +149,7 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     public void setNeedToRefresh(boolean isNeedToRefresh){
         mIsNeedToRefresh = isNeedToRefresh;
     }
-    public void setIBroadCast(AppointmentListPagerAdapter.IBroadCastToSynData broadCast){
+    public void setIBroadCast(AppointmentListForAPatientPagerAdapter.IBroadCastToSynData broadCast){
         mIBroadCast = broadCast;
     }
     public void setPatientId(String patientId){
@@ -163,10 +160,8 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
         mTvCalendarText.setText("");
         mAppointmentCode = "";
         mAppointmentDate = "";
-
-        mSelectedYear = -1;
-        mSelectedMonth = -1;
-        mSelectedDay = -1;
+        mStatus = AppConstants.EXAMINATION_STATUS.MISSING;
+        mAppointmentTimeDataForSelectCalendar.reset();
 
         updateDateSearch(0);
     }
@@ -307,18 +302,18 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
         int yearToSet = 0;
         int monthToSet = 0;
         int dayToSet = 0;
-        if(mSelectedYear != -1){
-            yearToSet = mSelectedYear;
+        if(mAppointmentTimeDataForSelectCalendar.getYear() != -1){
+            yearToSet = mAppointmentTimeDataForSelectCalendar.getYear();
         }else{
             yearToSet = calendar.get(Calendar.YEAR);
         }
-        if(mSelectedMonth != -1){
-            monthToSet = mSelectedMonth;
+        if(mAppointmentTimeDataForSelectCalendar.getMonth() != -1){
+            monthToSet = mAppointmentTimeDataForSelectCalendar.getMonth();
         }else{
             monthToSet = calendar.get(Calendar.MONTH);
         }
-        if(mSelectedDay != -1){
-            dayToSet = mSelectedDay;
+        if(mAppointmentTimeDataForSelectCalendar.getDay() != -1){
+            dayToSet = mAppointmentTimeDataForSelectCalendar.getDay();
         }else{
             dayToSet = calendar.get(Calendar.DAY_OF_MONTH);
         }
@@ -328,6 +323,16 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     private OnClickListener mOnClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
+            if(mIsClicked){
+                return;
+            }
+            mIsClicked = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mIsClicked = false;
+                }
+            }, 500);
             switch (v.getId()){
                 case R.id.rlSelectCalendarLayout:
                     showDatePickerDialog();
@@ -361,9 +366,6 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     private DatePickerDialog.OnDateSetListener mOnDateSetListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mSelectedYear = year;
-            mSelectedMonth = monthOfYear;
-            mSelectedDay = dayOfMonth;
             mAppointmentTimeDataForSelectCalendar.set(year, monthOfYear, dayOfMonth);
 
             // Update on UI
@@ -383,10 +385,10 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
 
         @Override
         public void onAppointmentCalendarChange(final ExaminationAppointmentItemData itemData) {
-            // TODO
             // Update appointment time from data
-            //...................
-            //itemData.
+            Calendar calendar = AppFnUtils.getCalendarFromDateFormat(AppConstants.DATE_FORMAT_YYYY_MM_DD_HH_MM_SS, itemData.getExaminationDateTime());
+            mAppointmentTimeDataForChangeCalendar.set(calendar);
+
             // Show datetime dialog here
             DialogUtil.showDateTimeDialog(getContext(), mAppointmentTimeDataForChangeCalendar, new DatePicker.OnDateChangedListener() {
                 @Override
@@ -401,39 +403,32 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
             }, new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    /*mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
+                    mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
                     mLoadingDialog.show();
-                    // Change examination based on appointment time
-                    mPresenter.ChangeAnExaminationAppointment(itemData);*/
+                    String updatedDate = mAppointmentTimeDataForChangeCalendar.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
+                    String updatedTime = mAppointmentTimeDataForChangeCalendar.generateTimeString(AppConstants.TIME_FORMAT_HH_MM);
+                    mStatus = AppConstants.EXAMINATION_STATUS.WAITING;
+                    mPresenter.ChangeAnExaminationAppointment(itemData.getExaminationId(), updatedDate, updatedTime, 0, null);
                 }
             });
-
-
         }
 
         @Override
         public void onAppointmentCalendarCancel(final String appointmentId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.CancelAnExaminationAppointment(appointmentId);
-                }
-            }, 2000);
 
+            mStatus = AppConstants.EXAMINATION_STATUS.CANCEL;
+            mPresenter.CancelAnExaminationAppointment(appointmentId);
         }
 
         @Override
         public void onAppointmentCalendarAccept(final String appointmentId) {
             mLoadingDialog = DialogUtil.createLoadingDialog(getContext(), getResources().getString(R.string.loading_dialog_in_progress));
             mLoadingDialog.show();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mPresenter.AcceptAnExaminationAppointment(appointmentId);
-                }
-            }, 2000);
+
+            mStatus = AppConstants.EXAMINATION_STATUS.ACCEPTED;
+            mPresenter.AcceptAnExaminationAppointment(appointmentId);
         }
     };
 
@@ -500,7 +495,23 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
 
     @Override
     public void DisplayMessageIncaseError(String message, String funcTitle) {
-        DialogUtil.createInformDialog(this.getContext(), funcTitle, message,
+        if(mLoadingDialog != null){
+            mLoadingDialog.dismiss();
+        }
+        String messageInfo = "";
+        switch (mStatus){
+            case ACCEPTED:
+                messageInfo = getContext().getString(R.string.message_inform_appointment_accept_fail);
+                break;
+            case CANCEL:
+                messageInfo = getContext().getString(R.string.message_inform_appointment_cancel_fail);
+                break;
+            case WAITING:
+                messageInfo = getContext().getString(R.string.message_inform_appointment_change_fail);
+                break;
+
+        }
+        DialogUtil.createInformDialog(this.getContext(), getContext().getString(R.string.message_title), messageInfo,
                 new DialogInterface.OnClickListener() {
 
                     @Override
@@ -509,11 +520,13 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
                         mIsDataLoading = false;
                         mIsNeedToRefresh = false;
 
-                        mLvAppointmentList.removeFooterView(mLoadMoreView);
-                        mLoadMoreView.loadMoreComplete();
+                        if(mStatus == AppConstants.EXAMINATION_STATUS.MISSING) {
+                            mLvAppointmentList.removeFooterView(mLoadMoreView);
+                            mLoadMoreView.loadMoreComplete();
 
-                        // Update UI anyway
-                        updateUI(true);
+                            // Update UI anyway
+                            updateUI(true);
+                        }
                         dialogInterface.dismiss();
                     }
                 }).show();
@@ -527,19 +540,12 @@ public class AppointmentListForAPatientLayout extends BaseLinearLayout implement
     }
 
     private void processWhenUpdateDone(String message, AppConstants.EXAMINATION_STATUS status){
-        boolean isUpdatedDone = true;
-        if(isUpdatedDone) {
-            // In case of OK
-            if (mIBroadCast != null) {
-                mIBroadCast.broadCast(status);
-            }
-            // Reload data here
-            refreshDataWhenDataChanged();
-        }else{
-            if(mLoadingDialog != null){
-                mLoadingDialog.dismiss();
-            }
+        // In case of OK
+        if (mIBroadCast != null) {
+            mIBroadCast.broadCast(status);
         }
+        // Reload data here
+        refreshDataWhenDataChanged();
     }
 
 }

@@ -26,4 +26,6 @@ public class DataSingleton {
     public ImageLoader getImageLoader(){
         return mImageLoader;
     }
+
+
 }
