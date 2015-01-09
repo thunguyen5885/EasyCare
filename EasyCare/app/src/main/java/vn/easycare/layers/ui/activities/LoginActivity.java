@@ -3,17 +3,21 @@ package vn.easycare.layers.ui.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gcm.GCMRegistrar;
+
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
 import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.views.ILoginView;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
 import vn.easycare.utils.DialogUtil;
 

@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             mSlidingPanelLayout.closePane();
         }
         // Check GCM for push notification
-        checkGcm();
+        checkToPostRegistrationToServer();
 
         decideWhichScreenToShow();
     }
@@ -192,15 +192,12 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             }, 10);
         }
     }
-    private void checkGcm() {
-
+    private void checkToPostRegistrationToServer() {
         // Make sure the device has the proper dependencies.
         GCMRegistrar.checkDevice(this);
         // Make sure the manifest was properly set - comment out this line
         // while developing the app, then uncomment it when it's ready.
         GCMRegistrar.checkManifest(this);
-
-//		GCMRegistrar.setRegisteredOnServer(mContext, false);
 
         final String regId = GCMRegistrar.getRegistrationId(this);
         if (regId.equals("")) {

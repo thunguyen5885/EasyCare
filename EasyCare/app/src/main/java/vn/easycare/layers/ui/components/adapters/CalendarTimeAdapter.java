@@ -29,7 +29,7 @@ import vn.easycare.utils.AppFnUtils;
  */
 public class CalendarTimeAdapter extends BaseAdapter{
     private static final int START_TIME = 7;
-    private static final int END_TIME = 21;
+    private static final int END_TIME = 22;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
 

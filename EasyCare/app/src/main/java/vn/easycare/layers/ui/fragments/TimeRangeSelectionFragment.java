@@ -39,7 +39,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         SCHEDULE_DELETE
     }
     private static final int START_TIME = 7;
-    private static final int END_TIME = 21;
+    private static final int END_TIME = 22;
     private static final Integer[] TIME_SLOTS = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
     private static final int TIME_SLOT_DEFAULT = 15;
     // For control, layout

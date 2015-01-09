@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package vn.easycare.layers.ui.activities;
+package vn.easycare;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -26,6 +26,7 @@ import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
 import vn.easycare.R;
+import vn.easycare.layers.ui.activities.NotificationReceivingActivity;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.views.ILoginView;
@@ -34,7 +35,7 @@ import vn.easycare.utils.AppConstants;
 /**
  * IntentService responsible for handling GCM messages.
  */
-public class GCMIntentService extends GCMBaseIntentService implements ILoginView{
+public class GCMIntentService extends GCMBaseIntentService{
 
     @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
@@ -49,8 +50,9 @@ public class GCMIntentService extends GCMBaseIntentService implements ILoginView
     protected void onRegistered(Context context, String registrationId) {
         Log.e(TAG, "Device registered: regId = " + registrationId);
         mContext = context;
+
         // Register registrationId to server
-        ILoginPresenter presenter = new LoginPresenterImpl(this, context);
+        ILoginPresenter presenter = new LoginPresenterImpl(mLoginView, context);
         presenter.DoRegisterDeviceId(registrationId);
     }
 
@@ -116,33 +118,34 @@ public class GCMIntentService extends GCMBaseIntentService implements ILoginView
          notificationManager.notify((int) when, notification);
 
     }
+    private ILoginView mLoginView = new ILoginView() {
+        @Override
+        public void LoginOK(String message) {
 
-    @Override
-    public void LoginOK(String message) {
-
-    }
-
-    @Override
-    public void LoginFail(String message) {
-
-    }
-
-    @Override
-    public void RegisterGCMIdOK(String message) {
-        if(mContext != null) {
-            GCMRegistrar.setRegisteredOnServer(mContext, true);
-        }else{
-            GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
         }
-    }
 
-    @Override
-    public void DisplayMessageIncaseError(String message, String funcTitle) {
+        @Override
+        public void LoginFail(String message) {
 
-    }
+        }
 
-    @Override
-    public void UnauthorizedProcessing() {
+        @Override
+        public void RegisterGCMIdOK(String message) {
+            if(mContext != null) {
+                GCMRegistrar.setRegisteredOnServer(mContext, true);
+            }else{
+                GCMRegistrar.setRegisteredOnServer(getApplicationContext(), true);
+            }
+        }
 
-    }
+        @Override
+        public void DisplayMessageIncaseError(String message, String funcTitle) {
+
+        }
+
+        @Override
+        public void UnauthorizedProcessing() {
+
+        }
+    };
 }

@@ -19,6 +19,7 @@ import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.activities.LoginActivity;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
+import vn.easycare.layers.ui.components.singleton.MySharePreference;
 import vn.easycare.utils.AppFnUtils;
 
 public class MenuFragment extends Fragment implements View.OnClickListener{
@@ -210,6 +211,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onMenuItemExitClicked() {
+            // Clear access token here
+            MySharePreference.clearAccessToken(getActivity());
             // Logout, exit here
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
