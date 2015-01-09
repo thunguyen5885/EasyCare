@@ -4,21 +4,26 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SlidingPaneLayout;
+import android.util.Log;
 import android.view.View;
-import android.view.Window;
+
+import com.google.android.gcm.GCMRegistrar;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.base.BaseActivity;
 import vn.easycare.layers.ui.components.CommonFooter;
 import vn.easycare.layers.ui.components.CommonHeader;
+import vn.easycare.layers.ui.fragments.AppointmentListFragment;
 import vn.easycare.layers.ui.fragments.HomeFragment;
 import vn.easycare.layers.ui.fragments.MenuFragment;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.views.ILoginView;
+import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.DialogUtil;
 
 /**
@@ -71,9 +76,16 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
         if(mSlidingPanelLayout != null){
             mSlidingPanelLayout.closePane();
         }
-        // Show home fragment as default
-        HomeFragment homeFragment = new HomeFragment();
-        showFragmentFromMenu(homeFragment);
+        // Check GCM for push notification
+        checkGcm();
+
+        decideWhichScreenToShow();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        decideWhichScreenToShow();
     }
 
     @Override
@@ -91,7 +103,18 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
         }
         mSlidingPanelLayout.closePane();
     }
-
+    private void decideWhichScreenToShow(){
+        boolean isComeFromNotify = getIntent().getBooleanExtra(AppConstants.APPOINTMENT_NOTIFICATION_KEY, false);
+        if(isComeFromNotify){ // From notify
+            // Show appointment_list screen
+            AppointmentListFragment appointmentListFragment = new AppointmentListFragment();
+            showFragmentFromMenu(appointmentListFragment);
+        }else{
+            // Show home fragment as default
+            HomeFragment homeFragment = new HomeFragment();
+            showFragmentFromMenu(homeFragment);
+        }
+    }
     public void showFragment(Fragment frag) {
         FragmentManager fragmentManager = getFragmentManager();
         String backStateName = frag.getClass().getName();
@@ -169,7 +192,31 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             }, 10);
         }
     }
+    private void checkGcm() {
 
+        // Make sure the device has the proper dependencies.
+        GCMRegistrar.checkDevice(this);
+        // Make sure the manifest was properly set - comment out this line
+        // while developing the app, then uncomment it when it's ready.
+        GCMRegistrar.checkManifest(this);
+
+//		GCMRegistrar.setRegisteredOnServer(mContext, false);
+
+        final String regId = GCMRegistrar.getRegistrationId(this);
+        if (regId.equals("")) {
+            // Automatically registers application on startup.
+            GCMRegistrar.register(this, AppConstants.SENDER_ID);
+        } else {
+            Log.i("== checkGcm", "else");
+            // Device is already registered on GCM, check server.
+            if (GCMRegistrar.isRegisteredOnServer(this)) {
+                // Skips registration.
+            } else {
+                Log.i("== checkGcm", "Add device token " + regId);
+                mLoginPresenter.DoRegisterDeviceId(regId);
+            }
+        }
+    }
     /**
      * Hide the separator on footer
      */
@@ -225,7 +272,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
 
     @Override
     public void RegisterGCMIdOK(String message) {
-
+        GCMRegistrar.setRegisteredOnServer(this, true);
     }
 
     @Override
