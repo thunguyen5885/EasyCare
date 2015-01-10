@@ -32,11 +32,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/common_padding"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:visibility="invisible">
             <TextView
                 android:id="@+id/tvNotifyCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/DefaultNormalTextView"
+                android:textColor="@color/white"
                 android:layout_gravity="center"/>
         </FrameLayout>
     </RelativeLayout>

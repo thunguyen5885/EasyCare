@@ -1,6 +1,8 @@
 package vn.easycare.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
@@ -15,6 +17,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by phan on 8/7/2014.
@@ -141,5 +144,10 @@ public class AppFnUtils {
             e.printStackTrace();
         }
         return calendar;
+    }
+    public static String getForegroundActivityName(Context context){
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        return taskInfo.get(0).topActivity.getClassName();
     }
 }

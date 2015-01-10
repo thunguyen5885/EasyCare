@@ -20,6 +20,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -39,7 +40,7 @@ public class GCMIntentService extends GCMBaseIntentService{
 
     @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
-
+    public static int mNotifyCount = 0;
     private Context mContext;
     public GCMIntentService() {
         super(AppConstants.SENDER_ID);
@@ -47,13 +48,14 @@ public class GCMIntentService extends GCMBaseIntentService{
     }
 
     @Override
-    protected void onRegistered(Context context, String registrationId) {
+    protected void onRegistered(final Context context, String registrationId) {
         Log.e(TAG, "Device registered: regId = " + registrationId);
         mContext = context;
 
+        generateNotification(context, "Test push notification");
         // Register registrationId to server
-        ILoginPresenter presenter = new LoginPresenterImpl(mLoginView, context);
-        presenter.DoRegisterDeviceId(registrationId);
+        //ILoginPresenter presenter = new LoginPresenterImpl(mLoginView, context);
+        //presenter.DoRegisterDeviceId(registrationId);
     }
 
     @Override
@@ -96,8 +98,9 @@ public class GCMIntentService extends GCMBaseIntentService{
      * Issues a notification to inform the user that server has sent a message.
      */
     private void generateNotification(Context context, String message) {
+         mNotifyCount = 10;
     	 int icon = R.drawable.ic_launcher;
-         long when = System.currentTimeMillis();
+         long when = 0;//System.currentTimeMillis();
          NotificationManager notificationManager = (NotificationManager)
                  context.getSystemService(Context.NOTIFICATION_SERVICE);
          Notification notification = new Notification(icon, message, when);
@@ -106,7 +109,7 @@ public class GCMIntentService extends GCMBaseIntentService{
          
          // set intent so it does not start a new activity
 //         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-         //notificationIntent.addFlags( Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP );
+         notificationIntent.addFlags( Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP );
          
          PendingIntent intent =
                  PendingIntent.getActivity(context, (int) when, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

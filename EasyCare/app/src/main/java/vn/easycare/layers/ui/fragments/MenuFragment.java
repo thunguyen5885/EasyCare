@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.google.android.gcm.GCMRegistrar;
 
 import vn.easycare.R;
 import vn.easycare.layers.services.WSDataSingleton;
@@ -213,6 +214,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         public void onMenuItemExitClicked() {
             // Clear access token here
             MySharePreference.clearDoctorInfo(getActivity());
+            // Unregister registration id
+            GCMRegistrar.unregister(getActivity());
             // Logout, exit here
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);

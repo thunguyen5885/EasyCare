@@ -27,7 +27,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:scaleType="fitXY"
-                android:background="@drawable/layout_circle_transparent_background"
+                android:background="@drawable/notification_circle_background"
             />
         </RelativeLayout>
         <LinearLayout
