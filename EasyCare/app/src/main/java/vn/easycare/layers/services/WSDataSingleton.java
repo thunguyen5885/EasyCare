@@ -5,6 +5,8 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import vn.easycare.layers.ui.components.data.DoctorInfoAccItemData;
+
 /**
  * Created by phannguyen on 12/21/14.
  */
@@ -13,12 +15,7 @@ public class WSDataSingleton {
     private static Object lock = new Object();
     private Context mContext;
     private RequestQueue queue;
-    private String sessionToken="";
-    private String doctorFullName="";
-    private String doctorAvatar="";
-    private String doctorId="";
-    private String doctorEmail="";
-    private String doctorAvatarThumb="";
+    DoctorInfoAccItemData mDoctorInfo;
 
     public static WSDataSingleton getInstance(Context context) {
         synchronized (lock) {
@@ -33,6 +30,7 @@ public class WSDataSingleton {
     public WSDataSingleton(Context context) {
         this.mContext = mContext;
         queue = Volley.newRequestQueue(context);
+        mDoctorInfo = new DoctorInfoAccItemData();
     }
 
     public RequestQueue getRequestQueue(){
@@ -40,52 +38,58 @@ public class WSDataSingleton {
     }
 
     public String getSessionToken() {
-        return sessionToken;
+        return mDoctorInfo.getSessionToken();
     }
 
     public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
+        mDoctorInfo.setSessionToken(sessionToken);
     }
 
     public String getDoctorFullName() {
-        return doctorFullName;
+        return mDoctorInfo.getDoctorFullName();
     }
 
     public void setDoctorFullName(String doctorFullName) {
-        this.doctorFullName = doctorFullName;
+        mDoctorInfo.setDoctorFullName(doctorFullName);
     }
 
     public String getDoctorAvatar() {
-        return doctorAvatar;
+        return mDoctorInfo.getDoctorAvatar();
     }
 
     public void setDoctorAvatar(String doctorAvatar) {
-        this.doctorAvatar = doctorAvatar;
+        mDoctorInfo.setDoctorAvatar(doctorAvatar);
     }
 
     public String getDoctorId() {
-        return doctorId;
+        return mDoctorInfo.getDoctorId();
     }
 
     public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+        mDoctorInfo.setDoctorId(doctorId);
     }
 
     public String getDoctorEmail() {
-        return doctorEmail;
+        return mDoctorInfo.getDoctorEmail();
     }
 
     public void setDoctorEmail(String doctorEmail) {
-        this.doctorEmail = doctorEmail;
+        mDoctorInfo.setDoctorEmail(doctorEmail);
     }
 
     public String getDoctorAvatarThumb() {
-        return doctorAvatarThumb;
+        return mDoctorInfo.getDoctorAvatarThumb();
     }
 
     public void setDoctorAvatarThumb(String doctorAvatarThumb) {
-        this.doctorAvatarThumb = doctorAvatarThumb;
+        mDoctorInfo.setDoctorAvatarThumb(doctorAvatarThumb);
     }
 
+    public void setDoctorInfo(String doctorInfoJson){
+        this.mDoctorInfo.initWithJsonString(doctorInfoJson);
+    }
+    public DoctorInfoAccItemData getDoctorInfo(){
+        return mDoctorInfo;
+    }
 
 }

@@ -13,7 +13,9 @@ import android.widget.TextView;
 import com.google.android.gcm.GCMRegistrar;
 
 import vn.easycare.R;
+import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.ui.base.BaseActivity;
+import vn.easycare.layers.ui.components.singleton.MySharePreference;
 import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
 import vn.easycare.layers.ui.views.ILoginView;
@@ -55,6 +57,20 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         // Apply font
         View rootLayout = findViewById(R.id.loginRootLayout);
         AppFnUtils.applyFontForTextViewChild(rootLayout);
+
+        if(MySharePreference.isLogin(this)){
+            WSDataSingleton.getInstance(this).setDoctorInfo(MySharePreference.getDoctorInfo(this));
+            finish();
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 
     @Override

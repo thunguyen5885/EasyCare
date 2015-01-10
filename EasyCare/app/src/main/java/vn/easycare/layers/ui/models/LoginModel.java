@@ -15,6 +15,7 @@ import vn.easycare.layers.services.models.AuthorizationWSParamModel;
 import vn.easycare.layers.ui.components.data.GCMItemData;
 import vn.easycare.layers.ui.components.data.LoginItemData;
 import vn.easycare.layers.ui.components.data.base.IBaseItemData;
+import vn.easycare.layers.ui.components.singleton.MySharePreference;
 import vn.easycare.layers.ui.models.base.ILoginModel;
 import vn.easycare.utils.AppConstants;
 
@@ -103,6 +104,7 @@ public class LoginModel implements ILoginModel, IWSResponse{
                 WSDataSingleton.getInstance(mContext).setDoctorEmail(model.getUserEmail());
                 WSDataSingleton.getInstance(mContext).setDoctorFullName(model.getUserFullname());
                 WSDataSingleton.getInstance(mContext).setDoctorId(model.getUserId());
+                MySharePreference.storeDoctorInfo(mContext,WSDataSingleton.getInstance(mContext).getDoctorInfo().buildJsonStringFromDoctorInfo());
                 LoginItemData item = new LoginItemData();
                 mCallback.onResponseOK(item,LoginItemData.class);
             }else if(model.getAction()== AppConstants.AUTHORIZATION_ACTION.REGISTER_DEVICE_ID){

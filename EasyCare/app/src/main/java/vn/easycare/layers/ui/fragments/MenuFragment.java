@@ -212,7 +212,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemExitClicked() {
             // Clear access token here
-            MySharePreference.clearAccessToken(getActivity());
+            MySharePreference.clearDoctorInfo(getActivity());
             // Logout, exit here
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             startActivity(intent);
