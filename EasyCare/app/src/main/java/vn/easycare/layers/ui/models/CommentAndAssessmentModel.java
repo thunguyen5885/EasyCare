@@ -81,11 +81,15 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
     @Override
     public void onWSResponseOK(IWebServiceModel result) {
         CommentAndAssessmentListWSModel listModel = (CommentAndAssessmentListWSModel)result;
+        String commemtTest = " testtesttesttesttesttest1\ntesttesttesttesttest2\ntesttesttesttesttesttest3\ntesttesttesttesttest4\ntesttesttesttesttest5";
+
         List<CommentAndAssessmentItemData> itemDataList = new ArrayList<CommentAndAssessmentItemData>();
+
         for(CommentAndAssessmentWSModel commentModel : listModel.getListComments()){
             CommentAndAssessmentItemData item = new CommentAndAssessmentItemData();
             item.setCommentId(commentModel.getId());
-            item.setCommentContent(commentModel.getComment());
+            item.setCommentContent(commentModel.getComment()+ commemtTest);
+
             item.setCommentDateTime(commentModel.getCreatedAt());
             item.setFacilityPoint(commentModel.getFacilityRating());
             item.setGeneralPoint(commentModel.getCommonRating());
