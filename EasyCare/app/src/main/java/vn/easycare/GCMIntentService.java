@@ -20,18 +20,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
 
-import vn.easycare.R;
+import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.activities.NotificationReceivingActivity;
-import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
-import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.views.ILoginView;
 import vn.easycare.utils.AppConstants;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * IntentService responsible for handling GCM messages.
@@ -40,7 +38,7 @@ public class GCMIntentService extends GCMBaseIntentService{
 
     @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
-    public static int mNotifyCount = 0;
+    public static int mNotifyCount = 10;
     private Context mContext;
     public GCMIntentService() {
         super(AppConstants.SENDER_ID);
@@ -48,11 +46,12 @@ public class GCMIntentService extends GCMBaseIntentService{
     }
 
     @Override
-    protected void onRegistered(final Context context, String registrationId) {
+    protected void onRegistered(Context context, String registrationId) {
         Log.e(TAG, "Device registered: regId = " + registrationId);
         mContext = context;
 
         generateNotification(context, "Test push notification");
+        updateNotifyLayoutWhenAppRunningForeground(context);
         // Register registrationId to server
         //ILoginPresenter presenter = new LoginPresenterImpl(mLoginView, context);
         //presenter.DoRegisterDeviceId(registrationId);
@@ -72,6 +71,8 @@ public class GCMIntentService extends GCMBaseIntentService{
         // Process message later
         String message = "Push notification";
         generateNotification(context, message);
+        // Also update notify count
+        updateNotifyLayoutWhenAppRunningForeground(context);
                
     }
 
@@ -93,7 +94,15 @@ public class GCMIntentService extends GCMBaseIntentService{
         Log.e(TAG, "Received recoverable error: " + errorId);
         return super.onRecoverableError(context, errorId);
     }
+    private void updateNotifyLayoutWhenAppRunningForeground(Context context){
+        String foregroundActivityName = AppFnUtils.getForegroundActivityName(context);
+        if(foregroundActivityName != null && foregroundActivityName.equals(HomeActivity.class.getName())){
+            if(context instanceof HomeActivity){
+                ((HomeActivity)context).showNotifyLayout();
+            }
+        }
 
+    }
     /**
      * Issues a notification to inform the user that server has sent a message.
      */

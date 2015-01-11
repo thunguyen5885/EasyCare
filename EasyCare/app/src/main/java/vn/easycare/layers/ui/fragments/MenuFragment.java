@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.toolbox.NetworkImageView;
 import com.google.android.gcm.GCMRegistrar;
 
+import vn.easycare.GCMIntentService;
 import vn.easycare.R;
 import vn.easycare.layers.services.WSDataSingleton;
 import vn.easycare.layers.ui.activities.HomeActivity;
@@ -131,6 +132,23 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
             mMenuItemSeletedItem.setBackgroundColor(Color.TRANSPARENT);
             TextView tvTitle = (TextView) mMenuItemSeletedItem.findViewById(R.id.tvMenuItemTitle);
             tvTitle.setTextColor(getResources().getColor(R.color.textview_color_grey));
+        }
+    }
+    public void showNotify(){
+        if(mMenuItemAppointmentManagement != null && GCMIntentService.mNotifyCount > 0){
+            View notifyLayout = mMenuItemAppointmentManagement.findViewById(R.id.flNotify);
+            notifyLayout.setVisibility(View.VISIBLE);
+            TextView tvNotify = (TextView) mMenuItemAppointmentManagement.findViewById(R.id.tvNotifyCount);
+            tvNotify.setText(String.valueOf(GCMIntentService.mNotifyCount));
+        }
+    }
+    public void hideNotify(){
+        if(mMenuItemAppointmentManagement != null){
+            View notifyLayout = mMenuItemAppointmentManagement.findViewById(R.id.flNotify);
+            notifyLayout.setVisibility(View.INVISIBLE);
+
+            // Also reset notify count
+            GCMIntentService.mNotifyCount = 0;
         }
     }
     @Override

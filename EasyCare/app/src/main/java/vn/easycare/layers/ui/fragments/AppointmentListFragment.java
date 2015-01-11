@@ -94,6 +94,9 @@ public class AppointmentListFragment extends Fragment{
         if(getActivity() != null){
             ((HomeActivity) getActivity()).showFooterSeparator();
             ((HomeActivity) getActivity()).showHeaderBackButton();
+
+            // Hide notify layout here
+            ((HomeActivity) getActivity()).hideNotifyLayout();
         }
     }
     private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {

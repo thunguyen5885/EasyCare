@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             mSlidingPanelLayout.closePane();
         }
         // Check GCM for push notification
-        checkToPostRegistrationToServer();
+        //checkToPostRegistrationToServer();
 
         decideWhichScreenToShow();
     }
@@ -86,6 +86,13 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         decideWhichScreenToShow();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Show notify layout if any
+        showNotifyLayout();
     }
 
     @Override
@@ -102,6 +109,20 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             super.onBackPressed();
         }
         mSlidingPanelLayout.closePane();
+    }
+
+    /**
+     * Update notify layout on menu
+     */
+    public void showNotifyLayout(){
+        if(mMenuFragment != null){
+            mMenuFragment.showNotify();
+        }
+    }
+    public void hideNotifyLayout(){
+        if(mMenuFragment != null){
+            mMenuFragment.hideNotify();
+        }
     }
     private void decideWhichScreenToShow(){
         boolean isComeFromNotify = getIntent().getBooleanExtra(AppConstants.APPOINTMENT_NOTIFICATION_KEY, false);
