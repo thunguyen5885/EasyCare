@@ -15,6 +15,7 @@ import vn.easycare.layers.ui.components.data.CommentAndAssessmentItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.components.views.CustomImageViewCircularShape;
 import vn.easycare.layers.ui.components.views.RatingLayout;
+import vn.easycare.layers.ui.components.views.SpannableTextView;
 import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
 import vn.easycare.utils.AppFnUtils;
 
@@ -66,7 +67,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvCommentPatientName);
             viewHolder.mTvCommentDate = (TextView) convertView.findViewById(R.id.tvCommentDate);
             viewHolder.mTvCommentHour = (TextView) convertView.findViewById(R.id.tvCommentHour);
-            viewHolder.mTvCommentComment = (TextView) convertView.findViewById(R.id.tvCommentComment);
+            viewHolder.mTvCommentComment = (SpannableTextView) convertView.findViewById(R.id.tvCommentComment);
             viewHolder.mCommonIdeaRatingLayout = (RatingLayout) convertView.findViewById(R.id.commonIdeaRatingLayout);
             viewHolder.mAssetRatingLayout = (RatingLayout) convertView.findViewById(R.id.assetRatingLayout);
             viewHolder.mWaitingTimeRatingLayout = (RatingLayout) convertView.findViewById(R.id.waitingTimeRatingLayout);
@@ -75,6 +76,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder.mTvCommentComment.resetTextViewResizable();
         }
         // Set onclick
         viewHolder.mCommentDiplayLayout.setTag(position);
@@ -130,7 +132,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         private TextView mTvPatientName;
         private TextView mTvCommentDate;
         private TextView mTvCommentHour;
-        private TextView mTvCommentComment;
+        private SpannableTextView mTvCommentComment;
         private RatingLayout mCommonIdeaRatingLayout;
         private RatingLayout mAssetRatingLayout;
         private RatingLayout mWaitingTimeRatingLayout;

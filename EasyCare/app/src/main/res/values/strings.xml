@@ -169,4 +169,6 @@
         <item>Tuần này</item>
         <item>Tháng này</item>
     </string-array>
+    <string name="view_more">Xem thêm</string>
+    <string name="view_less">Thu gọn</string>
 </resources>
