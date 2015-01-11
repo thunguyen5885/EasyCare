@@ -31,6 +31,9 @@
         <!-- Define the main background-->
         <color name="main_background_color">#f4f4f4</color>
 
+        <!-- Define highlight for time of calendar-->
+        <color name="calendar_time_highlight_color">#276baa</color>
+
         <!--Color for layout selector-->
         <color name="item_color_normal">#00000000</color>
         <color name="item_color_pressed">#40000000</color>

@@ -5,9 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,20 +32,22 @@ import vn.easycare.utils.AppFnUtils;
  * Created by ThuNguyen on 12/21/2014.
  */
 public class CalendarTimeAdapter extends BaseAdapter{
-    private static final int START_TIME = 7;
-    private static final int END_TIME = 22;
     private Context mContext;
     private LayoutInflater mLayoutInflater;
+    private ListView mListView;
 
     // For data, object
-    private List<MyTime> mTimeList = new ArrayList<MyTime>();
     private boolean mIsClicked = false;
+    private boolean mIsListViewScrolling = false;
+    private List<MyTime> mTimeList = new ArrayList<MyTime>();
     private List<ExaminationScheduleItemData> mItemDataList;
     private AppointmentTimeData mAppointmentTime;
+    private HashMap<Integer, ViewHolder> mViewHolderMap;
 
     public CalendarTimeAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
+        mViewHolderMap = new HashMap<Integer, ViewHolder>();
     }
     public void setItemDataList(List<ExaminationScheduleItemData> itemDataList){
         mItemDataList = itemDataList;
@@ -50,9 +56,13 @@ public class CalendarTimeAdapter extends BaseAdapter{
     public void setAppointmentTime(AppointmentTimeData appointmentTime){
         mAppointmentTime = appointmentTime;
     }
+    public void setListView(ListView listView){
+        mListView = listView;
+        mListView.setOnScrollListener(mOnScrollListener);
+    }
     private void createDisplayList(){
         mTimeList.clear();
-        for(int index = START_TIME; index <= END_TIME; index++){
+        for(int index = AppConstants.START_TIME; index <= AppConstants.END_TIME; index++){
             HashMap<Integer, ExaminationScheduleItemData> foundItemMap = new HashMap<Integer, ExaminationScheduleItemData>();
             for(int pos = 0; pos < mItemDataList.size(); pos++){
                 ExaminationScheduleItemData itemData = mItemDataList.get(pos);
@@ -143,23 +153,19 @@ public class CalendarTimeAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = mLayoutInflater.inflate(R.layout.calendar_time_ctrl, null);
             viewHolder = new ViewHolder();
+            viewHolder.mHighlight = convertView.findViewById(R.id.vDateHighlight);
             viewHolder.mTvTime = (TextView) convertView.findViewById(R.id.tvDateTime);
-            viewHolder.mHightlight = convertView.findViewById(R.id.vDateHightlight);
-            viewHolder.mAdd = convertView.findViewById(R.id.ivDateAdd);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        // Get hight light width by a half of screen width
-//        int screenWidth = AppFnUtils.getScreenWidth((Activity) mContext);
-//        viewHolder.mHightlight.getLayoutParams().width = screenWidth / 2;
+        // Add to view holder map
+        mViewHolderMap.put(position, viewHolder);
 
         // Set onclick
-        viewHolder.mAdd.setTag(position);
-        viewHolder.mAdd.setOnClickListener(mOnClickListener);
-
-        viewHolder.mHightlight.setTag(position);
-        viewHolder.mHightlight.setOnClickListener(mOnClickListener);
+        viewHolder.mHighlight.setTag(position);
+        viewHolder.mHighlight.setOnClickListener(mOnClickListener);
+        viewHolder.mHighlight.setOnTouchListener(mOnTouchListener);
         // Set data text
         String timeAtPos = mTimeList.get(position).displayText;
         if(timeAtPos.contains("00")){
@@ -172,11 +178,13 @@ public class CalendarTimeAdapter extends BaseAdapter{
         // Set background
         boolean isSelected = mTimeList.get(position).isSelected;
         if(isSelected){
-            viewHolder.mHightlight.setBackgroundColor(mContext.getResources().getColor(R.color.header_background_color));
+            viewHolder.mHighlight.setBackgroundColor(mContext.getResources().getColor(R.color.header_background_color));
+            viewHolder.mPosAtMainList = mTimeList.get(position).selectedPosInMainList;
         }else{
-            viewHolder.mHightlight.setBackgroundColor(Color.TRANSPARENT);
+            viewHolder.mHighlight.setBackgroundColor(Color.TRANSPARENT);
+            viewHolder.mPosAtMainList = -1;
         }
-        viewHolder.mHightlight.invalidate();
+        viewHolder.mHighlight.invalidate();
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(convertView);
@@ -196,8 +204,7 @@ public class CalendarTimeAdapter extends BaseAdapter{
                 }
             }, 500);
             switch (v.getId()){
-                case R.id.ivDateAdd:
-                case R.id.vDateHightlight:
+                case R.id.vDateHighlight:
                     // Go to time range screen
                     TimeRangeSelectionFragment timeRangeSelectionFragment = new TimeRangeSelectionFragment();
 
@@ -225,6 +232,75 @@ public class CalendarTimeAdapter extends BaseAdapter{
             }
         }
     };
+    private View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(final View v, final MotionEvent event) {
+
+            ExaminationScheduleItemData itemData = null;
+            Integer selectedTimeIndex = (Integer)v.getTag();
+            final MyTime selectedTimeItem = mTimeList.get(selectedTimeIndex);
+
+            if(selectedTimeItem != null) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                if(!mIsListViewScrolling){
+                                    if (selectedTimeItem.isSelected) {
+                                        findAndSetSelectionForAllSameItems(selectedTimeItem.selectedPosInMainList, true);
+                                    } else {
+                                        v.setBackgroundColor(mContext.getResources().getColor(R.color.textview_color_grey));
+                                        v.invalidate();
+                                    }
+                                }
+                            }
+                        },100);
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                        if(selectedTimeItem.isSelected){
+                            findAndSetSelectionForAllSameItems(selectedTimeItem.selectedPosInMainList, false);
+                        }else{
+                            v.setBackgroundColor(Color.TRANSPARENT);
+                            v.invalidate();
+                        }
+                        break;
+                }
+            }
+
+            return false;
+        }
+    };
+    private void findAndSetSelectionForAllSameItems(int posInMainList, boolean isSelected){
+        if(mViewHolderMap.size() > 0){
+            Iterator<ViewHolder> iterator = mViewHolderMap.values().iterator();
+            while(iterator.hasNext()){
+                ViewHolder viewHolder = iterator.next();
+                if(viewHolder.mPosAtMainList == posInMainList){
+                    if(isSelected){
+                        viewHolder.mHighlight.setBackgroundColor(mContext.getResources().getColor(R.color.calendar_time_highlight_color));
+                        viewHolder.mHighlight.invalidate();
+                    }else{
+                        viewHolder.mHighlight.setBackgroundColor(mContext.getResources().getColor(R.color.header_background_color));
+                        viewHolder.mHighlight.invalidate();
+                    }
+                }
+            }
+        }
+    }
+    private AbsListView.OnScrollListener mOnScrollListener = new AbsListView.OnScrollListener() {
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            mIsListViewScrolling = (scrollState != SCROLL_STATE_IDLE);
+        }
+
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+        }
+    };
     private class MyTime{
         private boolean isSelected;
         private int selectedPosInMainList;
@@ -232,8 +308,8 @@ public class CalendarTimeAdapter extends BaseAdapter{
     }
     private static class ViewHolder{
         private TextView mTvTime;
-        private View mHightlight;
-        private View mAdd;
+        private View mHighlight;
+        private int mPosAtMainList = -1;
     }
 
 }

@@ -38,8 +38,6 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         SCHEDULE_UPDATE,
         SCHEDULE_DELETE
     }
-    private static final int START_TIME = 7;
-    private static final int END_TIME = 22;
     private static final Integer[] TIME_SLOTS = {5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60};
     private static final int TIME_SLOT_DEFAULT = 15;
     // For control, layout
@@ -406,7 +404,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
     }
     private List<CalendarTime> createCalendarTimeListFromTimeSlot(int timeSlot){
         List<CalendarTime> resultList = new ArrayList<CalendarTime>();
-        for(int index = START_TIME; index < END_TIME; index++){
+        for(int index = AppConstants.START_TIME; index < AppConstants.END_TIME; index++){
             if(timeSlot > 0) {
                 for (int slotIndex = 0; slotIndex < 60; slotIndex += timeSlot) {
                     CalendarTime calendarTime = new CalendarTime();
@@ -423,7 +421,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         }
         // Add the last item
         CalendarTime calendarTime = new CalendarTime();
-        calendarTime.hour = END_TIME;
+        calendarTime.hour = AppConstants.END_TIME;
         calendarTime.minute = 0;
         resultList.add(calendarTime);
 
@@ -431,7 +429,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
     }
     private List<CalendarTime> createCalendarTimeListLessThanThreshold(int timeSlot, CalendarTime thresholdTime){
         List<CalendarTime> resultList = new ArrayList<CalendarTime>();
-        for(int index = START_TIME; index <= thresholdTime.hour; index++){
+        for(int index = AppConstants.START_TIME; index <= thresholdTime.hour; index++){
             int minuteThreshold = 59;
             if(index == thresholdTime.hour){
                 minuteThreshold = thresholdTime.minute;
@@ -448,7 +446,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
     }
     private List<CalendarTime> createCalendarTimeListMoreThanThreshold(int timeSlot, CalendarTime thresholdTime){
         List<CalendarTime> resultList = new ArrayList<CalendarTime>();
-        for(int index = thresholdTime.hour; index <END_TIME; index++){
+        for(int index = thresholdTime.hour; index <AppConstants.END_TIME; index++){
             int minuteStart = 0;
             if(index == thresholdTime.hour){
                 minuteStart = thresholdTime.minute;
@@ -462,7 +460,7 @@ public class TimeRangeSelectionFragment extends BaseFragment implements IExamina
         }
         // Add the last item
         CalendarTime calendarTime = new CalendarTime();
-        calendarTime.hour = END_TIME;
+        calendarTime.hour = AppConstants.END_TIME;
         calendarTime.minute = 0;
         resultList.add(calendarTime);
 

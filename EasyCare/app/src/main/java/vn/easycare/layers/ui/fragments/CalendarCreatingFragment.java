@@ -176,6 +176,7 @@ public class CalendarCreatingFragment extends BaseFragment implements IExaminati
         mCalendarTimeAdapter = new CalendarTimeAdapter(getActivity());
         mCalendarTimeAdapter.setItemDataList(mItemDataList);
         mCalendarTimeAdapter.setAppointmentTime(mMyDate);
+        mCalendarTimeAdapter.setListView(mCalendarListView);
         mCalendarListView.setAdapter(mCalendarTimeAdapter);
 //        if(mCalendarTimeAdapter == null) {
 //

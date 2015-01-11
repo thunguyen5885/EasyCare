@@ -46,6 +46,9 @@ public class AppConstants {
    public static final String SENDER_ID = "113119615392";
    //public static final String SENDER_ID = "338065318085";
 
+    /*Define start time and end time for calendar creating*/
+    public static final int START_TIME = 7;
+    public static final int END_TIME = 22;
 
     /*Define all date format*/
     public static final String DATE_FORMAT_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
