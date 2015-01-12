@@ -24,7 +24,7 @@ import vn.easycare.utils.AppConstants;
  */
 public class AuthorizationWSAccess extends AbstractWSAccess<AuthorizationWSModel,AuthorizationWSParamModel> {
     private static final String LOGIN_URI = WEBSERVICE_HOST + "/users/login?email=%s&password=%s";
-    private static final String DEVICE_REGISTRATION_URI = WEBSERVICE_HOST + "/doctors/message/register";
+    private static final String DEVICE_REGISTRATION_URI = WEBSERVICE_HOST + "/doctors/message/gcm/register";
     private static final String Param_Username = "email";
     private static final String Param_Password = "password";
     private static final String Param_Token = "token";

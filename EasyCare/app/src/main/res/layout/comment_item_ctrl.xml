@@ -58,11 +58,13 @@
                     android:layout_toLeftOf="@+id/tvCommentHour"
                     android:layout_marginRight="@dimen/common_padding"/>
             </RelativeLayout>
-            <vn.easycare.layers.ui.components.views.SpannableTextView
+            <TextView
                 android:id="@+id/tvCommentComment"
                 style="@style/DefaultNormalTextView"
                 android:layout_marginTop="@dimen/common_padding"
                 android:textStyle="italic"
+                android:maxLines="3"
+                android:ellipsize="end"
                 />
             <LinearLayout
                 android:id="@+id/commonCommentLayout"

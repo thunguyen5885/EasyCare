@@ -27,6 +27,8 @@ import com.google.android.gcm.GCMRegistrar;
 
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.activities.NotificationReceivingActivity;
+import vn.easycare.layers.ui.presenters.LoginPresenterImpl;
+import vn.easycare.layers.ui.presenters.base.ILoginPresenter;
 import vn.easycare.layers.ui.views.ILoginView;
 import vn.easycare.utils.AppConstants;
 import vn.easycare.utils.AppFnUtils;
@@ -38,7 +40,7 @@ public class GCMIntentService extends GCMBaseIntentService{
 
     @SuppressWarnings("hiding")
     private static final String TAG = "GCMIntentService";
-    public static int mNotifyCount = 10;
+    public static int mNotifyCount = 0;
     private Context mContext;
     public GCMIntentService() {
         super(AppConstants.SENDER_ID);
@@ -50,16 +52,14 @@ public class GCMIntentService extends GCMBaseIntentService{
         Log.e(TAG, "Device registered: regId = " + registrationId);
         mContext = context;
 
-        generateNotification(context, "Test push notification");
-        updateNotifyLayoutWhenAppRunningForeground(context);
         // Register registrationId to server
-        //ILoginPresenter presenter = new LoginPresenterImpl(mLoginView, context);
-        //presenter.DoRegisterDeviceId(registrationId);
+        ILoginPresenter presenter = new LoginPresenterImpl(mLoginView, context);
+        presenter.DoRegisterDeviceId(registrationId);
     }
 
     @Override
     protected void onUnregistered(Context context, String registrationId) {
-        Log.e(TAG, "Device unregistered");
+        Log.e(TAG, "Device unregistered for Device");
         
         GCMRegistrar.setRegisteredOnServer(context, false);      
     }
@@ -123,7 +123,6 @@ public class GCMIntentService extends GCMBaseIntentService{
          PendingIntent intent =
                  PendingIntent.getActivity(context, (int) when, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
          notification.setLatestEventInfo(context, title, message, intent);
-//         notification.flags |= Notification.FLAG_AUTO_CANCEL;
          notification.defaults |= Notification.DEFAULT_SOUND;
          notification.defaults |= Notification.DEFAULT_VIBRATE;
          notification.flags |= Notification.DEFAULT_LIGHTS | Notification.FLAG_AUTO_CANCEL;
@@ -143,6 +142,7 @@ public class GCMIntentService extends GCMBaseIntentService{
 
         @Override
         public void RegisterGCMIdOK(String message) {
+            Log.d("ThuNguyen", "Register GCM for Device to server successfully");
             if(mContext != null) {
                 GCMRegistrar.setRegisteredOnServer(mContext, true);
             }else{

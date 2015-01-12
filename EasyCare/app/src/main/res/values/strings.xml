@@ -91,7 +91,7 @@
     <string name="appointment_for_a_patient">Quản lý hẹn khám</string>
 
     <!-- Define string for footer-->
-    <string name="footer_copyright">Copyright ©2014 EasyCare, Inc.</string>
+    <string name="footer_copyright">Copyright ©2014 by SSGROUP</string>
     <string name="footer_privacy_policy">Chính sách bảo mật</string>
     <string name="footer_term_of_use">Điều khoản sử dụng</string>
     <string name="footer_full_version">Xem bản đầy đủ</string>

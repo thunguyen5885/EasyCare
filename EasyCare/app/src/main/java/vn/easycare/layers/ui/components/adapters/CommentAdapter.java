@@ -67,7 +67,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvCommentPatientName);
             viewHolder.mTvCommentDate = (TextView) convertView.findViewById(R.id.tvCommentDate);
             viewHolder.mTvCommentHour = (TextView) convertView.findViewById(R.id.tvCommentHour);
-            viewHolder.mTvCommentComment = (SpannableTextView) convertView.findViewById(R.id.tvCommentComment);
+            viewHolder.mTvCommentComment = (TextView) convertView.findViewById(R.id.tvCommentComment);
             viewHolder.mCommonIdeaRatingLayout = (RatingLayout) convertView.findViewById(R.id.commonIdeaRatingLayout);
             viewHolder.mAssetRatingLayout = (RatingLayout) convertView.findViewById(R.id.assetRatingLayout);
             viewHolder.mWaitingTimeRatingLayout = (RatingLayout) convertView.findViewById(R.id.waitingTimeRatingLayout);
@@ -76,8 +76,8 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
-            viewHolder.mTvCommentComment.resetTextViewResizable();
         }
+
         // Set onclick
         viewHolder.mCommentDiplayLayout.setTag(position);
         viewHolder.mCommentDiplayLayout.setOnClickListener(this);
@@ -88,6 +88,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         viewHolder.mPatientAvatar.setImageUrl(itemData.getPatientAvatarThumb(), DataSingleton.getInstance(mContext).getImageLoader());
         viewHolder.mTvPatientName.setText(itemData.getPatientName().toUpperCase());
         viewHolder.mTvCommentComment.setText(itemData.getCommentContent());
+        //
         viewHolder.mCommonIdeaRatingLayout.setSelection(itemData.getGeneralPoint() - 1);
         viewHolder.mWaitingTimeRatingLayout.setSelection(itemData.getWaitingTimePoint() - 1);
         viewHolder.mAssetRatingLayout.setSelection(itemData.getFacilityPoint() - 1);
@@ -132,7 +133,7 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
         private TextView mTvPatientName;
         private TextView mTvCommentDate;
         private TextView mTvCommentHour;
-        private SpannableTextView mTvCommentComment;
+        private TextView mTvCommentComment;
         private RatingLayout mCommonIdeaRatingLayout;
         private RatingLayout mAssetRatingLayout;
         private RatingLayout mWaitingTimeRatingLayout;
