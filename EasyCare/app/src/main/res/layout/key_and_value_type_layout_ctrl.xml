@@ -2,30 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+    android:orientation="horizontal">
     <TextView
         android:id="@+id/tvKey"
         style="@style/DefaultNormalTextView"
         android:layout_width="100dp"
-        android:layout_gravity="center_vertical"
         android:gravity="left"
         android:textStyle="bold"/>
     <TextView
         style="@style/DefaultNormalTextView"
-        android:layout_gravity="center_vertical"
         android:text=":"/>
-    <TextView
+    <vn.easycare.layers.ui.components.views.TextExpandableLayout
         android:id="@+id/tvValue"
-        android:layout_gravity="center_vertical"
-        style="@style/DefaultNormalTextView"
-        android:singleLine="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/home_item_separator_size"/>
     <TextView
         android:id="@+id/tvExtraMore"
         style="@style/GrayNormalTextView"
         android:textStyle="italic"
         android:layout_marginLeft="@dimen/home_item_separator_size"
-        android:layout_gravity="center_vertical"
         android:visibility="gone"/>
 </LinearLayout>

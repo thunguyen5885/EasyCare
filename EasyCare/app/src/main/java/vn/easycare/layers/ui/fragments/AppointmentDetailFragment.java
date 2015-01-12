@@ -27,6 +27,7 @@ import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.data.AppointmentTimeData;
 import vn.easycare.layers.ui.components.data.DoctorClinicAddressItemData;
 import vn.easycare.layers.ui.components.data.ExaminationAppointmentItemData;
+import vn.easycare.layers.ui.components.views.TextExpandableLayout;
 import vn.easycare.layers.ui.presenters.ExaminationAppointmentPresenterImpl;
 import vn.easycare.layers.ui.presenters.base.IExaminationAppointmentPresenter;
 import vn.easycare.layers.ui.views.IExaminationAppointmentView;
@@ -315,11 +316,12 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
     }
     private void initContentForChildView(View parentView, String contentVal){
         if(parentView != null){
-            TextView tvValue = (TextView)parentView.findViewById(R.id.tvValue);
+            //contentVal += "the tactic is very easy for me to attack him. See the below link for more detail. If have any questions, please feel free and contact me any time. See you.";
+            TextExpandableLayout tvValue = (TextExpandableLayout)parentView.findViewById(R.id.tvValue);
             if(contentVal != null && contentVal.length() > 0) {
                 tvValue.setText(contentVal);
             }else{
-                tvValue.setText(R.string.nothing_data);
+                tvValue.setText(getString(R.string.nothing_data));
                 tvValue.setTextColor(getResources().getColor(R.color.textview_color_grey));
             }
         }

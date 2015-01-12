@@ -16,6 +16,7 @@ import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.components.views.CustomImageViewCircularShape;
 import vn.easycare.layers.ui.components.views.RatingLayout;
 import vn.easycare.layers.ui.components.views.SpannableTextView;
+import vn.easycare.layers.ui.components.views.TextExpandableLayout;
 import vn.easycare.layers.ui.components.views.foreground.ForegroundRelativeLayout;
 import vn.easycare.utils.AppFnUtils;
 
@@ -65,13 +66,10 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
             viewHolder = new ViewHolder();
             viewHolder.mPatientAvatar = (CustomImageViewCircularShape) convertView.findViewById(R.id.commentPatientAvatar);
             viewHolder.mTvPatientName = (TextView) convertView.findViewById(R.id.tvCommentPatientName);
-            viewHolder.mTvCommentDate = (TextView) convertView.findViewById(R.id.tvCommentDate);
-            viewHolder.mTvCommentHour = (TextView) convertView.findViewById(R.id.tvCommentHour);
-            viewHolder.mTvCommentComment = (TextView) convertView.findViewById(R.id.tvCommentComment);
+            viewHolder.mTvCommentComment = (TextExpandableLayout) convertView.findViewById(R.id.tvCommentComment);
             viewHolder.mCommonIdeaRatingLayout = (RatingLayout) convertView.findViewById(R.id.commonIdeaRatingLayout);
             viewHolder.mAssetRatingLayout = (RatingLayout) convertView.findViewById(R.id.assetRatingLayout);
             viewHolder.mWaitingTimeRatingLayout = (RatingLayout) convertView.findViewById(R.id.waitingTimeRatingLayout);
-            viewHolder.mCommentDisplay = (TextView) convertView.findViewById(R.id.tvCommentDisplay);
             viewHolder.mCommentDiplayLayout = (ForegroundRelativeLayout) convertView.findViewById(R.id.commentDisplayLayout);
             convertView.setTag(viewHolder);
         }else{
@@ -131,13 +129,10 @@ public class CommentAdapter extends BaseAdapter implements View.OnClickListener{
     private static class ViewHolder{
         private CustomImageViewCircularShape mPatientAvatar;
         private TextView mTvPatientName;
-        private TextView mTvCommentDate;
-        private TextView mTvCommentHour;
-        private TextView mTvCommentComment;
+        private TextExpandableLayout mTvCommentComment;
         private RatingLayout mCommonIdeaRatingLayout;
         private RatingLayout mAssetRatingLayout;
         private RatingLayout mWaitingTimeRatingLayout;
-        private TextView mCommentDisplay;
         private ForegroundRelativeLayout mCommentDiplayLayout;
     }
 

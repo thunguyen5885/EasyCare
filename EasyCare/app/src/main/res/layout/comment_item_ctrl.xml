@@ -58,14 +58,18 @@
                     android:layout_toLeftOf="@+id/tvCommentHour"
                     android:layout_marginRight="@dimen/common_padding"/>
             </RelativeLayout>
-            <TextView
-                android:id="@+id/tvCommentComment"
-                style="@style/DefaultNormalTextView"
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_padding"
-                android:textStyle="italic"
-                android:maxLines="3"
-                android:ellipsize="end"
+                android:layout_marginRight="@dimen/common_padding">
+                <vn.easycare.layers.ui.components.views.TextExpandableLayout
+                    android:id="@+id/tvCommentComment"
+                    style="@style/DefaultNormalTextView"
+                    android:layout_width="match_parent"
+                    android:textStyle="italic"
                 />
+            </FrameLayout>
             <LinearLayout
                 android:id="@+id/commonCommentLayout"
                 android:layout_width="match_parent"
