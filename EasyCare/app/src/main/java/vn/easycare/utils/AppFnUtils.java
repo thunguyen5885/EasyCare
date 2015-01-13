@@ -148,6 +148,6 @@ public class AppFnUtils {
     public static String getForegroundActivityName(Context context){
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        return taskInfo.get(0).topActivity.getClassName();
+        return (taskInfo.size() > 0)?taskInfo.get(0).topActivity.getClassName() : null;
     }
 }

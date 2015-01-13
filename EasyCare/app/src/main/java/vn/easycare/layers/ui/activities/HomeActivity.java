@@ -3,8 +3,11 @@ package vn.easycare.layers.ui.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SlidingPaneLayout;
@@ -77,7 +80,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             mSlidingPanelLayout.closePane();
         }
         // Check GCM for push notification
-        //checkToPostRegistrationToServer();
+        checkToPostRegistrationToServer();
 
         decideWhichScreenToShow();
     }
@@ -93,6 +96,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
         super.onResume();
         // Show notify layout if any
         showNotifyLayout();
+        createIntentFilterForUpdateNotifyCount();
     }
 
     @Override
@@ -110,7 +114,12 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
         }
         mSlidingPanelLayout.closePane();
     }
-
+    private void createIntentFilterForUpdateNotifyCount(){
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(getPackageName());
+        BroadcastReceiver receiver = new MyBroadcastReceiver();
+        registerReceiver(receiver, intentFilter);
+    }
     /**
      * Update notify layout on menu
      */
@@ -303,5 +312,18 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
                         dialogInterface.dismiss();
                     }
                 }).show();
+    }
+    private class MyBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("ThuNguyen", "Update notification count on menu of Device");
+            Bundle bundle = intent.getExtras();
+            if(bundle != null){
+                boolean isUpdateNotiCount = bundle.getBoolean(AppConstants.APPOINTMENT_UPDATE_NOTIFICATION_COUNT_KEY, false);
+                if(isUpdateNotiCount){
+                    showNotifyLayout();
+                }
+            }
+        }
     }
 }

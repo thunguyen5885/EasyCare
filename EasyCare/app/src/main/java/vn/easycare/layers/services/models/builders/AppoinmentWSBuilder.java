@@ -18,6 +18,7 @@ public class AppoinmentWSBuilder {
     int first_visit = 0;
     int visits = 0;
     String code = "";
+    String addressId = "";
     String address ="";
     int insurance = 0;
     String insurance_company = "";
@@ -85,7 +86,10 @@ public class AppoinmentWSBuilder {
         this.address = address;
         return this;
     }
-
+    public AppoinmentWSBuilder withAddressId(String addressId) {
+        this.addressId  = addressId;
+        return this;
+    }
     public AppoinmentWSBuilder withInsurance(int insurance) {
         this.insurance = insurance;
         return this;
@@ -163,7 +167,7 @@ public class AppoinmentWSBuilder {
 
     public AppointmentWSModel build(){
         return new AppointmentWSModel( id,  doctor_id,  status,  time,  visit_reason,
-                first_visit,  visits,  code,  address,  insurance,
+                first_visit,  visits,  code,  addressId, address,  insurance,
                 insurance_company,  doctor_notes,  patient_notes,
                 created_at,  patient_full_name,  patient_gender,
                 patient_phone, patient_birth_date, patient_email, patient_id,patient_avatar,patient_avatarThumb,examine_for,action);
@@ -178,6 +182,7 @@ public class AppoinmentWSBuilder {
         first_visit = 0;
         visits = 0;
         code = "";
+        addressId = "";
         address ="";
         insurance = 0;
         insurance_company = "";

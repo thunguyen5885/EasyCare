@@ -45,6 +45,7 @@ public class AppConstants {
     /*Define string for sender_id for push notification*/
    public static final String SENDER_ID = "113119615392";
    //public static final String SENDER_ID = "338065318085";
+   public static final String INTENT_FILTER_UPDATE_NOTIFICATION_COUNT = "vn.easycare.notification";
 
     /*Define start time and end time for calendar creating*/
     public static final int START_TIME = 7;
@@ -63,6 +64,7 @@ public class AppConstants {
     public static final String EXAMINATION_TYPE_KEY = "examination_type_key";
     public static final String CALENDAR_ID_KEY = "calendar_id_key";
     public static final String APPOINTMENT_NOTIFICATION_KEY = "appointment_notification_key";
+    public static final String APPOINTMENT_UPDATE_NOTIFICATION_COUNT_KEY = "appointment_update_notification_count_key";
 
     public static final int HTTP_STATUS_UNAUTHORIZED = 401;
     public static final int APP_EXCEPTION_STATUS_CODE = -100;

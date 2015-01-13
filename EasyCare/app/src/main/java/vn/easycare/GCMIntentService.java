@@ -20,6 +20,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
@@ -66,14 +68,17 @@ public class GCMIntentService extends GCMBaseIntentService{
 
     @Override
     protected void onMessage(Context context, Intent intent) {
-        Log.e(TAG, "Received message. Extras: " + intent.getExtras());
-        // TODO
+        Bundle bundle = intent.getExtras();
+        Log.e(TAG, "Received message for Device. Extras: " + bundle.toString());
+        Log.e(TAG, "Received message for Device Device");
         // Process message later
-        String message = "Push notification";
+        String message = bundle.getString("msg_content", "");
+        mNotifyCount = Integer.parseInt(bundle.getString("count", "0"));
+        Log.e(TAG,"Received message for Device Device" + message);
+        Log.e(TAG,"Received count for Device Device" + mNotifyCount);
         generateNotification(context, message);
         // Also update notify count
         updateNotifyLayoutWhenAppRunningForeground(context);
-               
     }
 
     @Override
@@ -97,9 +102,12 @@ public class GCMIntentService extends GCMBaseIntentService{
     private void updateNotifyLayoutWhenAppRunningForeground(Context context){
         String foregroundActivityName = AppFnUtils.getForegroundActivityName(context);
         if(foregroundActivityName != null && foregroundActivityName.equals(HomeActivity.class.getName())){
-            if(context instanceof HomeActivity){
-                ((HomeActivity)context).showNotifyLayout();
-            }
+            Intent intent = new Intent();
+            intent.setAction(context.getPackageName());
+            intent.putExtra(AppConstants.APPOINTMENT_UPDATE_NOTIFICATION_COUNT_KEY, true);
+            sendBroadcast(intent);
+        }else{
+            Log.d(TAG, "Device context =" + context.getPackageName());
         }
 
     }
@@ -107,7 +115,6 @@ public class GCMIntentService extends GCMBaseIntentService{
      * Issues a notification to inform the user that server has sent a message.
      */
     private void generateNotification(Context context, String message) {
-         mNotifyCount = 10;
     	 int icon = R.drawable.ic_launcher;
          long when = 0;//System.currentTimeMillis();
          NotificationManager notificationManager = (NotificationManager)

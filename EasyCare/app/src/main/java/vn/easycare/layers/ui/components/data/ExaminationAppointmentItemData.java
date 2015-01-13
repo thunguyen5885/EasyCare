@@ -24,6 +24,7 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
     String ExaminationReason;
     String ExaminationCode;
     String ExaminationAddress;
+    String ExaminationAddressId;
     String ExaminationByPerson;
 
     String ExaminationDateTimeAppointmentCreated;
@@ -85,6 +86,14 @@ public class ExaminationAppointmentItemData implements IBaseItemData,Serializabl
 
     public void setExaminationReason(String examinationReason) {
         ExaminationReason = examinationReason;
+    }
+
+    public String getExaminationAddressId() {
+        return ExaminationAddressId;
+    }
+
+    public void setExaminationAddressId(String examinationAddressId) {
+        ExaminationAddressId = examinationAddressId;
     }
 
     public AppConstants.EXAMINATION_STATUS getExaminationStatus() {

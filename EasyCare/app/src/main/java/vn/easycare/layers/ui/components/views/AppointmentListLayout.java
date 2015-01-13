@@ -406,7 +406,7 @@ public class AppointmentListLayout extends BaseLinearLayout implements IExaminat
                     mStatus = AppConstants.EXAMINATION_STATUS.WAITING;
                     String updatedDate = mAppointmentTimeDataForChangeCalendar.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
                     String updatedTime = mAppointmentTimeDataForChangeCalendar.generateTimeString(AppConstants.TIME_FORMAT_HH_MM);
-                    mPresenter.ChangeAnExaminationAppointment(itemData.getExaminationId(), updatedDate, updatedTime, 0, null);
+                    mPresenter.ChangeAnExaminationAppointment(itemData.getExaminationId(), updatedDate, updatedTime, itemData.getExaminationAddressId(), null);
                 }
             });
 
@@ -506,6 +506,9 @@ public class AppointmentListLayout extends BaseLinearLayout implements IExaminat
                 break;
             case WAITING:
                 messageInfo = getContext().getString(R.string.message_inform_appointment_change_fail);
+                break;
+            default:
+                messageInfo = message;
                 break;
 
         }

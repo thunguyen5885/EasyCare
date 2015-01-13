@@ -100,11 +100,11 @@ public class TextExpandableLayout extends LinearLayout {
 				}				
 			}
 		});
-        AppFnUtils.applyFontForTextViewChild(this);
 	}
-	public void setTypeface(Typeface typeface) {
-		tvDescription.setTypeface(typeface);
-		tvMoreLess.setTypeface(typeface);
+	public void setTypeface(int style) {
+		tvDescription.setTypeface(null, style);
+		tvMoreLess.setTypeface(null, style);
+        AppFnUtils.applyFontForTextViewChild(this);
 	}
 	
 	public void setText(String str) {
@@ -121,6 +121,7 @@ public class TextExpandableLayout extends LinearLayout {
     public void setTextColor(int color){
         tvDescription.setTextColor(color);
     }
+
 	/**
 	 * Expand all text
 	 */

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -250,7 +251,7 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
                         String updatedDate = appointmentTimeData.generateDateString(AppConstants.DATE_FORMAT_YYYY_MM_DD);
                         String updatedTime = appointmentTimeData.generateTimeString(AppConstants.TIME_FORMAT_HH_MM);
                         mStatus = AppConstants.EXAMINATION_STATUS.WAITING;
-                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), updatedDate, updatedTime, 0, null);
+                        mPresenter.ChangeAnExaminationAppointment(mItemData.getExaminationId(), updatedDate, updatedTime, mItemData.getExaminationAddressId(), null);
 
                     }
                 });
@@ -318,6 +319,7 @@ public class AppointmentDetailFragment extends BaseFragment implements View.OnCl
         if(parentView != null){
             //contentVal += "the tactic is very easy for me to attack him. See the below link for more detail. If have any questions, please feel free and contact me any time. See you.";
             TextExpandableLayout tvValue = (TextExpandableLayout)parentView.findViewById(R.id.tvValue);
+            tvValue.setTypeface(Typeface.NORMAL);
             if(contentVal != null && contentVal.length() > 0) {
                 tvValue.setText(contentVal);
             }else{

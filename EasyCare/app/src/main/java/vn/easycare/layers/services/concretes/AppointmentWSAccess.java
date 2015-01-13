@@ -40,6 +40,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
     private static final String Res_first_visit = "first_visit";
     private static final String Res_visits = "visits";
     private static final String Res_code = "code";
+    private static final String Res_address_id = "address_id";
     private static final String Res_address = "address";
     private static final String Res_insurance = "insurance";
     private static final String Res_insurance_company = "insurance_company";
@@ -247,6 +248,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 modelBuilder.withVisits(Integer.valueOf(jsonObj.optString(Res_visits,"0")).intValue());
 
                 modelBuilder.withCode(jsonObj.optString(Res_code,""));
+                modelBuilder.withAddressId(jsonObj.optString(Res_address_id,""));
                 modelBuilder.withAddress(jsonObj.optString(Res_address,""));
                 modelBuilder.withInsurance(Integer.valueOf(jsonObj.optString(Res_insurance,"0")).intValue());
                 modelBuilder.withInsurance_company(jsonObj.optString(Res_insurance_company,""));
@@ -327,6 +329,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
                 modelBuilder.withFirst_visit(Integer.valueOf(jsonObj.optString(Res_first_visit,"0")).intValue());
 
                 modelBuilder.withCode(jsonObj.optString(Res_code,""));
+                modelBuilder.withAddressId(jsonObj.optString(Res_address_id,""));
                 modelBuilder.withAddress(jsonObj.optString(Res_address,""));
                 modelBuilder.withInsurance(Integer.valueOf(jsonObj.optString(Res_insurance,"0")).intValue());
                 modelBuilder.withInsurance_company(jsonObj.optString(Res_insurance_company,""));

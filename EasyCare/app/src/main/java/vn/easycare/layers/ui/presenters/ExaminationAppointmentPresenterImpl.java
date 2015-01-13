@@ -70,7 +70,7 @@ public class ExaminationAppointmentPresenterImpl implements IExaminationAppointm
     }
 
     @Override
-    public void ChangeAnExaminationAppointment(String appointmentID,String date,String time,int addressChangeID,String doctorNotes) {
+    public void ChangeAnExaminationAppointment(String appointmentID,String date,String time,String addressChangeID,String doctorNotes) {
        iModel.doChangeAnExaminationAppointment(appointmentID,date,time,addressChangeID);
 
     }

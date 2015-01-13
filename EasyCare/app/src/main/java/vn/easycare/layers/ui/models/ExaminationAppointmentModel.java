@@ -201,14 +201,14 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
     }
 
     @Override
-    public void doChangeAnExaminationAppointment(String appointmentID, String date,String time, int addressChangeID) {
+    public void doChangeAnExaminationAppointment(String appointmentID, String date,String time, String addressChangeID) {
         try {
             IWebServiceAccess<AppointmentListWSModel,AppointmentWSParamModel> WS = WSAccessFactory.getInstance().getWebServiceAccess(
                     AppointmentWSAccess.class,
                     mContext,
                     this,
                     new AppointmentWSParamModel(WSDataSingleton.getInstance(mContext).getSessionToken(), "",
-                            "","", "", "","", "", "", "10",appointmentID,addressChangeID+"",date,time,"",AppConstants.APPOINTMENT_ACTION.CHANGE));
+                            "","", "", "","", "", "", "10",appointmentID,addressChangeID,date,time,"",AppConstants.APPOINTMENT_ACTION.CHANGE));
             WS.sendRequest();
         } catch (InstantiationException e) {
             // TODO Auto-generated catch block
@@ -290,6 +290,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
                 item.setPatientEmail(appointmentModel.getPatient_email());
                 item.setExaminationCode(appointmentModel.getCode());
                 item.setExaminationAddress(appointmentModel.getAddress());
+                item.setExaminationAddressId(appointmentModel.getAddressId());
                 item.setExaminationByPerson(appointmentModel.getExamine_for());
                 item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());
                 item.setPatientAvatar(appointmentModel.getPatient_avatar());
@@ -336,6 +337,7 @@ public class ExaminationAppointmentModel implements IExaminationAppointmentModel
             item.setPatientPhone(appointmentModel.getPatient_phone());
             item.setPatientEmail(appointmentModel.getPatient_email());
             item.setExaminationCode(appointmentModel.getCode());
+            item.setExaminationAddressId(appointmentModel.getAddressId());
             item.setExaminationAddress(appointmentModel.getAddress());
             item.setExaminationByPerson(appointmentModel.getExamine_for());
             item.setExaminationDateTimeAppointmentCreated(appointmentModel.getCreated_at());

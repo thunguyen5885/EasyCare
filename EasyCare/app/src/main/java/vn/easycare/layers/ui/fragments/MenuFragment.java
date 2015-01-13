@@ -203,6 +203,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
         @Override
         public void onMenuItemAppointmentManagementClicked() {
+            hideNotify();
             // Go to dating management screen
             AppointmentListFragment appointmentListFragment = new AppointmentListFragment();
             ((HomeActivity) getActivity()).showFragmentFromMenu(appointmentListFragment);

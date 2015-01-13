@@ -67,7 +67,6 @@
                     android:id="@+id/tvCommentComment"
                     style="@style/DefaultNormalTextView"
                     android:layout_width="match_parent"
-                    android:textStyle="italic"
                 />
             </FrameLayout>
             <LinearLayout

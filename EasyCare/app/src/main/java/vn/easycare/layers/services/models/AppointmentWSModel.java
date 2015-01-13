@@ -16,6 +16,7 @@ public class AppointmentWSModel implements IWebServiceModel {
     int visits;
     String code;
     String address;
+    String addressId;
     int insurance;
     String insurance_company;
     String doctor_notes;
@@ -32,7 +33,7 @@ public class AppointmentWSModel implements IWebServiceModel {
     String examine_for;
     AppConstants.APPOINTMENT_ACTION action;
 
-    public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id, String patient_avatar, String patient_avatarThumb, String examine_for, AppConstants.APPOINTMENT_ACTION action) {
+    public AppointmentWSModel(String id, String doctor_id, int status, String time, String visit_reason, int first_visit, int visits, String code, String addressId, String address, int insurance, String insurance_company, String doctor_notes, String patient_notes, String created_at, String patient_full_name, int patient_gender, String patient_phone, String patient_birth_date, String patient_email, String patient_id, String patient_avatar, String patient_avatarThumb, String examine_for, AppConstants.APPOINTMENT_ACTION action) {
         this.id = id;
         this.doctor_id = doctor_id;
         this.status = status;
@@ -41,6 +42,7 @@ public class AppointmentWSModel implements IWebServiceModel {
         this.first_visit = first_visit;
         this.visits = visits;
         this.code = code;
+        this.addressId = addressId;
         this.address = address;
         this.insurance = insurance;
         this.insurance_company = insurance_company;
@@ -129,6 +131,14 @@ public class AppointmentWSModel implements IWebServiceModel {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
     }
 
     public int getInsurance() {
