@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -22,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.concurrent.TimeUnit;
 
 import vn.easycare.utils.AppConstants;
 
@@ -127,6 +129,10 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
                 return  getWSHeaders();
             }
         };
+        sr.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 
@@ -154,6 +160,10 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
               return  getWSHeaders();
             }
         };
+        sr.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 
@@ -180,6 +190,10 @@ public abstract class AbstractWSAccess<T extends IWebServiceModel, P extends IWe
                 return  getWSHeaders();
             }
         };
+        sr.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         WSDataSingleton.getInstance(mContext).getRequestQueue().add(sr);
     }
 

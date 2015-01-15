@@ -70,4 +70,6 @@ public class AppConstants {
     public static final int APP_EXCEPTION_STATUS_CODE = -100;
     public static final int APP_UNDEFINE_ERROR_STATUS_CODE = -101;
 
+
+
 }
