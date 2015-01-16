@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import vn.easycare.layers.ui.components.views.AppointmentListLayout;
+import vn.easycare.layers.ui.components.views.PatientListLayout;
 import vn.easycare.utils.AppConstants;
 
 /**
@@ -87,23 +89,28 @@ public class AppointmentListPagerAdapter extends PagerAdapter{
             switch (status){
                 case ACCEPTED:
                     AppointmentListLayout acceptAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(1);
-                    acceptAppointmentListLayout.refreshDataWhenDataChanged();
+                    if(acceptAppointmentListLayout != null) {
+                        acceptAppointmentListLayout.refreshDataWhenDataChanged();
+                    }
                     break;
                 case WAITING:
                     break;
                 case CANCEL:
                     AppointmentListLayout cancelAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(2);
-                    cancelAppointmentListLayout.refreshDataWhenDataChanged();
+                    if(cancelAppointmentListLayout != null) {
+                        cancelAppointmentListLayout.refreshDataWhenDataChanged();
+                    }
                     break;
             }
         }
     };
     public void refreshAllItems(){
-        for(int index = 0; index < mViewMaps.size(); index++){
-            View view = mViewMaps.get(index);
+        for (Map.Entry<Integer, View> entry : mViewMaps.entrySet()) {
+            View view = entry.getValue();
+            int key = entry.getKey();
             if(view instanceof AppointmentListLayout){
                 AppointmentListLayout appointmentListLayout = (AppointmentListLayout)view;
-                if(mViewPager.getCurrentItem() == index) {
+                if(mViewPager.getCurrentItem() == key) {
                     appointmentListLayout.refreshDataAndShowLoading();
                 }else {
                     appointmentListLayout.refreshDataWhenDataChanged();

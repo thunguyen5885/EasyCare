@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import vn.easycare.layers.ui.components.views.PatientListLayout;
 
@@ -71,11 +72,12 @@ public class PatientListPagerAdapter extends PagerAdapter{
         }
     };
     public void refreshAllItems(){
-        for(int index = 0; index < mViewMaps.size(); index++){
-            View view = mViewMaps.get(index);
-            if(view instanceof PatientListLayout){
+        for (Map.Entry<Integer, View> entry : mViewMaps.entrySet()) {
+            View view = entry.getValue();
+            int key = entry.getKey();
+            if(view != null && view instanceof PatientListLayout){
                 PatientListLayout patientListLayout = (PatientListLayout)view;
-                if(mViewPager.getCurrentItem() == index) {
+                if(mViewPager.getCurrentItem() == key) {
                     patientListLayout.refreshDataWithLoadingDialog();
                 }else {
                     patientListLayout.refreshData();

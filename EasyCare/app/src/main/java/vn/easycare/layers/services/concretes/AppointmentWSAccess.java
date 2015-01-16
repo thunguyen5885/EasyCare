@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.concretes;
 
+import android.util.Log;
+
 import com.android.volley.Request;
 
 import org.json.JSONArray;
@@ -138,6 +140,7 @@ public class AppointmentWSAccess extends AbstractWSAccess<AppointmentListWSModel
             Map<String,String> params = new HashMap<String, String>();
             params.put(Param_Token, mParam.getToken());
             params.put(Param_id, mParam.getAppointmentId());
+            Log.d("ThuNguyen", "Appointment Id = " + mParam.getAppointmentId());
             return  params;
         }else if(mParam.getAction()== AppConstants.APPOINTMENT_ACTION.CHANGE){
             Map<String,String> params = new HashMap<String, String>();

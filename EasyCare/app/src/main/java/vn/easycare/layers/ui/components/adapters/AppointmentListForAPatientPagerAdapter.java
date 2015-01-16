@@ -6,8 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import vn.easycare.layers.ui.components.views.AppointmentListForAPatientLayout;
+import vn.easycare.layers.ui.components.views.AppointmentListLayout;
 import vn.easycare.utils.AppConstants;
 
 /**
@@ -85,23 +87,28 @@ public class AppointmentListForAPatientPagerAdapter extends PagerAdapter{
             switch (status){
                 case ACCEPTED:
                     AppointmentListForAPatientLayout acceptAppointmentListLayout = (AppointmentListForAPatientLayout) mViewMaps.get(1);
-                    acceptAppointmentListLayout.refreshDataWhenDataChanged();
+                    if(acceptAppointmentListLayout != null) {
+                        acceptAppointmentListLayout.refreshDataWhenDataChanged();
+                    }
                     break;
                 case WAITING:
                     break;
                 case CANCEL:
                     AppointmentListForAPatientLayout cancelAppointmentListLayout = (AppointmentListForAPatientLayout) mViewMaps.get(2);
-                    cancelAppointmentListLayout.refreshDataWhenDataChanged();
+                    if(cancelAppointmentListLayout != null) {
+                        cancelAppointmentListLayout.refreshDataWhenDataChanged();
+                    }
                     break;
             }
         }
     };
     public void refreshAllItems(){
-        for(int index = 0; index < mViewMaps.size(); index++){
-            View view = mViewMaps.get(index);
+        for (Map.Entry<Integer, View> entry : mViewMaps.entrySet()) {
+            View view = entry.getValue();
+            int key = entry.getKey();
             if(view instanceof AppointmentListForAPatientLayout){
                 AppointmentListForAPatientLayout appointmentListLayout = (AppointmentListForAPatientLayout)view;
-                if(mViewPager.getCurrentItem() == index) {
+                if(mViewPager.getCurrentItem() == key) {
                     appointmentListLayout.refreshDataAndShowLoading();
                 }else {
                     appointmentListLayout.refreshDataWhenDataChanged();
