@@ -90,13 +90,15 @@ public class CommentAndAssessmentWSAccess extends AbstractWSAccess<CommentAndAss
                 modelBuilder.withWaitingTimeRating(Integer.valueOf(jsonObj.optString(Res_waitingTimeRating,"0")).intValue());
                 modelBuilder.withIsShow(Integer.valueOf(jsonObj.optString(Res_isShow,"0")).intValue());
                 modelBuilder.withCreatedAt(jsonObj.optString(Res_createdAt,""));
+                Object commentByJson = jsonObj.get(Res_commentBy);
+                if(commentByJson instanceof JSONObject) {
+                    JSONObject commentByJsonObj = (JSONObject) commentByJson;
 
-                JSONObject commentByJsonObj = (JSONObject)jsonObj.get(Res_commentBy);
-                modelBuilder.withCommentByPatientId(commentByJsonObj.optString(Res_id,""));
-                modelBuilder.withCommentByPatientName(commentByJsonObj.optString(Res_full_name,""));
-                modelBuilder.withCommentByPatientAvatarUrl(commentByJsonObj.optString(Res_avatar,""));
-                modelBuilder.withCommentByPatientAvatarThumbUrl(commentByJsonObj.optString(Res_avatar_thumb,""));
-
+                    modelBuilder.withCommentByPatientId(commentByJsonObj.optString(Res_id, ""));
+                    modelBuilder.withCommentByPatientName(commentByJsonObj.optString(Res_full_name, ""));
+                    modelBuilder.withCommentByPatientAvatarUrl(commentByJsonObj.optString(Res_avatar, ""));
+                    modelBuilder.withCommentByPatientAvatarThumbUrl(commentByJsonObj.optString(Res_avatar_thumb, ""));
+                }
                 CommentAndAssessmentWSModel model = modelBuilder.build();
                 if(model.getIsShow()==1)
                     listModel.getListComments().add(model);

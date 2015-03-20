@@ -47,12 +47,13 @@ public class CommentFragment extends BaseFragment implements ICommentAndAssessme
     private ICommentAndAssessmentPresenter mPresenter;
     private int mPage;
     public CommentFragment(){
-        mCommentAndAssessmentItemDatas = new ArrayList<CommentAndAssessmentItemData>();
-        mPresenter = new CommentAndAssessmentPresenterImpl(this, getActivity());
-        mPage = 1;
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mCommentAndAssessmentItemDatas = new ArrayList<CommentAndAssessmentItemData>();
+        mPresenter = new CommentAndAssessmentPresenterImpl(this, getActivity());
+        mPage = 1;
         View v = inflater.inflate(R.layout.fragment_comment, container, false);
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         mRefreshLayout = v.findViewById(R.id.refreshLayout);

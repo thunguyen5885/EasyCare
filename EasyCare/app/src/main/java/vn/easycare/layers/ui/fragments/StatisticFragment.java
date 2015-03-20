@@ -49,10 +49,11 @@ public class StatisticFragment extends BaseFragment implements IInformationStati
     private IInformationStatisticPresenter mPresenter;
 
     public StatisticFragment(){
-        mPresenter = new InformationStatisticPresenterImpl(this, getActivity());
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mPresenter = new InformationStatisticPresenterImpl(this, getActivity());
         View v = inflater.inflate(R.layout.fragment_statistic, container, false);
         mStatisticLayout = v.findViewById(R.id.mainStatisticLayout);
 
