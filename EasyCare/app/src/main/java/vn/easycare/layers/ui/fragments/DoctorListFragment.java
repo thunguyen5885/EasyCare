@@ -3,6 +3,7 @@ package vn.easycare.layers.ui.fragments;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,6 +119,22 @@ public class DoctorListFragment extends BaseFragment{
     }
     private void loadData(){
         //mPresenter.loadCommentAndAssessmentForDoctor( mPage);
+        final List<PatientManagementItemData> dataList = new ArrayList<PatientManagementItemData>();
+        for(int index = 0; index < 10; index++){
+            PatientManagementItemData item = new PatientManagementItemData();
+            item.setPatientName("Nguyen Van A");
+            item.setPatientPhoneNumber("0455999000");
+            item.setPatientEmailAddress("support@easycare.vn");
+            //item.setPatientAvatarThumb();
+            dataList.add(item);
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                DisplayAllCommentAndAssessmentForDoctor(dataList);
+            }
+        }, 2000);
+
     }
     private void updateUI(){
         mPbLoading.setVisibility(View.GONE);

@@ -25,15 +25,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="4"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/tvDoctorName"
-                style="@style/DefaultBoldNormalTextView"
-                android:layout_marginTop="-7dp"
-                android:paddingRight="@dimen/common_padding"
-                android:paddingBottom="@dimen/home_item_separator_size"
-                android:paddingTop="@dimen/home_item_separator_size"
-                android:gravity="top|left"
-                android:textColor="@color/textview_color_highlight"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-2dp"
+                android:orientation="horizontal">
+                <TextView
+                    style="@style/DefaultNormalTextView"
+                    android:text="@string/doctor_text"/>
+                <TextView
+                    android:id="@+id/tvDoctorName"
+                    style="@style/DefaultBoldNormalTextView"
+                    android:layout_marginLeft="@dimen/common_padding_5dp"
+                    android:gravity="top|left"
+                    android:textColor="@color/textview_color_highlight"/>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

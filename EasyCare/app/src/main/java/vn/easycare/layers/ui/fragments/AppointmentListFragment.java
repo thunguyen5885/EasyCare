@@ -38,9 +38,8 @@ public class AppointmentListFragment extends Fragment{
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mAppointmentList.add(activity.getString(R.string.appointment_list_waiting));
-        mAppointmentList.add(activity.getString(R.string.appointment_list_approved));
-        mAppointmentList.add(activity.getString(R.string.appointment_list_cancel));
+        mAppointmentList.add(activity.getString(R.string.appointment_list_grid));
+        mAppointmentList.add(activity.getString(R.string.appointment_list_list));
     }
 
     @Override
