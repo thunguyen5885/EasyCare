@@ -11,8 +11,8 @@ import vn.easycare.layers.ui.activities.LoginActivity;
 public class BaseActivity extends Activity{
 
     public void UnauthorizedProcessing() {
-        Intent intent = new Intent(this, LoginActivity.class);
+       /* Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
-        finish();
+        finish();*/
     }
 }
