@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <View
+        android:id="@+id/vHintColorBackground"
+        android:layout_width="@dimen/hint_color_size"
+        android:layout_height="@dimen/hint_color_size"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:id="@+id/tvHintColorText"
+        style="@style/DefaultNormalTextView"
+        android:layout_marginLeft="@dimen/common_padding_5dp"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:id="@+id/tvHintColorOpenBrac"
+        style="@style/DefaultNormalTextView"
+        android:text="("
+        android:layout_marginLeft="1dp"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:id="@+id/tvHintColorNumVal"
+        style="@style/DefaultNormalTextView"
+        android:textColor="@color/red"
+        android:layout_gravity="center_vertical"/>
+    <TextView
+        android:id="@+id/tvHintColorCloseBrac"
+        style="@style/DefaultNormalTextView"
+        android:text=")"
+        android:layout_gravity="center_vertical"/>
+</LinearLayout>

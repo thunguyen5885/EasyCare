@@ -25,6 +25,11 @@
             android:layout_height="wrap_content"
             layout="@layout/home_menu_item_ctrl"/>
         <include
+            android:id="@+id/menuItemDoctorList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
             android:id="@+id/menuItemPatientList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
