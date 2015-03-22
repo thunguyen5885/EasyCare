@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,9 +20,13 @@ public class AuthorizationWSBuilder {
     String userAvatarThumb="";
     String errorMessageIfAny="";
     AppConstants.AUTHORIZATION_ACTION action;
-
+    Context mContext;
     public AuthorizationWSBuilder() {
 
+    }
+
+    public AuthorizationWSBuilder(Context context) {
+        mContext = context;
     }
 
     public AuthorizationWSBuilder(JSONObject resJson) throws JSONException {

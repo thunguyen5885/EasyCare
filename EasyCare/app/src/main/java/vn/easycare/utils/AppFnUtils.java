@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import vn.easycare.R;
+
 /**
  * Created by phan on 8/7/2014.
  * For all util common functions
@@ -149,5 +151,11 @@ public class AppFnUtils {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         return (taskInfo.size() > 0)?taskInfo.get(0).topActivity.getClassName() : null;
+    }
+
+    public static String replaceNullEmptyString(String replacedStr,Context mContext){
+        if(replacedStr==null || replacedStr=="null" || replacedStr=="NULL" || replacedStr=="" || replacedStr==AppConstants.NOTHING_TEXTDATA)
+            return mContext.getResources().getString(R.string.nothing_data);
+        return  replacedStr;
     }
 }

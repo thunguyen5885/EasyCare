@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,9 +26,13 @@ public class ScheduleWSBuilder {
     String doctor_address_id ="";
     String updated_at = "";
     AppConstants.SCHEDULE_ACTION action;
+    Context mContext;
     public ScheduleWSBuilder() {
     }
 
+    public ScheduleWSBuilder(Context context) {
+        mContext = context;
+    }
     public ScheduleWSBuilder(JSONObject resJson) throws JSONException {
         //parse json and set value for properties
     }

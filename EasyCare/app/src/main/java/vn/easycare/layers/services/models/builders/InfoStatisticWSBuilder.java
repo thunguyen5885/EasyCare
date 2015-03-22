@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,10 +21,13 @@ public class InfoStatisticWSBuilder {
     float avgCommonRating = 0;
     float avgFacilityRating = 0;
     float avgWaitingTimeRating = 0;
-
+    Context mContext;
     public InfoStatisticWSBuilder() {
     }
 
+    public InfoStatisticWSBuilder(Context context) {
+        mContext = context;
+    }
     public InfoStatisticWSBuilder(JSONObject resJson) throws JSONException {
         //parse json and set value for properties
     }

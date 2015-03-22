@@ -18,39 +18,41 @@ import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
 import vn.easycare.layers.ui.base.BaseFragment;
 import vn.easycare.layers.ui.components.adapters.DoctorListAdapter;
-import vn.easycare.layers.ui.components.data.DoctorManagementItemData;
+import vn.easycare.layers.ui.components.adapters.MessagesListAdapter;
+import vn.easycare.layers.ui.components.data.MessageManagementItemData;
+import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.views.LoadMoreLayout;
 import vn.easycare.utils.AppFnUtils;
 import vn.easycare.utils.DialogUtil;
 
 /**
- * Created by ThuNguyen on 12/13/2014.
+ * Created by phannguyen on 3/22/15.
  */
-public class DoctorListFragment extends BaseFragment{
-    private int mTotalItemCount = 0;
+public class MessageListFragment extends BaseFragment{
 
+    private int mTotalItemCount = 0;
     // For control, layout
     private ProgressBar mPbLoading;
-    private ListView mCommentListView;
+    private ListView mMessageListView;
     private TextView mTvNoData;
-    private DoctorListAdapter mDoctorAdapter;
+    private MessagesListAdapter mMessageAdapter;
     private LoadMoreLayout mLoadMoreView;
     private View mRefreshLayout;
     private Dialog mLoadingDialog;
 
     // For data, object
-    private List<DoctorManagementItemData> mDoctorItemsData;
+    private List<MessageManagementItemData> mMessagesItemData;
     //private ICommentAndAssessmentPresenter mPresenter;
     private int mPage;
-    public DoctorListFragment(){
+    public MessageListFragment(){
 
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mDoctorItemsData = new ArrayList<DoctorManagementItemData>();
+        mMessagesItemData = new ArrayList<MessageManagementItemData>();
         //mPresenter = new CommentAndAssessmentPresenterImpl(this, getActivity());
         mPage = 1;
-        View v = inflater.inflate(R.layout.fragment_doctor_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_messages_list, container, false);
         mPbLoading = (ProgressBar) v.findViewById(R.id.pbLoading);
         mRefreshLayout = v.findViewById(R.id.refreshLayout);
         mRefreshLayout.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +61,11 @@ public class DoctorListFragment extends BaseFragment{
                 refreshData();
             }
         });
-        mCommentListView = (ListView) v.findViewById(R.id.doctorListView);
+        mMessageListView = (ListView) v.findViewById(R.id.messagesListView);
         mTvNoData = (TextView) v.findViewById(R.id.tvNoData);
         mLoadMoreView = new LoadMoreLayout(getActivity());
         mLoadMoreView.setOnLoadMoreClickListener(mOnLoadMoreClickListener);
-        mCommentListView.addFooterView(mLoadMoreView);
+        mMessageListView.addFooterView(mLoadMoreView);
 
         // Apply font
         AppFnUtils.applyFontForTextViewChild(v);
@@ -97,14 +99,14 @@ public class DoctorListFragment extends BaseFragment{
     }
     private void loadNewData(){
         mPage = 1;
-        mDoctorItemsData.clear();
+        mMessagesItemData.clear();
         mPbLoading.setVisibility(View.VISIBLE);
-        mCommentListView.setVisibility(View.GONE);
+        mMessageListView.setVisibility(View.GONE);
         loadData();
     }
     private void refreshData(){
         mPage = 1;
-        mDoctorItemsData.clear();
+        mMessagesItemData.clear();
         mLoadingDialog = DialogUtil.createLoadingDialog(getActivity(), getString(R.string.loading_dialog_in_progress));
         mLoadingDialog.show();
         loadData();
@@ -114,72 +116,74 @@ public class DoctorListFragment extends BaseFragment{
      */
     private void reloadData(){
         mPage = 1;
-        mDoctorItemsData.clear();
+        mMessagesItemData.clear();
         loadData();
     }
     private void loadData(){
         //mPresenter.loadCommentAndAssessmentForDoctor( mPage);
-        final List<DoctorManagementItemData> dataList = new ArrayList<DoctorManagementItemData>();
+        final List<MessageManagementItemData> dataList = new ArrayList<MessageManagementItemData>();
         for(int index = 0; index < 10; index++){
-            DoctorManagementItemData item = new DoctorManagementItemData();
-            item.setDoctorFullName("Nguyen Van A");
-            item.setDoctorPhone("0455999000");
-            item.setDoctorEmail("support@easycare.vn");
+            MessageManagementItemData item = new MessageManagementItemData();
+            item.setSenderName("Nguyen Van A");
+            item.setSentTime("17:00");
+            item.setMessageContent("Dau co");
+            item.setPlaceExaminationToDoctorName("Nguyen Anh Tuan");
+            item.setDepartmentName("Viem co bap");
             //item.setPatientAvatarThumb();
             dataList.add(item);
         }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                DisplayAllDoctorsInfo(dataList);
+                DisplayAllMessages(dataList);
             }
         }, 2000);
 
     }
     private void updateUI(){
         mPbLoading.setVisibility(View.GONE);
-        mCommentListView.setVisibility(View.VISIBLE);
+        mMessageListView.setVisibility(View.VISIBLE);
         if(mLoadingDialog != null){
             mLoadingDialog.dismiss();
         }
-        if(mDoctorAdapter == null || mPage == 1){
-            mDoctorAdapter = new DoctorListAdapter(getActivity());
-            mDoctorAdapter.setItemDataList(mDoctorItemsData);
-            mCommentListView.setAdapter(mDoctorAdapter);
+        if(mMessageAdapter == null || mPage == 1){
+            mMessageAdapter = new MessagesListAdapter(getActivity());
+            mMessageAdapter.setItemDataList(mMessagesItemData);
+            mMessageListView.setAdapter(mMessageAdapter);
         }else{
-            mDoctorAdapter.notifyDataSetChanged();
+            mMessageAdapter.notifyDataSetChanged();
         }
-        if(mDoctorItemsData.size() == 0){ // No data
+        if(mMessagesItemData.size() == 0){ // No data
             mTvNoData.setVisibility(View.VISIBLE);
         }else{
             mTvNoData.setVisibility(View.GONE);
         }
     }
     //@Override
-    public void DisplayAllDoctorsInfo(List<DoctorManagementItemData> doctorItemsList) {
+    public void DisplayAllMessages(List<MessageManagementItemData> messageItemsList) {
 
-        if(doctorItemsList != null && doctorItemsList.size() > 0){
+        if(messageItemsList != null && messageItemsList.size() > 0){
             if(mPage == 1){ // Load for first time
-                if(mDoctorItemsData != null){
-                    mDoctorItemsData.clear();
+                if(mMessagesItemData != null){
+                    mMessagesItemData.clear();
                 }
-                mTotalItemCount = doctorItemsList.get(0).getTotalItems();
-                mDoctorItemsData.addAll(doctorItemsList);
+                mTotalItemCount = messageItemsList.get(0).getTotalItems();
+                mMessagesItemData.addAll(messageItemsList);
             }else{ // Load more here
-                mDoctorItemsData.addAll(doctorItemsList);
+                mMessagesItemData.addAll(messageItemsList);
             }
             // Decide to hide load more or not
-            if(mDoctorItemsData.size() == mTotalItemCount){ // End of list
+            if(mMessagesItemData.size() == mTotalItemCount){ // End of list
                 mLoadMoreView.closeView();
-                mCommentListView.removeFooterView(mLoadMoreView);
+                mMessageListView.removeFooterView(mLoadMoreView);
             }else {
-                mCommentListView.removeFooterView(mLoadMoreView);
+                mMessageListView.removeFooterView(mLoadMoreView);
                 mLoadMoreView.loadMoreComplete();
-                mCommentListView.addFooterView(mLoadMoreView);
+                mMessageListView.addFooterView(mLoadMoreView);
             }
         }else{ // Maybe failed or data is end of list
             mLoadMoreView.closeView();
-            mCommentListView.removeFooterView(mLoadMoreView);
+            mMessageListView.removeFooterView(mLoadMoreView);
         }
         // Update UI anyway
         updateUI();

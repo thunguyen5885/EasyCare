@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,10 +13,13 @@ import vn.easycare.layers.services.models.ClinicAddressWSModel;
 public class ClinicAddressWSBuilder {
     String clinicAddress="";
     String clinicAddressId="";
+    Context mContext;
     public ClinicAddressWSBuilder() {
 
     }
-
+    public ClinicAddressWSBuilder(Context context) {
+        mContext = context;
+    }
     public ClinicAddressWSBuilder(JSONObject resJson) throws JSONException {
         //parse json and set value for properties
     }

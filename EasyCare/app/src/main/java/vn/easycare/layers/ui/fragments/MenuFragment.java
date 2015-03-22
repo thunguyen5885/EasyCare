@@ -27,6 +27,7 @@ import vn.easycare.utils.AppFnUtils;
 public class MenuFragment extends Fragment implements View.OnClickListener{
     public interface IOnMenuItemOnClickListener{
         public void onMenuItemUserClicked();
+        public void onMenuItemMessageListClicked();
         public void onMenuItemAppointmentManagementClicked();
         public void onMenuItemCalendarCreatingClicked();
         public void onMenuItemDoctorListClicked();
@@ -36,6 +37,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
     }
     // For layout, control
 	private View mMenuItemUser;
+    private View mMenuItemMessageManagement;
     private View mMenuItemAppointmentManagement;
     private View mMenuItemCalendarCreating;
     private View mMenuItemDoctorList;
@@ -70,6 +72,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 		
 		View v = inflater.inflate(R.layout.fragment_menu, container, false);
 		mMenuItemUser = v.findViewById(R.id.menuItemUser);
+        mMenuItemMessageManagement = v.findViewById(R.id.menuItemMessageManagement);
         mMenuItemAppointmentManagement = v.findViewById(R.id.menuItemDatingManagement);
         mMenuItemCalendarCreating = v.findViewById(R.id.menuItemCalendarCreating);
         mMenuItemDoctorList = v.findViewById(R.id.menuItemDoctorList);
@@ -79,6 +82,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
 
         //initMenuItem(mMenuItemUser, 0, );
         //initMenuItem(mMenuItemUser, R.string.menu_test_user, R.drawable.ic_no_avatar);
+        initMenuItem(mMenuItemMessageManagement, R.string.menu_message_management, R.drawable.ic_no_avatar);
         initMenuItem(mMenuItemAppointmentManagement, R.string.menu_dating_management, R.drawable.ic_menu_dating_management);
         initMenuItem(mMenuItemCalendarCreating, R.string.menu_calendar_creating, R.drawable.ic_menu_calendar_creating);
         initMenuItem(mMenuItemDoctorList, R.string.menu_doctor_list, R.drawable.ic_no_avatar);
@@ -139,16 +143,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         }
     }
     public void showNotify(){
-        if(mMenuItemAppointmentManagement != null && GCMIntentService.mNotifyCount > 0){
-            View notifyLayout = mMenuItemAppointmentManagement.findViewById(R.id.flNotify);
+        if(mMenuItemMessageManagement != null && GCMIntentService.mNotifyCount > 0){
+            View notifyLayout = mMenuItemMessageManagement.findViewById(R.id.flNotify);
             notifyLayout.setVisibility(View.VISIBLE);
-            TextView tvNotify = (TextView) mMenuItemAppointmentManagement.findViewById(R.id.tvNotifyCount);
+            TextView tvNotify = (TextView) mMenuItemMessageManagement.findViewById(R.id.tvNotifyCount);
             tvNotify.setText(String.valueOf(GCMIntentService.mNotifyCount));
         }
     }
     public void hideNotify(){
-        if(mMenuItemAppointmentManagement != null){
-            View notifyLayout = mMenuItemAppointmentManagement.findViewById(R.id.flNotify);
+        if(mMenuItemMessageManagement != null){
+            View notifyLayout = mMenuItemMessageManagement.findViewById(R.id.flNotify);
             notifyLayout.setVisibility(View.INVISIBLE);
 
             // Also reset notify count
@@ -174,6 +178,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
                 case R.id.menuItemUser:
                     mMenuItemSeletedItem = mMenuItemUser;
                     mMenuItemOnClickListener.onMenuItemUserClicked();
+                    break;
+                case R.id.menuItemMessageManagement:
+                    mMenuItemSeletedItem = mMenuItemMessageManagement;
+                    mMenuItemOnClickListener.onMenuItemMessageListClicked();
                     break;
                 case R.id.menuItemDatingManagement:
                     mMenuItemSeletedItem = mMenuItemAppointmentManagement;
@@ -207,6 +215,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener{
         @Override
         public void onMenuItemUserClicked() {
             // Go to user info screen
+        }
+
+        @Override
+        public void onMenuItemMessageListClicked() {
+            MessageListFragment messageListFragment = new MessageListFragment();
+            ((HomeActivity) getActivity()).showFragmentFromMenu(messageListFragment);
         }
 
         @Override

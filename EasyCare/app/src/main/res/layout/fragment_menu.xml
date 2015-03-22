@@ -15,6 +15,11 @@
             android:layout_height="wrap_content"
             layout="@layout/home_menu_item_for_user_ctrl"/>
         <include
+            android:id="@+id/menuItemMessageManagement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/home_menu_item_ctrl"/>
+        <include
             android:id="@+id/menuItemDatingManagement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

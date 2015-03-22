@@ -9,6 +9,7 @@
 
     <!-- Define string for menu-->
     <string name="menu_test_user">Test User</string>
+    <string name="menu_message_management">Quản lý tin nhắn</string>
     <string name="menu_dating_management">Quản lý hẹn khám</string>
     <string name="menu_calendar_creating">Tạo lịch khám</string>
     <string name="menu_doctor_list">Danh sách bác sĩ</string>
@@ -143,13 +144,14 @@
     <string name="empty_data">Không tìm thấy dữ liệu.</string>
 
     <!-- Define string for patient detail screen-->
-    <string name="nothing_data">không có</string>
+    <string name="nothing_data">Không có</string>
     <string name="first_visit">Lần đầu tới khám</string>
     <string name="gender_man">Nam</string>
     <string name="gender_women">Nữ</string>
 
     <!-- Define string for doctor management screen-->
     <string name="doctor_management">Quản lý bác sĩ</string>
+    <string name="messages_management">Quản lý tin nhắn</string>
     <string name="doctor_text">Bác sĩ</string>
     <string name="doctor_appointment_management">Quản lý hẹn khám</string>
     <string name="doctor_calendar_management">Quản lý lịch khám</string>
@@ -184,4 +186,14 @@
     </string-array>
     <string name="view_more">Xem thêm</string>
     <string name="view_less">Thu gọn</string>
+
+    <string name="sender_text_message">Người gửi: </string>
+    <string name="send_time_text_message">Gửi lúc: </string>
+    <string name="content_text_message">Nội dung: </string>
+    <string name="place_examination_text_message">Đặt khám tới: B.S </string>
+    <string name="department_text_message">Chuyên khoa: </string>
+    <string name="detail_text_message">Chi tiết</string>
+    <string name="delete_text_message">Xóa</string>
+
+
 </resources>

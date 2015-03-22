@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,10 +22,13 @@ public class CommentAndAssessmentWSBuilder {
     String commentByPatientName = "";
     String commentByPatientAvatarUrl = "";
     String commentByPatientAvatarThumbUrl = "";
-
+    Context mContext;
     public CommentAndAssessmentWSBuilder() {
     }
 
+    public CommentAndAssessmentWSBuilder(Context context) {
+        mContext = context;
+    }
     public CommentAndAssessmentWSBuilder(JSONObject resJson) throws JSONException {
         //parse json and set value for properties
     }

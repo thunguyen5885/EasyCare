@@ -1,5 +1,7 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +37,12 @@ public class AppoinmentWSBuilder {
     String patient_avatarThumb = "";
     String examine_for = "";
     AppConstants.APPOINTMENT_ACTION action= AppConstants.APPOINTMENT_ACTION.NONE;
+    Context mContext;
     public AppoinmentWSBuilder() {
+    }
+
+    public AppoinmentWSBuilder(Context context) {
+        mContext = context;
     }
 
     public AppoinmentWSBuilder(JSONObject resJson) throws JSONException {

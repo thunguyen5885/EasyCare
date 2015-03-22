@@ -17,6 +17,8 @@ import vn.easycare.layers.services.models.PatientListWSModel;
 import vn.easycare.layers.services.models.PatientWSParamModel;
 import vn.easycare.layers.services.models.builders.PatientWSBuilder;
 import vn.easycare.utils.AppConstants;
+import vn.easycare.utils.AppFnUtils;
+
 
 /**
  * Created by phannguyen on 12/28/14.
@@ -126,22 +128,21 @@ public class PatientWSAccess extends AbstractWSAccess<PatientListWSModel,Patient
 
     private void parseResponseForGetAllPatient(String jsonResponse){
         try {
-            PatientWSBuilder modelBuilder = new  PatientWSBuilder();
+            PatientWSBuilder modelBuilder = new  PatientWSBuilder(mContext);
             PatientListWSModel listModel = new PatientListWSModel();
 
             JSONObject jsonBigObj = new JSONObject(jsonResponse);
             JSONArray patients = jsonBigObj.getJSONArray(Res_patients);
-
             for (int i = 0 ; i < patients.length(); i++) {
                 JSONObject jsonObj = patients.getJSONObject(i);
                 modelBuilder.Clear();
                 modelBuilder.withId(jsonObj.optString(Res_id,""));
-                modelBuilder.withFull_name(jsonObj.optString(Res_full_name,""));
+                modelBuilder.withFull_name(jsonObj.optString(Res_full_name,AppConstants.NOTHING_TEXTDATA));
                 modelBuilder.withGender(Integer.valueOf(jsonObj.optString(Res_gender,"0")).intValue());
-                modelBuilder.withBirthday(jsonObj.optString(Res_birthday,""));
-                modelBuilder.withEmail(jsonObj.optString(Res_email,""));
-                modelBuilder.withPhone(jsonObj.optString(Res_phone,""));
-                modelBuilder.withAddress(jsonObj.optString(Res_address,""));
+                modelBuilder.withBirthday(jsonObj.optString(Res_birthday,AppConstants.NOTHING_TEXTDATA));
+                modelBuilder.withEmail(jsonObj.optString(Res_email,AppConstants.NOTHING_TEXTDATA));
+                modelBuilder.withPhone(jsonObj.optString(Res_phone, AppConstants.NOTHING_TEXTDATA));
+                modelBuilder.withAddress(jsonObj.optString(Res_address,AppConstants.NOTHING_TEXTDATA));
                 modelBuilder.withAvatar(jsonObj.optString(Res_avatar,""));
                 modelBuilder.withAvatar_thumb(jsonObj.optString(Res_avatar_thumb,""));
                 modelBuilder.withVisits(Integer.valueOf(jsonObj.optString(Res_visits,"0")).intValue());

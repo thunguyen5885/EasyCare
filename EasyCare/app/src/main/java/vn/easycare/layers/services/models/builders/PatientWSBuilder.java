@@ -1,10 +1,13 @@
 package vn.easycare.layers.services.models.builders;
 
+import android.content.Context;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import vn.easycare.layers.services.models.PatientWSModel;
 import vn.easycare.utils.AppConstants;
+import vn.easycare.utils.AppFnUtils;
 
 /**
  * Created by phannguyen on 12/28/14.
@@ -26,8 +29,15 @@ public class PatientWSBuilder {
     int banned = 0;
 
 
-    public PatientWSBuilder() {
+    Context mContext;
+    public PatientWSBuilder(Context context) {
+        mContext = context;
     }
+
+    public PatientWSBuilder() {
+
+    }
+
 
     public PatientWSBuilder(JSONObject resJson) throws JSONException {
         //parse json and set value for properties
@@ -39,7 +49,7 @@ public class PatientWSBuilder {
     }
 
     public PatientWSBuilder withFull_name(String full_name) {
-        this.full_name = full_name;
+        this.full_name = AppFnUtils.replaceNullEmptyString(full_name,mContext);
         return this;
     }
 
@@ -49,22 +59,22 @@ public class PatientWSBuilder {
     }
 
     public PatientWSBuilder withBirthday(String birthday) {
-        this.birthday = birthday;
+        this.birthday = AppFnUtils.replaceNullEmptyString(birthday,mContext);
         return this;
     }
 
     public PatientWSBuilder withEmail(String email) {
-        this.email = email;
+        this.email = AppFnUtils.replaceNullEmptyString(email,mContext);
         return this;
     }
 
     public PatientWSBuilder withPhone(String phone) {
-        this.phone = phone;
+        this.phone = AppFnUtils.replaceNullEmptyString(phone,mContext);
         return this;
     }
 
     public PatientWSBuilder withAddress(String address) {
-        this.address = address;
+        this.address = AppFnUtils.replaceNullEmptyString(address,mContext);
         return this;
     }
 

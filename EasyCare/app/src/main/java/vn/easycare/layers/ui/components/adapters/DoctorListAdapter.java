@@ -16,6 +16,7 @@ import java.util.List;
 
 import vn.easycare.R;
 import vn.easycare.layers.ui.activities.HomeActivity;
+import vn.easycare.layers.ui.components.data.DoctorManagementItemData;
 import vn.easycare.layers.ui.components.data.PatientManagementItemData;
 import vn.easycare.layers.ui.components.singleton.DataSingleton;
 import vn.easycare.layers.ui.fragments.AppointmentListForAPatientFragment;
@@ -35,13 +36,13 @@ public class DoctorListAdapter extends BaseAdapter{
     private boolean mIsClicked = false;
     private boolean mIsEndOfList = false;
     private IDoctorListClickListener mDoctorListClickListener;
-    private List<PatientManagementItemData> mItemDataList;
+    private List<DoctorManagementItemData> mItemDataList;
 
     public DoctorListAdapter(Context context){
         mContext = context;
         mLayoutInflater = LayoutInflater.from(context);
     }
-    public void setItemDataList(List<PatientManagementItemData> itemDataList){
+    public void setItemDataList(List<DoctorManagementItemData> itemDataList){
         mItemDataList = itemDataList;
     }
     public void setDoctorListClickListener(IDoctorListClickListener doctorListClickListener){
@@ -104,19 +105,19 @@ public class DoctorListAdapter extends BaseAdapter{
         viewHolder.mDoctorAvatar.getLayoutParams().height = avatarSize;
 
         // Set fake data
-        PatientManagementItemData itemData = mItemDataList.get(position);
+        DoctorManagementItemData itemData = mItemDataList.get(position);
         viewHolder.mDoctorAvatar.setDefaultImageResId(R.drawable.ic_no_avatar);
-        viewHolder.mDoctorAvatar.setImageUrl(itemData.getPatientAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
-        viewHolder.mDoctorName.setText(itemData.getPatientName());
-        if(itemData.getPatientEmailAddress() != null && itemData.getPatientEmailAddress().length() > 0) {
-            viewHolder.mDoctorEmail.setText(itemData.getPatientEmailAddress());
+        viewHolder.mDoctorAvatar.setImageUrl(itemData.getDoctorAvatar(), DataSingleton.getInstance(mContext).getImageLoader());
+        viewHolder.mDoctorName.setText(itemData.getDoctorFullName());
+        if(itemData.getDoctorEmail() != null && itemData.getDoctorEmail().length() > 0) {
+            viewHolder.mDoctorEmail.setText(itemData.getDoctorEmail());
             viewHolder.mDoctorEmail.setTextColor(mContext.getResources().getColor(R.color.textview_color_default));
         }else{
             viewHolder.mDoctorEmail.setText(R.string.nothing_data);
             viewHolder.mDoctorEmail.setTextColor(mContext.getResources().getColor(R.color.textview_color_grey));
         }
-        if(itemData.getPatientPhoneNumber() != null && itemData.getPatientPhoneNumber().length() > 0) {
-            viewHolder.mDoctorPhone.setText(itemData.getPatientPhoneNumber());
+        if(itemData.getDoctorPhone() != null && itemData.getDoctorPhone().length() > 0) {
+            viewHolder.mDoctorPhone.setText(itemData.getDoctorPhone());
             viewHolder.mDoctorPhone.setTextColor(mContext.getResources().getColor(R.color.textview_color_default));
         }else{
             viewHolder.mDoctorPhone.setText(R.string.nothing_data);

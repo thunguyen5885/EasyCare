@@ -5,7 +5,7 @@ package vn.easycare.utils;
  */
 public class AppConstants {
     public static final int UNDEFINED_ID = -1;
-
+    public  static final String NOTHING_TEXTDATA = "nothing_textdata";
     public static enum WSMethod {
         GET, POST, PUT, DELETE
     }
