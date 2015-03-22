@@ -81,7 +81,7 @@ public class CommentAndAssessmentModel implements ICommentAndAssessmentModel,IWS
     @Override
     public void onWSResponseOK(IWebServiceModel result) {
         CommentAndAssessmentListWSModel listModel = (CommentAndAssessmentListWSModel)result;
-        //String commemtTest = " testtestte sttesttesttest1 testtest testtestt testtestte sttesttesttest1 testtesttesttestt est2testte sttesttesttesttest3te sttesttest testtest4tes ttesttestt esttest5";
+        //String commemtTest = " testtestte sttesttesttest1 testtest \n testtestt testtestte sttesttesttest1 \n testtesttesttestt \n est2testte sttesttesttesttest3te sttesttest \ntesttest4tes ttesttestt esttest5";
         String commemtTest = "";
         List<CommentAndAssessmentItemData> itemDataList = new ArrayList<CommentAndAssessmentItemData>();
 
