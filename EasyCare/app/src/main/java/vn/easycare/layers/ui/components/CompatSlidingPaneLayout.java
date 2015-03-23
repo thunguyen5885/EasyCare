@@ -13,7 +13,7 @@ public class CompatSlidingPaneLayout extends SlidingPaneLayout {
     private boolean mTouchedDown = false;
     private boolean mForwardTouchesToChildren = false;
     private int mHeaderHeight = 100;
-    private int mCommonPadding = 50;
+    private int mCommonPadding = 5;
 	
 	public CompatSlidingPaneLayout(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle); 
@@ -37,7 +37,7 @@ public class CompatSlidingPaneLayout extends SlidingPaneLayout {
 		this.setSliderFadeColor(getResources().getColor(android.R.color.transparent)); 
 		
 		this.mHeaderHeight = getResources().getDimensionPixelSize(R.dimen.header_height);
-		this.mCommonPadding = getResources().getDimensionPixelSize(R.dimen.common_padding);				
+		this.mCommonPadding = 5;//getResources().getDimensionPixelSize(R.dimen.common_padding);
 	}
 
     @Override

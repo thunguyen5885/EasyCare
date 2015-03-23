@@ -80,7 +80,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             mSlidingPanelLayout.closePane();
         }
         // Check GCM for push notification
-        checkToPostRegistrationToServer();
+        //checkToPostRegistrationToServer();
 
         decideWhichScreenToShow();
     }

@@ -11,23 +11,24 @@
         android:layout_gravity="center_vertical"/>
     <TextView
         android:id="@+id/tvHintColorText"
-        style="@style/DefaultNormalTextView"
-        android:layout_marginLeft="@dimen/common_padding_5dp"
+        style="@style/DefaultMicroTextView"
+        android:layout_marginLeft="@dimen/common_padding_2dp"
         android:layout_gravity="center_vertical"/>
     <TextView
         android:id="@+id/tvHintColorOpenBrac"
-        style="@style/DefaultNormalTextView"
+        style="@style/DefaultMicroTextView"
         android:text="("
         android:layout_marginLeft="1dp"
         android:layout_gravity="center_vertical"/>
     <TextView
         android:id="@+id/tvHintColorNumVal"
-        style="@style/DefaultNormalTextView"
+        style="@style/DefaultMicroTextView"
         android:textColor="@color/red"
+        android:text="100"
         android:layout_gravity="center_vertical"/>
     <TextView
         android:id="@+id/tvHintColorCloseBrac"
-        style="@style/DefaultNormalTextView"
+        style="@style/DefaultMicroTextView"
         android:text=")"
         android:layout_gravity="center_vertical"/>
 </LinearLayout>

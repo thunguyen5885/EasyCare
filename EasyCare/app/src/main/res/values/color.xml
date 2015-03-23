@@ -5,6 +5,7 @@
         <color name="white">#FFFFFF</color>
         <color name="blue">#0000FF</color>
         <color name="red">#ff0000</color>
+        <color name="yellow">#ffff00</color>
         <color name="gray_bg">#eae8de</color>
         <color name="gray_button_disable">#E5E9EA</color>
         <color name="purple_bg">#6737a7</color>
@@ -65,4 +66,10 @@
         <color name="textview_color_patient_detail_cancel_count">#e30300</color>
         <color name="textview_color_patient_detail_change_count">#3694eb</color>
         <color name="textview_color_patient_detail_comment_count">#ff8a00</color>
+
+        <!-- Define color for appointment list grid item-->
+        <color name="grid_item_empty_color">#3694eb</color>
+        <color name="grid_item_waiting_confirmed_color">#ffd646</color>
+        <color name="grid_item_confirmed_color">#f24445</color>
+        <color name="grid_item_treated_color">#ffffff</color>
     </resources>

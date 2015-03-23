@@ -12,10 +12,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/common_padding"
+            android:clickable="true"
             android:layout_centerVertical="true">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_previous"
                 android:layout_gravity="center"/>
         </FrameLayout>
@@ -24,18 +25,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="@dimen/common_padding"
+            android:clickable="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_next"
                 android:layout_gravity="center"/>
         </FrameLayout>
         <TextView
-           android:id="@+id/tvDate"
-           style="@style/DefaultBoldLargeTextView"
-           android:layout_centerInParent="true" />
+            android:id="@+id/tvDate"
+            style="@style/DefaultBoldLargeTextView"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/flNext"
+            android:layout_toRightOf="@+id/flPrevious"
+            android:gravity="center"
+            android:layout_centerInParent="true" />
     </RelativeLayout>
     <View
         android:id="@+id/vSeparator"
@@ -49,11 +55,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/common_padding">
+        android:layout_marginTop="@dimen/common_padding"
+        android:layout_marginBottom="@dimen/common_padding"
+        android:layout_marginLeft="@dimen/common_padding_5dp"
+        android:layout_marginRight="@dimen/common_padding_5dp">
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2">
             <include
                 android:id="@+id/emptyHintColor"
                 android:layout_width="match_parent"
@@ -63,7 +72,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="3">
             <include
                 android:id="@+id/waitingConfirmedHintColor"
                 android:layout_width="match_parent"
@@ -73,7 +82,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="3">
             <include
                 android:id="@+id/confirmedHintColor"
                 android:layout_width="match_parent"
@@ -83,7 +92,7 @@
         <FrameLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_weight="2">
             <include
                 android:id="@+id/treatedHintColor"
                 android:layout_width="match_parent"
@@ -94,7 +103,11 @@
     <GridView
         android:id="@+id/gvCalendar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vSeparator"
+        android:layout_above="@+id/llHint"
+        android:padding="@dimen/common_padding"
+        android:scrollbars="none"
+        android:numColumns="5">
     </GridView>
 </RelativeLayout>

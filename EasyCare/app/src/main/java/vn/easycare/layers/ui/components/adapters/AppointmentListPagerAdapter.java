@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.HashMap;
 import java.util.Map;
 
+import vn.easycare.layers.ui.components.views.AppointmentListGridLayout;
 import vn.easycare.layers.ui.components.views.AppointmentListLayout;
 import vn.easycare.layers.ui.components.views.PatientListLayout;
 import vn.easycare.utils.AppConstants;
@@ -32,7 +33,7 @@ public class AppointmentListPagerAdapter extends PagerAdapter{
     }
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -48,36 +49,46 @@ public class AppointmentListPagerAdapter extends PagerAdapter{
     }
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        AppointmentListLayout appointmentListLayout;
+        View mCurrentView = null;
         if(mViewMaps.containsKey(position)){
-            appointmentListLayout = (AppointmentListLayout)mViewMaps.get(position);
+            mCurrentView = mViewMaps.get(position);
+
         }else{
-            appointmentListLayout = new AppointmentListLayout(mViewPager.getContext());
-            if(position == 0) {
+            if(position == 0){
+                AppointmentListGridLayout appointmentListGridLayout = new AppointmentListGridLayout(mViewPager.getContext());
+                appointmentListGridLayout.loadNewData();
+                mViewMaps.put(position, appointmentListGridLayout);
+                mCurrentView = appointmentListGridLayout;
+            }else {
+                AppointmentListLayout appointmentListLayout = new AppointmentListLayout(mViewPager.getContext());
+//                if (position == 0) {
+//                    appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
+//                } else if (position == 1) {
+//                    appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
+//                } else {
+//                    appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
+//                }
                 appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.WAITING);
-            }else if(position == 1){
-                appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.ACCEPTED);
-            }else{
-                appointmentListLayout.setDateType(AppConstants.EXAMINATION_STATUS.CANCEL);
+                appointmentListLayout.setIBroadCast(mBroadCastToSynData);
+                appointmentListLayout.loadNewData();
+                mViewMaps.put(position, appointmentListLayout);
+                mCurrentView = appointmentListLayout;
             }
-            appointmentListLayout.setIBroadCast(mBroadCastToSynData);
-            appointmentListLayout.loadNewData();
-            mViewMaps.put(position, appointmentListLayout);
         }
 
-        container.addView(appointmentListLayout);
-        return appointmentListLayout;
+        container.addView(mCurrentView);
+        return mCurrentView;
     }
 
     /**
      * Load data again for current item if data changed
      */
     public void updateDataIfAnyForCurrentItem(){
-        int currentPos = mViewPager.getCurrentItem();
-        AppointmentListLayout curItem = (AppointmentListLayout) mViewMaps.get(currentPos);
-        if(curItem != null) {
-            curItem.enforceToRefreshForDataChanged();
-        }
+//        int currentPos = mViewPager.getCurrentItem();
+//        AppointmentListLayout curItem = (AppointmentListLayout) mViewMaps.get(currentPos);
+//        if(curItem != null) {
+//            curItem.enforceToRefreshForDataChanged();
+//        }
     }
 
     private IBroadCastToSynData mBroadCastToSynData = new IBroadCastToSynData() {
@@ -86,36 +97,36 @@ public class AppointmentListPagerAdapter extends PagerAdapter{
             // Always change on the first item
 //            DatingListLayout waitingDatingListLayout = (DatingListLayout) mViewMaps.get(0);
 //            waitingDatingListLayout.setNeedToRefresh(true);
-            switch (status){
-                case ACCEPTED:
-                    AppointmentListLayout acceptAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(1);
-                    if(acceptAppointmentListLayout != null) {
-                        acceptAppointmentListLayout.refreshDataWhenDataChanged();
-                    }
-                    break;
-                case WAITING:
-                    break;
-                case CANCEL:
-                    AppointmentListLayout cancelAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(2);
-                    if(cancelAppointmentListLayout != null) {
-                        cancelAppointmentListLayout.refreshDataWhenDataChanged();
-                    }
-                    break;
-            }
+//            switch (status){
+//                case ACCEPTED:
+//                    AppointmentListLayout acceptAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(1);
+//                    if(acceptAppointmentListLayout != null) {
+//                        acceptAppointmentListLayout.refreshDataWhenDataChanged();
+//                    }
+//                    break;
+//                case WAITING:
+//                    break;
+//                case CANCEL:
+//                    AppointmentListLayout cancelAppointmentListLayout = (AppointmentListLayout) mViewMaps.get(2);
+//                    if(cancelAppointmentListLayout != null) {
+//                        cancelAppointmentListLayout.refreshDataWhenDataChanged();
+//                    }
+//                    break;
+//            }
         }
     };
     public void refreshAllItems(){
-        for (Map.Entry<Integer, View> entry : mViewMaps.entrySet()) {
-            View view = entry.getValue();
-            int key = entry.getKey();
-            if(view instanceof AppointmentListLayout){
-                AppointmentListLayout appointmentListLayout = (AppointmentListLayout)view;
-                if(mViewPager.getCurrentItem() == key) {
-                    appointmentListLayout.refreshDataAndShowLoading();
-                }else {
-                    appointmentListLayout.refreshDataWhenDataChanged();
-                }
-            }
-        }
+//        for (Map.Entry<Integer, View> entry : mViewMaps.entrySet()) {
+//            View view = entry.getValue();
+//            int key = entry.getKey();
+//            if(view instanceof AppointmentListLayout){
+//                AppointmentListLayout appointmentListLayout = (AppointmentListLayout)view;
+//                if(mViewPager.getCurrentItem() == key) {
+//                    appointmentListLayout.refreshDataAndShowLoading();
+//                }else {
+//                    appointmentListLayout.refreshDataWhenDataChanged();
+//                }
+//            }
+//        }
     }
 }
