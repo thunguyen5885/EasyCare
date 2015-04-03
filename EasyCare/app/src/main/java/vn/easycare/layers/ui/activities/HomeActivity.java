@@ -81,13 +81,14 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
         }
         // Check GCM for push notification
         //checkToPostRegistrationToServer();
-
+        Log.d("ThuNguyen", "decideWhichScreenToShow on OnCreate()");
         decideWhichScreenToShow();
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        Log.d("ThuNguyen", "decideWhichScreenToShow on OnNewIntent()");
         decideWhichScreenToShow();
     }
 
@@ -140,6 +141,7 @@ public class HomeActivity extends BaseActivity implements ILoginView, CommonHead
             AppointmentListFragment appointmentListFragment = new AppointmentListFragment();
             showFragmentFromMenu(appointmentListFragment);
         }else{
+            Log.d("ThuNguyen", "show HomeFragment from decideWhichScreenToShow()");
             // Show home fragment as default
             HomeFragment homeFragment = new HomeFragment();
             showFragmentFromMenu(homeFragment);

@@ -155,7 +155,13 @@
     <string name="doctor_text">Bác sĩ</string>
     <string name="doctor_appointment_management">Quản lý hẹn khám</string>
     <string name="doctor_calendar_management">Quản lý lịch khám</string>
-
+    
+    <!-- Define string for take an appointment-->
+    <string name="appointment_text_dialog">Cuộc hẹn</string>
+    <string name="appointment_reason">Lý do</string>
+    <string name="appointment_taken">Đặt khám</string>
+    <string name="appointment_confirmed">Xác nhận</string>
+    <string name="appointment_telephone">Số điện thoại</string>
     <!-- Define string for message confirm, error-->
     <string name="message_title">Thông báo</string>
     <string name="message_inform_schedule_create_succeed">Tạo lịch khám thành công</string>

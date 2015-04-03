@@ -24,9 +24,10 @@ public class BaseFrameLayout extends FrameLayout {
     }
 
     public void UnauthorizedProcessing() {
-//        Intent intent = new Intent(getContext(), LoginActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        getContext().startActivity(intent);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        getContext().startActivity(intent);
 
     }
 }

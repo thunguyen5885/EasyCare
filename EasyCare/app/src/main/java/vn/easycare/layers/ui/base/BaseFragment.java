@@ -10,8 +10,9 @@ import vn.easycare.layers.ui.activities.LoginActivity;
  */
 public class BaseFragment extends Fragment{
     public void UnauthorizedProcessing() {
-//        Intent intent = new Intent(getActivity(), LoginActivity.class);
-//        startActivity(intent);
-//        getActivity().finish();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

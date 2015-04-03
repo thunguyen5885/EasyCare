@@ -68,6 +68,19 @@ public class DialogUtil {
         });
 		dialog.show();
 	}
+    public static void showTakeAppointmentDialog(Context context, AppointmentTimeData appointmentTime,
+                                          final OnClickListener mOnAcceptClickListener){
+        final Dialog dialog = new Dialog(context,android.R.style.Theme_Holo_Dialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.take_appointment_dialog_layout);
+        dialog.getWindow().setBackgroundDrawableResource(R.drawable.layout_border_dialog);
+
+        // Get screen width
+        int screenWidth = AppFnUtils.getScreenWidth((Activity) context);
+        int dialogWidth = screenWidth - (int)(4* context.getResources().getDimension(R.dimen.common_padding));
+        dialog.getWindow().setLayout(dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.show();
+    }
     public static void showListViewDialog(Context context, Object dataList, boolean isFullScreen,
                                           final SimpleTextAdapter.IOnItemClickListener onItemClickListener){
         final Dialog dialog = new Dialog(context,android.R.style.Theme_Holo_Dialog);
